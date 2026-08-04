@@ -93,8 +93,8 @@ export default function BookingPage() {
     <div className="min-h-screen bg-[#111111] text-white font-sans flex flex-col justify-between">
       <Navbar />
 
-      <main className="pt-36 pb-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto w-full flex-1 space-y-12">
-        <div className="text-center space-y-3">
+      <main className="pt-32 sm:pt-36 pb-16 sm:pb-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto w-full flex-1 space-y-8 sm:space-y-12">
+        <div className="text-center space-y-2 sm:space-y-3">
           <span className="text-[10px] uppercase tracking-[0.35em] text-[#C6A15B] font-semibold">Luxury Suite Checkout</span>
           <h1 className="font-serif text-3xl sm:text-5xl text-white font-normal">Reserve Your Luxury Sanctuary</h1>
           <p className="text-xs text-neutral-400 font-light max-w-md mx-auto">14B, Providence Street, Lekki Phase 1, Lagos, Nigeria</p>
@@ -102,9 +102,9 @@ export default function BookingPage() {
 
         {/* Step 1 & Step 2 Booking Wizard */}
         {step < 3 && (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
             {/* Form Steps */}
-            <div className="lg:col-span-7 bg-[#1A1918] border border-[#2C2B29] rounded-2xl p-6 sm:p-8 space-y-6 shadow-2xl">
+            <div className="lg:col-span-7 bg-[#1A1918] border border-[#2C2B29] rounded-2xl p-5 sm:p-8 space-y-6 shadow-2xl">
               <div className="flex items-center justify-between border-b border-[#2C2B29] pb-4">
                 <span className="text-xs font-serif text-[#C6A15B]">Step {step} of 2</span>
                 <span className="text-xs uppercase tracking-widest text-neutral-400 font-semibold">
@@ -120,32 +120,34 @@ export default function BookingPage() {
                       type="text"
                       disabled
                       value={formData.suite}
-                      className="w-full bg-[#111111] border border-[#2C2B29] rounded-lg px-4 py-3 text-[#C6A15B] font-serif font-bold mt-1"
+                      className="w-full bg-[#111111] border border-[#2C2B29] rounded-xl px-4 py-3 text-[#C6A15B] font-serif font-bold mt-1"
                     />
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3">
-                    <div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                    <div className="space-y-1 w-full">
                       <label className="text-neutral-300 font-medium block">Check-In Date</label>
                       <input
                         type="date"
                         value={formData.checkIn}
                         onChange={(e) => setFormData({ ...formData, checkIn: e.target.value })}
-                        className="w-full bg-[#111111] border border-[#2C2B29] rounded-lg px-3.5 py-2.5 text-white mt-1"
+                        style={{ colorScheme: 'dark' }}
+                        className="w-full min-h-[48px] bg-[#111111] border border-[#2C2B29] rounded-xl px-4 py-3 text-sm sm:text-xs text-white font-medium focus:outline-none focus:border-[#C6A15B] appearance-none mt-1"
                       />
                     </div>
-                    <div>
+                    <div className="space-y-1 w-full">
                       <label className="text-neutral-300 font-medium block">Check-Out Date</label>
                       <input
                         type="date"
                         value={formData.checkOut}
                         onChange={(e) => setFormData({ ...formData, checkOut: e.target.value })}
-                        className="w-full bg-[#111111] border border-[#2C2B29] rounded-lg px-3.5 py-2.5 text-white mt-1"
+                        style={{ colorScheme: 'dark' }}
+                        className="w-full min-h-[48px] bg-[#111111] border border-[#2C2B29] rounded-xl px-4 py-3 text-sm sm:text-xs text-white font-medium focus:outline-none focus:border-[#C6A15B] appearance-none mt-1"
                       />
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                     <div>
                       <label className="text-neutral-300 font-medium block">Guest Full Name *</label>
                       <input
@@ -154,7 +156,7 @@ export default function BookingPage() {
                         placeholder="e.g. Chief Oluwaseun Davies"
                         value={formData.guestName}
                         onChange={(e) => setFormData({ ...formData, guestName: e.target.value })}
-                        className="w-full bg-[#111111] border border-[#2C2B29] rounded-lg px-3.5 py-2.5 text-white mt-1"
+                        className="w-full min-h-[48px] bg-[#111111] border border-[#2C2B29] rounded-xl px-4 py-3 text-sm sm:text-xs text-white mt-1"
                       />
                     </div>
                     <div>
@@ -165,7 +167,7 @@ export default function BookingPage() {
                         placeholder="yourname@domain.com"
                         value={formData.guestEmail}
                         onChange={(e) => setFormData({ ...formData, guestEmail: e.target.value })}
-                        className="w-full bg-[#111111] border border-[#2C2B29] rounded-lg px-3.5 py-2.5 text-white mt-1"
+                        className="w-full min-h-[48px] bg-[#111111] border border-[#2C2B29] rounded-xl px-4 py-3 text-sm sm:text-xs text-white mt-1"
                       />
                     </div>
                   </div>
@@ -178,7 +180,7 @@ export default function BookingPage() {
                       placeholder="+234 704 100 8351"
                       value={formData.guestPhone}
                       onChange={(e) => setFormData({ ...formData, guestPhone: e.target.value })}
-                      className="w-full bg-[#111111] border border-[#2C2B29] rounded-lg px-3.5 py-2.5 text-white mt-1"
+                      className="w-full min-h-[48px] bg-[#111111] border border-[#2C2B29] rounded-xl px-4 py-3 text-sm sm:text-xs text-white mt-1"
                     />
                   </div>
 
@@ -189,7 +191,7 @@ export default function BookingPage() {
                       placeholder="Airport Chauffeur pickup, late check-in, dietary preferences..."
                       value={formData.specialRequests}
                       onChange={(e) => setFormData({ ...formData, specialRequests: e.target.value })}
-                      className="w-full bg-[#111111] border border-[#2C2B29] rounded-lg px-3.5 py-2.5 text-white mt-1"
+                      className="w-full bg-[#111111] border border-[#2C2B29] rounded-xl px-4 py-3 text-sm sm:text-xs text-white mt-1"
                     />
                   </div>
 
@@ -202,7 +204,7 @@ export default function BookingPage() {
                       }
                       setStep(2);
                     }}
-                    className="w-full py-3.5 bg-[#C6A15B] hover:bg-[#B08C46] text-[#111111] font-semibold text-xs uppercase tracking-widest rounded-lg shadow-xl transition-all flex items-center justify-center gap-2 mt-4"
+                    className="w-full min-h-[48px] bg-[#C6A15B] hover:bg-[#B08C46] text-[#111111] font-semibold text-xs uppercase tracking-widest rounded-xl shadow-xl transition-all flex items-center justify-center gap-2 mt-4 active:scale-95"
                   >
                     <span>Proceed to Payment Method</span>
                     <ArrowRight className="w-4 h-4" />
@@ -291,14 +293,14 @@ export default function BookingPage() {
                     <button
                       type="button"
                       onClick={() => setStep(1)}
-                      className="w-1/3 py-3 border border-[#2C2B29] text-neutral-400 hover:text-white rounded-lg"
+                      className="w-1/3 min-h-[48px] border border-[#2C2B29] text-neutral-400 hover:text-white rounded-xl"
                     >
                       Back
                     </button>
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-2/3 py-3.5 bg-[#C6A15B] hover:bg-[#B08C46] text-[#111111] font-semibold text-xs uppercase tracking-widest rounded-lg shadow-xl transition-all"
+                      className="w-2/3 min-h-[48px] bg-[#C6A15B] hover:bg-[#B08C46] text-[#111111] font-semibold text-xs uppercase tracking-widest rounded-xl shadow-xl transition-all active:scale-95"
                     >
                       {isSubmitting ? 'Processing Voucher...' : 'Complete & Dispatch Voucher'}
                     </button>
@@ -308,7 +310,7 @@ export default function BookingPage() {
             </div>
 
             {/* Reservation Summary Panel */}
-            <div className="lg:col-span-5 bg-[#1A1918] border border-[#2C2B29] rounded-2xl p-6 space-y-6">
+            <div className="lg:col-span-5 bg-[#1A1918] border border-[#2C2B29] rounded-2xl p-5 sm:p-6 space-y-6">
               <h3 className="font-serif text-xl text-white border-b border-[#2C2B29] pb-3">Reservation Summary</h3>
 
               <div className="space-y-3 text-xs">
@@ -343,14 +345,14 @@ export default function BookingPage() {
 
         {/* Step 3: Public Confirmation Voucher Modal */}
         {step === 3 && bookingCompleted && (
-          <div className="bg-[#1A1918] border border-[#C6A15B] rounded-2xl p-8 max-w-2xl mx-auto text-center space-y-6 shadow-2xl">
+          <div className="bg-[#1A1918] border border-[#C6A15B] rounded-2xl p-6 sm:p-8 max-w-2xl mx-auto text-center space-y-6 shadow-2xl">
             <div className="w-16 h-16 rounded-full bg-[#C6A15B]/20 border border-[#C6A15B] text-[#C6A15B] flex items-center justify-center mx-auto">
               <CheckCircle className="w-8 h-8" />
             </div>
 
             <div className="space-y-2">
               <span className="text-[10px] uppercase tracking-[0.35em] text-[#C6A15B] font-semibold">Reservation Confirmed</span>
-              <h2 className="font-serif text-3xl text-white">Voucher #{bookingCompleted.bookingRef}</h2>
+              <h2 className="font-serif text-2xl sm:text-3xl text-white">Voucher #{bookingCompleted.bookingRef}</h2>
               <p className="text-xs text-neutral-300">
                 Thank you, <strong>{formData.guestName}</strong>! Your reservation voucher has been generated and dispatched to{' '}
                 <span className="text-[#C6A15B] font-mono">{formData.guestEmail}</span>.
@@ -359,7 +361,7 @@ export default function BookingPage() {
 
             {/* Bank Transfer Receipt Submission Card */}
             {formData.paymentMethod === 'Bank Transfer' && (
-              <div className="p-6 bg-[#111111] border border-[#C6A15B]/40 rounded-xl space-y-4 text-left">
+              <div className="p-5 sm:p-6 bg-[#111111] border border-[#C6A15B]/40 rounded-xl space-y-4 text-left">
                 <div className="flex items-center justify-between border-b border-[#2C2B29] pb-3">
                   <span className="text-xs font-semibold text-[#C6A15B] uppercase tracking-wider">Bank Transfer Verification</span>
                   <span className="text-[10px] bg-amber-950 text-amber-400 border border-amber-800 px-2 py-0.5 rounded font-bold">
@@ -388,7 +390,7 @@ export default function BookingPage() {
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 shadow-xl transition-all"
+                  className="w-full min-h-[48px] bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs uppercase tracking-widest rounded-xl flex items-center justify-center gap-2 shadow-xl transition-all"
                 >
                   <MessageSquare className="w-4 h-4" />
                   <span>Send Transfer Receipt via WhatsApp (+234 704 100 8351)</span>
@@ -397,7 +399,7 @@ export default function BookingPage() {
             )}
 
             <div className="pt-4 border-t border-[#2C2B29] flex items-center justify-center">
-              <Link href="/" className="px-8 py-3 bg-[#C6A15B] hover:bg-[#B08C46] text-[#111111] font-semibold uppercase tracking-widest rounded-lg text-xs shadow-xl transition-all">
+              <Link href="/" className="px-8 py-3.5 bg-[#C6A15B] hover:bg-[#B08C46] text-[#111111] font-semibold uppercase tracking-widest rounded-xl text-xs shadow-xl transition-all">
                 Return to Homepage
               </Link>
             </div>
