@@ -42,23 +42,23 @@ export default function Navbar() {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
-            ? 'bg-[#111111]/95 backdrop-blur-xl border-b border-[#2C2B29] py-5 shadow-2xl'
+            ? 'bg-[#111111]/95 backdrop-blur-xl border-b border-[#2C2B29] py-4 sm:py-5 shadow-2xl'
             : isHome
-            ? 'bg-gradient-to-b from-black/90 via-black/40 to-transparent py-7'
-            : 'bg-[#111111] py-6 border-b border-[#2C2B29]'
+            ? 'bg-gradient-to-b from-black/90 via-black/40 to-transparent py-5 sm:py-7'
+            : 'bg-[#111111] py-4 sm:py-6 border-b border-[#2C2B29]'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-8 lg:px-16 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 flex items-center justify-between">
           {/* Brand Identity */}
-          <Link href="/" className="group flex items-center gap-4">
-            <div className="w-10 h-10 rounded-full bg-[#1A1918] border border-[#C6A15B]/50 flex items-center justify-center transition-all duration-300 group-hover:border-[#C6A15B] group-hover:scale-105">
-              <span className="font-serif text-[#C6A15B] text-lg font-semibold tracking-wider">SC</span>
+          <Link href="/" className="group flex items-center gap-2.5 sm:gap-4">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#1A1918] border border-[#C6A15B]/50 flex items-center justify-center transition-all duration-300 group-hover:border-[#C6A15B] group-hover:scale-105 shrink-0">
+              <span className="font-serif text-[#C6A15B] text-sm sm:text-lg font-semibold tracking-wider">SC</span>
             </div>
             <div className="flex flex-col justify-center">
-              <span className="font-serif text-xl tracking-[0.3em] text-white uppercase font-normal leading-none">
+              <span className="font-serif text-base sm:text-xl tracking-[0.2em] sm:tracking-[0.3em] text-white uppercase font-normal leading-none">
                 STAY CONNECT
               </span>
-              <span className="text-[9px] tracking-[0.4em] text-[#C6A15B] uppercase font-light mt-1">
+              <span className="text-[8px] sm:text-[9px] tracking-[0.25em] sm:tracking-[0.4em] text-[#C6A15B] uppercase font-light mt-1">
                 Hotels & Suites • Lekki
               </span>
             </div>
@@ -137,11 +137,11 @@ export default function Navbar() {
           {/* Action CTAs */}
           <div className="hidden md:flex items-center gap-6">
             <a
-              href="tel:+2348031234567"
+              href="tel:+2347041008351"
               className="text-[11px] tracking-[0.2em] text-neutral-300 hover:text-[#C6A15B] transition-colors flex items-center gap-2 font-medium"
             >
               <Phone className="w-3.5 h-3.5 text-[#C6A15B]" />
-              <span className="hidden xl:inline">+234 803 123 4567</span>
+              <span className="hidden xl:inline">+234 704 100 8351</span>
             </a>
 
             <Link
@@ -159,7 +159,7 @@ export default function Navbar() {
             className="lg:hidden p-2 text-white hover:text-[#C6A15B] transition-colors focus:outline-none"
             aria-label="Toggle Menu"
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {mobileMenuOpen ? <X className="w-6 h-6 text-[#C6A15B]" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
       </header>
@@ -172,9 +172,9 @@ export default function Navbar() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed inset-0 z-40 bg-[#111111] pt-28 px-8 pb-12 flex flex-col justify-between overflow-y-auto"
+            className="fixed inset-0 z-40 bg-[#111111] pt-24 px-6 pb-8 flex flex-col justify-between overflow-y-auto"
           >
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-5">
               <div className="text-[9px] uppercase tracking-[0.3em] text-[#C6A15B] font-semibold border-b border-[#2C2B29] pb-3">
                 Navigation Directory
               </div>
@@ -183,13 +183,13 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="font-serif text-2xl text-white hover:text-[#C6A15B] transition-colors"
+                  className="font-serif text-xl sm:text-2xl text-white hover:text-[#C6A15B] transition-colors"
                 >
                   {link.name}
                 </Link>
               ))}
 
-              <div className="pt-6 border-t border-[#2C2B29]">
+              <div className="pt-4 border-t border-[#2C2B29]">
                 <div className="text-[9px] uppercase tracking-[0.3em] text-[#C6A15B] font-semibold mb-3">
                   Flagship Executive Suite
                 </div>
@@ -198,22 +198,31 @@ export default function Navbar() {
                   onClick={() => setMobileMenuOpen(false)}
                   className="block p-4 rounded-xl bg-[#1A1918] border border-[#2C2B29]"
                 >
-                  <div className="text-white font-serif text-lg">Saffron Suite (Executive Single Room)</div>
+                  <div className="text-white font-serif text-base">Saffron Suite (Executive Single Room)</div>
                   <div className="text-xs text-neutral-400 mt-1">14B Providence St, Lekki, Lagos</div>
                   <div className="text-xs text-[#C6A15B] mt-2 font-medium">Explore Room Specs & Book →</div>
                 </Link>
               </div>
             </div>
 
-            <div className="pt-8 border-t border-[#2C2B29] flex flex-col gap-4">
+            <div className="pt-6 border-t border-[#2C2B29] flex flex-col gap-3">
               <Link
                 href="/book"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full text-center py-3.5 rounded bg-[#C6A15B] text-[#111111] font-medium text-xs uppercase tracking-widest shadow-xl"
+                className="w-full text-center py-3.5 rounded bg-[#C6A15B] text-[#111111] font-semibold text-xs uppercase tracking-widest shadow-xl"
               >
-                Book Your Stay
+                Book Your Stay Online
               </Link>
-              <div className="text-center text-xs text-neutral-500 tracking-wider font-light">
+              <a
+                href="https://wa.me/2347041008351"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full text-center py-3 rounded border border-[#C6A15B] text-white font-semibold text-xs uppercase tracking-widest"
+              >
+                Chat Concierge (+234 704 100 8351)
+              </a>
+              <div className="text-center text-[10px] text-neutral-500 tracking-wider font-light mt-1">
                 14B Providence Street, Lekki Phase 1, Lagos, Nigeria
               </div>
             </div>

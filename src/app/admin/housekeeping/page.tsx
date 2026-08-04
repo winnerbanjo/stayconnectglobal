@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Sparkles, CheckCircle2, Clock, AlertTriangle, RefreshCw, BarChart3, Building, BedDouble, Calendar, Car, LogOut, Utensils } from 'lucide-react';
 import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
+import AdminMobileNav from '@/components/admin/AdminMobileNav';
 
 interface RoomStatus {
   id: string;
@@ -54,7 +55,10 @@ export default function AdminHousekeepingPage() {
 
   return (
     <AdminAuthGuard>
-      <div className="min-h-screen bg-[#111111] text-white font-sans flex">
+      <div className="min-h-screen bg-[#111111] text-white font-sans flex flex-col md:flex-row">
+        {/* Mobile Header Bar */}
+        <AdminMobileNav />
+
         {/* Sidebar */}
         <aside className="w-64 border-r border-[#2C2B29] p-6 flex flex-col justify-between hidden md:flex shrink-0">
           <div className="space-y-8">
@@ -109,11 +113,11 @@ export default function AdminHousekeepingPage() {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-8 lg:p-12 space-y-8">
+        <main className="flex-1 p-4 sm:p-8 lg:p-12 space-y-8 overflow-x-hidden">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#2C2B29] pb-6">
             <div>
               <span className="text-[10px] uppercase tracking-[0.35em] text-[#C6A15B] font-semibold">Hotel Operations</span>
-              <h1 className="font-serif text-3xl text-white font-normal mt-1">Housekeeping & Suite Hygiene Control</h1>
+              <h1 className="font-serif text-2xl sm:text-3xl text-white font-normal mt-1">Housekeeping & Suite Hygiene Control</h1>
             </div>
 
             <div className="text-xs text-neutral-400 font-light">
@@ -121,7 +125,7 @@ export default function AdminHousekeepingPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
             <div className="p-6 bg-[#1A1918] border border-[#2C2B29] rounded-2xl space-y-2">
               <div className="text-neutral-400 text-xs font-medium">Clean & Inspected Suites</div>
               <div className="font-serif text-3xl text-emerald-400 font-bold">
@@ -144,9 +148,9 @@ export default function AdminHousekeepingPage() {
             </div>
           </div>
 
-          <div className="bg-[#1A1918] rounded-2xl border border-[#2C2B29] p-6 space-y-4">
+          <div className="bg-[#1A1918] rounded-2xl border border-[#2C2B29] p-4 sm:p-6 space-y-4">
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs font-light text-neutral-300">
+              <table className="w-full text-left text-xs font-light text-neutral-300 min-w-[600px]">
                 <thead className="bg-[#111111] text-[#C6A15B] uppercase tracking-wider text-[10px] font-semibold">
                   <tr>
                     <th className="py-3 px-4">Suite / Room</th>

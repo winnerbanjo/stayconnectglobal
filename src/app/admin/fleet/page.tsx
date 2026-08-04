@@ -2,8 +2,9 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Car, Plus, CheckCircle, BarChart3, Building, BedDouble, Calendar, LogOut, X, Anchor, Shield } from 'lucide-react';
+import { Car, Plus, CheckCircle, BarChart3, Building, BedDouble, Calendar, LogOut, X, Anchor, Shield, RefreshCw, Utensils } from 'lucide-react';
 import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
+import AdminMobileNav from '@/components/admin/AdminMobileNav';
 
 interface Vehicle {
   id: string;
@@ -79,7 +80,10 @@ export default function AdminFleetPage() {
 
   return (
     <AdminAuthGuard>
-      <div className="min-h-screen bg-[#111111] text-white font-sans flex">
+      <div className="min-h-screen bg-[#111111] text-white font-sans flex flex-col md:flex-row">
+        {/* Mobile Header Bar */}
+        <AdminMobileNav />
+
         {/* Sidebar */}
         <aside className="w-64 border-r border-[#2C2B29] p-6 flex flex-col justify-between hidden md:flex shrink-0">
           <div className="space-y-8">
@@ -93,24 +97,32 @@ export default function AdminFleetPage() {
               </div>
             </div>
 
-            <nav className="space-y-2">
-              <Link href="/admin" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918] transition-colors text-xs uppercase tracking-widest font-medium">
+            <nav className="space-y-2 text-xs uppercase tracking-widest font-medium">
+              <Link href="/admin" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]">
                 <BarChart3 className="w-4 h-4 text-[#C6A15B]" />
                 <span>PMS Dashboard</span>
               </Link>
-              <Link href="/admin/properties" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918] transition-colors text-xs uppercase tracking-widest font-medium">
+              <Link href="/admin/properties" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]">
                 <Building className="w-4 h-4 text-[#C6A15B]" />
                 <span>Properties</span>
               </Link>
-              <Link href="/admin/rooms" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918] transition-colors text-xs uppercase tracking-widest font-medium">
+              <Link href="/admin/rooms" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]">
                 <BedDouble className="w-4 h-4 text-[#C6A15B]" />
                 <span>Rooms Inventory</span>
               </Link>
-              <Link href="/admin/fleet" className="flex items-center gap-3 px-4 py-3 rounded-lg bg-[#C6A15B] text-[#111111] font-semibold text-xs uppercase tracking-widest">
-                <Car className="w-4 h-4" />
-                <span>Fleet & Chauffeur</span>
+              <Link href="/admin/housekeeping" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]">
+                <RefreshCw className="w-4 h-4 text-[#C6A15B]" />
+                <span>Housekeeping Ops</span>
               </Link>
-              <Link href="/admin/bookings" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918] transition-colors text-xs uppercase tracking-widest font-medium">
+              <Link href="/admin/dining" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]">
+                <Utensils className="w-4 h-4 text-[#C6A15B]" />
+                <span>Dining & Menu</span>
+              </Link>
+              <Link href="/admin/fleet" className="flex items-center gap-3 px-4 py-3 rounded-lg bg-[#C6A15B] text-[#111111] font-semibold">
+                <Car className="w-4 h-4" />
+                <span>Fleet Logistics</span>
+              </Link>
+              <Link href="/admin/bookings" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]">
                 <Calendar className="w-4 h-4 text-[#C6A15B]" />
                 <span>Reservations CRM</span>
               </Link>
@@ -118,7 +130,7 @@ export default function AdminFleetPage() {
           </div>
 
           <div className="pt-6 border-t border-[#2C2B29]">
-            <Link href="/" className="flex items-center gap-2 text-xs text-neutral-400 hover:text-[#C6A15B] transition-colors">
+            <Link href="/" className="flex items-center gap-2 text-xs text-neutral-400 hover:text-[#C6A15B]">
               <LogOut className="w-4 h-4" />
               <span>Return to Site</span>
             </Link>
@@ -126,22 +138,22 @@ export default function AdminFleetPage() {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-8 lg:p-12 space-y-10">
+        <main className="flex-1 p-4 sm:p-8 lg:p-12 space-y-8 overflow-x-hidden">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#2C2B29] pb-6">
             <div>
               <span className="text-[10px] uppercase tracking-[0.35em] text-[#C6A15B] font-semibold">Chauffeur & Yacht Concierge</span>
-              <h1 className="font-serif text-3xl text-white font-normal mt-1">Fleet & Luxury Vehicle Manager</h1>
+              <h1 className="font-serif text-2xl sm:text-3xl text-white font-normal mt-1">Fleet & Luxury Vehicle Manager</h1>
             </div>
             <button
               onClick={() => setIsModalOpen(true)}
-              className="px-5 py-3 bg-[#C6A15B] hover:bg-[#B08C46] text-[#111111] font-semibold text-xs uppercase tracking-widest rounded-lg flex items-center gap-2 shadow-xl transition-all active:scale-95"
+              className="w-full sm:w-auto px-5 py-3 bg-[#C6A15B] hover:bg-[#B08C46] text-[#111111] font-semibold text-xs uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 shadow-xl"
             >
               <Plus className="w-4 h-4" />
               <span>+ Add New Vehicle / Yacht</span>
             </button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {vehicles.map((v) => (
               <div key={v.id} className="bg-[#1A1918] border border-[#2C2B29] rounded-2xl overflow-hidden shadow-xl space-y-4 p-6">
                 <div className="relative h-44 rounded-xl overflow-hidden bg-neutral-900">
@@ -169,7 +181,7 @@ export default function AdminFleetPage() {
         {/* Modal */}
         {isModalOpen && (
           <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-            <div className="bg-[#111111] text-white p-6 sm:p-8 rounded-2xl border border-[#C6A15B]/40 max-w-lg w-full space-y-6 shadow-2xl">
+            <div className="bg-[#111111] text-white p-6 sm:p-8 rounded-2xl border border-[#C6A15B]/40 max-w-lg w-full space-y-6 shadow-2xl max-h-[90vh] overflow-y-auto">
               <div className="flex items-center justify-between border-b border-[#2C2B29] pb-4">
                 <h3 className="font-serif text-2xl text-white">Add Luxury Fleet Vehicle</h3>
                 <button onClick={() => setIsModalOpen(false)} className="text-neutral-400 hover:text-white">
@@ -190,7 +202,7 @@ export default function AdminFleetPage() {
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="text-neutral-300 font-medium">Driver Name</label>
                     <input

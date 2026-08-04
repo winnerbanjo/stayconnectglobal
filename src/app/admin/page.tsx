@@ -28,6 +28,7 @@ import {
 import { INITIAL_BOOKINGS, INITIAL_ROOMS } from '@/lib/data/seedData';
 import { Booking } from '@/types';
 import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
+import AdminMobileNav from '@/components/admin/AdminMobileNav';
 
 export default function AdminPage() {
   const [bookings, setBookings] = useState<Booking[]>([
@@ -140,7 +141,10 @@ export default function AdminPage() {
 
   return (
     <AdminAuthGuard>
-      <div className="min-h-screen bg-[#111111] text-white font-sans flex">
+      <div className="min-h-screen bg-[#111111] text-white font-sans flex flex-col md:flex-row">
+        {/* Mobile Header Bar */}
+        <AdminMobileNav />
+
         {/* Sidebar Navigation */}
         <aside className="w-64 border-r border-[#2C2B29] p-6 flex flex-col justify-between hidden md:flex shrink-0">
           <div className="space-y-8">
@@ -202,14 +206,14 @@ export default function AdminPage() {
         </aside>
 
         {/* Main PMS Executive Area */}
-        <main className="flex-1 p-6 lg:p-10 space-y-8 overflow-x-hidden">
+        <main className="flex-1 p-4 sm:p-8 lg:p-10 space-y-8 overflow-x-hidden">
           {/* Header Bar */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#2C2B29] pb-6">
             <div>
               <span className="text-[10px] uppercase tracking-[0.35em] text-[#C6A15B] font-semibold">
                 Property Management System (PMS)
               </span>
-              <h1 className="font-serif text-3xl sm:text-4xl text-white font-normal mt-1">
+              <h1 className="font-serif text-2xl sm:text-4xl text-white font-normal mt-1">
                 Executive Front Desk Control
               </h1>
             </div>
@@ -217,7 +221,7 @@ export default function AdminPage() {
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setShowAddWalkInModal(true)}
-                className="px-5 py-3 bg-[#C6A15B] hover:bg-[#B08C46] text-[#111111] font-semibold text-xs uppercase tracking-widest rounded-lg flex items-center gap-2 shadow-xl transition-all active:scale-95"
+                className="w-full sm:w-auto px-5 py-3 bg-[#C6A15B] hover:bg-[#B08C46] text-[#111111] font-semibold text-xs uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 shadow-xl transition-all active:scale-95"
               >
                 <UserCheck className="w-4 h-4" />
                 <span>+ Record Walk-In Guest</span>
@@ -267,14 +271,14 @@ export default function AdminPage() {
           </div>
 
           {/* Filter Controls for Digital vs Walk-In */}
-          <div className="bg-[#1A1918] rounded-2xl border border-[#2C2B29] p-6 space-y-6">
+          <div className="bg-[#1A1918] rounded-2xl border border-[#2C2B29] p-4 sm:p-6 space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#2C2B29] pb-4">
-              <div className="flex items-center gap-2">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2">
                 <span className="text-xs uppercase tracking-widest text-neutral-400 font-semibold">Filter Channel:</span>
-                <div className="flex items-center gap-1 bg-[#111111] p-1 rounded-lg border border-[#2C2B29]">
+                <div className="flex items-center gap-1 bg-[#111111] p-1 rounded-lg border border-[#2C2B29] overflow-x-auto">
                   <button
                     onClick={() => setActiveFilter('ALL')}
-                    className={`px-3 py-1.5 rounded text-xs font-semibold uppercase tracking-wider transition-colors ${
+                    className={`px-3 py-1.5 rounded text-xs font-semibold uppercase tracking-wider transition-colors shrink-0 ${
                       activeFilter === 'ALL' ? 'bg-[#C6A15B] text-[#111111]' : 'text-neutral-400 hover:text-white'
                     }`}
                   >
@@ -282,7 +286,7 @@ export default function AdminPage() {
                   </button>
                   <button
                     onClick={() => setActiveFilter('DIGITAL')}
-                    className={`px-3 py-1.5 rounded text-xs font-semibold uppercase tracking-wider transition-colors ${
+                    className={`px-3 py-1.5 rounded text-xs font-semibold uppercase tracking-wider transition-colors shrink-0 ${
                       activeFilter === 'DIGITAL' ? 'bg-[#C6A15B] text-[#111111]' : 'text-neutral-400 hover:text-white'
                     }`}
                   >
@@ -290,7 +294,7 @@ export default function AdminPage() {
                   </button>
                   <button
                     onClick={() => setActiveFilter('WALK_IN')}
-                    className={`px-3 py-1.5 rounded text-xs font-semibold uppercase tracking-wider transition-colors ${
+                    className={`px-3 py-1.5 rounded text-xs font-semibold uppercase tracking-wider transition-colors shrink-0 ${
                       activeFilter === 'WALK_IN' ? 'bg-[#C6A15B] text-[#111111]' : 'text-neutral-400 hover:text-white'
                     }`}
                   >
@@ -306,7 +310,7 @@ export default function AdminPage() {
 
             {/* Reservations Table */}
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs font-light text-neutral-300">
+              <table className="w-full text-left text-xs font-light text-neutral-300 min-w-[640px]">
                 <thead className="bg-[#111111] text-[#C6A15B] uppercase tracking-wider text-[10px] font-semibold">
                   <tr>
                     <th className="py-3 px-4">Ref Code</th>
@@ -372,7 +376,7 @@ export default function AdminPage() {
         {/* Record Walk-In Modal */}
         {showAddWalkInModal && (
           <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-            <div className="bg-[#111111] text-white p-6 sm:p-8 rounded-2xl border border-[#C6A15B]/40 max-w-lg w-full space-y-6 shadow-2xl">
+            <div className="bg-[#111111] text-white p-6 sm:p-8 rounded-2xl border border-[#C6A15B]/40 max-w-lg w-full space-y-6 shadow-2xl max-h-[90vh] overflow-y-auto">
               <div className="flex items-center justify-between border-b border-[#2C2B29] pb-4">
                 <div>
                   <span className="text-[10px] uppercase tracking-widest text-[#C6A15B] font-semibold">Front Desk Reception</span>
@@ -411,7 +415,7 @@ export default function AdminPage() {
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="text-neutral-300 font-medium">Check-In Date</label>
                     <input
@@ -434,7 +438,7 @@ export default function AdminPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="text-neutral-300 font-medium">Total Amount (₦)</label>
                     <input

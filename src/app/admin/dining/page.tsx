@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Utensils, Plus, CheckCircle, BarChart3, Building, BedDouble, Calendar, Car, RefreshCw, LogOut, X, Wine } from 'lucide-react';
 import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
+import AdminMobileNav from '@/components/admin/AdminMobileNav';
 
 interface MenuItem {
   id: string;
@@ -72,7 +73,10 @@ export default function AdminDiningPage() {
 
   return (
     <AdminAuthGuard>
-      <div className="min-h-screen bg-[#111111] text-white font-sans flex">
+      <div className="min-h-screen bg-[#111111] text-white font-sans flex flex-col md:flex-row">
+        {/* Mobile Header Bar */}
+        <AdminMobileNav />
+
         {/* Sidebar */}
         <aside className="w-64 border-r border-[#2C2B29] p-6 flex flex-col justify-between hidden md:flex shrink-0">
           <div className="space-y-8">
@@ -127,23 +131,23 @@ export default function AdminDiningPage() {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-8 lg:p-12 space-y-8">
+        <main className="flex-1 p-4 sm:p-8 lg:p-12 space-y-8 overflow-x-hidden">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#2C2B29] pb-6">
             <div>
               <span className="text-[10px] uppercase tracking-[0.35em] text-[#C6A15B] font-semibold">Gastronomy & Bar</span>
-              <h1 className="font-serif text-3xl text-white font-normal mt-1">Aura Fine Dining & Room Service Menu</h1>
+              <h1 className="font-serif text-2xl sm:text-3xl text-white font-normal mt-1">Aura Fine Dining & Room Service Menu</h1>
             </div>
 
             <button
               onClick={() => setIsModalOpen(true)}
-              className="px-5 py-3 bg-[#C6A15B] hover:bg-[#B08C46] text-[#111111] font-semibold text-xs uppercase tracking-widest rounded-lg flex items-center gap-2 shadow-xl"
+              className="w-full sm:w-auto px-5 py-3 bg-[#C6A15B] hover:bg-[#B08C46] text-[#111111] font-semibold text-xs uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 shadow-xl"
             >
               <Plus className="w-4 h-4" />
               <span>+ Add Menu Dish</span>
             </button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {menuItems.map((item) => (
               <div key={item.id} className="p-6 bg-[#1A1918] border border-[#2C2B29] rounded-2xl space-y-3">
                 <div className="flex items-center justify-between">
@@ -163,7 +167,7 @@ export default function AdminDiningPage() {
         {/* Modal */}
         {isModalOpen && (
           <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-            <div className="bg-[#111111] text-white p-6 sm:p-8 rounded-2xl border border-[#C6A15B]/40 max-w-lg w-full space-y-6 shadow-2xl">
+            <div className="bg-[#111111] text-white p-6 sm:p-8 rounded-2xl border border-[#C6A15B]/40 max-w-lg w-full space-y-6 shadow-2xl max-h-[90vh] overflow-y-auto">
               <div className="flex items-center justify-between border-b border-[#2C2B29] pb-4">
                 <h3 className="font-serif text-2xl text-white">Add Culinary Dish / Cocktail</h3>
                 <button onClick={() => setIsModalOpen(false)} className="text-neutral-400 hover:text-white">
@@ -184,7 +188,7 @@ export default function AdminDiningPage() {
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="text-neutral-300 font-medium">Category</label>
                     <select

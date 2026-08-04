@@ -2,14 +2,19 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Calendar, BarChart3, Building, BedDouble, LogOut, Search, Filter, Car } from 'lucide-react';
+import { Calendar, BarChart3, Building, BedDouble, LogOut, Search, Filter, Car, RefreshCw, Utensils } from 'lucide-react';
 import { INITIAL_BOOKINGS } from '@/lib/data/seedData';
 import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
+import AdminMobileNav from '@/components/admin/AdminMobileNav';
 
 export default function AdminBookingsPage() {
   return (
     <AdminAuthGuard>
-      <div className="min-h-screen bg-[#111111] text-white font-sans flex">
+      <div className="min-h-screen bg-[#111111] text-white font-sans flex flex-col md:flex-row">
+        {/* Mobile Header Bar */}
+        <AdminMobileNav />
+
+        {/* Sidebar */}
         <aside className="w-64 border-r border-[#2C2B29] p-6 flex flex-col justify-between hidden md:flex shrink-0">
           <div className="space-y-8">
             <div className="flex items-center gap-3">
@@ -22,24 +27,32 @@ export default function AdminBookingsPage() {
               </div>
             </div>
 
-            <nav className="space-y-2">
-              <Link href="/admin" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918] transition-colors text-xs uppercase tracking-widest font-medium">
+            <nav className="space-y-2 text-xs uppercase tracking-widest font-medium">
+              <Link href="/admin" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]">
                 <BarChart3 className="w-4 h-4 text-[#C6A15B]" />
                 <span>Dashboard</span>
               </Link>
-              <Link href="/admin/properties" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918] transition-colors text-xs uppercase tracking-widest font-medium">
+              <Link href="/admin/properties" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]">
                 <Building className="w-4 h-4 text-[#C6A15B]" />
                 <span>Properties</span>
               </Link>
-              <Link href="/admin/rooms" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918] transition-colors text-xs uppercase tracking-widest font-medium">
+              <Link href="/admin/rooms" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]">
                 <BedDouble className="w-4 h-4 text-[#C6A15B]" />
                 <span>Rooms Inventory</span>
               </Link>
-              <Link href="/admin/fleet" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918] transition-colors text-xs uppercase tracking-widest font-medium">
-                <Car className="w-4 h-4 text-[#C6A15B]" />
-                <span>Fleet & Chauffeur</span>
+              <Link href="/admin/housekeeping" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]">
+                <RefreshCw className="w-4 h-4 text-[#C6A15B]" />
+                <span>Housekeeping Ops</span>
               </Link>
-              <Link href="/admin/bookings" className="flex items-center gap-3 px-4 py-3 rounded-lg bg-[#C6A15B] text-[#111111] font-semibold text-xs uppercase tracking-widest">
+              <Link href="/admin/dining" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]">
+                <Utensils className="w-4 h-4 text-[#C6A15B]" />
+                <span>Dining & Menu</span>
+              </Link>
+              <Link href="/admin/fleet" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]">
+                <Car className="w-4 h-4 text-[#C6A15B]" />
+                <span>Fleet Logistics</span>
+              </Link>
+              <Link href="/admin/bookings" className="flex items-center gap-3 px-4 py-3 rounded-lg bg-[#C6A15B] text-[#111111] font-semibold">
                 <Calendar className="w-4 h-4" />
                 <span>Reservations CRM</span>
               </Link>
@@ -47,27 +60,28 @@ export default function AdminBookingsPage() {
           </div>
 
           <div className="pt-6 border-t border-[#2C2B29]">
-            <Link href="/" className="flex items-center gap-2 text-xs text-neutral-400 hover:text-[#C6A15B] transition-colors">
+            <Link href="/" className="flex items-center gap-2 text-xs text-neutral-400 hover:text-[#C6A15B]">
               <LogOut className="w-4 h-4" />
               <span>Return to Site</span>
             </Link>
           </div>
         </aside>
 
-        <main className="flex-1 p-8 lg:p-12 space-y-10">
-          <div className="flex items-center justify-between border-b border-[#2C2B29] pb-6">
+        {/* Main Content */}
+        <main className="flex-1 p-4 sm:p-8 lg:p-12 space-y-8 overflow-x-hidden">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#2C2B29] pb-6">
             <div>
               <span className="text-[10px] uppercase tracking-[0.35em] text-[#C6A15B] font-semibold">Guest Reservations</span>
-              <h1 className="font-serif text-3xl text-white font-normal mt-1">Bookings CRM</h1>
+              <h1 className="font-serif text-2xl sm:text-3xl text-white font-normal mt-1">Bookings CRM</h1>
             </div>
-            <Link href="/book" className="px-5 py-2.5 bg-[#C6A15B] text-[#111111] font-semibold text-xs uppercase tracking-widest rounded">
+            <Link href="/book" className="w-full sm:w-auto text-center px-5 py-2.5 bg-[#C6A15B] text-[#111111] font-semibold text-xs uppercase tracking-widest rounded">
               + New Booking
             </Link>
           </div>
 
-          <div className="bg-[#1A1918] rounded-xl border border-[#2C2B29] overflow-hidden p-6 space-y-4">
+          <div className="bg-[#1A1918] rounded-xl border border-[#2C2B29] overflow-hidden p-4 sm:p-6 space-y-4">
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs font-light text-neutral-300">
+              <table className="w-full text-left text-xs font-light text-neutral-300 min-w-[640px]">
                 <thead className="bg-[#111111] text-[#C6A15B] uppercase tracking-wider text-[10px] font-semibold">
                   <tr>
                     <th className="py-3 px-4">Ref Number</th>

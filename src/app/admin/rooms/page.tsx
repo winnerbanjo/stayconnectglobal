@@ -7,6 +7,7 @@ import { BedDouble, Plus, CheckCircle, BarChart3, Building, Calendar, LogOut, X,
 import { INITIAL_ROOMS } from '@/lib/data/seedData';
 import { Room } from '@/types';
 import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
+import AdminMobileNav from '@/components/admin/AdminMobileNav';
 
 export default function AdminRoomsPage() {
   const [rooms, setRooms] = useState<Room[]>(INITIAL_ROOMS);
@@ -176,7 +177,10 @@ export default function AdminRoomsPage() {
 
   return (
     <AdminAuthGuard>
-      <div className="min-h-screen bg-[#111111] text-white font-sans flex">
+      <div className="min-h-screen bg-[#111111] text-white font-sans flex flex-col md:flex-row">
+        {/* Mobile Header Bar */}
+        <AdminMobileNav />
+
         {/* Sidebar */}
         <aside className="w-64 border-r border-[#2C2B29] p-6 flex flex-col justify-between hidden md:flex shrink-0">
           <div className="space-y-8">
@@ -231,15 +235,15 @@ export default function AdminRoomsPage() {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-8 lg:p-12 space-y-10">
+        <main className="flex-1 p-4 sm:p-8 lg:p-12 space-y-8 sm:space-y-10 overflow-x-hidden">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#2C2B29] pb-6">
             <div>
               <span className="text-[10px] uppercase tracking-[0.35em] text-[#C6A15B] font-semibold">Inventory Manager</span>
-              <h1 className="font-serif text-3xl text-white font-normal mt-1">Suites & Rooms Catalog</h1>
+              <h1 className="font-serif text-2xl sm:text-3xl text-white font-normal mt-1">Suites & Rooms Catalog</h1>
             </div>
             <button
               onClick={() => setIsModalOpen(true)}
-              className="px-5 py-3 bg-[#C6A15B] hover:bg-[#B08C46] text-[#111111] font-semibold text-xs uppercase tracking-widest rounded-lg flex items-center gap-2 shadow-xl transition-all active:scale-95"
+              className="w-full sm:w-auto px-5 py-3 bg-[#C6A15B] hover:bg-[#B08C46] text-[#111111] font-semibold text-xs uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 shadow-xl transition-all active:scale-95"
             >
               <Plus className="w-4 h-4" />
               <span>+ Create New Room</span>
@@ -252,17 +256,17 @@ export default function AdminRoomsPage() {
               <span className="text-xs uppercase tracking-widest">Loading Live MongoDB Inventory...</span>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
               {rooms.map((rm, idx) => (
                 <div
                   key={(rm as any)._id || rm.id || rm.slug || `room-${idx}`}
-                  className="p-8 bg-[#1A1918] border border-[#2C2B29] rounded-2xl space-y-4 shadow-xl"
+                  className="p-6 sm:p-8 bg-[#1A1918] border border-[#2C2B29] rounded-2xl space-y-4 shadow-xl"
                 >
                   <div className="relative h-44 rounded-xl overflow-hidden bg-neutral-900 mb-2">
                     <img src={rm.heroImage} alt={rm.name} className="w-full h-full object-cover" />
                   </div>
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-serif text-2xl text-white">{rm.name}</h3>
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <h3 className="font-serif text-xl sm:text-2xl text-white">{rm.name}</h3>
                     <span className="text-xs font-serif text-[#C6A15B] font-bold">₦{rm.pricePerNight.toLocaleString()} / night</span>
                   </div>
                   <div className="text-xs text-neutral-400">
@@ -298,7 +302,7 @@ export default function AdminRoomsPage() {
               </div>
 
               <form onSubmit={handleCreateRoom} className="space-y-4 text-xs">
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="text-neutral-300 font-medium">Suite Name</label>
                     <input
@@ -358,7 +362,7 @@ export default function AdminRoomsPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div>
                     <label className="text-neutral-300 font-medium">Nightly Rate (₦)</label>
                     <input
@@ -391,7 +395,7 @@ export default function AdminRoomsPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div>
                     <label className="text-neutral-300 font-medium">Max Guests</label>
                     <input
