@@ -8,6 +8,19 @@ import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
 import AdminMobileNav from '@/components/admin/AdminMobileNav';
 
 export default function AdminBookingsPage() {
+  const [bookings, setBookings] = React.useState<any[]>([]);
+
+  React.useEffect(() => {
+    fetch('/api/bookings')
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.success && Array.isArray(json.data)) {
+          setBookings(json.data);
+        }
+      })
+      .catch((err) => console.error('Error fetching live bookings:', err));
+  }, []);
+
   return (
     <AdminAuthGuard>
       <div className="min-h-screen bg-[#111111] text-white font-sans flex flex-col md:flex-row">
@@ -80,50 +93,60 @@ export default function AdminBookingsPage() {
           </div>
 
           <div className="bg-[#1A1918] rounded-xl border border-[#2C2B29] overflow-hidden p-4 sm:p-6 space-y-4">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs font-light text-neutral-300 min-w-[640px]">
-                <thead className="bg-[#111111] text-[#C6A15B] uppercase tracking-wider text-[10px] font-semibold">
-                  <tr>
-                    <th className="py-3 px-4">Ref Number</th>
-                    <th className="py-3 px-4">Guest Name</th>
-                    <th className="py-3 px-4">Suite Booked</th>
-                    <th className="py-3 px-4">Check-In → Out</th>
-                    <th className="py-3 px-4">Total Amount</th>
-                    <th className="py-3 px-4">Payment</th>
-                    <th className="py-3 px-4">Status</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[#2C2B29]">
-                  {INITIAL_BOOKINGS.map((b) => (
-                    <tr key={b.id} className="hover:bg-[#252422] transition-colors">
-                      <td className="py-4 px-4 font-mono text-white font-medium">{b.bookingRef}</td>
-                      <td className="py-4 px-4 text-white font-medium">
-                        {b.guestName}
-                        <div className="text-[10px] text-neutral-400">{b.guestPhone}</div>
-                      </td>
-                      <td className="py-4 px-4 text-neutral-200">{b.roomName}</td>
-                      <td className="py-4 px-4">
-                        {b.checkIn} → {b.checkOut}
-                        <div className="text-[10px] text-[#C6A15B]">{b.nights} Night(s)</div>
-                      </td>
-                      <td className="py-4 px-4 font-serif text-sm font-semibold text-white">
-                        ₦{b.totalPrice.toLocaleString()}
-                      </td>
-                      <td className="py-4 px-4">
-                        <span className="px-2 py-0.5 rounded bg-[#111111] border border-[#2C2B29] text-[10px] text-[#C6A15B]">
-                          {b.paymentMethod}
-                        </span>
-                      </td>
-                      <td className="py-4 px-4">
-                        <span className="px-2.5 py-1 rounded-full text-[10px] uppercase font-semibold bg-emerald-950 text-emerald-400 border border-emerald-800">
-                          {b.status}
-                        </span>
-                      </td>
+            {bookings.length === 0 ? (
+              <div className="py-16 text-center space-y-3">
+                <Calendar className="w-10 h-10 text-[#C6A15B] mx-auto" />
+                <h3 className="font-serif text-xl text-white">No Reservations Yet</h3>
+                <p className="text-xs text-neutral-400 max-w-sm mx-auto">
+                  Live guest reservations placed online or added via reception walk-in will appear here automatically.
+                </p>
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs font-light text-neutral-300 min-w-[640px]">
+                  <thead className="bg-[#111111] text-[#C6A15B] uppercase tracking-wider text-[10px] font-semibold">
+                    <tr>
+                      <th className="py-3 px-4">Ref Number</th>
+                      <th className="py-3 px-4">Guest Name</th>
+                      <th className="py-3 px-4">Suite Booked</th>
+                      <th className="py-3 px-4">Check-In → Out</th>
+                      <th className="py-3 px-4">Total Amount</th>
+                      <th className="py-3 px-4">Payment</th>
+                      <th className="py-3 px-4">Status</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody className="divide-y divide-[#2C2B29]">
+                    {bookings.map((b) => (
+                      <tr key={b.id || b._id} className="hover:bg-[#252422] transition-colors">
+                        <td className="py-4 px-4 font-mono text-white font-medium">{b.bookingRef}</td>
+                        <td className="py-4 px-4 text-white font-medium">
+                          {b.guestName}
+                          <div className="text-[10px] text-neutral-400">{b.guestPhone}</div>
+                        </td>
+                        <td className="py-4 px-4 text-neutral-200">{b.roomName}</td>
+                        <td className="py-4 px-4">
+                          {b.checkIn} → {b.checkOut}
+                          <div className="text-[10px] text-[#C6A15B]">{b.nights} Night(s)</div>
+                        </td>
+                        <td className="py-4 px-4 font-serif text-sm font-semibold text-white">
+                          ₦{b.totalPrice?.toLocaleString()}
+                        </td>
+                        <td className="py-4 px-4">
+                          <span className="px-2 py-0.5 rounded bg-[#111111] border border-[#2C2B29] text-[10px] text-[#C6A15B]">
+                            {b.paymentMethod}
+                          </span>
+                        </td>
+                        <td className="py-4 px-4">
+                          <span className="px-2.5 py-1 rounded-full text-[10px] uppercase font-semibold bg-emerald-950 text-emerald-400 border border-emerald-800">
+                            {b.status}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         </main>
       </div>

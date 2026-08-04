@@ -4,6 +4,11 @@ export interface IProperty extends Document {
   slug: string;
   name: string;
   tagline: string;
+  category: 'Luxury Hotel' | 'Serviced Apartment' | 'Luxury Residence' | 'Villa' | 'Shortlet' | 'Corporate Housing' | 'Resort' | 'Boutique Hotel';
+  partnerId?: string;
+  hostName?: string;
+  isVerified?: boolean;
+  pricingStartingFrom?: number;
   address: string;
   city: string;
   coordinates: { lat: number; lng: number };
@@ -13,6 +18,7 @@ export interface IProperty extends Document {
   logoUrl?: string;
   themeColor?: string;
   gallery: string[];
+  amenities?: string[];
   published: boolean;
   policies: {
     checkInTime: string;
@@ -28,6 +34,15 @@ const PropertySchema = new Schema<IProperty>(
     slug: { type: String, required: true, unique: true },
     name: { type: String, required: true },
     tagline: { type: String, required: true },
+    category: {
+      type: String,
+      enum: ['Luxury Hotel', 'Serviced Apartment', 'Luxury Residence', 'Villa', 'Shortlet', 'Corporate Housing', 'Resort', 'Boutique Hotel'],
+      default: 'Luxury Hotel',
+    },
+    partnerId: { type: String },
+    hostName: { type: String, default: 'Stay Connect Operator' },
+    isVerified: { type: Boolean, default: true },
+    pricingStartingFrom: { type: Number, default: 75000 },
     address: { type: String, required: true },
     city: { type: String, required: true },
     coordinates: {
@@ -40,6 +55,7 @@ const PropertySchema = new Schema<IProperty>(
     logoUrl: { type: String },
     themeColor: { type: String, default: '#C6A15B' },
     gallery: [{ type: String }],
+    amenities: [{ type: String }],
     published: { type: Boolean, default: true },
     policies: {
       checkInTime: { type: String, default: '3:00 PM' },

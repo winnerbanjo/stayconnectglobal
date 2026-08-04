@@ -6,16 +6,33 @@ import { Property } from '@/types';
 
 let memoryProperties: Property[] = [...INITIAL_PROPERTIES];
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    const { searchParams } = new URL(request.url);
+    const category = searchParams.get('category');
+    const city = searchParams.get('city');
+
+    const filter: any = {};
+    if (category) filter.category = category;
+    if (city) filter.city = new RegExp(city, 'i');
+
     const conn = await connectToDatabase();
     if (conn) {
-      const properties = await PropertyModel.find({}).sort({ createdAt: -1 }).lean();
+      const properties = await PropertyModel.find(filter).sort({ createdAt: -1 }).lean();
       if (properties.length > 0) {
         return NextResponse.json({ success: true, data: properties });
       }
     }
-    return NextResponse.json({ success: true, data: memoryProperties });
+
+    let filtered = memoryProperties;
+    if (category) {
+      filtered = filtered.filter((p) => p.category === category);
+    }
+    if (city) {
+      filtered = filtered.filter((p) => p.city.toLowerCase().includes(city.toLowerCase()));
+    }
+
+    return NextResponse.json({ success: true, data: filtered });
   } catch (error) {
     console.error('Error fetching properties:', error);
     return NextResponse.json({ success: true, data: memoryProperties });
@@ -32,6 +49,7 @@ export async function POST(request: Request) {
       slug,
       name: body.name,
       tagline: body.tagline || 'Luxury Hotel & Residences',
+      category: body.category || 'Luxury Hotel',
       address: body.address || 'Lagos, Nigeria',
       city: body.city || 'Lagos, Nigeria',
       coordinates: { lat: 6.4474, lng: 3.4723 },

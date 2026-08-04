@@ -1,6 +1,7 @@
 import './globals.css';
 import { Cormorant_Garamond, Inter } from 'next/font/google';
 import WhatsAppFloatingWidget from '@/components/ui/WhatsAppFloatingWidget';
+import { ThemeProvider } from '@/context/ThemeContext';
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -17,8 +18,8 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: 'Stay Connect Hotels | Luxury Multi-Property Hotel Group',
-  description: 'World-class luxury hotel booking and multi-property management platform in Lekki Phase 1, Lagos, Nigeria.',
+  title: 'Stay Connect Global | Luxury Hospitality Platform & Ecosystem',
+  description: 'Discover luxury hotels, serviced apartments, premium residences, chauffeur mobility, and concierge experiences across Nigeria.',
 };
 
 export default function RootLayout({
@@ -28,9 +29,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${cormorant.variable} ${inter.variable} scroll-smooth`}>
-      <body className="bg-[#FAF9F6] text-[#111111] font-sans antialiased selection:bg-[#C6A15B] selection:text-[#111111] relative">
-        {children}
-        <WhatsAppFloatingWidget />
+      <body className="bg-[#FAF9F6] dark:bg-[#111111] text-[#111111] dark:text-white font-sans antialiased selection:bg-[#C6A15B] selection:text-[#111111] relative transition-colors duration-300">
+        <ThemeProvider>
+          {children}
+          <WhatsAppFloatingWidget />
+        </ThemeProvider>
       </body>
     </html>
   );

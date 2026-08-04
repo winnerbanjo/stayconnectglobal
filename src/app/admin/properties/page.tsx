@@ -104,6 +104,7 @@ export default function AdminPropertiesPage() {
       } else {
         const localProp: Property = {
           id: `prop-${Date.now()}`,
+          category: 'Luxury Hotel',
           ...newPropPayload,
           coordinates: { lat: 6.4281, lng: 3.4219 },
           gallery: [formData.heroImage],

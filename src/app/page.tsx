@@ -3,43 +3,44 @@ import Navbar from '@/components/navigation/Navbar';
 import Footer from '@/components/navigation/Footer';
 import HeroSection from '@/components/home/HeroSection';
 import BookingSearchWidget from '@/components/home/BookingSearchWidget';
+import CategoryOfferings from '@/components/home/CategoryOfferings';
+import DestinationsSection from '@/components/home/DestinationsSection';
 import FeaturedRoomsSection from '@/components/home/FeaturedRoomsSection';
-import EditorialStorySection from '@/components/home/EditorialStorySection';
-import AmenitiesGrid from '@/components/home/AmenitiesGrid';
-import LekkiMapSection from '@/components/home/LekkiMapSection';
+import HospitalityPackagesSection from '@/components/home/HospitalityPackagesSection';
+import LuxuryFleetSection from '@/components/home/LuxuryFleetSection';
+import CuratedExperiencesSection from '@/components/home/CuratedExperiencesSection';
+import WhyStayConnect from '@/components/home/WhyStayConnect';
+import PartnerCTASection from '@/components/home/PartnerCTASection';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
 
 export const metadata = {
-  title: 'Stay Connect Hotels | Luxury Hotel & Executive Suites in Lekki, Lagos',
-  description: 'Experience luxury hospitality at Stay Connect Hotels in Lekki Phase 1, Lagos, Nigeria. Flagship executive single suites, presidential penthouses, fine dining, and private lagoon experiences.',
+  title: 'Stay Connect Global | Luxury Hospitality Platform & Ecosystem',
+  description: 'Discover exceptional luxury hotels, serviced apartments, premium residences, chauffeur services, concierge experiences, and curated stays across Nigeria.',
 };
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-[#FAF9F6] text-[#111111] font-sans selection:bg-[#C6A15B] selection:text-[#111111]">
+    <div className="min-h-screen bg-[#FAF9F6] dark:bg-[#111111] text-[#111111] dark:text-white font-sans selection:bg-[#C6A15B] selection:text-[#111111] transition-colors duration-300">
       <Navbar />
 
       <main>
-        {/* Full-Screen Hero */}
+        {/* Section 1: Hero */}
         <HeroSection />
 
-        {/* Floating Availability Widget */}
+        {/* Section 2: Search Widget */}
         <BookingSearchWidget />
 
-        {/* Featured Suites (Saffron Spotlight) */}
+        {/* Section 3: Featured Stays (Stay Connect Collection vs Partner Collection) */}
         <FeaturedRoomsSection />
 
-        {/* Editorial Storytelling */}
-        <EditorialStorySection />
+        {/* Section 4: Top Destinations */}
+        <DestinationsSection />
 
-        {/* Luxury Amenities Showcase */}
-        <AmenitiesGrid />
+        {/* Section 5: Stay & Mobility Packages */}
+        <HospitalityPackagesSection />
 
-        {/* Interactive Location & Lekki Map */}
-        <LekkiMapSection />
-
-        {/* Testimonials */}
-        <TestimonialsSection />
+        {/* Section 6: Why Stay Connect Guarantees */}
+        <WhyStayConnect />
       </main>
 
       <Footer />

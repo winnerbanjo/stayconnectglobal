@@ -76,6 +76,11 @@ export interface Property {
   slug: string;
   name: string; // e.g., "Stay Connect Lekki"
   tagline: string;
+  category: 'Luxury Hotel' | 'Serviced Apartment' | 'Luxury Residence' | 'Villa' | 'Shortlet' | 'Corporate Housing' | 'Resort' | 'Boutique Hotel';
+  partnerId?: string;
+  hostName?: string;
+  isVerified?: boolean;
+  pricingStartingFrom?: number;
   address: string; // "14B, Providence Street, Lekki Phase 1, Lagos, Nigeria"
   city: string;
   coordinates: {
@@ -99,6 +104,57 @@ export interface Property {
   };
 }
 
+export interface Partner {
+  id: string;
+  partnerId: string;
+  businessName: string;
+  contactName: string;
+  email: string;
+  phone: string;
+  propertyType: 'Hotel' | 'Serviced Apartment' | 'Luxury Residence' | 'Villa' | 'Shortlet' | 'Corporate Housing' | 'Boutique Hotel' | 'Resort';
+  propertyName: string;
+  address: string;
+  city: string;
+  numberOfUnits: number;
+  description: string;
+  amenities: string[];
+  status: 'Pending' | 'Approved' | 'Rejected' | 'Suspended';
+  commissionRate: number;
+  createdAt: string;
+}
+
+export interface MobilityVehicle {
+  id: string;
+  vehicleId: string;
+  name: string;
+  category: 'SUV' | 'Luxury Sedan' | 'Executive Bus' | 'Van' | 'Sports Car' | 'Yacht' | 'Boat';
+  capacity: number;
+  hourlyRate: number;
+  dailyRate: number;
+  airportTransferRate: number;
+  image: string;
+  features: string[];
+  includesChauffeur: boolean;
+  availableCities: string[];
+  partnerId?: string;
+  hostName?: string;
+}
+
+export interface ConciergeRequest {
+  id?: string;
+  requestId: string;
+  serviceType: 'Airport Pickup' | 'Airport Drop-off' | 'Restaurant Reservation' | 'Birthday Setup' | 'Proposal Setup' | 'Private Chef' | 'Laundry' | 'Shopping Assistance' | 'VIP Security' | 'Personal Driver' | 'Translator';
+  guestName: string;
+  guestEmail: string;
+  guestPhone: string;
+  preferredDate: string;
+  preferredTime: string;
+  location: string;
+  notes?: string;
+  status: 'Pending' | 'Confirmed' | 'Completed' | 'Cancelled';
+  priceEstimate?: number;
+}
+
 export interface DiningVenue {
   id: string;
   name: string;
@@ -117,11 +173,15 @@ export interface DiningVenue {
 export interface ExperienceItem {
   id: string;
   title: string;
-  category: 'Chauffeur' | 'Cruise' | 'Dining' | 'Wellness' | 'Event' | 'Package';
+  category: 'Boat Cruise' | 'Spa & Wellness' | 'Private Dinner' | 'Photography' | 'City Tour' | 'Cooking Class' | 'Water Sports' | 'VIP Event';
+  tagline?: string;
   description: string;
   image: string;
   duration: string;
   priceTag?: string;
+  pricePerPerson?: number;
+  location?: string;
+  hostName?: string;
 }
 
 export interface EventVenue {

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Sparkles, CheckCircle2, Clock, AlertTriangle, RefreshCw, BarChart3, Building, BedDouble, Calendar, Car, LogOut, Utensils } from 'lucide-react';
+import { CheckCircle2, Clock, AlertTriangle, RefreshCw, BarChart3, Building, BedDouble, Calendar, Car, LogOut, Utensils } from 'lucide-react';
 import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
 import AdminMobileNav from '@/components/admin/AdminMobileNav';
 

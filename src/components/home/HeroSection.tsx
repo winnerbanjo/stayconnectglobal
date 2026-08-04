@@ -70,10 +70,10 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.4 }}
-          className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-normal leading-[1.08] tracking-tight text-white"
+          className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-normal leading-[1.1] tracking-tight text-white"
         >
-          Stay Connected <br className="inline" />
-          <span className="italic font-light text-[#FAF9F6]">to Luxury.</span>
+          Stay Connected to <br className="hidden sm:inline" />
+          <span className="italic font-light text-[#C6A15B]">Exceptional Hospitality.</span>
         </motion.h1>
 
         {/* Subtitle */}
@@ -81,9 +81,9 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.6 }}
-          className="text-xs sm:text-base md:text-xl text-neutral-300 font-light max-w-2xl mx-auto tracking-wide leading-relaxed px-2"
+          className="text-xs sm:text-base md:text-lg text-neutral-300 font-light max-w-3xl mx-auto tracking-wide leading-relaxed px-2"
         >
-          Experience premium hospitality in the heart of Lekki. Editorial suites, private tranquility, and bespoke Nigerian elegance.
+          Discover luxury hotels, serviced apartments, premium residences, chauffeur services, concierge experiences, and curated stays across Nigeria.
         </motion.p>
 
         {/* CTA Action Buttons */}
@@ -94,18 +94,18 @@ export default function HeroSection() {
           className="pt-2 sm:pt-4 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-5"
         >
           <Link
-            href="/book"
+            href="/rooms"
             className="w-full sm:w-auto px-8 py-3.5 sm:px-10 sm:py-4 rounded-lg bg-[#C6A15B] hover:bg-[#B08C46] text-[#111111] font-semibold text-xs uppercase tracking-[0.25em] transition-all duration-300 shadow-2xl hover:scale-105 active:scale-95 text-center"
           >
-            Book Your Stay
+            Explore Stays
           </Link>
 
           <Link
-            href="/rooms/saffron"
+            href="/list-your-property"
             className="w-full sm:w-auto px-8 py-3.5 sm:px-10 sm:py-4 rounded-lg border border-white/40 hover:border-[#C6A15B] text-white hover:text-[#C6A15B] backdrop-blur-sm font-semibold text-xs uppercase tracking-[0.25em] transition-all duration-300 flex items-center justify-center gap-2 group active:scale-95"
           >
             <Compass className="w-4 h-4 text-[#C6A15B]" />
-            <span>Explore Saffron Suite</span>
+            <span>List Your Property</span>
           </Link>
         </motion.div>
       </div>

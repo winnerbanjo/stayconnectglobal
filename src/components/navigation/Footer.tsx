@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Instagram, MapPin, Phone, Mail, ArrowRight, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { Instagram, MapPin, Phone, Mail, ArrowRight, ShieldCheck, CheckCircle2, Building2, Car, Crown, Compass } from 'lucide-react';
 
 export default function Footer() {
   const [email, setEmail] = useState('');
@@ -23,13 +23,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 pb-12 sm:pb-20 border-b border-[#2C2B29]">
           <div className="lg:col-span-7 space-y-3 sm:space-y-4">
             <span className="text-[10px] uppercase tracking-[0.4em] text-[#C6A15B] font-semibold">
-              The Guest Journal
+              The Hospitality Journal
             </span>
             <h3 className="font-serif text-2xl sm:text-4xl md:text-5xl text-white font-normal leading-[1.15]">
-              Receive private invitations, curated Lagos experiences, and preferential rates.
+              Discover curated luxury stays, chauffeur mobility, and bespoke experiences.
             </h3>
             <p className="text-neutral-400 text-xs sm:text-sm font-light max-w-lg leading-relaxed">
-              Quiet luxury delivered directly to your inbox. No noise. Only elevated hospitality moments.
+              Quiet luxury and extraordinary hospitality delivered directly to your inbox. No noise. Only elevated African hospitality moments.
             </p>
           </div>
 
@@ -37,7 +37,7 @@ export default function Footer() {
             {subscribed ? (
               <div className="p-5 sm:p-6 rounded-xl bg-[#1A1918] border border-[#C6A15B]/40 flex items-center gap-3 text-xs text-[#C6A15B]">
                 <CheckCircle2 className="w-5 h-5 text-[#C6A15B] shrink-0" />
-                <span>Thank you. You have been registered in our private guest directory.</span>
+                <span>Thank you for subscribing to Stay Connect Global.</span>
               </div>
             ) : (
               <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3">
@@ -59,7 +59,7 @@ export default function Footer() {
               </form>
             )}
             <span className="text-[10px] text-neutral-500 mt-3 font-light tracking-wider">
-              By subscribing you agree to our privacy protocol and reservation terms.
+              By subscribing you agree to our privacy protocol and platform terms.
             </span>
           </div>
         </div>
@@ -72,18 +72,18 @@ export default function Footer() {
               <div className="relative h-12 sm:h-16 w-52 sm:w-64">
                 <img
                   src="/images/logo.png"
-                  alt="Stay Connect Hotels Logo"
+                  alt="Stay Connect Global Logo"
                   className="w-full h-full object-contain filter brightness-110"
                 />
               </div>
             </Link>
             <p className="text-neutral-400 text-xs leading-relaxed font-light pr-2 sm:pr-4">
-              Stay Connect Hotels is Lekki’s premier luxury hospitality destination, offering editorial single executive suites, penthouses, fine dining, and private lagoon concierge in Lagos, Nigeria.
+              Stay Connect Global is a luxury hospitality platform and ecosystem connecting guests with carefully curated hotels, serviced apartments, premium residences, chauffeur mobility, and concierge experiences across Nigeria.
             </p>
             <div className="space-y-2.5 text-xs text-neutral-300 font-light">
               <div className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-[#C6A15B] shrink-0 mt-0.5" />
-                <span>14B, Providence Street, Lekki Phase 1, Lagos, Nigeria</span>
+                <span>Headquarters: Providence Street, Lekki Phase 1, Lagos, Nigeria</span>
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-[#C6A15B] shrink-0" />
@@ -91,90 +91,93 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-3">
                 <Mail className="w-4 h-4 text-[#C6A15B] shrink-0" />
-                <span>concierge@stayconnecthotels.com</span>
+                <span>partners@stayconnectglobal.com</span>
               </div>
             </div>
           </div>
 
-          {/* Directory Column 1: Suites */}
+          {/* Column 1: Accommodation Categories */}
           <div className="lg:col-span-3 space-y-3 sm:space-y-4">
-            <div className="text-[10px] uppercase tracking-[0.3em] text-[#C6A15B] font-semibold">
-              Accommodations
+            <div className="text-[10px] uppercase tracking-[0.3em] text-[#C6A15B] font-semibold flex items-center gap-1.5">
+              <Building2 className="w-3.5 h-3.5" />
+              <span>Explore Collection</span>
             </div>
             <ul className="space-y-2.5 text-xs text-neutral-300 font-light">
               <li>
-                <Link href="/rooms/saffron" className="hover:text-[#C6A15B] transition-colors flex items-center gap-2">
-                  <span>Saffron Executive Suite (14B Providence)</span>
-                  <span className="text-[9px] px-2 py-0.5 bg-[#C6A15B]/20 text-[#C6A15B] rounded font-semibold uppercase">Flagship</span>
+                <Link href="/rooms?category=Luxury+Hotel" className="hover:text-[#C6A15B] transition-colors">
+                  Luxury Hotels & Resorts
                 </Link>
               </li>
               <li>
-                <Link href="/rooms/presidential-suite" className="hover:text-[#C6A15B] transition-colors">
-                  The Royal Lekki Penthouse
+                <Link href="/rooms?category=Serviced+Apartment" className="hover:text-[#C6A15B] transition-colors">
+                  Serviced Executive Apartments
                 </Link>
               </li>
               <li>
-                <Link href="/rooms/deluxe-executive-suite" className="hover:text-[#C6A15B] transition-colors">
-                  Azure Deluxe Suite
+                <Link href="/rooms?category=Luxury+Residence" className="hover:text-[#C6A15B] transition-colors">
+                  Private Penthouses & Villas
                 </Link>
               </li>
               <li>
-                <Link href="/rooms" className="hover:text-[#C6A15B] transition-colors">
-                  View All Suites & Inventory
+                <Link href="/rooms" className="hover:text-[#C6A15B] transition-colors font-medium text-[#C6A15B]">
+                  Browse All Stays →
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Directory Column 2: Experiences */}
+          {/* Column 2: Mobility & Concierge */}
           <div className="lg:col-span-2 space-y-3 sm:space-y-4">
-            <div className="text-[10px] uppercase tracking-[0.3em] text-[#C6A15B] font-semibold">
-              Experiences
+            <div className="text-[10px] uppercase tracking-[0.3em] text-[#C6A15B] font-semibold flex items-center gap-1.5">
+              <Car className="w-3.5 h-3.5" />
+              <span>Mobility & Services</span>
             </div>
             <ul className="space-y-2.5 text-xs text-neutral-300 font-light">
               <li>
-                <Link href="/dining" className="hover:text-[#C6A15B] transition-colors">
-                  Aura Fine Dining & Lounge
+                <Link href="/car-rentals" className="hover:text-[#C6A15B] transition-colors">
+                  Luxury Fleet & SUVs
                 </Link>
               </li>
               <li>
-                <Link href="/amenities" className="hover:text-[#C6A15B] transition-colors">
-                  Infinity Rooftop Pool & Spa
+                <Link href="/transfers" className="hover:text-[#C6A15B] transition-colors">
+                  Airport Transfers & Pickups
                 </Link>
               </li>
               <li>
                 <Link href="/experiences" className="hover:text-[#C6A15B] transition-colors">
-                  Private Yacht Lagoon Charters
+                  Yacht Charters & Dining
                 </Link>
               </li>
               <li>
-                <Link href="/events" className="hover:text-[#C6A15B] transition-colors">
-                  Weddings & Executive Galas
-                </Link>
-              </li>
-              <li>
-                <Link href="/gallery" className="hover:text-[#C6A15B] transition-colors">
-                  Editorial Photo Gallery
+                <Link href="/concierge" className="hover:text-[#C6A15B] transition-colors">
+                  VIP Concierge & Security
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Directory Column 3: Admin Portal */}
+          {/* Column 3: For Hospitality Partners */}
           <div className="lg:col-span-3 space-y-3 sm:space-y-4">
-            <div className="text-[10px] uppercase tracking-[0.3em] text-[#C6A15B] font-semibold">
-              Management Portal
+            <div className="text-[10px] uppercase tracking-[0.3em] text-[#C6A15B] font-semibold flex items-center gap-1.5">
+              <Crown className="w-3.5 h-3.5" />
+              <span>Hospitality Partners</span>
             </div>
             <p className="text-neutral-400 text-xs font-light leading-relaxed">
-              Multi-property hotel management system for Stay Connect Hotel Group.
+              Onboard your hotel, shortlet, or residence to receive direct bookings and management tools.
             </p>
-            <div>
+            <div className="flex flex-col gap-2.5">
               <Link
-                href="/admin"
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#1A1918] border border-[#2C2B29] rounded-lg text-xs text-[#C6A15B] hover:border-[#C6A15B] hover:text-white transition-all font-medium"
+                href="/list-your-property"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#C6A15B] text-[#111111] rounded-lg text-xs font-semibold hover:bg-[#d8b46e] transition-all"
               >
-                <ShieldCheck className="w-4 h-4 text-[#C6A15B]" />
-                <span>Executive Management Dashboard</span>
+                <span>List Your Property</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+              <Link
+                href="/for-business"
+                className="inline-flex items-center justify-center gap-2 text-xs text-[#C6A15B] hover:underline mt-1"
+              >
+                <span>Business Solutions & Corporate Travel →</span>
               </Link>
             </div>
           </div>
@@ -183,15 +186,14 @@ export default function Footer() {
         {/* Copyright & Social */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-neutral-500 font-light text-center md:text-left">
           <div>
-            © {new Date().getFullYear()} Stay Connect Hotels Group. 14B Providence Street, Lekki Phase 1, Lagos, Nigeria.
+            © {new Date().getFullYear()} Stay Connect Global. Luxury Hospitality Platform & Ecosystem. Lagos, Abuja, Port Harcourt.
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8">
             <a href="https://instagram.com" target="_blank" rel="noreferrer" className="hover:text-[#C6A15B] transition-colors">
               <Instagram className="w-4 h-4" />
             </a>
-            <Link href="/contact" className="hover:text-white transition-colors">Contact Concierge</Link>
-            <Link href="/book" className="hover:text-[#C6A15B] transition-colors font-medium">Book Now</Link>
+            <Link href="/contact" className="hover:text-white transition-colors">Contact Support</Link>
           </div>
         </div>
       </div>
