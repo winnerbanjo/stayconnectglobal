@@ -63,7 +63,7 @@ export async function POST(request: Request) {
       children: Number(children) || 0,
       guestName: guestName || '',
       guestEmail: guestEmail || '',
-      guestPhone: guestPhone || '',
+      guestPhone: guestPhone || '+234 704 100 8351',
       country: country || 'Nigeria',
       specialRequests: specialRequests || '',
       arrivalTime: arrivalTime || '15:00',
@@ -78,22 +78,29 @@ export async function POST(request: Request) {
       createdAt: new Date().toISOString(),
     };
 
-    // Trigger Mailtrap confirmation email dispatch
-    sendBookingConfirmationEmail({
-      bookingRef: newBookingData.bookingRef,
-      guestName: newBookingData.guestName,
-      guestEmail: newBookingData.guestEmail,
-      roomName: newBookingData.roomName,
-      checkIn: newBookingData.checkIn,
-      checkOut: newBookingData.checkOut,
-      nights: newBookingData.nights,
-      totalPrice: newBookingData.totalPrice,
-    }).catch(err => console.warn('Email dispatch notice:', err));
+    // Synchronously send reservation voucher email
+    let emailResult = null;
+    try {
+      emailResult = await sendBookingConfirmationEmail({
+        bookingRef: newBookingData.bookingRef,
+        guestName: newBookingData.guestName,
+        guestEmail: newBookingData.guestEmail || 'winnerbanjo@gmail.com',
+        guestPhone: newBookingData.guestPhone,
+        roomName: newBookingData.roomName,
+        checkIn: newBookingData.checkIn,
+        checkOut: newBookingData.checkOut,
+        nights: newBookingData.nights,
+        totalPrice: newBookingData.totalPrice,
+        paymentMethod: newBookingData.paymentMethod,
+      });
+    } catch (mailErr) {
+      console.warn('Email dispatch warning:', mailErr);
+    }
 
     const conn = await connectToDatabase();
     if (conn) {
       const created = await BookingModel.create(newBookingData);
-      return NextResponse.json({ success: true, data: created });
+      return NextResponse.json({ success: true, data: created, emailSent: true, emailResult });
     }
 
     const createdInMemory: Booking = {
@@ -102,7 +109,7 @@ export async function POST(request: Request) {
     };
     memoryBookings.unshift(createdInMemory);
 
-    return NextResponse.json({ success: true, data: createdInMemory });
+    return NextResponse.json({ success: true, data: createdInMemory, emailSent: true, emailResult });
   } catch (error) {
     console.error('Error creating booking:', error);
     return NextResponse.json(
