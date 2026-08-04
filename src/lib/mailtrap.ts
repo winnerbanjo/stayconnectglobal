@@ -1,6 +1,9 @@
+import { MailtrapClient } from 'mailtrap';
 import nodemailer from 'nodemailer';
 
-const TOKEN = process.env.MAILTRAP_TOKEN || '93155a5bc54cbe235921b6d6844e05f4';
+const TOKEN = process.env.MAILTRAP_TOKEN || 'f8b86b71e617958e8126ec8c54a90162';
+const SENDER_EMAIL = 'hello@nile.ng';
+const SENDER_NAME = 'Stay Connect Hotels Lekki';
 
 export interface BookingEmailPayload {
   bookingRef: string;
@@ -16,23 +19,23 @@ export interface BookingEmailPayload {
 }
 
 export async function sendBookingConfirmationEmail(bookingDetails: BookingEmailPayload) {
-  console.log(`[EMAIL DISPATCH] Triggered reservation email for voucher ${bookingDetails.bookingRef} -> ${bookingDetails.guestEmail}`);
+  console.log(`[MAILTRAP DISPATCH] Sending reservation voucher ${bookingDetails.bookingRef} to ${bookingDetails.guestEmail} from ${SENDER_EMAIL}...`);
 
   const htmlContent = `
-    <div style="font-family: 'Cormorant Garamond', Georgia, serif; background-color: #111111; color: #FAF9F6; padding: 40px; border-radius: 16px; max-width: 600px; margin: 0 auto; border: 1px solid #C6A15B;">
+    <div style="font-family: Georgia, serif; background-color: #111111; color: #FAF9F6; padding: 40px; border-radius: 16px; max-width: 600px; margin: 0 auto; border: 1px solid #C6A15B;">
       <div style="text-align: center; margin-bottom: 24px;">
-        <h1 style="color: #C6A15B; font-size: 32px; letter-spacing: 2px; margin: 0;">STAY CONNECT HOTELS</h1>
+        <h1 style="color: #C6A15B; font-size: 30px; letter-spacing: 2px; margin: 0;">STAY CONNECT HOTELS</h1>
         <p style="text-transform: uppercase; font-size: 10px; letter-spacing: 3px; color: #8E8B85; margin-top: 6px;">14B Providence Street, Lekki Phase 1, Lagos, Nigeria</p>
       </div>
       
       <hr style="border: 0; border-top: 1px solid #2C2B29; margin: 24px 0;" />
 
       <h2 style="font-size: 22px; font-weight: normal; color: #FFFFFF; text-align: center;">Luxury Reservation Voucher</h2>
-      <p style="font-size: 14px; color: #D1CDC7; leading-height: 1.6;">Dear <strong>${bookingDetails.guestName}</strong>,</p>
-      <p style="font-size: 13px; color: #A09D98; line-height: 1.6;">We are pleased to confirm your upcoming luxury stay with Stay Connect Hotels. Below are your official reservation voucher details:</p>
+      <p style="font-size: 14px; color: #D1CDC7;">Dear <strong>${bookingDetails.guestName}</strong>,</p>
+      <p style="font-size: 13px; color: #A09D98; line-height: 1.6;">We are delighted to confirm your upcoming luxury stay reservation at Stay Connect Hotels Lekki Phase 1.</p>
 
       <div style="background-color: #1A1918; border: 1px solid #C6A15B; padding: 20px; text-align: center; border-radius: 10px; margin: 24px 0;">
-        <div style="font-size: 10px; uppercase; tracking-widest; color: #8E8B85;">Booking Reference Code</div>
+        <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: #8E8B85;">Booking Reference Code</div>
         <div style="font-size: 28px; color: #C6A15B; font-weight: bold; letter-spacing: 4px; margin-top: 4px;">${bookingDetails.bookingRef}</div>
       </div>
 
@@ -58,7 +61,7 @@ export async function sendBookingConfirmationEmail(bookingDetails: BookingEmailP
           <td style="padding: 12px 0; text-align: right;">${bookingDetails.paymentMethod || 'Bank Transfer / Paystack'}</td>
         </tr>
         <tr>
-          <td style="padding: 16px 0; font-size: 16px; font-weight: bold;">Total Amount Paid / Reserved</td>
+          <td style="padding: 16px 0; font-size: 15px; font-weight: bold;">Total Reserved Amount</td>
           <td style="padding: 16px 0; font-size: 20px; font-weight: bold; color: #C6A15B; text-align: right;">₦${bookingDetails.totalPrice.toLocaleString()}</td>
         </tr>
       </table>
@@ -72,28 +75,44 @@ export async function sendBookingConfirmationEmail(bookingDetails: BookingEmailP
     </div>
   `;
 
-  // Attempt Dispatch via Mailtrap Sandbox Transporter
+  // 1. Primary Dispatch via Official Mailtrap SDK Client
+  try {
+    const client = new MailtrapClient({ token: TOKEN });
+    const res = await client.send({
+      from: { email: SENDER_EMAIL, name: SENDER_NAME },
+      to: [{ email: bookingDetails.guestEmail }],
+      subject: `Luxury Reservation Voucher ${bookingDetails.bookingRef} | Stay Connect Hotels`,
+      html: htmlContent,
+    });
+
+    console.log(`[MAILTRAP SUCCESS] Email delivered via Mailtrap API to ${bookingDetails.guestEmail}. ID:`, res.message_ids);
+    return { success: true, messageIds: res.message_ids };
+  } catch (apiErr: any) {
+    console.warn(`[MAILTRAP API NOTICE] API fallback to SMTP:`, apiErr.message);
+  }
+
+  // 2. Secondary Dispatch via Live SMTP with hello@nile.ng
   try {
     const transporter = nodemailer.createTransport({
-      host: 'sandbox.smtp.mailtrap.io',
-      port: 2525,
+      host: 'live.smtp.mailtrap.io',
+      port: 587,
       auth: {
-        user: '93155a5bc54cbe',
+        user: 'api',
         pass: TOKEN,
       },
     });
 
     const info = await transporter.sendMail({
-      from: '"Stay Connect Hotels Lekki" <reservations@stayconnecthotels.com>',
+      from: `"${SENDER_NAME}" <${SENDER_EMAIL}>`,
       to: bookingDetails.guestEmail,
-      subject: `Reservation Confirmed - Voucher ${bookingDetails.bookingRef} | Stay Connect Hotels`,
+      subject: `Luxury Reservation Voucher ${bookingDetails.bookingRef} | Stay Connect Hotels`,
       html: htmlContent,
     });
 
-    console.log(`[EMAIL DISPATCH SUCCESS] Voucher sent via SMTP to ${bookingDetails.guestEmail}. Message ID: ${info.messageId}`);
+    console.log(`[MAILTRAP SMTP SUCCESS] Email delivered via SMTP to ${bookingDetails.guestEmail}. Message ID:`, info.messageId);
     return { success: true, messageId: info.messageId };
-  } catch (error: any) {
-    console.warn(`[EMAIL DISPATCH NOTICE] Fallback logger active for ${bookingDetails.guestEmail}:`, error.message);
-    return { success: true, fallback: true, bookingRef: bookingDetails.bookingRef };
+  } catch (smtpErr: any) {
+    console.error(`[MAILTRAP ERROR] SMTP failed:`, smtpErr.message);
+    return { success: false, error: smtpErr.message };
   }
 }
