@@ -1,18 +1,21 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { BedDouble, Plus, CheckCircle, BarChart3, Building, Calendar, LogOut, X, Car } from 'lucide-react';
+import Image from 'next/image';
+import { BedDouble, Plus, CheckCircle, BarChart3, Building, Calendar, LogOut, X, Car, Upload, Image as ImageIcon, Loader2 } from 'lucide-react';
 import { INITIAL_ROOMS } from '@/lib/data/seedData';
 import { Room } from '@/types';
 
 export default function AdminRoomsPage() {
   const [rooms, setRooms] = useState<Room[]>(INITIAL_ROOMS);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [loadingRooms, setLoadingRooms] = useState(false);
 
   const [formData, setFormData] = useState({
     name: '',
-    tagline: 'Luxury Suite',
+    tagline: 'Executive Single Suite',
     type: 'Executive',
     pricePerNight: 200000,
     weekendPricePerNight: 230000,
@@ -26,79 +29,151 @@ export default function AdminRoomsPage() {
     amenities: 'WiFi, Air Conditioning, Smart TV, Netflix, Coffee Machine, Room Service',
   });
 
-  const handleCreateRoom = (e: React.FormEvent) => {
+  // Fetch live rooms from MongoDB Atlas
+  const fetchLiveRooms = async () => {
+    try {
+      setLoadingRooms(true);
+      const res = await fetch('/api/rooms');
+      const json = await res.json();
+      if (json.success && json.data && json.data.length > 0) {
+        setRooms(json.data);
+      }
+    } catch (e) {
+      console.warn('Using local seed rooms fallback:', e);
+    } finally {
+      setLoadingRooms(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchLiveRooms();
+  }, []);
+
+  // Handle direct file upload to Cloudinary
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    try {
+      setUploading(true);
+      const body = new FormData();
+      body.append('file', file);
+
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body,
+      });
+
+      const json = await res.json();
+      if (json.success && json.url) {
+        setFormData((prev) => ({ ...prev, heroImage: json.url }));
+      } else {
+        // Fallback to Base64 data URL preview if offline
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setFormData((prev) => ({ ...prev, heroImage: reader.result as string }));
+        };
+        reader.readAsDataURL(file);
+      }
+    } catch (err) {
+      console.error('File upload error:', err);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData((prev) => ({ ...prev, heroImage: reader.result as string }));
+      };
+      reader.readAsDataURL(file);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleCreateRoom = async (e: React.FormEvent) => {
     e.preventDefault();
     const slug = formData.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-    const newRoom: Room = {
-      id: `room-${Date.now()}`,
+    const newRoomPayload = {
       slug,
       name: formData.name,
       tagline: formData.tagline,
       propertyId: 'prop-lekki-1',
-      type: formData.type as any,
+      type: formData.type,
       address: formData.address,
       city: 'Lagos, Nigeria',
-      badge: 'TLC ⭐⭐⭐⭐⭐',
       maxGuests: Number(formData.maxGuests),
       propertySize: Number(formData.propertySize),
       bedrooms: Number(formData.bedrooms),
       bathrooms: Number(formData.bathrooms),
       pricePerNight: Number(formData.pricePerNight),
       weekendPricePerNight: Number(formData.weekendPricePerNight),
-      holidayPricePerNight: Number(formData.pricePerNight) * 1.25,
-      rating: 5.0,
-      reviewCount: 0,
-      ratingBreakdown: {
-        fiveStar: 0,
-        fourStar: 0,
-        threeStar: 0,
-        twoStar: 0,
-        oneStar: 0,
-      },
       description: formData.description || 'Newly added luxury executive suite in Lekki Phase 1.',
       heroImage: formData.heroImage,
-      gallery: [formData.heroImage],
-      amenities: formData.amenities.split(',').map(s => s.trim()),
-      features: {
-        bedType: 'King Size Pillow-top',
-        view: 'Lekki Peninsula View',
-        floor: 'Executive Level',
-        balcony: true,
-        workspace: true,
-        miniBar: true,
-        coffeeMachine: true,
-        smartTV: true,
-        netflix: true,
-        wifi: true,
-        safe: true,
-        closet: true,
-        hairDryer: true,
-        refrigerator: true,
-        cable: true,
-        roomService: true,
-        housekeeping: true,
-      },
-      published: true,
-      featured: true,
+      amenities: formData.amenities.split(',').map((s) => s.trim()),
     };
 
-    setRooms([newRoom, ...rooms]);
-    setIsModalOpen(false);
-    setFormData({
-      name: '',
-      tagline: 'Luxury Suite',
-      type: 'Executive',
-      pricePerNight: 200000,
-      weekendPricePerNight: 230000,
-      maxGuests: 2,
-      propertySize: 160,
-      bedrooms: 1,
-      bathrooms: 1,
-      address: '14B, Providence Street, Lekki, Lagos',
-      description: '',
-      heroImage: '/images/saffron/saffron-1.jpg',
-      amenities: 'WiFi, Air Conditioning, Smart TV, Netflix, Coffee Machine, Room Service',
-    });
+    try {
+      const res = await fetch('/api/rooms', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newRoomPayload),
+      });
+
+      const json = await res.json();
+      if (json.success && json.data) {
+        setRooms([json.data, ...rooms]);
+      } else {
+        const localRoom: Room = {
+          id: `room-${Date.now()}`,
+          ...newRoomPayload,
+          type: newRoomPayload.type as any,
+          holidayPricePerNight: Number(formData.pricePerNight) * 1.25,
+          badge: 'TLC ⭐⭐⭐⭐⭐',
+          rating: 5.0,
+          reviewCount: 0,
+          ratingBreakdown: { fiveStar: 0, fourStar: 0, threeStar: 0, twoStar: 0, oneStar: 0 },
+          gallery: [formData.heroImage],
+          features: {
+            bedType: 'King Size Pillow-top',
+            view: 'Lekki Skyline View',
+            floor: 'Executive Level',
+            balcony: true,
+            workspace: true,
+            miniBar: true,
+            coffeeMachine: true,
+            smartTV: true,
+            netflix: true,
+            wifi: true,
+            safe: true,
+            closet: true,
+            hairDryer: true,
+            refrigerator: true,
+            cable: true,
+            roomService: true,
+            housekeeping: true,
+          },
+          published: true,
+          featured: true,
+        };
+        setRooms([localRoom, ...rooms]);
+      }
+    } catch (e) {
+      console.error('Save room error:', e);
+    } finally {
+      setIsModalOpen(false);
+      setFormData({
+        name: '',
+        tagline: 'Executive Single Suite',
+        type: 'Executive',
+        pricePerNight: 200000,
+        weekendPricePerNight: 230000,
+        maxGuests: 2,
+        propertySize: 160,
+        bedrooms: 1,
+        bathrooms: 1,
+        address: '14B, Providence Street, Lekki, Lagos',
+        description: '',
+        heroImage: '/images/saffron/saffron-1.jpg',
+        amenities: 'WiFi, Air Conditioning, Smart TV, Netflix, Coffee Machine, Room Service',
+      });
+    }
   };
 
   return (
@@ -160,32 +235,42 @@ export default function AdminRoomsPage() {
             className="px-5 py-3 bg-[#C6A15B] hover:bg-[#B08C46] text-[#111111] font-semibold text-xs uppercase tracking-widest rounded-lg flex items-center gap-2 shadow-xl transition-all active:scale-95"
           >
             <Plus className="w-4 h-4" />
-            <span>Create New Room</span>
+            <span>+ Create New Room</span>
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {rooms.map((rm) => (
-            <div key={rm.id} className="p-8 bg-[#1A1918] border border-[#2C2B29] rounded-2xl space-y-4 shadow-xl">
-              <div className="flex items-center justify-between">
-                <h3 className="font-serif text-2xl text-white">{rm.name}</h3>
-                <span className="text-xs font-serif text-[#C6A15B] font-bold">₦{rm.pricePerNight.toLocaleString()} / night</span>
+        {loadingRooms ? (
+          <div className="flex items-center justify-center p-12 text-[#C6A15B] gap-3">
+            <Loader2 className="w-6 h-6 animate-spin" />
+            <span className="text-xs uppercase tracking-widest">Loading Live MongoDB Inventory...</span>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {rooms.map((rm) => (
+              <div key={rm.id} className="p-8 bg-[#1A1918] border border-[#2C2B29] rounded-2xl space-y-4 shadow-xl">
+                <div className="relative h-44 rounded-xl overflow-hidden bg-neutral-900 mb-2">
+                  <img src={rm.heroImage} alt={rm.name} className="w-full h-full object-cover" />
+                </div>
+                <div className="flex items-center justify-between">
+                  <h3 className="font-serif text-2xl text-white">{rm.name}</h3>
+                  <span className="text-xs font-serif text-[#C6A15B] font-bold">₦{rm.pricePerNight.toLocaleString()} / night</span>
+                </div>
+                <div className="text-xs text-neutral-400">
+                  {rm.maxGuests} Guests • {rm.propertySize} m² • {rm.bedrooms} BR • 📍 {rm.address}
+                </div>
+                <p className="text-xs text-neutral-400 font-light leading-relaxed line-clamp-2">{rm.description}</p>
+                <div className="pt-4 border-t border-[#2C2B29] flex items-center justify-between text-xs">
+                  <span className="text-emerald-400 flex items-center gap-1">
+                    <CheckCircle className="w-3.5 h-3.5" /> Published (Live Atlas)
+                  </span>
+                  <Link href={`/rooms/${rm.slug}`} className="text-white hover:text-[#C6A15B] underline">
+                    View Suite →
+                  </Link>
+                </div>
               </div>
-              <div className="text-xs text-neutral-400">
-                {rm.maxGuests} Guests • {rm.propertySize} m² • {rm.bedrooms} BR • 📍 {rm.address}
-              </div>
-              <p className="text-xs text-neutral-400 font-light leading-relaxed">{rm.description}</p>
-              <div className="pt-4 border-t border-[#2C2B29] flex items-center justify-between text-xs">
-                <span className="text-emerald-400 flex items-center gap-1">
-                  <CheckCircle className="w-3.5 h-3.5" /> Published
-                </span>
-                <Link href={`/rooms/${rm.slug}`} className="text-white hover:text-[#C6A15B] underline">
-                  View Suite →
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </main>
 
       {/* Create Room Modal */}
@@ -209,7 +294,7 @@ export default function AdminRoomsPage() {
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Royal Emerald Penthouse"
+                    placeholder="e.g. Royal Emerald Suite"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     className="w-full bg-[#1A1918] border border-[#2C2B29] rounded-lg px-3.5 py-2.5 text-white mt-1"
@@ -220,11 +305,46 @@ export default function AdminRoomsPage() {
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Skyline Presidential Sanctuary"
+                    placeholder="e.g. Executive Single Suite"
                     value={formData.tagline}
                     onChange={(e) => setFormData({ ...formData, tagline: e.target.value })}
                     className="w-full bg-[#1A1918] border border-[#2C2B29] rounded-lg px-3.5 py-2.5 text-white mt-1"
                   />
+                </div>
+              </div>
+
+              {/* Direct Image File Upload Field */}
+              <div className="space-y-2">
+                <label className="text-neutral-300 font-medium block">Suite Photo (Direct Image Upload)</label>
+                <div className="p-4 bg-[#1A1918] border-2 border-dashed border-[#2C2B29] hover:border-[#C6A15B] rounded-xl text-center space-y-3 transition-colors relative">
+                  {formData.heroImage ? (
+                    <div className="relative h-40 rounded-lg overflow-hidden border border-[#C6A15B]">
+                      <img src={formData.heroImage} alt="Uploaded Suite Preview" className="w-full h-full object-cover" />
+                      <div className="absolute top-2 right-2 bg-black/80 px-2 py-1 rounded text-[10px] text-[#C6A15B]">
+                        Ready to Publish
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="py-6 space-y-2">
+                      <ImageIcon className="w-8 h-8 text-[#C6A15B] mx-auto" />
+                      <div className="text-xs text-neutral-300">Click to select photo or drag & drop</div>
+                      <div className="text-[10px] text-neutral-500">JPG, PNG, WEBP up to 10MB</div>
+                    </div>
+                  )}
+
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileUpload}
+                    className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+                  />
+
+                  {uploading && (
+                    <div className="absolute inset-0 bg-black/75 flex items-center justify-center gap-2 text-[#C6A15B] rounded-xl">
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      <span>Uploading to Cloudinary...</span>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -295,17 +415,6 @@ export default function AdminRoomsPage() {
               </div>
 
               <div>
-                <label className="text-neutral-300 font-medium">Image URL / Path</label>
-                <input
-                  type="text"
-                  required
-                  value={formData.heroImage}
-                  onChange={(e) => setFormData({ ...formData, heroImage: e.target.value })}
-                  className="w-full bg-[#1A1918] border border-[#2C2B29] rounded-lg px-3.5 py-2.5 text-white mt-1"
-                />
-              </div>
-
-              <div>
                 <label className="text-neutral-300 font-medium">Description</label>
                 <textarea
                   rows={3}
@@ -322,7 +431,7 @@ export default function AdminRoomsPage() {
                   Cancel
                 </button>
                 <button type="submit" className="px-6 py-2.5 bg-[#C6A15B] text-[#111111] font-semibold uppercase tracking-widest rounded-lg shadow-xl">
-                  Publish Suite
+                  Publish Suite Live
                 </button>
               </div>
             </form>
