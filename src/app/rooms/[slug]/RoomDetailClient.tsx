@@ -21,7 +21,8 @@ import {
   ArrowRight,
   Send,
   Building,
-  Award
+  Award,
+  MessageSquare
 } from 'lucide-react';
 import { Room } from '@/types';
 
@@ -47,6 +48,11 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
   const vat = subtotal * 0.075;
   const consumptionTax = subtotal * 0.05;
   const total = subtotal + vat + consumptionTax;
+
+  const whatsappMessage = encodeURIComponent(
+    `Hello Stay Connect Concierge, I would like to book the ${room.name} (${room.type} Suite) at 14B Providence Street, Lekki from ${checkIn} to ${checkOut} (${nights} nights) for ${guests} guest(s). Total estimated: ₦${total.toLocaleString()}.`
+  );
+  const whatsappUrl = `https://wa.me/2347041008351?text=${whatsappMessage}`;
 
   const handleReviewSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -292,7 +298,7 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
           </div>
         </div>
 
-        {/* Right Column: Sticky Booking Card */}
+        {/* Right Column: Sticky Booking Card with Dual Booking Triggers */}
         <div className="lg:col-span-4">
           <div className="lg:sticky lg:top-28 bg-[#111111] text-white p-6 sm:p-8 rounded-2xl border border-[#C6A15B]/30 shadow-2xl space-y-6">
             <div className="flex items-center justify-between border-b border-[#2C2B29] pb-4">
@@ -371,13 +377,26 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
               </div>
             </div>
 
-            <Link
-              href={`/book?room=${room.slug}&checkIn=${checkIn}&checkOut=${checkOut}&adults=${guests}`}
-              className="w-full py-4 bg-[#C6A15B] hover:bg-[#B08C46] text-[#111111] font-semibold text-xs uppercase tracking-[0.25em] rounded-lg transition-all duration-300 flex items-center justify-center gap-2 shadow-xl group active:scale-95"
-            >
-              <span>Book Now</span>
-              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-            </Link>
+            {/* Dual Booking CTAs: Book Online vs Book via WhatsApp */}
+            <div className="space-y-3 pt-2">
+              <Link
+                href={`/book?room=${room.slug}&checkIn=${checkIn}&checkOut=${checkOut}&adults=${guests}`}
+                className="w-full py-3.5 bg-[#C6A15B] hover:bg-[#B08C46] text-[#111111] font-semibold text-xs uppercase tracking-[0.2em] rounded-lg transition-all duration-300 flex items-center justify-center gap-2 shadow-xl group active:scale-95"
+              >
+                <span>Book Online</span>
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-3.5 bg-[#1A1918] hover:bg-[#252422] text-white border border-[#2C2B29] hover:border-[#C6A15B] font-semibold text-xs uppercase tracking-[0.2em] rounded-lg transition-all duration-300 flex items-center justify-center gap-2 shadow-lg active:scale-95"
+              >
+                <MessageSquare className="w-4 h-4 text-[#C6A15B]" />
+                <span>Book on WhatsApp</span>
+              </a>
+            </div>
 
             <div className="text-[10px] sm:text-[11px] text-center text-neutral-400 font-light pt-1">
               🔒 Instant Confirmation • Guaranteed Best Rate at 14B Providence St.

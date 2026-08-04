@@ -1,5 +1,6 @@
 import './globals.css';
 import { Cormorant_Garamond, Inter } from 'next/font/google';
+import WhatsAppFloatingWidget from '@/components/ui/WhatsAppFloatingWidget';
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -27,8 +28,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${cormorant.variable} ${inter.variable} scroll-smooth`}>
-      <body className="bg-[#FAF9F6] text-[#111111] font-sans antialiased selection:bg-[#C6A15B] selection:text-[#111111]">
+      <body className="bg-[#FAF9F6] text-[#111111] font-sans antialiased selection:bg-[#C6A15B] selection:text-[#111111] relative">
         {children}
+        <WhatsAppFloatingWidget />
       </body>
     </html>
   );
