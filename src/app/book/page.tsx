@@ -341,7 +341,7 @@ export default function BookingPage() {
           </div>
         )}
 
-        {/* Step 3: Confirmation Voucher Modal & Bank Receipt Trigger */}
+        {/* Step 3: Public Confirmation Voucher Modal */}
         {step === 3 && bookingCompleted && (
           <div className="bg-[#1A1918] border border-[#C6A15B] rounded-2xl p-8 max-w-2xl mx-auto text-center space-y-6 shadow-2xl">
             <div className="w-16 h-16 rounded-full bg-[#C6A15B]/20 border border-[#C6A15B] text-[#C6A15B] flex items-center justify-center mx-auto">
@@ -396,12 +396,9 @@ export default function BookingPage() {
               </div>
             )}
 
-            <div className="pt-4 border-t border-[#2C2B29] flex items-center justify-center gap-4">
-              <Link href="/" className="px-6 py-2.5 border border-[#2C2B29] text-neutral-300 hover:text-white rounded-lg text-xs">
+            <div className="pt-4 border-t border-[#2C2B29] flex items-center justify-center">
+              <Link href="/" className="px-8 py-3 bg-[#C6A15B] hover:bg-[#B08C46] text-[#111111] font-semibold uppercase tracking-widest rounded-lg text-xs shadow-xl transition-all">
                 Return to Homepage
-              </Link>
-              <Link href="/admin/bookings" className="px-6 py-2.5 bg-[#C6A15B] text-[#111111] font-semibold rounded-lg text-xs">
-                View in Admin CRM
               </Link>
             </div>
           </div>
