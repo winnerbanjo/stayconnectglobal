@@ -21,7 +21,9 @@ import {
   Filter,
   MessageSquare,
   Car,
-  Lock
+  Lock,
+  RefreshCw,
+  Utensils
 } from 'lucide-react';
 import { INITIAL_BOOKINGS, INITIAL_ROOMS } from '@/lib/data/seedData';
 import { Booking } from '@/types';
@@ -152,24 +154,32 @@ export default function AdminPage() {
               </div>
             </div>
 
-            <nav className="space-y-2">
-              <Link href="/admin" className="flex items-center gap-3 px-4 py-3 rounded-lg bg-[#C6A15B] text-[#111111] font-semibold text-xs uppercase tracking-widest">
+            <nav className="space-y-2 text-xs uppercase tracking-widest font-medium">
+              <Link href="/admin" className="flex items-center gap-3 px-4 py-3 rounded-lg bg-[#C6A15B] text-[#111111] font-semibold">
                 <BarChart3 className="w-4 h-4" />
                 <span>PMS Dashboard</span>
               </Link>
-              <Link href="/admin/properties" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918] transition-colors text-xs uppercase tracking-widest font-medium">
+              <Link href="/admin/properties" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]">
                 <Building className="w-4 h-4 text-[#C6A15B]" />
                 <span>Properties</span>
               </Link>
-              <Link href="/admin/rooms" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918] transition-colors text-xs uppercase tracking-widest font-medium">
+              <Link href="/admin/rooms" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]">
                 <BedDouble className="w-4 h-4 text-[#C6A15B]" />
                 <span>Rooms Inventory</span>
               </Link>
-              <Link href="/admin/fleet" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918] transition-colors text-xs uppercase tracking-widest font-medium">
-                <Car className="w-4 h-4 text-[#C6A15B]" />
-                <span>Fleet & Chauffeur</span>
+              <Link href="/admin/housekeeping" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]">
+                <RefreshCw className="w-4 h-4 text-[#C6A15B]" />
+                <span>Housekeeping Ops</span>
               </Link>
-              <Link href="/admin/bookings" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918] transition-colors text-xs uppercase tracking-widest font-medium">
+              <Link href="/admin/dining" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]">
+                <Utensils className="w-4 h-4 text-[#C6A15B]" />
+                <span>Dining & Menu</span>
+              </Link>
+              <Link href="/admin/fleet" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]">
+                <Car className="w-4 h-4 text-[#C6A15B]" />
+                <span>Fleet Logistics</span>
+              </Link>
+              <Link href="/admin/bookings" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]">
                 <Calendar className="w-4 h-4 text-[#C6A15B]" />
                 <span>Reservations CRM</span>
               </Link>
