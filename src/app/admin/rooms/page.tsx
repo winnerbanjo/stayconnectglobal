@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { BedDouble, Plus, CheckCircle, BarChart3, Building, Calendar, LogOut, X, Car, Upload, Image as ImageIcon, Loader2 } from 'lucide-react';
+import { BedDouble, Plus, CheckCircle, BarChart3, Building, Calendar, LogOut, X, Car, Upload, Image as ImageIcon, Loader2, RefreshCw, Utensils } from 'lucide-react';
 import { INITIAL_ROOMS } from '@/lib/data/seedData';
 import { Room } from '@/types';
 import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
@@ -185,29 +185,37 @@ export default function AdminRoomsPage() {
                 SC
               </div>
               <div>
-                <div className="font-serif text-lg text-[#C6A15B] font-medium">Stay Connect</div>
-                <div className="text-[10px] text-neutral-400 uppercase tracking-widest font-semibold">Admin Portal</div>
+                <div className="font-serif text-lg text-white font-medium">Stay Connect</div>
+                <div className="text-[10px] text-[#C6A15B] uppercase tracking-widest font-semibold">Admin Portal</div>
               </div>
             </div>
 
-            <nav className="space-y-2">
-              <Link href="/admin" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918] transition-colors text-xs uppercase tracking-widest font-medium">
+            <nav className="space-y-2 text-xs uppercase tracking-widest font-medium">
+              <Link href="/admin" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]">
                 <BarChart3 className="w-4 h-4 text-[#C6A15B]" />
                 <span>Dashboard</span>
               </Link>
-              <Link href="/admin/properties" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918] transition-colors text-xs uppercase tracking-widest font-medium">
+              <Link href="/admin/properties" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]">
                 <Building className="w-4 h-4 text-[#C6A15B]" />
                 <span>Properties</span>
               </Link>
-              <Link href="/admin/rooms" className="flex items-center gap-3 px-4 py-3 rounded-lg bg-[#C6A15B] text-[#111111] font-semibold text-xs uppercase tracking-widest">
+              <Link href="/admin/rooms" className="flex items-center gap-3 px-4 py-3 rounded-lg bg-[#C6A15B] text-[#111111] font-semibold">
                 <BedDouble className="w-4 h-4" />
                 <span>Rooms & Inventory</span>
               </Link>
-              <Link href="/admin/fleet" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918] transition-colors text-xs uppercase tracking-widest font-medium">
-                <Car className="w-4 h-4 text-[#C6A15B]" />
-                <span>Fleet & Chauffeur</span>
+              <Link href="/admin/housekeeping" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]">
+                <RefreshCw className="w-4 h-4 text-[#C6A15B]" />
+                <span>Housekeeping Ops</span>
               </Link>
-              <Link href="/admin/bookings" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918] transition-colors text-xs uppercase tracking-widest font-medium">
+              <Link href="/admin/dining" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]">
+                <Utensils className="w-4 h-4 text-[#C6A15B]" />
+                <span>Dining & Menu</span>
+              </Link>
+              <Link href="/admin/fleet" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]">
+                <Car className="w-4 h-4 text-[#C6A15B]" />
+                <span>Fleet Logistics</span>
+              </Link>
+              <Link href="/admin/bookings" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]">
                 <Calendar className="w-4 h-4 text-[#C6A15B]" />
                 <span>Reservations CRM</span>
               </Link>
@@ -215,7 +223,7 @@ export default function AdminRoomsPage() {
           </div>
 
           <div className="pt-6 border-t border-[#2C2B29]">
-            <Link href="/" className="flex items-center gap-2 text-xs text-neutral-400 hover:text-[#C6A15B] transition-colors">
+            <Link href="/" className="flex items-center gap-2 text-xs text-neutral-400 hover:text-[#C6A15B]">
               <LogOut className="w-4 h-4" />
               <span>Return to Site</span>
             </Link>
@@ -245,8 +253,11 @@ export default function AdminRoomsPage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {rooms.map((rm) => (
-                <div key={rm.id} className="p-8 bg-[#1A1918] border border-[#2C2B29] rounded-2xl space-y-4 shadow-xl">
+              {rooms.map((rm, idx) => (
+                <div
+                  key={(rm as any)._id || rm.id || rm.slug || `room-${idx}`}
+                  className="p-8 bg-[#1A1918] border border-[#2C2B29] rounded-2xl space-y-4 shadow-xl"
+                >
                   <div className="relative h-44 rounded-xl overflow-hidden bg-neutral-900 mb-2">
                     <img src={rm.heroImage} alt={rm.name} className="w-full h-full object-cover" />
                   </div>

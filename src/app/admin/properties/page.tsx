@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Building, Plus, MapPin, CheckCircle, BarChart3, BedDouble, Calendar, LogOut, X, Car, Image as ImageIcon, Loader2 } from 'lucide-react';
+import { Building, Plus, MapPin, CheckCircle, BarChart3, BedDouble, Calendar, LogOut, X, Car, Image as ImageIcon, Loader2, RefreshCw, Utensils } from 'lucide-react';
 import { INITIAL_PROPERTIES } from '@/lib/data/seedData';
 import { Property } from '@/types';
 import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
@@ -152,24 +152,32 @@ export default function AdminPropertiesPage() {
               </div>
             </div>
 
-            <nav className="space-y-2">
-              <Link href="/admin" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918] transition-colors text-xs uppercase tracking-widest font-medium">
+            <nav className="space-y-2 text-xs uppercase tracking-widest font-medium">
+              <Link href="/admin" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]">
                 <BarChart3 className="w-4 h-4 text-[#C6A15B]" />
                 <span>Dashboard</span>
               </Link>
-              <Link href="/admin/properties" className="flex items-center gap-3 px-4 py-3 rounded-lg bg-[#C6A15B] text-[#111111] font-semibold text-xs uppercase tracking-widest">
+              <Link href="/admin/properties" className="flex items-center gap-3 px-4 py-3 rounded-lg bg-[#C6A15B] text-[#111111] font-semibold">
                 <Building className="w-4 h-4" />
                 <span>Properties</span>
               </Link>
-              <Link href="/admin/rooms" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918] transition-colors text-xs uppercase tracking-widest font-medium">
+              <Link href="/admin/rooms" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]">
                 <BedDouble className="w-4 h-4 text-[#C6A15B]" />
                 <span>Rooms Inventory</span>
               </Link>
-              <Link href="/admin/fleet" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918] transition-colors text-xs uppercase tracking-widest font-medium">
-                <Car className="w-4 h-4 text-[#C6A15B]" />
-                <span>Fleet & Chauffeur</span>
+              <Link href="/admin/housekeeping" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]">
+                <RefreshCw className="w-4 h-4 text-[#C6A15B]" />
+                <span>Housekeeping Ops</span>
               </Link>
-              <Link href="/admin/bookings" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918] transition-colors text-xs uppercase tracking-widest font-medium">
+              <Link href="/admin/dining" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]">
+                <Utensils className="w-4 h-4 text-[#C6A15B]" />
+                <span>Dining & Menu</span>
+              </Link>
+              <Link href="/admin/fleet" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]">
+                <Car className="w-4 h-4 text-[#C6A15B]" />
+                <span>Fleet Logistics</span>
+              </Link>
+              <Link href="/admin/bookings" className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]">
                 <Calendar className="w-4 h-4 text-[#C6A15B]" />
                 <span>Reservations CRM</span>
               </Link>
@@ -177,7 +185,7 @@ export default function AdminPropertiesPage() {
           </div>
 
           <div className="pt-6 border-t border-[#2C2B29]">
-            <Link href="/" className="flex items-center gap-2 text-xs text-neutral-400 hover:text-[#C6A15B] transition-colors">
+            <Link href="/" className="flex items-center gap-2 text-xs text-neutral-400 hover:text-[#C6A15B]">
               <LogOut className="w-4 h-4" />
               <span>Return to Site</span>
             </Link>
@@ -207,8 +215,11 @@ export default function AdminPropertiesPage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {properties.map((prop) => (
-                <div key={prop.id} className="p-8 bg-[#1A1918] border border-[#2C2B29] rounded-2xl space-y-4 shadow-xl">
+              {properties.map((prop, idx) => (
+                <div
+                  key={(prop as any)._id || prop.id || prop.slug || `prop-${idx}`}
+                  className="p-8 bg-[#1A1918] border border-[#2C2B29] rounded-2xl space-y-4 shadow-xl"
+                >
                   <div className="relative h-44 rounded-xl overflow-hidden bg-neutral-900 mb-2">
                     <img src={prop.heroImage} alt={prop.name} className="w-full h-full object-cover" />
                   </div>
