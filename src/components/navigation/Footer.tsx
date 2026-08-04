@@ -68,14 +68,15 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 pb-16 border-b border-[#2C2B29]">
           {/* Brand & Address */}
           <div className="lg:col-span-4 space-y-6">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full bg-[#1A1918] border border-[#C6A15B] flex items-center justify-center font-serif text-[#C6A15B] text-sm font-semibold">
-                SC
+            <Link href="/" className="inline-block">
+              <div className="relative h-10 w-44">
+                <img
+                  src="/images/logo.png"
+                  alt="Stay Connect Hotels Logo"
+                  className="w-full h-full object-contain filter brightness-110"
+                />
               </div>
-              <span className="font-serif text-xl tracking-[0.3em] text-white uppercase font-normal">
-                STAY CONNECT
-              </span>
-            </div>
+            </Link>
             <p className="text-neutral-400 text-xs leading-relaxed font-light pr-4">
               Stay Connect Hotels is Lekki’s premier luxury hospitality destination, offering editorial single executive suites, penthouses, fine dining, and private lagoon concierge in Lagos, Nigeria.
             </p>
@@ -86,7 +87,7 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-[#C6A15B] shrink-0" />
-                <span>+234 803 123 4567 / +234 901 888 0000</span>
+                <span>+234 704 100 8351</span>
               </div>
               <div className="flex items-center gap-3">
                 <Mail className="w-4 h-4 text-[#C6A15B] shrink-0" />

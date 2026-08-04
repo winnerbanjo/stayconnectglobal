@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Calendar, Phone, MapPin, ChevronDown } from 'lucide-react';
@@ -42,25 +43,21 @@ export default function Navbar() {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
-            ? 'bg-[#111111]/95 backdrop-blur-xl border-b border-[#2C2B29] py-4 sm:py-5 shadow-2xl'
+            ? 'bg-[#111111]/95 backdrop-blur-xl border-b border-[#2C2B29] py-3.5 shadow-2xl'
             : isHome
-            ? 'bg-gradient-to-b from-black/90 via-black/40 to-transparent py-5 sm:py-7'
-            : 'bg-[#111111] py-4 sm:py-6 border-b border-[#2C2B29]'
+            ? 'bg-gradient-to-b from-black/90 via-black/40 to-transparent py-5 sm:py-6'
+            : 'bg-[#111111] py-4 sm:py-5 border-b border-[#2C2B29]'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 flex items-center justify-between">
-          {/* Brand Identity */}
-          <Link href="/" className="group flex items-center gap-2.5 sm:gap-4">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#1A1918] border border-[#C6A15B]/50 flex items-center justify-center transition-all duration-300 group-hover:border-[#C6A15B] group-hover:scale-105 shrink-0">
-              <span className="font-serif text-[#C6A15B] text-sm sm:text-lg font-semibold tracking-wider">SC</span>
-            </div>
-            <div className="flex flex-col justify-center">
-              <span className="font-serif text-base sm:text-xl tracking-[0.2em] sm:tracking-[0.3em] text-white uppercase font-normal leading-none">
-                STAY CONNECT
-              </span>
-              <span className="text-[8px] sm:text-[9px] tracking-[0.25em] sm:tracking-[0.4em] text-[#C6A15B] uppercase font-light mt-1">
-                Hotels & Suites • Lekki
-              </span>
+          {/* Brand Logo */}
+          <Link href="/" className="group flex items-center gap-3">
+            <div className="relative h-9 sm:h-11 w-32 sm:w-44 transition-transform duration-300 group-hover:scale-105">
+              <img
+                src="/images/logo.png"
+                alt="Stay Connect Hotels Logo"
+                className="w-full h-full object-contain filter brightness-110"
+              />
             </div>
           </Link>
 

@@ -27,15 +27,13 @@ export default function AdminMobileNav() {
   return (
     <div className="md:hidden border-b border-[#2C2B29] bg-[#111111] px-4 py-3 sticky top-0 z-40">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-full bg-[#C6A15B]/20 border border-[#C6A15B] text-[#C6A15B] font-serif font-bold flex items-center justify-center text-xs">
-            SC
-          </div>
-          <div>
-            <div className="font-serif text-sm text-white font-medium">Stay Connect</div>
-            <div className="text-[9px] text-[#C6A15B] uppercase tracking-widest font-semibold">PMS Portal</div>
-          </div>
-        </div>
+        <Link href="/admin" className="relative h-8 w-36">
+          <img
+            src="/images/logo.png"
+            alt="Stay Connect Admin Logo"
+            className="w-full h-full object-contain filter brightness-110"
+          />
+        </Link>
 
         <button
           onClick={() => setOpen(!open)}
