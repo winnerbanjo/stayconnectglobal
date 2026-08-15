@@ -2,26 +2,42 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Building, Plus, MapPin, CheckCircle, BarChart3, BedDouble, Calendar, LogOut, X, Car, Image as ImageIcon, Loader2, RefreshCw, Utensils } from 'lucide-react';
-import { INITIAL_PROPERTIES } from '@/lib/data/seedData';
-import { Property } from '@/types';
+import { Building, Plus, MapPin, CheckCircle, BarChart3, BedDouble, Calendar, LogOut, X, Car, Image as ImageIcon, Loader2, RefreshCw, Utensils, UserCheck, Upload, Trash2 } from 'lucide-react';
+import { INITIAL_PROPERTIES, INITIAL_PARTNERS } from '@/lib/data/seedData';
+import { Property, Partner } from '@/types';
 import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
 import AdminMobileNav from '@/components/admin/AdminMobileNav';
 
 export default function AdminPropertiesPage() {
   const [properties, setProperties] = useState<Property[]>(INITIAL_PROPERTIES);
+  const [partners, setPartners] = useState<Partner[]>(INITIAL_PARTNERS);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [loadingProps, setLoadingProps] = useState(false);
 
   const [formData, setFormData] = useState({
     name: '',
-    tagline: 'Refined Sanctuary in Victoria Island',
-    address: '25 Adetokunbo Ademola Street, Victoria Island, Lagos',
+    tagline: 'Refined Sanctuary in Lekki Phase 1',
+    address: '14B Providence Street, Lekki Phase 1, Lagos',
     city: 'Lagos, Nigeria',
-    description: 'An ultra-exclusive collection of luxury suites and dining lounges.',
-    heroImage: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=2000&q=90',
+    description: 'An ultra-exclusive collection of luxury serviced suites.',
+    heroImage: '',
+    gallery: [] as string[],
+    partnerId: '',
+    hostName: '',
   });
+
+  const fetchLivePartners = async () => {
+    try {
+      const res = await fetch('/api/partners');
+      const json = await res.json();
+      if (json.success && json.data && json.data.length > 0) {
+        setPartners(json.data);
+      }
+    } catch (e) {
+      console.warn('Fallback to local partners:', e);
+    }
+  };
 
   const fetchLiveProperties = async () => {
     try {
@@ -40,7 +56,47 @@ export default function AdminPropertiesPage() {
 
   useEffect(() => {
     fetchLiveProperties();
+    fetchLivePartners();
   }, []);
+
+  const approvedPartners = partners.filter((p) => p.status === 'Approved');
+
+  const handleBulkImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    setUploading(true);
+    const newImages: string[] = [];
+
+    Array.from(files).forEach((file, idx) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (reader.result) {
+          newImages.push(reader.result as string);
+          if (newImages.length === files.length) {
+            setFormData((prev) => ({
+              ...prev,
+              heroImage: prev.heroImage || newImages[0],
+              gallery: [...prev.gallery, ...newImages],
+            }));
+            setUploading(false);
+          }
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const removeGalleryImage = (index: number) => {
+    setFormData((prev) => {
+      const updated = prev.gallery.filter((_, i) => i !== index);
+      return {
+        ...prev,
+        gallery: updated,
+        heroImage: updated[0] || '',
+      };
+    });
+  };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -88,7 +144,10 @@ export default function AdminPropertiesPage() {
       address: formData.address,
       city: formData.city,
       description: formData.description,
-      heroImage: formData.heroImage,
+      heroImage: formData.heroImage || (formData.gallery[0] || 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=2000&q=90'),
+      gallery: formData.gallery.length > 0 ? formData.gallery : [formData.heroImage],
+      partnerId: formData.partnerId || undefined,
+      hostName: formData.hostName || undefined,
     };
 
     try {
@@ -104,10 +163,10 @@ export default function AdminPropertiesPage() {
       } else {
         const localProp: Property = {
           id: `prop-${Date.now()}`,
-          category: 'Luxury Hotel',
+          category: 'Serviced Apartment',
           ...newPropPayload,
           coordinates: { lat: 6.4281, lng: 3.4219 },
-          gallery: [formData.heroImage],
+          gallery: newPropPayload.gallery,
           amenities: [
             { id: 'wifi', name: 'High Speed Internet', category: 'general', icon: 'Wifi' },
             { id: 'ac', name: 'Air Conditioning', category: 'room', icon: 'Wind' },
@@ -129,11 +188,14 @@ export default function AdminPropertiesPage() {
       setIsModalOpen(false);
       setFormData({
         name: '',
-        tagline: 'Refined Sanctuary in Victoria Island',
-        address: '25 Adetokunbo Ademola Street, Victoria Island, Lagos',
+        tagline: 'Refined Sanctuary in Lekki Phase 1',
+        address: '14B Providence Street, Lekki Phase 1, Lagos',
         city: 'Lagos, Nigeria',
-        description: 'An ultra-exclusive collection of luxury suites and dining lounges.',
-        heroImage: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=2000&q=90',
+        description: 'An ultra-exclusive collection of luxury serviced suites.',
+        heroImage: '',
+        gallery: [],
+        partnerId: '',
+        hostName: '',
       });
     }
   };
@@ -216,7 +278,7 @@ export default function AdminPropertiesPage() {
           {loadingProps ? (
             <div className="flex items-center justify-center p-12 text-[#C6A15B] gap-3">
               <Loader2 className="w-6 h-6 animate-spin" />
-              <span className="text-xs uppercase tracking-widest">Loading Live MongoDB Properties...</span>
+              <span className="text-xs uppercase tracking-widest">Loading Live Properties...</span>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
@@ -226,12 +288,17 @@ export default function AdminPropertiesPage() {
                   className="p-6 sm:p-8 bg-[#1A1918] border border-[#2C2B29] rounded-2xl space-y-4 shadow-xl"
                 >
                   <div className="relative h-44 rounded-xl overflow-hidden bg-neutral-900 mb-2">
-                    <img src={prop.heroImage} alt={prop.name} className="w-full h-full object-cover" />
+                    <img src={prop.heroImage || prop.gallery?.[0] || '/images/saffron/saffron-1.jpg'} alt={prop.name} className="w-full h-full object-cover" />
+                    {prop.partnerId && (
+                      <span className="absolute top-2 right-2 bg-amber-950 text-amber-400 text-[10px] font-bold px-2.5 py-1 rounded-full border border-amber-800 uppercase font-mono">
+                        Merchant: {prop.hostName || prop.partnerId}
+                      </span>
+                    )}
                   </div>
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <h3 className="font-serif text-xl sm:text-2xl text-white">{prop.name}</h3>
                     <span className="px-3 py-1 bg-emerald-950 text-emerald-400 text-[10px] uppercase font-bold rounded-full border border-emerald-800 self-start sm:self-auto">
-                      Active Atlas Property
+                      Active Property
                     </span>
                   </div>
                   <div className="text-xs text-neutral-400 flex items-center gap-2">
@@ -256,19 +323,47 @@ export default function AdminPropertiesPage() {
           <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
             <div className="bg-[#111111] text-white p-6 sm:p-8 rounded-2xl border border-[#C6A15B]/40 max-w-lg w-full space-y-6 shadow-2xl max-h-[90vh] overflow-y-auto">
               <div className="flex items-center justify-between border-b border-[#2C2B29] pb-4">
-                <h3 className="font-serif text-2xl text-white">Add New Hotel / Residence</h3>
+                <h3 className="font-serif text-2xl text-white">Add New Property</h3>
                 <button onClick={() => setIsModalOpen(false)} className="text-neutral-400 hover:text-white">
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
               <form onSubmit={handleCreateProperty} className="space-y-4 text-xs">
+                {/* Property Owner / Partner Selection */}
+                <div>
+                  <label className="text-neutral-300 font-medium flex items-center justify-between">
+                    <span>Property Owner / Partner Merchant</span>
+                    <span className="text-[10px] text-[#C6A15B] font-semibold">Approved Merchants Only</span>
+                  </label>
+                  <select
+                    value={formData.partnerId}
+                    onChange={(e) => {
+                      const selectedPartnerId = e.target.value;
+                      const matchedPartner = approvedPartners.find((p) => p.partnerId === selectedPartnerId);
+                      setFormData({
+                        ...formData,
+                        partnerId: selectedPartnerId,
+                        hostName: matchedPartner ? (matchedPartner.propertyName || matchedPartner.businessName || matchedPartner.contactName) : 'Stay Connect Direct Flagship',
+                      });
+                    }}
+                    className="w-full bg-[#1A1918] border border-[#2C2B29] rounded-lg px-3.5 py-2.5 text-white mt-1 focus:border-[#C6A15B]"
+                  >
+                    <option value="">Stay Connect Global (Direct Flagship Managed)</option>
+                    {approvedPartners.map((p) => (
+                      <option key={p.id || p.partnerId} value={p.partnerId}>
+                        {p.propertyName || p.businessName || p.contactName} ({p.partnerId} • {p.contactName})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
                 <div>
                   <label className="text-neutral-300 font-medium">Property Name</label>
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Stay Connect Eko Atlantic Residences"
+                    placeholder="e.g. Mary House Serviced Suites"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     className="w-full bg-[#1A1918] border border-[#2C2B29] rounded-lg px-3.5 py-2.5 text-white mt-1"
@@ -276,50 +371,64 @@ export default function AdminPropertiesPage() {
                 </div>
 
                 <div>
-                  <label className="text-neutral-300 font-medium">Address</label>
+                  <label className="text-neutral-300 font-medium">Full Address</label>
                   <input
                     type="text"
                     required
-                    placeholder="e.g. 10 Eko Boulevard, Eko Atlantic, Lagos"
+                    placeholder="e.g. 14B Providence Street, Lekki Phase 1, Lagos"
                     value={formData.address}
                     onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                     className="w-full bg-[#1A1918] border border-[#2C2B29] rounded-lg px-3.5 py-2.5 text-white mt-1"
                   />
                 </div>
 
-                {/* Direct Image File Upload Field */}
+                {/* Bulk Image Upload Field (6+ images at once) */}
                 <div className="space-y-2">
-                  <label className="text-neutral-300 font-medium block">Property Cover Photo (Direct Image Upload)</label>
-                  <div className="p-4 bg-[#1A1918] border-2 border-dashed border-[#2C2B29] hover:border-[#C6A15B] rounded-xl text-center space-y-3 transition-colors relative">
-                    {formData.heroImage ? (
-                      <div className="relative h-36 rounded-lg overflow-hidden border border-[#C6A15B]">
-                        <img src={formData.heroImage} alt="Uploaded Property Preview" className="w-full h-full object-cover" />
-                        <div className="absolute top-2 right-2 bg-black/80 px-2 py-1 rounded text-[10px] text-[#C6A15B]">
-                          Ready to Publish
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="py-4 space-y-2">
-                        <ImageIcon className="w-8 h-8 text-[#C6A15B] mx-auto" />
-                        <div className="text-xs text-neutral-300">Click to select photo or drag & drop</div>
-                        <div className="text-[10px] text-neutral-500">JPG, PNG, WEBP up to 10MB</div>
-                      </div>
-                    )}
+                  <div className="flex items-center justify-between">
+                    <label className="text-neutral-300 font-medium block">Property Photos (Bulk Upload 6+ Photos At Once)</label>
+                    <span className="text-[10px] font-mono text-[#C6A15B] font-semibold">
+                      {formData.gallery.length} Photo(s) Attached
+                    </span>
+                  </div>
 
+                  <div className="p-4 bg-[#1A1918] border-2 border-dashed border-[#2C2B29] hover:border-[#C6A15B] rounded-xl text-center space-y-2 transition-colors relative cursor-pointer">
+                    <div className="w-10 h-10 rounded-full bg-[#111111] text-[#C6A15B] flex items-center justify-center mx-auto border border-[#C6A15B]/40">
+                      <Upload className="w-5 h-5" />
+                    </div>
+                    <div className="space-y-1">
+                      <div className="text-xs font-semibold text-white">Click to Select & Upload At Least 6+ Image Files</div>
+                      <div className="text-[10px] text-neutral-400">Multi-select JPG, PNG, WEBP files directly from device</div>
+                    </div>
                     <input
                       type="file"
                       accept="image/*"
-                      onChange={handleFileUpload}
+                      multiple
+                      onChange={handleBulkImageUpload}
                       className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
                     />
-
-                    {uploading && (
-                      <div className="absolute inset-0 bg-black/75 flex items-center justify-center gap-2 text-[#C6A15B] rounded-xl">
-                        <Loader2 className="w-5 h-5 animate-spin" />
-                        <span>Uploading to Cloudinary...</span>
-                      </div>
-                    )}
                   </div>
+
+                  {formData.gallery.length > 0 && (
+                    <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 pt-2">
+                      {formData.gallery.map((imgSrc, idx) => (
+                        <div key={idx} className="relative h-20 rounded-lg overflow-hidden border border-[#C6A15B]/50 group bg-neutral-900">
+                          <img src={imgSrc} alt={`Gallery ${idx + 1}`} className="w-full h-full object-cover" />
+                          <button
+                            type="button"
+                            onClick={() => removeGalleryImage(idx)}
+                            className="absolute top-1 right-1 p-1 bg-black/80 text-rose-400 rounded-full hover:bg-rose-950 transition-colors"
+                          >
+                            <X className="w-3 h-3" />
+                          </button>
+                          {idx === 0 && (
+                            <span className="absolute bottom-1 left-1 bg-[#C6A15B] text-[#111111] text-[8px] font-bold px-1.5 py-0.5 rounded uppercase">
+                              Hero Cover
+                            </span>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 <div>

@@ -4,13 +4,14 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BedDouble, Plus, CheckCircle, BarChart3, Building, Calendar, LogOut, X, Car, Upload, Image as ImageIcon, Loader2, RefreshCw, Utensils } from 'lucide-react';
-import { INITIAL_ROOMS } from '@/lib/data/seedData';
-import { Room } from '@/types';
+import { INITIAL_ROOMS, INITIAL_PARTNERS } from '@/lib/data/seedData';
+import { Room, Partner } from '@/types';
 import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
 import AdminMobileNav from '@/components/admin/AdminMobileNav';
 
 export default function AdminRoomsPage() {
   const [rooms, setRooms] = useState<Room[]>(INITIAL_ROOMS);
+  const [partners, setPartners] = useState<Partner[]>(INITIAL_PARTNERS);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [loadingRooms, setLoadingRooms] = useState(false);
@@ -28,8 +29,23 @@ export default function AdminRoomsPage() {
     address: '14B, Providence Street, Lekki, Lagos',
     description: '',
     heroImage: '/images/saffron/saffron-1.jpg',
+    gallery: [] as string[],
+    partnerId: '',
+    hostName: '',
     amenities: 'WiFi, Air Conditioning, Smart TV, Netflix, Coffee Machine, Room Service',
   });
+
+  const fetchLivePartners = async () => {
+    try {
+      const res = await fetch('/api/partners');
+      const json = await res.json();
+      if (json.success && json.data && json.data.length > 0) {
+        setPartners(json.data);
+      }
+    } catch (e) {
+      console.warn('Fallback to local partners:', e);
+    }
+  };
 
   const fetchLiveRooms = async () => {
     try {
@@ -48,7 +64,47 @@ export default function AdminRoomsPage() {
 
   useEffect(() => {
     fetchLiveRooms();
+    fetchLivePartners();
   }, []);
+
+  const approvedPartners = partners.filter((p) => p.status === 'Approved');
+
+  const handleBulkImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    setUploading(true);
+    const newImages: string[] = [];
+
+    Array.from(files).forEach((file) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (reader.result) {
+          newImages.push(reader.result as string);
+          if (newImages.length === files.length) {
+            setFormData((prev) => ({
+              ...prev,
+              heroImage: prev.heroImage || newImages[0],
+              gallery: [...prev.gallery, ...newImages],
+            }));
+            setUploading(false);
+          }
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const removeGalleryImage = (index: number) => {
+    setFormData((prev) => {
+      const updated = prev.gallery.filter((_, i) => i !== index);
+      return {
+        ...prev,
+        gallery: updated,
+        heroImage: updated[0] || prev.heroImage,
+      };
+    });
+  };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -104,7 +160,10 @@ export default function AdminRoomsPage() {
       pricePerNight: Number(formData.pricePerNight),
       weekendPricePerNight: Number(formData.weekendPricePerNight),
       description: formData.description || 'Newly added luxury executive suite in Lekki Phase 1.',
-      heroImage: formData.heroImage,
+      heroImage: formData.heroImage || (formData.gallery[0] || '/images/saffron/saffron-1.jpg'),
+      gallery: formData.gallery.length > 0 ? formData.gallery : [formData.heroImage],
+      partnerId: formData.partnerId || undefined,
+      hostName: formData.hostName || undefined,
       amenities: formData.amenities.split(',').map((s) => s.trim()),
     };
 
@@ -161,8 +220,8 @@ export default function AdminRoomsPage() {
         name: '',
         tagline: 'Executive Single Suite',
         type: 'Executive',
-        pricePerNight: 200000,
-        weekendPricePerNight: 230000,
+        pricePerNight: 100000,
+        weekendPricePerNight: 120000,
         maxGuests: 2,
         propertySize: 160,
         bedrooms: 1,
@@ -170,6 +229,9 @@ export default function AdminRoomsPage() {
         address: '14B, Providence Street, Lekki, Lagos',
         description: '',
         heroImage: '/images/saffron/saffron-1.jpg',
+        gallery: [],
+        partnerId: '',
+        hostName: '',
         amenities: 'WiFi, Air Conditioning, Smart TV, Netflix, Coffee Machine, Room Service',
       });
     }
@@ -302,6 +364,34 @@ export default function AdminRoomsPage() {
               </div>
 
               <form onSubmit={handleCreateRoom} className="space-y-4 text-xs">
+                {/* Property Owner / Partner Selection */}
+                <div>
+                  <label className="text-neutral-300 font-medium flex items-center justify-between">
+                    <span>Property Owner / Partner Merchant</span>
+                    <span className="text-[10px] text-[#C6A15B] font-semibold">Approved Merchants Only</span>
+                  </label>
+                  <select
+                    value={formData.partnerId}
+                    onChange={(e) => {
+                      const selectedPartnerId = e.target.value;
+                      const matchedPartner = approvedPartners.find((p) => p.partnerId === selectedPartnerId);
+                      setFormData({
+                        ...formData,
+                        partnerId: selectedPartnerId,
+                        hostName: matchedPartner ? (matchedPartner.propertyName || matchedPartner.businessName || matchedPartner.contactName) : 'Stay Connect Direct Flagship',
+                      });
+                    }}
+                    className="w-full bg-[#1A1918] border border-[#2C2B29] rounded-lg px-3.5 py-2.5 text-white mt-1 focus:border-[#C6A15B]"
+                  >
+                    <option value="">Stay Connect Global (Direct Flagship Managed)</option>
+                    {approvedPartners.map((p) => (
+                      <option key={p.id || p.partnerId} value={p.partnerId}>
+                        {p.propertyName || p.businessName || p.contactName} ({p.partnerId} • {p.contactName})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="text-neutral-300 font-medium">Suite Name</label>
@@ -327,39 +417,53 @@ export default function AdminRoomsPage() {
                   </div>
                 </div>
 
-                {/* Direct Image File Upload Field */}
+                {/* Bulk Image Upload Field (6+ Photos At Once) */}
                 <div className="space-y-2">
-                  <label className="text-neutral-300 font-medium block">Suite Photo (Direct Image Upload)</label>
-                  <div className="p-4 bg-[#1A1918] border-2 border-dashed border-[#2C2B29] hover:border-[#C6A15B] rounded-xl text-center space-y-3 transition-colors relative">
-                    {formData.heroImage ? (
-                      <div className="relative h-40 rounded-lg overflow-hidden border border-[#C6A15B]">
-                        <img src={formData.heroImage} alt="Uploaded Suite Preview" className="w-full h-full object-cover" />
-                        <div className="absolute top-2 right-2 bg-black/80 px-2 py-1 rounded text-[10px] text-[#C6A15B]">
-                          Ready to Publish
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="py-6 space-y-2">
-                        <ImageIcon className="w-8 h-8 text-[#C6A15B] mx-auto" />
-                        <div className="text-xs text-neutral-300">Click to select photo or drag & drop</div>
-                        <div className="text-[10px] text-neutral-500">JPG, PNG, WEBP up to 10MB</div>
-                      </div>
-                    )}
+                  <div className="flex items-center justify-between">
+                    <label className="text-neutral-300 font-medium block">Suite Photos (Bulk Upload 6+ Photos At Once)</label>
+                    <span className="text-[10px] font-mono text-[#C6A15B] font-semibold">
+                      {formData.gallery.length} Photo(s) Attached
+                    </span>
+                  </div>
 
+                  <div className="p-4 bg-[#1A1918] border-2 border-dashed border-[#2C2B29] hover:border-[#C6A15B] rounded-xl text-center space-y-2 transition-colors relative cursor-pointer">
+                    <div className="w-10 h-10 rounded-full bg-[#111111] text-[#C6A15B] flex items-center justify-center mx-auto border border-[#C6A15B]/40">
+                      <Upload className="w-5 h-5" />
+                    </div>
+                    <div className="space-y-1">
+                      <div className="text-xs font-semibold text-white">Click to Select & Upload At Least 6+ Image Files</div>
+                      <div className="text-[10px] text-neutral-400">Multi-select JPG, PNG, WEBP files directly from device</div>
+                    </div>
                     <input
                       type="file"
                       accept="image/*"
-                      onChange={handleFileUpload}
+                      multiple
+                      onChange={handleBulkImageUpload}
                       className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
                     />
-
-                    {uploading && (
-                      <div className="absolute inset-0 bg-black/75 flex items-center justify-center gap-2 text-[#C6A15B] rounded-xl">
-                        <Loader2 className="w-5 h-5 animate-spin" />
-                        <span>Uploading to Cloudinary...</span>
-                      </div>
-                    )}
                   </div>
+
+                  {formData.gallery.length > 0 && (
+                    <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 pt-2">
+                      {formData.gallery.map((imgSrc, idx) => (
+                        <div key={idx} className="relative h-20 rounded-lg overflow-hidden border border-[#C6A15B]/50 group bg-neutral-900">
+                          <img src={imgSrc} alt={`Suite Photo ${idx + 1}`} className="w-full h-full object-cover" />
+                          <button
+                            type="button"
+                            onClick={() => removeGalleryImage(idx)}
+                            className="absolute top-1 right-1 p-1 bg-black/80 text-rose-400 rounded-full hover:bg-rose-950 transition-colors"
+                          >
+                            <X className="w-3 h-3" />
+                          </button>
+                          {idx === 0 && (
+                            <span className="absolute bottom-1 left-1 bg-[#C6A15B] text-[#111111] text-[8px] font-bold px-1.5 py-0.5 rounded uppercase">
+                              Primary Photo
+                            </span>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
