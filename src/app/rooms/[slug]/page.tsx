@@ -9,7 +9,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const room = INITIAL_ROOMS.find((r) => r.slug === slug || r.id === slug) || INITIAL_ROOMS[0];
   return {
-    title: `${room.name} (${room.type} Suite) | Stay Connect Hotels Lekki`,
+    title: `${room.name} | Stay Connect Global Lekki`,
     description: room.description,
   };
 }
@@ -19,13 +19,13 @@ export default async function RoomDetailPage({ params }: { params: Promise<{ slu
   const room = INITIAL_ROOMS.find((r) => r.slug === slug || r.id === slug);
 
   if (!room) {
-    // Default to Saffron if slug matches saffron or isn't found
-    const saffron = INITIAL_ROOMS[0];
+    // Default to flagship standard room if slug matches saffron or isn't found
+    const standardRoom = INITIAL_ROOMS[0];
     return (
       <div className="min-h-screen bg-[#FAF9F6]">
         <Navbar />
         <main className="pt-20">
-          <RoomDetailClient room={saffron} />
+          <RoomDetailClient room={standardRoom} />
         </main>
         <Footer />
       </div>

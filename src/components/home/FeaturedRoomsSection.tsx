@@ -8,7 +8,7 @@ import { Star, Users, Maximize, Bed, Bath, ArrowRight, ShieldCheck, Building2, C
 import { INITIAL_ROOMS, INITIAL_PROPERTIES } from '@/lib/data/seedData';
 
 export default function FeaturedRoomsSection() {
-  const saffronRoom = INITIAL_ROOMS.find((r) => r.slug === 'saffron') || INITIAL_ROOMS[0];
+  const standardRoom = INITIAL_ROOMS.find((r) => r.slug === 'standard-room' || r.slug === 'saffron') || INITIAL_ROOMS[0];
 
   // Partner Collection Properties
   const partnerCollection = INITIAL_PROPERTIES.filter((p) => p.partnerId);
@@ -33,13 +33,13 @@ export default function FeaturedRoomsSection() {
             </p>
           </div>
 
-          {/* Hero Spotlight Card: SAFFRON EXECUTIVE SUITE */}
+          {/* Hero Spotlight Card: STANDARD EXECUTIVE ROOM */}
           <div className="bg-[#1A1918] rounded-2xl border border-[#2C2B29] hover:border-[#C6A15B]/40 shadow-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-0 group">
             {/* Image Showcase */}
             <div className="lg:col-span-7 relative min-h-[420px] bg-neutral-900 overflow-hidden">
               <Image
-                src={saffronRoom.heroImage}
-                alt="Saffron Executive Suite"
+                src={standardRoom.heroImage}
+                alt="Standard Room"
                 fill
                 className="object-cover transition-transform duration-1000 group-hover:scale-105"
               />
@@ -60,18 +60,18 @@ export default function FeaturedRoomsSection() {
               </div>
             </div>
 
-            {/* Saffron Content Details */}
+            {/* Standard Room Content Details */}
             <div className="lg:col-span-5 p-8 lg:p-12 flex flex-col justify-between space-y-6">
               <div>
                 <div className="flex items-center justify-between text-xs text-neutral-400 font-light mb-2">
-                  <span className="uppercase tracking-widest text-[#C6A15B] font-semibold">{saffronRoom.type} Suite</span>
+                  <span className="uppercase tracking-widest text-[#C6A15B] font-semibold">{standardRoom.type} Room</span>
                   <span>Managed Directly</span>
                 </div>
                 <h3 className="font-serif text-3xl lg:text-4xl text-white font-normal mb-3">
-                  {saffronRoom.name}
+                  {standardRoom.name}
                 </h3>
                 <p className="text-neutral-300 text-xs sm:text-sm font-light leading-relaxed mb-6">
-                  {saffronRoom.description}
+                  {standardRoom.description}
                 </p>
 
                 {/* Spec Badges Grid */}
@@ -80,7 +80,7 @@ export default function FeaturedRoomsSection() {
                     <span className="text-[10px] uppercase tracking-wider text-neutral-400 font-medium">Capacity</span>
                     <span className="text-xs font-semibold text-white flex items-center gap-1 mt-0.5">
                       <Users className="w-3.5 h-3.5 text-[#C6A15B]" />
-                      <span>{saffronRoom.maxGuests} Guests</span>
+                      <span>{standardRoom.maxGuests} Guests</span>
                     </span>
                   </div>
 
@@ -88,7 +88,7 @@ export default function FeaturedRoomsSection() {
                     <span className="text-[10px] uppercase tracking-wider text-neutral-400 font-medium">Size</span>
                     <span className="text-xs font-semibold text-white flex items-center gap-1 mt-0.5">
                       <Maximize className="w-3.5 h-3.5 text-[#C6A15B]" />
-                      <span>{saffronRoom.propertySize} m²</span>
+                      <span>{standardRoom.propertySize} m²</span>
                     </span>
                   </div>
 
@@ -96,7 +96,7 @@ export default function FeaturedRoomsSection() {
                     <span className="text-[10px] uppercase tracking-wider text-neutral-400 font-medium">Bedrooms</span>
                     <span className="text-xs font-semibold text-white flex items-center gap-1 mt-0.5">
                       <Bed className="w-3.5 h-3.5 text-[#C6A15B]" />
-                      <span>{saffronRoom.bedrooms} BR</span>
+                      <span>{standardRoom.bedrooms} BR</span>
                     </span>
                   </div>
 
@@ -104,7 +104,7 @@ export default function FeaturedRoomsSection() {
                     <span className="text-[10px] uppercase tracking-wider text-neutral-400 font-medium">Bathrooms</span>
                     <span className="text-xs font-semibold text-white flex items-center gap-1 mt-0.5">
                       <Bath className="w-3.5 h-3.5 text-[#C6A15B]" />
-                      <span>{saffronRoom.bathrooms} BA</span>
+                      <span>{standardRoom.bathrooms} BA</span>
                     </span>
                   </div>
                 </div>
@@ -116,7 +116,7 @@ export default function FeaturedRoomsSection() {
                   <span className="text-[10px] uppercase tracking-widest text-neutral-400">Nightly Rate</span>
                   <div className="flex items-baseline gap-1">
                     <span className="font-serif text-3xl font-semibold text-[#C6A15B]">
-                      ₦{saffronRoom.pricePerNight.toLocaleString()}
+                      ₦{standardRoom.pricePerNight.toLocaleString()}
                     </span>
                     <span className="text-xs text-neutral-400 font-light">/ night</span>
                   </div>
@@ -124,7 +124,7 @@ export default function FeaturedRoomsSection() {
 
                 <div className="flex items-center gap-3">
                   <Link
-                    href={`/rooms/${saffronRoom.slug}`}
+                    href={`/rooms/${standardRoom.slug}`}
                     className="px-6 py-3 bg-[#C6A15B] hover:bg-[#d8b46e] text-[#111111] text-xs font-semibold uppercase tracking-widest rounded-lg transition-all shadow-md flex items-center gap-2"
                   >
                     <span>Book Your Stay</span>

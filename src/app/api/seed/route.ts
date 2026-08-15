@@ -46,7 +46,7 @@ export async function GET() {
         propertiesCount: properties.length,
         roomsCount: rooms.length,
         bookingsCount: bookings.length,
-        saffronSuite: rooms.find(r => r.slug === 'saffron'),
+        standardRoom: rooms.find(r => r.slug === 'standard-room' || r.slug === 'saffron'),
       },
     });
   } catch (error: any) {

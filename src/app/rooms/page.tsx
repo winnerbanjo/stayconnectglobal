@@ -4,8 +4,8 @@ import Footer from '@/components/navigation/Footer';
 import FeaturedRoomsSection from '@/components/home/FeaturedRoomsSection';
 
 export const metadata = {
-  title: 'Suites & Accommodations | Stay Connect Hotels Lekki',
-  description: 'Explore Saffron Executive Suite, Presidential Penthouse, and Executive Deluxe Suites at 14B Providence Street, Lekki Phase 1, Lagos.',
+  title: 'Suites & Accommodations | Stay Connect Global Lekki',
+  description: 'Explore the Standard Room and luxury executive residences at 14B Providence Street, Lekki Phase 1, Lagos.',
 };
 
 export default function RoomsPage() {

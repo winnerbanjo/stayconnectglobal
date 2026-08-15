@@ -39,7 +39,7 @@ export default function ExperiencesPage() {
                 Bespoke Experiences Available on Request
               </h2>
               <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 font-light leading-relaxed">
-                From private Lagos lagoon yacht cruises to in-suite Michelin-trained chefs, our concierge arranges customized luxury experiences for Saffron suite guests.
+                From private Lagos lagoon yacht cruises to in-suite Michelin-trained chefs, our concierge arranges customized luxury experiences for Standard Room guests.
               </p>
             </div>
 

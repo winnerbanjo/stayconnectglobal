@@ -54,8 +54,8 @@ export async function POST(request: Request) {
     const newBookingData = {
       bookingRef,
       propertyId: propertyId || 'prop-lekki-1',
-      roomId: roomId || 'room-saffron-1',
-      roomName: roomName || 'Saffron (Executive Single Room)',
+      roomId: roomId || 'room-standard-1',
+      roomName: roomName || 'Standard Room (Executive Single Room)',
       checkIn: checkIn || '',
       checkOut: checkOut || '',
       nights: Number(nights) || 1,

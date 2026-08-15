@@ -7,8 +7,8 @@ import { Tag, ArrowRight, Clock } from 'lucide-react';
 import { INITIAL_OFFERS } from '@/lib/data/seedData';
 
 export const metadata = {
-  title: 'Exclusive Offers & Packages | Stay Connect Hotels Lekki',
-  description: 'Seasonal stay packages, 20% Lekki weekend escapes, and long-stay corporate discounts at Stay Connect Hotels.',
+  title: 'Exclusive Offers & Packages | Stay Connect Global Lekki',
+  description: 'Seasonal stay packages, 20% Lekki weekend escapes, and long-stay corporate discounts at Stay Connect Global.',
 };
 
 export default function OffersPage() {
@@ -26,7 +26,7 @@ export default function OffersPage() {
               Offers & Seasonal Packages
             </h1>
             <p className="text-neutral-600 text-sm font-light max-w-xl mx-auto">
-              Curated packages featuring preferential rates for Saffron suite stays, fine dining inclusions, and long-term retreats in Lekki.
+              Curated packages featuring preferential rates for Standard Room stays, fine dining inclusions, and long-term retreats in Lekki.
             </p>
           </div>
 

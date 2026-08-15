@@ -9,8 +9,8 @@ export default function GalleryPage() {
   const [activeCategory, setActiveCategory] = useState<string>('All');
 
   const photos = [
-    { title: 'Saffron Executive Suite Bedroom', category: 'Suites', src: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1600&q=90' },
-    { title: 'Saffron Suite Executive Lounge', category: 'Suites', src: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1600&q=90' },
+    { title: 'Standard Room Bedroom', category: 'Suites', src: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1600&q=90' },
+    { title: 'Standard Room Executive Lounge', category: 'Suites', src: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1600&q=90' },
     { title: 'Royal Penthouse Skyline View', category: 'Suites', src: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=1600&q=90' },
     { title: 'Aura Fine Dining & Wine Bar', category: 'Dining', src: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=90' },
     { title: 'Rooftop Infinity Pool', category: 'Wellness', src: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1600&q=90' },

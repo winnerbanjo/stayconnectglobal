@@ -39,9 +39,9 @@ export default function BookingPage() {
   const [bookingCompleted, setBookingCompleted] = useState<any>(null);
 
   const [formData, setFormData] = useState({
-    suiteSlug: 'saffron',
-    suiteName: 'Saffron Executive Suite (14B Providence)',
-    pricePerNight: 185000,
+    suiteSlug: 'standard-room',
+    suiteName: 'Standard Room (14B Providence)',
+    pricePerNight: 100000,
     checkIn: '2026-08-15',
     checkOut: '2026-08-18',
     nights: 3,

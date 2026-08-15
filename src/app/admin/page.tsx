@@ -61,11 +61,11 @@ export default function AdminPage() {
   const [newWalkIn, setNewWalkIn] = useState({
     guestName: '',
     guestPhone: '',
-    roomName: 'Saffron (Executive Single Room)',
+    roomName: 'Standard Room (Executive Single Room)',
     checkIn: '2026-08-04',
     checkOut: '2026-08-07',
     nights: 3,
-    totalPrice: 624375,
+    totalPrice: 337500,
     paymentMethod: 'Bank Transfer',
     channel: 'Walk-In',
   });
@@ -85,7 +85,7 @@ export default function AdminPage() {
       id: `book-walkin-${Date.now()}`,
       bookingRef: `SC-WALKIN-${Math.floor(1000 + Math.random() * 9000)}`,
       propertyId: 'prop-lekki-1',
-      roomId: 'room-saffron-1',
+      roomId: 'room-standard-1',
       roomName: newWalkIn.roomName,
       checkIn: newWalkIn.checkIn,
       checkOut: newWalkIn.checkOut,
@@ -93,7 +93,7 @@ export default function AdminPage() {
       adults: 2,
       children: 0,
       guestName: newWalkIn.guestName,
-      guestEmail: 'frontdesk@stayconnecthotels.com',
+      guestEmail: 'frontdesk@stayconnectglobal.com',
       guestPhone: newWalkIn.guestPhone || '+234 704 100 8351',
       country: 'Nigeria',
       specialRequests: 'Walk-In reservation entered by Front Desk Admin',
@@ -112,11 +112,11 @@ export default function AdminPage() {
     setNewWalkIn({
       guestName: '',
       guestPhone: '',
-      roomName: 'Saffron (Executive Single Room)',
+      roomName: 'Standard Room (Executive Single Room)',
       checkIn: '2026-08-04',
       checkOut: '2026-08-07',
       nights: 3,
-      totalPrice: 624375,
+      totalPrice: 337500,
       paymentMethod: 'Bank Transfer',
       channel: 'Walk-In',
     });
@@ -432,7 +432,7 @@ export default function AdminPage() {
                           <div className="text-[10px] text-neutral-400">{p.totalUnits || 1} Units Offered</div>
                         </td>
                         <td className="py-4 px-4 font-serif text-sm text-[#C6A15B] font-semibold">
-                          ₦{(p.expectedRate || 185000).toLocaleString()} / night
+                          ₦{(p.expectedRate || 100000).toLocaleString()} / night
                         </td>
                         <td className="py-4 px-4 space-y-2">
                           <span className={`inline-block px-2.5 py-1 text-[10px] font-bold uppercase rounded ${

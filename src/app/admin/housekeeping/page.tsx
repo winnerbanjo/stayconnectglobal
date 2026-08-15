@@ -20,7 +20,7 @@ export default function AdminHousekeepingPage() {
   const [housekeepingList, setHousekeepingList] = useState<RoomStatus[]>([
     {
       id: 'hk-1',
-      roomName: 'Saffron Executive Suite (14B Providence)',
+      roomName: 'Standard Room (14B Providence)',
       roomType: 'Executive Single Suite',
       assignedHousekeeper: 'Blessing Okon',
       cleaningStatus: 'Clean & Inspected',

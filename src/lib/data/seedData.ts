@@ -9,11 +9,11 @@ export const INITIAL_PROPERTIES: Property[] = [
     category: 'Luxury Hotel',
     hostName: 'Stay Connect Global',
     isVerified: true,
-    pricingStartingFrom: 185000,
+    pricingStartingFrom: 100000,
     address: '14B, Providence Street, Lekki Phase 1, Lagos, Nigeria',
     city: 'Lagos',
     coordinates: { lat: 6.4474, lng: 3.4723 },
-    description: 'Stay Connect Lekki defines quiet luxury in the prestigious Lekki enclave of Lagos. Blending editorial design, timeless architecture, and personalized Nigerian hospitality, each suite provides an elevated urban retreat for elite travelers, executives, and couples.',
+    description: 'Stay Connect Lekki defines quiet luxury in the prestigious Lekki enclave of Lagos. Blending editorial design, timeless architecture, and personalized Nigerian hospitality, each room provides an elevated urban retreat for elite travelers, executives, and couples.',
     heroImage: '/images/saffron/saffron-1.jpg',
     heroVideo: 'https://assets.mixkit.co/videos/preview/mixkit-top-view-of-a-luxury-hotel-pool-42885-large.mp4',
     logoUrl: '/logo.svg',
@@ -47,10 +47,10 @@ export const INITIAL_PROPERTIES: Property[] = [
 
 export const INITIAL_ROOMS: Room[] = [
   {
-    id: 'room-saffron-1',
-    slug: 'saffron',
-    name: 'Saffron',
-    tagline: 'Executive Single Suite',
+    id: 'room-standard-1',
+    slug: 'standard-room',
+    name: 'Standard Room',
+    tagline: 'Standard Executive Room',
     propertyId: 'prop-lekki-1',
     type: 'Executive',
     address: '14B, Providence Street, Lekki, Lagos',
@@ -60,9 +60,9 @@ export const INITIAL_ROOMS: Room[] = [
     propertySize: 150,
     bedrooms: 1,
     bathrooms: 1,
-    pricePerNight: 185000,
-    weekendPricePerNight: 210000,
-    holidayPricePerNight: 250000,
+    pricePerNight: 100000,
+    weekendPricePerNight: 120000,
+    holidayPricePerNight: 150000,
     rating: 5.0,
     reviewCount: 1,
     ratingBreakdown: {
@@ -72,7 +72,7 @@ export const INITIAL_ROOMS: Room[] = [
       twoStar: 0,
       oneStar: 0
     },
-    description: 'Experience elevated living in Saffron, an elegantly designed executive suite located at 14B, Providence Street, Lekki, Lagos. This premium apartment combines comfort, convenience, and modern sophistication—perfect for professionals, couples, or anyone seeking a luxurious city lifestyle.',
+    description: 'Experience elevated living in the Standard Room, an elegantly designed executive room located at 14B, Providence Street, Lekki, Lagos. This premium room combines comfort, convenience, and modern sophistication—perfect for professionals, couples, or anyone seeking a luxurious city lifestyle.',
     heroImage: '/images/saffron/saffron-1.jpg',
     gallery: [
       '/images/saffron/saffron-1.jpg',
@@ -120,14 +120,14 @@ export const INITIAL_ROOMS: Room[] = [
 
 export const INITIAL_REVIEWS: Review[] = [
   {
-    id: 'rev-saffron-1',
+    id: 'rev-standard-1',
     guestName: 'Dr. Babatunde Alabi',
     guestAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80',
     rating: 5.0,
     date: 'July 24, 2026',
     title: 'An Oasis of Tranquility in Lekki',
-    comment: 'Saffron exceeded all my expectations. The subtle luxury, immaculate cleanliness, 150m² of thoughtful spatial design, and flawless customer care made my business trip to Lagos unforgettable. 14B Providence Street is unmatched.',
-    roomType: 'Saffron (Executive Single Room)',
+    comment: 'The Standard Room exceeded all my expectations. The subtle luxury, immaculate cleanliness, 150m² of thoughtful spatial design, and flawless customer care made my business trip to Lagos unforgettable. 14B Providence Street is unmatched.',
+    roomType: 'Standard Room (Executive Single Room)',
     verified: true
   }
 ];

@@ -4,19 +4,19 @@ import Footer from '@/components/navigation/Footer';
 import { HelpCircle } from 'lucide-react';
 
 export const metadata = {
-  title: 'Frequently Asked Questions | Stay Connect Hotels Lekki',
-  description: 'Answers to guest queries regarding check-in times, Saffron suite specifications, power backup, and airport transfers.',
+  title: 'Frequently Asked Questions | Stay Connect Global Lekki',
+  description: 'Answers to guest queries regarding check-in times, Standard Room specifications, power backup, and airport transfers.',
 };
 
 export default function FAQPage() {
   const faqs = [
     {
-      q: 'Where is Stay Connect Hotels located?',
-      a: 'Our flagship hotel property is located at 14B, Providence Street, Lekki Phase 1, Lagos, Nigeria — a serene, highly secured enclave within close proximity to Admiralty Way, Nike Art Gallery, and Ikoyi.'
+      q: 'Where is Stay Connect Global located?',
+      a: 'Our flagship property is located at 14B, Providence Street, Lekki Phase 1, Lagos, Nigeria — a serene, highly secured enclave within close proximity to Admiralty Way, Nike Art Gallery, and Ikoyi.'
     },
     {
-      q: 'What are the specifications for the Saffron Executive Suite?',
-      a: 'Saffron is a 150 m² executive single room featuring 1 bedroom, 1 bathroom, king pillow-top bed, Nespresso coffee machine, Evian mineral water, high-speed fiber internet, and 24/7 climate control.'
+      q: 'What are the specifications for the Standard Room?',
+      a: 'The Standard Room is a 150 m² executive single room featuring 1 bedroom, 1 bathroom, king pillow-top bed, Nespresso coffee machine, Evian mineral water, high-speed fiber internet, and 24/7 climate control.'
     },
     {
       q: 'Do you guarantee 24/7 uninterrupted power?',
