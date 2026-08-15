@@ -23,7 +23,15 @@ import {
   Car,
   Lock,
   RefreshCw,
-  Utensils
+  Utensils,
+  Eye,
+  Building2,
+  MapPin,
+  Mail,
+  CheckCircle2,
+  X,
+  Upload,
+  Image as ImageIcon
 } from 'lucide-react';
 import { INITIAL_BOOKINGS, INITIAL_ROOMS, INITIAL_PARTNERS } from '@/lib/data/seedData';
 import { Booking, Partner } from '@/types';
@@ -33,6 +41,7 @@ import AdminMobileNav from '@/components/admin/AdminMobileNav';
 export default function AdminPage() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [partners, setPartners] = useState<Partner[]>([]);
+  const [selectedPartnerModal, setSelectedPartnerModal] = useState<any>(null);
   const [activeTab, setActiveTab] = useState<'BOOKINGS' | 'PARTNERS'>('BOOKINGS');
   const [activeFilter, setActiveFilter] = useState<'ALL' | 'DIGITAL' | 'WALK_IN'>('ALL');
   const [showAddWalkInModal, setShowAddWalkInModal] = useState(false);
@@ -417,30 +426,44 @@ export default function AdminPage() {
                   </thead>
                   <tbody className="divide-y divide-[#2C2B29]">
                     {partners.map((p: any) => (
-                      <tr key={p.id || p.partnerId} className="hover:bg-[#252422] transition-colors">
-                        <td className="py-4 px-4 font-mono text-white font-medium">{p.partnerId || 'PART-NEW'}</td>
+                      <tr
+                        key={p.id || p.partnerId}
+                        onClick={() => setSelectedPartnerModal(p)}
+                        className="hover:bg-[#252422] transition-colors cursor-pointer group"
+                      >
+                        <td className="py-4 px-4 font-mono text-white font-medium group-hover:text-[#C6A15B] transition-colors">
+                          {p.partnerId || 'PART-NEW'}
+                        </td>
                         <td className="py-4 px-4">
                           <div className="text-white font-medium">{p.contactName || p.name}</div>
                           <div className="text-[10px] text-neutral-400 font-mono">{p.email}</div>
                           <div className="text-[10px] text-[#C6A15B] font-mono">{p.phone}</div>
                         </td>
                         <td className="py-4 px-4">
-                          <div className="text-white font-serif text-sm font-medium">{p.companyName || p.propertyName || 'Private Luxury Residence'}</div>
+                          <div className="text-white font-serif text-sm font-medium">{p.propertyName || p.businessName || p.companyName || 'Private Luxury Residence'}</div>
+                          <div className="text-[10px] text-neutral-400">{p.propertyType || 'Serviced Apartment'}</div>
                         </td>
                         <td className="py-4 px-4">
-                          <div>{p.location || 'Lagos, Nigeria'}</div>
-                          <div className="text-[10px] text-neutral-400">{p.totalUnits || 1} Units Offered</div>
+                          <div>{p.address ? `${p.address}, ${p.city || 'Lagos'}` : (p.location || 'Lagos, Nigeria')}</div>
+                          <div className="text-[10px] text-neutral-400">{p.numberOfUnits || p.totalUnits || 1} Units Offered</div>
                         </td>
                         <td className="py-4 px-4 font-serif text-sm text-[#C6A15B] font-semibold">
-                          ₦{(p.expectedRate || 100000).toLocaleString()} / night
+                          ₦{(p.expectedRate || p.pricingStartingFrom || 100000).toLocaleString()} / night
                         </td>
-                        <td className="py-4 px-4 space-y-2">
+                        <td className="py-4 px-4 space-y-2" onClick={(e) => e.stopPropagation()}>
                           <span className={`inline-block px-2.5 py-1 text-[10px] font-bold uppercase rounded ${
-                            p.status === 'Verified' ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' : 'bg-amber-950 text-amber-400 border border-amber-800'
+                            p.status === 'Approved' || p.status === 'Verified' ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' : 'bg-amber-950 text-amber-400 border border-amber-800'
                           }`}>
                             {p.status || 'Pending Onboarding'}
                           </span>
-                          <div>
+                          <div className="flex items-center gap-3">
+                            <button
+                              onClick={() => setSelectedPartnerModal(p)}
+                              className="inline-flex items-center gap-1 px-3 py-1.5 rounded bg-[#C6A15B] text-[#111111] font-bold text-[10px] uppercase tracking-wider hover:bg-[#d8b46e] transition-colors shadow-sm"
+                            >
+                              <Eye className="w-3 h-3" />
+                              <span>View Onboarding Details</span>
+                            </button>
                             <a
                               href={`https://wa.me/${(p.phone || '+2347041008351').replace(/[^0-9]/g, '')}?text=${encodeURIComponent(
                                 `Hello ${p.contactName || 'Partner'}, this is Stay Connect Admin regarding your property application on Stay Connect Global.`
@@ -450,7 +473,7 @@ export default function AdminPage() {
                               className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#C6A15B] hover:text-white transition-colors"
                             >
                               <MessageSquare className="w-3.5 h-3.5" />
-                              <span>Contact via WhatsApp</span>
+                              <span>WhatsApp</span>
                             </a>
                           </div>
                         </td>
@@ -570,6 +593,234 @@ export default function AdminPage() {
                   </button>
                 </div>
               </form>
+            </div>
+          </div>
+        )}
+
+        {/* Merchant Onboarding Application Details Modal */}
+        {selectedPartnerModal && (
+          <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+            <div className="bg-[#111111] text-white p-6 sm:p-8 rounded-3xl border border-[#C6A15B]/50 max-w-2xl w-full space-y-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+              <div className="flex items-center justify-between border-b border-[#2C2B29] pb-4">
+                <div>
+                  <div className="inline-flex items-center gap-2 text-[10px] uppercase tracking-widest text-[#C6A15B] font-semibold">
+                    <ShieldCheck className="w-4 h-4" />
+                    <span>Merchant Onboarding File • {selectedPartnerModal.partnerId || 'PART-86871'}</span>
+                  </div>
+                  <h3 className="font-serif text-2xl text-white mt-1">Partner Application Details</h3>
+                </div>
+                <button
+                  onClick={() => setSelectedPartnerModal(null)}
+                  className="p-2 text-neutral-400 hover:text-white rounded-xl bg-[#1A1918] border border-[#2C2B29]"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs">
+                {/* Contact Information */}
+                <div className="space-y-3 bg-[#1A1918] p-5 rounded-2xl border border-[#2C2B29]">
+                  <div className="text-[10px] uppercase tracking-wider text-[#C6A15B] font-bold flex items-center gap-1.5">
+                    <UserCheck className="w-3.5 h-3.5" />
+                    <span>1. Applicant Contact Info</span>
+                  </div>
+                  <div>
+                    <span className="text-neutral-400 block text-[10px]">Contact Person Name</span>
+                    <span className="text-sm font-semibold text-white">{selectedPartnerModal.contactName || selectedPartnerModal.name || 'WINNER OYEBANJO'}</span>
+                  </div>
+                  <div>
+                    <span className="text-neutral-400 block text-[10px]">Email Address</span>
+                    <span className="font-mono text-white flex items-center gap-1.5 mt-0.5">
+                      <Mail className="w-3.5 h-3.5 text-[#C6A15B]" />
+                      {selectedPartnerModal.email}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-neutral-400 block text-[10px]">Phone / WhatsApp</span>
+                    <span className="font-mono text-[#C6A15B] font-bold flex items-center gap-1.5 mt-0.5">
+                      <PhoneCall className="w-3.5 h-3.5" />
+                      {selectedPartnerModal.phone}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Property Details */}
+                <div className="space-y-3 bg-[#1A1918] p-5 rounded-2xl border border-[#2C2B29]">
+                  <div className="text-[10px] uppercase tracking-wider text-[#C6A15B] font-bold flex items-center gap-1.5">
+                    <Building2 className="w-3.5 h-3.5" />
+                    <span>2. Property Specifications</span>
+                  </div>
+                  <div>
+                    <span className="text-neutral-400 block text-[10px]">Company / Property Name</span>
+                    <span className="font-serif text-base font-medium text-white">{selectedPartnerModal.propertyName || selectedPartnerModal.businessName || 'MARY HOUSE'}</span>
+                  </div>
+                  <div>
+                    <span className="text-neutral-400 block text-[10px]">Property Category</span>
+                    <span className="text-white font-medium">{selectedPartnerModal.propertyType || 'Serviced Apartment'}</span>
+                  </div>
+                  <div>
+                    <span className="text-neutral-400 block text-[10px]">Location & Address</span>
+                    <span className="text-white flex items-center gap-1 mt-0.5">
+                      <MapPin className="w-3.5 h-3.5 text-[#C6A15B] shrink-0" />
+                      <span>{selectedPartnerModal.address ? `${selectedPartnerModal.address}, ${selectedPartnerModal.city || 'Lagos'}` : (selectedPartnerModal.location || 'Lagos, Nigeria')}</span>
+                    </span>
+                  </div>
+                </div>
+
+                {/* Commercials & Units */}
+                <div className="space-y-3 bg-[#1A1918] p-5 rounded-2xl border border-[#2C2B29] sm:col-span-2">
+                  <div className="flex items-center justify-between border-b border-[#2C2B29] pb-3">
+                    <div className="text-[10px] uppercase tracking-wider text-[#C6A15B] font-bold">3. Commercials & Inventory Offered</div>
+                    <span className={`px-3 py-1 text-[10px] uppercase font-bold rounded-full border ${
+                      selectedPartnerModal.status === 'Approved' || selectedPartnerModal.status === 'Verified' ? 'bg-emerald-950 text-emerald-400 border-emerald-800' : 'bg-amber-950 text-amber-400 border-amber-800'
+                    }`}>
+                      {selectedPartnerModal.status || 'Pending Onboarding'}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-1">
+                    <div>
+                      <span className="text-neutral-400 block text-[10px]">Units Offered</span>
+                      <span className="text-sm font-semibold text-white">{selectedPartnerModal.numberOfUnits || selectedPartnerModal.totalUnits || 1} Unit(s)</span>
+                    </div>
+                    <div>
+                      <span className="text-neutral-400 block text-[10px]">Expected Nightly Rate</span>
+                      <span className="text-sm font-serif font-bold text-[#C6A15B]">₦{(selectedPartnerModal.expectedRate || selectedPartnerModal.pricingStartingFrom || 100000).toLocaleString()} / night</span>
+                    </div>
+                    <div>
+                      <span className="text-neutral-400 block text-[10px]">Onboarding Commission</span>
+                      <span className="text-sm font-semibold text-emerald-400">{selectedPartnerModal.commissionRate || 10}% Negotiated</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Amenities List */}
+                {selectedPartnerModal.amenities && selectedPartnerModal.amenities.length > 0 && (
+                  <div className="space-y-3 bg-[#1A1918] p-5 rounded-2xl border border-[#2C2B29] sm:col-span-2">
+                    <div className="text-[10px] uppercase tracking-wider text-[#C6A15B] font-bold">4. Submitted Property Amenities</div>
+                    <div className="flex flex-wrap gap-2 pt-1">
+                      {selectedPartnerModal.amenities.map((item: string, idx: number) => (
+                        <span key={idx} className="px-3 py-1 bg-[#111111] border border-[#C6A15B]/30 rounded-lg text-[11px] text-neutral-200 flex items-center gap-1.5">
+                          <CheckCircle2 className="w-3 h-3 text-[#C6A15B]" />
+                          <span>{item}</span>
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Property Photos & Direct File Upload */}
+                <div className="space-y-4 bg-[#1A1918] p-5 rounded-2xl border border-[#2C2B29] sm:col-span-2">
+                  <div className="flex items-center justify-between">
+                    <div className="text-[10px] uppercase tracking-wider text-[#C6A15B] font-bold flex items-center gap-1.5">
+                      <ImageIcon className="w-3.5 h-3.5" />
+                      <span>5. Property Photos (Direct File Uploads)</span>
+                    </div>
+                    <span className="text-[10px] text-neutral-400">
+                      {selectedPartnerModal.images?.length || 0} File(s) Attached
+                    </span>
+                  </div>
+
+                  {/* Direct Image File Picker Dropzone */}
+                  <div className="p-5 bg-[#111111] border-2 border-dashed border-[#C6A15B]/40 hover:border-[#C6A15B] rounded-xl text-center relative transition-colors cursor-pointer group space-y-2">
+                    <div className="w-10 h-10 rounded-full bg-[#1A1918] text-[#C6A15B] flex items-center justify-center mx-auto border border-[#C6A15B]/30 group-hover:scale-110 transition-transform">
+                      <Upload className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <div className="text-xs font-semibold text-white">Click to Upload / Add Property Photo Files</div>
+                      <div className="text-[10px] text-neutral-400 font-light mt-0.5">Select image files (JPG, PNG, WEBP) directly from device. No image links needed.</div>
+                    </div>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      onChange={(e) => {
+                        const files = e.target.files;
+                        if (!files || files.length === 0) return;
+                        Array.from(files).forEach((file) => {
+                          const reader = new FileReader();
+                          reader.onloadend = () => {
+                            if (reader.result) {
+                              setSelectedPartnerModal((prev: any) => ({
+                                ...prev,
+                                images: [...(prev?.images || []), reader.result as string],
+                              }));
+                            }
+                          };
+                          reader.readAsDataURL(file);
+                        });
+                      }}
+                      className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+                    />
+                  </div>
+
+                  {/* Photo Thumbnails */}
+                  {selectedPartnerModal.images && selectedPartnerModal.images.length > 0 ? (
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+                      {selectedPartnerModal.images.map((imgSrc: string, i: number) => (
+                        <div key={i} className="relative h-28 rounded-xl overflow-hidden border border-[#C6A15B]/40 bg-neutral-900 group">
+                          <img src={imgSrc} alt={`Property Photo ${i + 1}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setSelectedPartnerModal((prev: any) => ({
+                                ...prev,
+                                images: prev.images.filter((_: any, idx: number) => idx !== i),
+                              }));
+                            }}
+                            className="absolute top-1.5 right-1.5 p-1 bg-black/80 text-rose-400 rounded-full hover:bg-rose-950 transition-colors"
+                          >
+                            <X className="w-3.5 h-3.5" />
+                          </button>
+                          <span className="absolute bottom-1 left-1.5 bg-black/75 px-2 py-0.5 rounded text-[9px] font-mono text-[#C6A15B]">
+                            Photo #{i + 1}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-[11px] text-neutral-400 italic text-center py-2 bg-[#111111] rounded-xl border border-[#2C2B29]">
+                      No photos uploaded yet. Use the file picker above to attach actual image files.
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="pt-4 border-t border-[#2C2B29] flex flex-col sm:flex-row items-center justify-between gap-3">
+                <a
+                  href={`https://wa.me/${(selectedPartnerModal.phone || '+2347041008351').replace(/[^0-9]/g, '')}?text=${encodeURIComponent(
+                    `Hello ${selectedPartnerModal.contactName || 'Partner'}, this is Stay Connect Global Admin regarding your property application for ${selectedPartnerModal.propertyName || selectedPartnerModal.businessName || 'MARY HOUSE'}.`
+                  )}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-full sm:w-auto px-6 py-3 bg-[#25D366] hover:bg-[#20bd5a] text-black font-bold text-xs uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg"
+                >
+                  <MessageSquare className="w-4 h-4 fill-black" />
+                  <span>Contact via WhatsApp ({selectedPartnerModal.phone})</span>
+                </a>
+
+                <div className="flex items-center gap-3 w-full sm:w-auto">
+                  {selectedPartnerModal.status !== 'Approved' && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setPartners(partners.map(p => (p.partnerId === selectedPartnerModal.partnerId || p.email === selectedPartnerModal.email) ? { ...p, status: 'Approved' } : p));
+                        setSelectedPartnerModal((prev: any) => ({ ...prev, status: 'Approved' }));
+                      }}
+                      className="flex-1 sm:flex-none px-6 py-3 bg-[#C6A15B] hover:bg-[#d8b46e] text-[#111111] font-bold text-xs uppercase tracking-widest rounded-xl transition-all shadow-lg"
+                    >
+                      Approve Merchant
+                    </button>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => setSelectedPartnerModal(null)}
+                    className="px-5 py-3 bg-[#1A1918] text-neutral-400 hover:text-white text-xs uppercase font-medium rounded-xl border border-[#2C2B29]"
+                  >
+                    Close Details
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         )}

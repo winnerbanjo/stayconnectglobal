@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Navbar from '@/components/navigation/Navbar';
 import Footer from '@/components/navigation/Footer';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Building2, CheckCircle2, ShieldCheck, Upload, ArrowRight, Phone, Mail, MapPin } from 'lucide-react';
+import { Building2, CheckCircle2, ShieldCheck, Upload, ArrowRight, Phone, Mail, MapPin, Image as ImageIcon, X } from 'lucide-react';
 
 export default function ListYourPropertyPage() {
   const [submitted, setSubmitted] = useState(false);
@@ -19,10 +19,37 @@ export default function ListYourPropertyPage() {
     address: '',
     city: 'Lagos',
     numberOfUnits: 1,
+    expectedRate: 100000,
     description: '',
     amenities: [] as string[],
+    images: [] as string[],
     notes: '',
   });
+
+  const handleImageFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    Array.from(files).forEach((file) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (reader.result) {
+          setFormData((prev) => ({
+            ...prev,
+            images: [...prev.images, reader.result as string],
+          }));
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const removeUploadedImage = (index: number) => {
+    setFormData((prev) => ({
+      ...prev,
+      images: prev.images.filter((_, i) => i !== index),
+    }));
+  };
 
   const amenitiesOptions = [
     '24/7 Power Generator',
@@ -293,6 +320,52 @@ export default function ListYourPropertyPage() {
                       );
                     })}
                   </div>
+                </div>
+
+                {/* Property Photos (Direct File Upload) */}
+                <div className="border-b border-[#2C2B29] pb-6 space-y-4">
+                  <div>
+                    <h3 className="font-serif text-2xl text-white">4. Property Photos (Direct File Upload)</h3>
+                    <p className="text-xs text-neutral-400 font-light mt-1">Select actual image files from your phone or computer. No image links required.</p>
+                  </div>
+
+                  <div className="p-6 bg-[#111111] border-2 border-dashed border-[#2C2B29] hover:border-[#C6A15B] rounded-2xl text-center space-y-3 transition-colors relative">
+                    <div className="w-12 h-12 rounded-full bg-[#1A1918] text-[#C6A15B] flex items-center justify-center mx-auto border border-[#C6A15B]/40">
+                      <ImageIcon className="w-6 h-6" />
+                    </div>
+                    <div className="space-y-1">
+                      <div className="text-xs font-semibold text-white">Click to Upload Actual Property Photos</div>
+                      <div className="text-[10px] text-neutral-500">Upload JPG, PNG, WEBP files directly</div>
+                    </div>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      onChange={handleImageFileUpload}
+                      className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+                    />
+                  </div>
+
+                  {/* Thumbnail Previews */}
+                  {formData.images.length > 0 && (
+                    <div className="space-y-2 pt-2">
+                      <div className="text-xs text-[#C6A15B] font-semibold">Uploaded Photos ({formData.images.length})</div>
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                        {formData.images.map((imgSrc, i) => (
+                          <div key={i} className="relative h-28 rounded-xl overflow-hidden border border-[#C6A15B]/50 group">
+                            <img src={imgSrc} alt={`Uploaded ${i}`} className="w-full h-full object-cover" />
+                            <button
+                              type="button"
+                              onClick={() => removeUploadedImage(i)}
+                              className="absolute top-1.5 right-1.5 p-1 bg-black/80 text-rose-400 rounded-full hover:bg-rose-950 transition-colors"
+                            >
+                              <X className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4">
