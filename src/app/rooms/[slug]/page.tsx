@@ -1,36 +1,34 @@
-import React from 'react';
-import { notFound } from 'next/navigation';
-import Navbar from '@/components/navigation/Navbar';
-import Footer from '@/components/navigation/Footer';
-import RoomDetailClient from './RoomDetailClient';
-import { INITIAL_ROOMS } from '@/lib/data/seedData';
+import React from "react";
+import { notFound } from "next/navigation";
+import Navbar from "@/components/navigation/Navbar";
+import Footer from "@/components/navigation/Footer";
+import RoomDetailClient from "./RoomDetailClient";
+import { publicRooms, findPublicRoom } from "@/lib/platform/store";
+export const dynamic = "force-dynamic";
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
-  const room = INITIAL_ROOMS.find((r) => r.slug === slug || r.id === slug) || INITIAL_ROOMS[0];
+  const room = await findPublicRoom(slug);
+  if (!room) return { title: "Room not found | Stay Connect" };
   return {
     title: `${room.name} | Stay Connect Global Lekki`,
     description: room.description,
   };
 }
 
-export default async function RoomDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function RoomDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
-  const room = INITIAL_ROOMS.find((r) => r.slug === slug || r.id === slug);
+  const room = await findPublicRoom(slug);
 
-  if (!room) {
-    // Default to flagship standard room if slug matches saffron or isn't found
-    const standardRoom = INITIAL_ROOMS[0];
-    return (
-      <div className="min-h-screen bg-[#FAF9F6]">
-        <Navbar />
-        <main className="pt-20">
-          <RoomDetailClient room={standardRoom} />
-        </main>
-        <Footer />
-      </div>
-    );
-  }
+  if (!room) notFound();
 
   return (
     <div className="min-h-screen bg-[#FAF9F6] text-[#111111] font-sans selection:bg-[#C6A15B] selection:text-[#111111]">

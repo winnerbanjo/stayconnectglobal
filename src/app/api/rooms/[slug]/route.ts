@@ -1,40 +1,16 @@
-import { NextResponse } from 'next/server';
-import { connectToDatabase } from '@/lib/db';
-import RoomModel from '@/lib/models/Room';
-import { INITIAL_ROOMS } from '@/lib/data/seedData';
-
+import { publicRooms, findPublicRoom } from "@/lib/platform/store";
+import { errorResponse } from "@/lib/platform/validation";
 export async function GET(
   request: Request,
-  { params }: { params: Promise<{ slug: string }> }
+  { params }: { params: Promise<{ slug: string }> },
 ) {
-  const { slug } = await params;
   try {
-    const conn = await connectToDatabase();
-    if (conn) {
-      const room = await RoomModel.findOne({ slug }).lean();
-      if (room) {
-        return NextResponse.json({ success: true, data: room });
-      }
-    }
-
-    const room = INITIAL_ROOMS.find((r) => r.slug === slug || r.id === slug);
-    if (room) {
-      return NextResponse.json({ success: true, data: room });
-    }
-
-    return NextResponse.json(
-      { success: false, error: 'Room not found' },
-      { status: 404 }
-    );
-  } catch (error) {
-    console.error('Error fetching room detail:', error);
-    const room = INITIAL_ROOMS.find((r) => r.slug === slug);
-    if (room) {
-      return NextResponse.json({ success: true, data: room });
-    }
-    return NextResponse.json(
-      { success: false, error: 'Internal server error' },
-      { status: 500 }
-    );
+    const { slug } = await params;
+    const room = await findPublicRoom(slug);
+    return room
+      ? Response.json({ success: true, data: room })
+      : Response.json({ error: "Room not found" }, { status: 404 });
+  } catch (e) {
+    return errorResponse(e);
   }
 }

@@ -28,3 +28,12 @@ yarn-error.log*
 *.pem
 .idea/
 .vscode/
+
+# Isolated local preview data and uploads
+/.local-data/
+/public/uploads/
+
+*.tsbuildinfo
+
+.env
+.vercel/

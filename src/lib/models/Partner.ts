@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Schema, Document } from "mongoose";
 
 export interface IPartner extends Document {
   partnerId: string;
@@ -6,7 +6,15 @@ export interface IPartner extends Document {
   contactName: string;
   email: string;
   phone: string;
-  propertyType: 'Hotel' | 'Serviced Apartment' | 'Luxury Residence' | 'Villa' | 'Shortlet' | 'Corporate Housing' | 'Boutique Hotel' | 'Resort';
+  propertyType:
+    | "Hotel"
+    | "Serviced Apartment"
+    | "Luxury Residence"
+    | "Villa"
+    | "Shortlet"
+    | "Corporate Housing"
+    | "Boutique Hotel"
+    | "Resort";
   propertyName: string;
   address: string;
   city: string;
@@ -14,7 +22,7 @@ export interface IPartner extends Document {
   description: string;
   amenities: string[];
   verificationDocuments?: string[];
-  status: 'Pending' | 'Approved' | 'Rejected' | 'Suspended';
+  status: "Pending" | "Approved" | "Rejected" | "Suspended";
   commissionRate: number;
   payoutDetails?: {
     bankName: string;
@@ -23,8 +31,14 @@ export interface IPartner extends Document {
   };
 }
 
-const PartnerSchema = new Schema<IPartner>(
+const PartnerSchema = new Schema(
   {
+    id: { type: String, index: true },
+    accessTokenHash: String,
+    propertyId: String,
+    images: [String],
+    expectedRate: Number,
+    notes: String,
     partnerId: { type: String, required: true, unique: true },
     businessName: { type: String, required: true },
     contactName: { type: String, required: true },
@@ -32,20 +46,29 @@ const PartnerSchema = new Schema<IPartner>(
     phone: { type: String, required: true },
     propertyType: {
       type: String,
-      enum: ['Hotel', 'Serviced Apartment', 'Luxury Residence', 'Villa', 'Shortlet', 'Corporate Housing', 'Boutique Hotel', 'Resort'],
-      default: 'Serviced Apartment',
+      enum: [
+        "Hotel",
+        "Serviced Apartment",
+        "Luxury Residence",
+        "Villa",
+        "Shortlet",
+        "Corporate Housing",
+        "Boutique Hotel",
+        "Resort",
+      ],
+      default: "Serviced Apartment",
     },
     propertyName: { type: String, required: true },
     address: { type: String, required: true },
     city: { type: String, required: true },
     numberOfUnits: { type: Number, default: 1 },
-    description: { type: String, default: '' },
+    description: { type: String, default: "" },
     amenities: [{ type: String }],
     verificationDocuments: [{ type: String }],
     status: {
       type: String,
-      enum: ['Pending', 'Approved', 'Rejected', 'Suspended'],
-      default: 'Pending',
+      enum: ["Pending", "Approved", "Rejected", "Suspended"],
+      default: "Pending",
     },
     commissionRate: { type: Number, default: 12 },
     payoutDetails: {
@@ -54,7 +77,8 @@ const PartnerSchema = new Schema<IPartner>(
       accountName: { type: String },
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-export default mongoose.models.Partner || mongoose.model<IPartner>('Partner', PartnerSchema);
+export default mongoose.models.Partner ||
+  mongoose.model<IPartner>("Partner", PartnerSchema);

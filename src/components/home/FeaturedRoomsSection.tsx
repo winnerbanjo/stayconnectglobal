@@ -1,17 +1,51 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { motion } from 'framer-motion';
-import { Star, Users, Maximize, Bed, Bath, ArrowRight, ShieldCheck, Building2, Crown, CheckCircle2 } from 'lucide-react';
-import { INITIAL_ROOMS, INITIAL_PROPERTIES } from '@/lib/data/seedData';
+import React, { useEffect, useState } from "react";
+import { Room, Property } from "@/types";
+import Link from "next/link";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import {
+  Star,
+  Users,
+  Maximize,
+  Bed,
+  Bath,
+  ArrowRight,
+  ShieldCheck,
+  Building2,
+  Crown,
+  CheckCircle2,
+} from "lucide-react";
+import { INITIAL_ROOMS, INITIAL_PROPERTIES } from "@/lib/data/seedData";
 
 export default function FeaturedRoomsSection() {
-  const standardRoom = INITIAL_ROOMS.find((r) => r.slug === 'standard-room' || r.slug === 'saffron') || INITIAL_ROOMS[0];
+  const [liveRooms, setLiveRooms] = useState<Room[]>([]);
+  const [liveProperties, setLiveProperties] = useState<Property[]>([]);
+  useEffect(() => {
+    Promise.all([
+      fetch("/api/rooms").then((r) => r.json()),
+      fetch("/api/properties").then((r) => r.json()),
+    ])
+      .then(([rooms, properties]) => {
+        if (rooms.success) setLiveRooms(rooms.data);
+        if (properties.success) setLiveProperties(properties.data);
+      })
+      .catch(() => {});
+  }, []);
+  const standardRoom =
+    liveRooms.find((r) => r.slug === "standard-room") || liveRooms[0];
 
   // Partner Collection Properties
-  const partnerCollection = INITIAL_PROPERTIES.filter((p) => p.partnerId);
+  const partnerCollection = liveProperties.filter((p) => p.partnerId);
+  if (!standardRoom)
+    return (
+      <section className="p-12 text-center">
+        <Link href="/properties" className="text-[#947137] underline">
+          Explore hotels & residences →
+        </Link>
+      </section>
+    );
 
   return (
     <section className="py-24 bg-[#FAF9F6] dark:bg-[#161514] text-[#111111] dark:text-white border-t border-[#E8E5DF] dark:border-[#2C2B29] transition-colors duration-300">
@@ -25,11 +59,12 @@ export default function FeaturedRoomsSection() {
                 <span>Stay Connect Collection</span>
               </div>
               <h2 className="font-serif text-4xl md:text-5xl text-[#111111] dark:text-white mt-2 font-normal">
-                Directly Operated Flagships
+                Stay Connect Residence & Suites
               </h2>
             </div>
             <p className="text-neutral-600 dark:text-neutral-400 text-sm font-light max-w-md">
-              Flagship luxury sanctuaries owned or directly managed by Stay Connect Global with 24/7 in-house butler service.
+              Flagship luxury sanctuaries owned or directly managed by Stay
+              Connect Global with 24/7 in-house butler service.
             </p>
           </div>
 
@@ -64,7 +99,9 @@ export default function FeaturedRoomsSection() {
             <div className="lg:col-span-5 p-8 lg:p-12 flex flex-col justify-between space-y-6">
               <div>
                 <div className="flex items-center justify-between text-xs text-neutral-400 font-light mb-2">
-                  <span className="uppercase tracking-widest text-[#C6A15B] font-semibold">{standardRoom.type} Room</span>
+                  <span className="uppercase tracking-widest text-[#C6A15B] font-semibold">
+                    {standardRoom.type} Room
+                  </span>
                   <span>Managed Directly</span>
                 </div>
                 <h3 className="font-serif text-3xl lg:text-4xl text-white font-normal mb-3">
@@ -77,7 +114,9 @@ export default function FeaturedRoomsSection() {
                 {/* Spec Badges Grid */}
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 py-4 border-y border-[#2C2B29] mb-6">
                   <div className="flex flex-col">
-                    <span className="text-[10px] uppercase tracking-wider text-neutral-400 font-medium">Capacity</span>
+                    <span className="text-[10px] uppercase tracking-wider text-neutral-400 font-medium">
+                      Capacity
+                    </span>
                     <span className="text-xs font-semibold text-white flex items-center gap-1 mt-0.5">
                       <Users className="w-3.5 h-3.5 text-[#C6A15B]" />
                       <span>{standardRoom.maxGuests} Guests</span>
@@ -85,7 +124,9 @@ export default function FeaturedRoomsSection() {
                   </div>
 
                   <div className="flex flex-col">
-                    <span className="text-[10px] uppercase tracking-wider text-neutral-400 font-medium">Size</span>
+                    <span className="text-[10px] uppercase tracking-wider text-neutral-400 font-medium">
+                      Size
+                    </span>
                     <span className="text-xs font-semibold text-white flex items-center gap-1 mt-0.5">
                       <Maximize className="w-3.5 h-3.5 text-[#C6A15B]" />
                       <span>{standardRoom.propertySize} m²</span>
@@ -93,7 +134,9 @@ export default function FeaturedRoomsSection() {
                   </div>
 
                   <div className="flex flex-col">
-                    <span className="text-[10px] uppercase tracking-wider text-neutral-400 font-medium">Bedrooms</span>
+                    <span className="text-[10px] uppercase tracking-wider text-neutral-400 font-medium">
+                      Bedrooms
+                    </span>
                     <span className="text-xs font-semibold text-white flex items-center gap-1 mt-0.5">
                       <Bed className="w-3.5 h-3.5 text-[#C6A15B]" />
                       <span>{standardRoom.bedrooms} BR</span>
@@ -101,7 +144,9 @@ export default function FeaturedRoomsSection() {
                   </div>
 
                   <div className="flex flex-col">
-                    <span className="text-[10px] uppercase tracking-wider text-neutral-400 font-medium">Bathrooms</span>
+                    <span className="text-[10px] uppercase tracking-wider text-neutral-400 font-medium">
+                      Bathrooms
+                    </span>
                     <span className="text-xs font-semibold text-white flex items-center gap-1 mt-0.5">
                       <Bath className="w-3.5 h-3.5 text-[#C6A15B]" />
                       <span>{standardRoom.bathrooms} BA</span>
@@ -113,12 +158,16 @@ export default function FeaturedRoomsSection() {
               {/* Pricing & CTA */}
               <div className="pt-4 border-t border-[#2C2B29] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                  <span className="text-[10px] uppercase tracking-widest text-neutral-400">Nightly Rate</span>
+                  <span className="text-[10px] uppercase tracking-widest text-neutral-400">
+                    Nightly Rate
+                  </span>
                   <div className="flex items-baseline gap-1">
                     <span className="font-serif text-3xl font-semibold text-[#C6A15B]">
                       ₦{standardRoom.pricePerNight.toLocaleString()}
                     </span>
-                    <span className="text-xs text-neutral-400 font-light">/ night</span>
+                    <span className="text-xs text-neutral-400 font-light">
+                      / night
+                    </span>
                   </div>
                 </div>
 
@@ -149,32 +198,33 @@ export default function FeaturedRoomsSection() {
               </h2>
             </div>
             <p className="text-neutral-600 dark:text-neutral-400 text-sm font-light max-w-md">
-              Carefully selected hotels, apartments, villas, and residences operated by verified partners across Lagos & Abuja.
+              Carefully selected hotels, apartments, villas, and residences
+              operated by verified partners across Lagos & Abuja.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                title: 'Ikoyi Waterfront Residences',
-                location: 'Ikoyi, Lagos',
-                category: 'Luxury Residence',
-                desc: 'Onboarding penthouses and waterfront villas overlooking Five Cowries Creek. Are you a property owner in Ikoyi?',
-                img: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1200&q=90',
+                title: "Ikoyi Waterfront Residences",
+                location: "Ikoyi, Lagos",
+                category: "Luxury Residence",
+                desc: "Onboarding penthouses and waterfront villas overlooking Five Cowries Creek. Are you a property owner in Ikoyi?",
+                img: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1200&q=90",
               },
               {
-                title: 'Maitama Diplomatic Suites',
-                location: 'Maitama, Abuja',
-                category: 'Serviced Apartment',
-                desc: 'Onboarding high-security executive shortlet apartments in Abuja’s diplomatic enclave. Submit your property for verification.',
-                img: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=90',
+                title: "Maitama Diplomatic Suites",
+                location: "Maitama, Abuja",
+                category: "Serviced Apartment",
+                desc: "Onboarding high-security executive shortlet apartments in Abuja’s diplomatic enclave. Submit your property for verification.",
+                img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=90",
               },
               {
-                title: 'Banana Island Luxury Villas',
-                location: 'Banana Island, Lagos',
-                category: 'Private Villa',
-                desc: 'Onboarding private waterfront villas with infinity pools and helipad access for diplomatic stays.',
-                img: 'https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1200&q=90',
+                title: "Banana Island Luxury Villas",
+                location: "Banana Island, Lagos",
+                category: "Private Villa",
+                desc: "Onboarding private waterfront villas with infinity pools and helipad access for diplomatic stays.",
+                img: "https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1200&q=90",
               },
             ].map((prop, idx) => (
               <div
@@ -212,8 +262,12 @@ export default function FeaturedRoomsSection() {
 
                   <div className="pt-4 border-t border-[#E8E5DF] dark:border-[#2C2B29] flex items-center justify-between">
                     <div>
-                      <div className="text-[10px] uppercase text-neutral-500 font-medium">Partner Portal</div>
-                      <div className="text-xs font-semibold text-[#C6A15B]">Open for Verification</div>
+                      <div className="text-[10px] uppercase text-neutral-500 font-medium">
+                        Partner Portal
+                      </div>
+                      <div className="text-xs font-semibold text-[#C6A15B]">
+                        Open for Verification
+                      </div>
                     </div>
 
                     <Link
@@ -233,4 +287,3 @@ export default function FeaturedRoomsSection() {
     </section>
   );
 }
-

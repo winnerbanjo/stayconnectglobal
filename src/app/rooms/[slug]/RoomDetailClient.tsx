@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import {
   Star,
   Users,
@@ -22,9 +22,9 @@ import {
   Send,
   Building,
   Award,
-  MessageSquare
-} from 'lucide-react';
-import { Room } from '@/types';
+  MessageSquare,
+} from "lucide-react";
+import { Room } from "@/types";
 
 interface RoomDetailClientProps {
   room: Room;
@@ -32,16 +32,27 @@ interface RoomDetailClientProps {
 
 export default function RoomDetailClient({ room }: RoomDetailClientProps) {
   const [selectedImg, setSelectedImg] = useState(room.heroImage);
-  const [checkIn, setCheckIn] = useState('2026-08-15');
-  const [checkOut, setCheckOut] = useState('2026-08-18');
-  const [guests, setGuests] = useState('2');
+  const [checkIn, setCheckIn] = useState(new Date().toISOString().slice(0, 10));
+  const [checkOut, setCheckOut] = useState(
+    new Date(Date.now() + 86400000).toISOString().slice(0, 10),
+  );
+  const [guests, setGuests] = useState("2");
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("checkIn")) setCheckIn(params.get("checkIn")!);
+    if (params.get("checkOut")) setCheckOut(params.get("checkOut")!);
+    if (params.get("guests"))
+      setGuests(
+        String(Math.min(Number(params.get("guests")) || 2, room.maxGuests)),
+      );
+  }, [room.maxGuests]);
   const [reviewModalOpen, setReviewModalOpen] = useState(false);
   const [reviewSuccess, setReviewSuccess] = useState(false);
 
   // Calculate nights
   const d1 = new Date(checkIn);
   const d2 = new Date(checkOut);
-  const diffTime = Math.abs(d2.getTime() - d1.getTime());
+  const diffTime = Math.max(0, d2.getTime() - d1.getTime());
   const nights = Math.max(1, Math.ceil(diffTime / (1000 * 60 * 60 * 24)));
 
   const subtotal = room.pricePerNight * nights;
@@ -50,7 +61,7 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
   const total = subtotal + vat + consumptionTax;
 
   const whatsappMessage = encodeURIComponent(
-    `Hello Stay Connect Concierge, I would like to book the ${room.name} (${room.type} Suite) at 14B Providence Street, Lekki from ${checkIn} to ${checkOut} (${nights} nights) for ${guests} guest(s). Total estimated: ₦${total.toLocaleString()}.`
+    `Hello Stay Connect Concierge, I would like to book the ${room.name} (${room.type} Suite) at ${room.address} from ${checkIn} to ${checkOut} (${nights} nights) for ${guests} guest(s). Total estimated: ₦${total.toLocaleString()}.`,
   );
   const whatsappUrl = `https://wa.me/2347041008351?text=${whatsappMessage}`;
 
@@ -68,9 +79,16 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
       {/* Top Breadcrumbs & Header */}
       <div className="space-y-3 sm:space-y-4">
         <div className="flex flex-wrap items-center gap-2 text-[10px] sm:text-xs uppercase tracking-widest text-neutral-400 font-medium">
-          <Link href="/" className="hover:text-[#C6A15B] transition-colors">Home</Link>
+          <Link href="/" className="hover:text-[#C6A15B] transition-colors">
+            Home
+          </Link>
           <span>/</span>
-          <Link href="/rooms" className="hover:text-[#C6A15B] transition-colors">Suites</Link>
+          <Link
+            href="/rooms"
+            className="hover:text-[#C6A15B] transition-colors"
+          >
+            Suites
+          </Link>
           <span>/</span>
           <span className="text-[#C6A15B] font-semibold">{room.name}</span>
         </div>
@@ -79,7 +97,7 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
           <div className="space-y-2">
             <div className="flex flex-wrap items-center gap-2.5">
               <span className="px-3 py-1 bg-[#111111] text-[#C6A15B] text-[10px] sm:text-xs font-semibold uppercase tracking-widest rounded-full">
-                {room.badge || 'TLC ⭐⭐⭐⭐⭐'}
+                {room.badge || "TLC ⭐⭐⭐⭐⭐"}
               </span>
               <span className="text-[11px] sm:text-xs uppercase tracking-widest text-neutral-500 font-medium">
                 {room.city} ({room.tagline})
@@ -96,7 +114,9 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
 
           <div className="flex items-center justify-between lg:justify-end gap-4 pt-2 lg:pt-0">
             <div>
-              <span className="text-[10px] uppercase tracking-widest text-neutral-400">Nightly Rate</span>
+              <span className="text-[10px] uppercase tracking-widest text-neutral-400">
+                Nightly Rate
+              </span>
               <div className="font-serif text-2xl sm:text-3xl font-bold text-[#111111]">
                 ₦{room.pricePerNight.toLocaleString()}
               </div>
@@ -130,10 +150,17 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
               key={i}
               onClick={() => setSelectedImg(img)}
               className={`relative h-20 sm:h-24 lg:h-32 rounded-xl overflow-hidden border-2 transition-all shrink-0 ${
-                selectedImg === img ? 'border-[#C6A15B] shadow-lg scale-[0.98]' : 'border-transparent opacity-75 hover:opacity-100'
+                selectedImg === img
+                  ? "border-[#C6A15B] shadow-lg scale-[0.98]"
+                  : "border-transparent opacity-75 hover:opacity-100"
               }`}
             >
-              <Image src={img} alt={`Gallery ${i}`} fill className="object-cover" />
+              <Image
+                src={img}
+                alt={`Gallery ${i}`}
+                fill
+                className="object-cover"
+              />
             </button>
           ))}
         </div>
@@ -146,7 +173,9 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
           {/* Key Metric Specs */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 p-5 sm:p-6 bg-white rounded-2xl border border-[#E8E5DF] shadow-sm">
             <div className="space-y-1">
-              <span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-neutral-400 font-semibold">Maximum Capacity</span>
+              <span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-neutral-400 font-semibold">
+                Maximum Capacity
+              </span>
               <div className="flex items-center gap-1.5 font-serif text-base sm:text-lg text-[#111111] font-medium">
                 <Users className="w-4 h-4 text-[#C6A15B] shrink-0" />
                 <span>👥 {room.maxGuests} GUESTS</span>
@@ -154,7 +183,9 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
             </div>
 
             <div className="space-y-1">
-              <span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-neutral-400 font-semibold">Property Size</span>
+              <span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-neutral-400 font-semibold">
+                Property Size
+              </span>
               <div className="flex items-center gap-1.5 font-serif text-base sm:text-lg text-[#111111] font-medium">
                 <Maximize className="w-4 h-4 text-[#C6A15B] shrink-0" />
                 <span>📐 {room.propertySize} m²</span>
@@ -162,7 +193,9 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
             </div>
 
             <div className="space-y-1">
-              <span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-neutral-400 font-semibold">Bedrooms</span>
+              <span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-neutral-400 font-semibold">
+                Bedrooms
+              </span>
               <div className="flex items-center gap-1.5 font-serif text-base sm:text-lg text-[#111111] font-medium">
                 <Bed className="w-4 h-4 text-[#C6A15B] shrink-0" />
                 <span>🛏️ {room.bedrooms} BR</span>
@@ -170,7 +203,9 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
             </div>
 
             <div className="space-y-1">
-              <span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-neutral-400 font-semibold">Bathrooms</span>
+              <span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-neutral-400 font-semibold">
+                Bathrooms
+              </span>
               <div className="flex items-center gap-1.5 font-serif text-base sm:text-lg text-[#111111] font-medium">
                 <Bath className="w-4 h-4 text-[#C6A15B] shrink-0" />
                 <span>🚿 {room.bathrooms} BA</span>
@@ -210,17 +245,24 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
           <div className="p-6 sm:p-8 bg-white rounded-2xl border border-[#E8E5DF] shadow-md space-y-6 sm:space-y-8">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E8E5DF] pb-6">
               <div>
-                <h3 className="font-serif text-xl sm:text-2xl text-[#111111] font-normal">Guest Ratings & Reviews</h3>
+                <h3 className="font-serif text-xl sm:text-2xl text-[#111111] font-normal">
+                  Guest Ratings & Reviews
+                </h3>
                 <div className="flex items-center gap-2 mt-1">
                   <div className="flex items-center text-[#C6A15B]">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 sm:w-5 sm:h-5 fill-[#C6A15B]" />
+                      <Star
+                        key={i}
+                        className="w-4 h-4 sm:w-5 sm:h-5 fill-[#C6A15B]"
+                      />
                     ))}
                   </div>
                   <span className="font-serif text-lg sm:text-xl font-bold text-[#111111]">
                     {room.rating.toFixed(1)} out of 5 stars
                   </span>
-                  <span className="text-xs text-neutral-500 font-light">({room.reviewCount} review)</span>
+                  <span className="text-xs text-neutral-500 font-light">
+                    ({room.reviewCount} review)
+                  </span>
                 </div>
               </div>
 
@@ -239,10 +281,15 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
           <div className="lg:sticky lg:top-28 bg-[#111111] text-white p-5 sm:p-8 rounded-2xl border border-[#C6A15B]/30 shadow-2xl space-y-6">
             <div className="flex items-center justify-between border-b border-[#2C2B29] pb-4">
               <div>
-                <span className="text-[10px] uppercase tracking-widest text-[#C6A15B] font-semibold">Reserve Suite</span>
+                <span className="text-[10px] uppercase tracking-widest text-[#C6A15B] font-semibold">
+                  Reserve Suite
+                </span>
                 <div className="font-serif text-2xl sm:text-3xl font-medium text-white">
                   ₦{room.pricePerNight.toLocaleString()}
-                  <span className="text-xs text-neutral-400 font-light"> / night</span>
+                  <span className="text-xs text-neutral-400 font-light">
+                    {" "}
+                    / night
+                  </span>
                 </div>
               </div>
               <div className="flex items-center gap-1 text-xs text-[#C6A15B] font-semibold bg-[#1A1918] px-3 py-1 rounded-full border border-[#2C2B29]">
@@ -262,7 +309,7 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
                     type="date"
                     value={checkIn}
                     onChange={(e) => setCheckIn(e.target.value)}
-                    style={{ colorScheme: 'dark' }}
+                    style={{ colorScheme: "dark" }}
                     className="w-full min-h-[46px] bg-[#1A1918] border border-[#2C2B29] rounded-xl px-3.5 py-2.5 text-sm sm:text-xs text-white font-medium focus:outline-none focus:border-[#C6A15B] appearance-none"
                   />
                 </div>
@@ -276,14 +323,16 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
                     type="date"
                     value={checkOut}
                     onChange={(e) => setCheckOut(e.target.value)}
-                    style={{ colorScheme: 'dark' }}
+                    style={{ colorScheme: "dark" }}
                     className="w-full min-h-[46px] bg-[#1A1918] border border-[#2C2B29] rounded-xl px-3.5 py-2.5 text-sm sm:text-xs text-white font-medium focus:outline-none focus:border-[#C6A15B] appearance-none"
                   />
                 </div>
               </div>
 
               <div className="space-y-1.5 w-full">
-                <label className="text-[10px] uppercase tracking-widest text-neutral-400 font-semibold">Guests</label>
+                <label className="text-[10px] uppercase tracking-widest text-neutral-400 font-semibold">
+                  Guests
+                </label>
                 <select
                   value={guests}
                   onChange={(e) => setGuests(e.target.value)}
@@ -298,7 +347,9 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
             {/* Price Breakdown Table */}
             <div className="space-y-2.5 pt-4 border-t border-[#2C2B29] text-xs font-light text-neutral-300">
               <div className="flex justify-between">
-                <span>₦{room.pricePerNight.toLocaleString()} × {nights} nights</span>
+                <span>
+                  ₦{room.pricePerNight.toLocaleString()} × {nights} nights
+                </span>
                 <span>₦{subtotal.toLocaleString()}</span>
               </div>
               <div className="flex justify-between">
@@ -311,7 +362,9 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
               </div>
               <div className="flex justify-between font-serif text-base sm:text-lg text-white font-semibold pt-3 border-t border-[#2C2B29]">
                 <span>Total Estimated</span>
-                <span className="text-[#C6A15B]">₦{total.toLocaleString()}</span>
+                <span className="text-[#C6A15B]">
+                  ₦{total.toLocaleString()}
+                </span>
               </div>
             </div>
 
@@ -337,7 +390,8 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
             </div>
 
             <div className="text-[10px] sm:text-[11px] text-center text-neutral-400 font-light pt-1">
-              🔒 Instant Confirmation • Guaranteed Best Rate at 14B Providence St.
+              🔒 Instant Confirmation • Guaranteed Best Rate at 14B Providence
+              St.
             </div>
           </div>
         </div>

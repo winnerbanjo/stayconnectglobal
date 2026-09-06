@@ -1,10 +1,18 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Schema, Document } from "mongoose";
 
 export interface IProperty extends Document {
   slug: string;
   name: string;
   tagline: string;
-  category: 'Luxury Hotel' | 'Serviced Apartment' | 'Luxury Residence' | 'Villa' | 'Shortlet' | 'Corporate Housing' | 'Resort' | 'Boutique Hotel';
+  category:
+    | "Luxury Hotel"
+    | "Serviced Apartment"
+    | "Luxury Residence"
+    | "Villa"
+    | "Shortlet"
+    | "Corporate Housing"
+    | "Resort"
+    | "Boutique Hotel";
   partnerId?: string;
   hostName?: string;
   isVerified?: boolean;
@@ -29,18 +37,39 @@ export interface IProperty extends Document {
   };
 }
 
-const PropertySchema = new Schema<IProperty>(
+const PropertySchema = new Schema(
   {
+    id: { type: String, index: true },
+    area: { type: String, default: "" },
+    numberOfUnits: { type: Number, min: 1, default: 1 },
+    verificationStatus: {
+      type: String,
+      enum: ["Draft", "Pending Verification", "Approved", "Changes Required"],
+      default: "Draft",
+    },
+    reviewNote: String,
+    submittedAt: String,
+    reviewedAt: String,
+    reviewedBy: String,
     slug: { type: String, required: true, unique: true },
     name: { type: String, required: true },
     tagline: { type: String, required: true },
     category: {
       type: String,
-      enum: ['Luxury Hotel', 'Serviced Apartment', 'Luxury Residence', 'Villa', 'Shortlet', 'Corporate Housing', 'Resort', 'Boutique Hotel'],
-      default: 'Luxury Hotel',
+      enum: [
+        "Luxury Hotel",
+        "Serviced Apartment",
+        "Luxury Residence",
+        "Villa",
+        "Shortlet",
+        "Corporate Housing",
+        "Resort",
+        "Boutique Hotel",
+      ],
+      default: "Luxury Hotel",
     },
     partnerId: { type: String },
-    hostName: { type: String, default: 'Stay Connect Operator' },
+    hostName: { type: String, default: "Stay Connect Operator" },
     isVerified: { type: Boolean, default: true },
     pricingStartingFrom: { type: Number, default: 75000 },
     address: { type: String, required: true },
@@ -53,19 +82,20 @@ const PropertySchema = new Schema<IProperty>(
     heroImage: { type: String, required: true },
     heroVideo: { type: String },
     logoUrl: { type: String },
-    themeColor: { type: String, default: '#C6A15B' },
+    themeColor: { type: String, default: "#C6A15B" },
     gallery: [{ type: String }],
     amenities: [{ type: String }],
     published: { type: Boolean, default: true },
     policies: {
-      checkInTime: { type: String, default: '3:00 PM' },
-      checkOutTime: { type: String, default: '12:00 PM' },
+      checkInTime: { type: String, default: "3:00 PM" },
+      checkOutTime: { type: String, default: "12:00 PM" },
       cancellation: { type: String },
       petsAllowed: { type: Boolean, default: false },
       smokingAllowed: { type: Boolean, default: false },
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-export default mongoose.models.Property || mongoose.model<IProperty>('Property', PropertySchema);
+export default mongoose.models.Property ||
+  mongoose.model<IProperty>("Property", PropertySchema);

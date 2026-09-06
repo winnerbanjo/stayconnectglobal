@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Schema, Document } from "mongoose";
 
 export interface IBooking extends Document {
   bookingRef: string;
@@ -21,13 +21,27 @@ export interface IBooking extends Document {
   taxesAndFees: number;
   discountAmount: number;
   totalPrice: number;
-  status: 'Pending' | 'Confirmed' | 'Checked In' | 'Checked Out' | 'Cancelled' | 'Refunded';
-  paymentMethod: 'Bank Transfer' | 'Paystack' | 'Stripe' | 'Pay at Hotel';
-  paymentStatus: 'Paid' | 'Unpaid' | 'Pending Verification';
+  status:
+    | "Pending"
+    | "Confirmed"
+    | "Checked In"
+    | "Checked Out"
+    | "Cancelled"
+    | "Refunded";
+  paymentMethod: "Bank Transfer" | "Paystack" | "Stripe" | "Pay at Hotel";
+  paymentStatus: "Paid" | "Unpaid" | "Pending Verification";
 }
 
-const BookingSchema = new Schema<IBooking>(
+const BookingSchema = new Schema(
   {
+    id: { type: String, index: true },
+    agentCode: String,
+    agentName: String,
+    visitorId: String,
+    lookupToken: String,
+    paymentConfirmedAt: String,
+    paymentConfirmedBy: String,
+    selectedAddOns: [String],
     bookingRef: { type: String, required: true, unique: true },
     propertyId: { type: String, required: true },
     roomId: { type: String, required: true },
@@ -40,7 +54,7 @@ const BookingSchema = new Schema<IBooking>(
     guestName: { type: String, required: true },
     guestEmail: { type: String, required: true },
     guestPhone: { type: String, required: true },
-    country: { type: String, required: true, default: 'Nigeria' },
+    country: { type: String, required: true, default: "Nigeria" },
     specialRequests: { type: String },
     arrivalTime: { type: String },
     promoCode: { type: String },
@@ -50,21 +64,29 @@ const BookingSchema = new Schema<IBooking>(
     totalPrice: { type: Number, required: true },
     status: {
       type: String,
-      enum: ['Pending', 'Confirmed', 'Checked In', 'Checked Out', 'Cancelled', 'Refunded'],
-      default: 'Pending',
+      enum: [
+        "Pending",
+        "Confirmed",
+        "Checked In",
+        "Checked Out",
+        "Cancelled",
+        "Refunded",
+      ],
+      default: "Pending",
     },
     paymentMethod: {
       type: String,
-      enum: ['Bank Transfer', 'Paystack', 'Stripe', 'Pay at Hotel'],
-      default: 'Bank Transfer',
+      enum: ["Bank Transfer", "Paystack", "Stripe", "Pay at Hotel"],
+      default: "Bank Transfer",
     },
     paymentStatus: {
       type: String,
-      enum: ['Paid', 'Unpaid', 'Pending Verification'],
-      default: 'Pending Verification',
+      enum: ["Paid", "Unpaid", "Pending Verification"],
+      default: "Pending Verification",
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-export default mongoose.models.Booking || mongoose.model<IBooking>('Booking', BookingSchema);
+export default mongoose.models.Booking ||
+  mongoose.model<IBooking>("Booking", BookingSchema);

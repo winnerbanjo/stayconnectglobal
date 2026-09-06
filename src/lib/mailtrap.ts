@@ -1,9 +1,9 @@
-import { MailtrapClient } from 'mailtrap';
-import nodemailer from 'nodemailer';
+import { MailtrapClient } from "mailtrap";
+import nodemailer from "nodemailer";
 
-const TOKEN = process.env.MAILTRAP_TOKEN || 'f8b86b71e617958e8126ec8c54a90162';
-const SENDER_EMAIL = 'hello@nile.ng';
-const SENDER_NAME = 'Stay Connect Hotels Lekki';
+const TOKEN = process.env.MAILTRAP_TOKEN || "";
+const SENDER_EMAIL = "hello@nile.ng";
+const SENDER_NAME = "Stay Connect Hotels Lekki";
 
 export interface BookingEmailPayload {
   bookingRef: string;
@@ -18,9 +18,29 @@ export interface BookingEmailPayload {
   paymentMethod?: string;
 }
 
-export async function sendBookingConfirmationEmail(bookingDetails: BookingEmailPayload) {
-  console.log(`[EMAIL DISPATCH] Triggering reservation voucher ${bookingDetails.bookingRef} for ${bookingDetails.guestEmail}...`);
+export async function sendBookingConfirmationEmail(
+  bookingDetails: BookingEmailPayload,
+) {
+  if (process.env.STAYCONNECT_LOCAL_PREVIEW === "true" || !TOKEN)
+    return { success: false, skipped: true };
+  console.log(
+    `[EMAIL DISPATCH] Triggering reservation voucher ${bookingDetails.bookingRef} for ${bookingDetails.guestEmail}...`,
+  );
 
+  const escape = (value: string) =>
+    value.replace(
+      /[&<>"']/g,
+      (ch) =>
+        ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;",
+        })[ch]!,
+    );
+  const guestName = escape(bookingDetails.guestName);
+  const roomName = escape(bookingDetails.roomName);
   const htmlContent = `
     <div style="font-family: Georgia, serif; background-color: #111111; color: #FAF9F6; padding: 40px; border-radius: 16px; max-width: 600px; margin: 0 auto; border: 1px solid #C6A15B;">
       <div style="text-align: center; margin-bottom: 24px;">
@@ -31,8 +51,8 @@ export async function sendBookingConfirmationEmail(bookingDetails: BookingEmailP
       <hr style="border: 0; border-top: 1px solid #2C2B29; margin: 24px 0;" />
 
       <h2 style="font-size: 22px; font-weight: normal; color: #FFFFFF; text-align: center;">Luxury Reservation Voucher</h2>
-      <p style="font-size: 14px; color: #D1CDC7;">Dear <strong>${bookingDetails.guestName}</strong>,</p>
-      <p style="font-size: 13px; color: #A09D98; line-height: 1.6;">We are delighted to confirm your upcoming luxury stay reservation at Stay Connect Hotels Lekki Phase 1.</p>
+      <p style="font-size: 14px; color: #D1CDC7;">Dear <strong>${guestName}</strong>,</p>
+      <p style="font-size: 13px; color: #A09D98; line-height: 1.6;">Your reservation request has been received. Payment is pending. Your booking is confirmed only after Stay Connect verifies payment and availability.</p>
 
       <div style="background-color: #1A1918; border: 1px solid #C6A15B; padding: 20px; text-align: center; border-radius: 10px; margin: 24px 0;">
         <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: #8E8B85;">Booking Reference Code</div>
@@ -42,7 +62,7 @@ export async function sendBookingConfirmationEmail(bookingDetails: BookingEmailP
       <table style="width: 100%; border-collapse: collapse; font-size: 13px; color: #FAF9F6; margin: 20px 0;">
         <tr style="border-bottom: 1px solid #2C2B29;">
           <td style="padding: 12px 0; color: #8E8B85;">Reserved Suite</td>
-          <td style="padding: 12px 0; text-align: right; color: #C6A15B; font-weight: bold;">${bookingDetails.roomName}</td>
+          <td style="padding: 12px 0; text-align: right; color: #C6A15B; font-weight: bold;">${roomName}</td>
         </tr>
         <tr style="border-bottom: 1px solid #2C2B29;">
           <td style="padding: 12px 0; color: #8E8B85;">Check-In Date</td>
@@ -58,7 +78,7 @@ export async function sendBookingConfirmationEmail(bookingDetails: BookingEmailP
         </tr>
         <tr style="border-bottom: 1px solid #2C2B29;">
           <td style="padding: 12px 0; color: #8E8B85;">Payment Method</td>
-          <td style="padding: 12px 0; text-align: right;">${bookingDetails.paymentMethod || 'Bank Transfer / Paystack'}</td>
+          <td style="padding: 12px 0; text-align: right;">${bookingDetails.paymentMethod || "Bank Transfer / Paystack"}</td>
         </tr>
         <tr>
           <td style="padding: 16px 0; font-size: 15px; font-weight: bold;">Total Reserved Amount</td>
@@ -85,10 +105,17 @@ export async function sendBookingConfirmationEmail(bookingDetails: BookingEmailP
       html: htmlContent,
     });
 
-    console.log(`[MAILTRAP SUCCESS] Email accepted for delivery to ${bookingDetails.guestEmail}. Message IDs:`, res.message_ids);
+    console.log(
+      `[MAILTRAP SUCCESS] Email accepted for delivery to ${bookingDetails.guestEmail}. Message IDs:`,
+      res.message_ids,
+    );
     return { success: true, messageIds: res.message_ids };
   } catch (apiErr: any) {
     console.warn(`[MAILTRAP NOTICE] Fallback logger active:`, apiErr.message);
-    return { success: true, fallback: true, bookingRef: bookingDetails.bookingRef };
+    return {
+      success: false,
+      fallback: true,
+      bookingRef: bookingDetails.bookingRef,
+    };
   }
 }

@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Schema, Document } from "mongoose";
 
 export interface IRoom extends Document {
   slug: string;
@@ -27,8 +27,11 @@ export interface IRoom extends Document {
   featured: boolean;
 }
 
-const RoomSchema = new Schema<IRoom>(
+const RoomSchema = new Schema(
   {
+    id: { type: String, index: true },
+    inventoryVersion: { type: Number, default: 0 },
+    numberOfUnits: { type: Number, min: 1, default: 1 },
     slug: { type: String, required: true, unique: true },
     name: { type: String, required: true },
     tagline: { type: String, required: true },
@@ -54,7 +57,8 @@ const RoomSchema = new Schema<IRoom>(
     published: { type: Boolean, default: true },
     featured: { type: Boolean, default: false },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-export default mongoose.models.Room || mongoose.model<IRoom>('Room', RoomSchema);
+export default mongoose.models.Room ||
+  mongoose.model<IRoom>("Room", RoomSchema);

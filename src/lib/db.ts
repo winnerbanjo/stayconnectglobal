@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
@@ -19,8 +19,9 @@ if (!cached) {
 }
 
 export async function connectToDatabase() {
+  if (process.env.STAYCONNECT_LOCAL_PREVIEW === "true") return null;
   if (!MONGODB_URI) {
-    // If no MONGODB_URI is provided, we return null and fallback gracefully to seedData memory engine
+    // Callers fail explicitly when production storage is unavailable.
     return null;
   }
 
@@ -31,6 +32,8 @@ export async function connectToDatabase() {
   if (!cached?.promise) {
     const opts = {
       bufferCommands: false,
+      autoIndex: false,
+      serverSelectionTimeoutMS: 10000,
     };
 
     cached!.promise = mongoose.connect(MONGODB_URI, opts).then((m) => m);
@@ -40,7 +43,9 @@ export async function connectToDatabase() {
     cached!.conn = await cached!.promise;
   } catch (e) {
     cached!.promise = null;
-    console.warn('MongoDB Atlas Connection Warning, using fallback memory state:', e);
+    console.warn(
+      "MongoDB connection unavailable",
+    );
     return null;
   }
 

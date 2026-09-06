@@ -1,7 +1,7 @@
 export interface Amenity {
   id: string;
   name: string;
-  category: 'general' | 'room' | 'wellness' | 'business' | 'dining';
+  category: "general" | "room" | "wellness" | "business" | "dining";
   icon: string;
   description?: string;
 }
@@ -19,12 +19,22 @@ export interface Review {
 }
 
 export interface Room {
+  numberOfUnits?: number;
   id: string;
   slug: string;
   name: string; // e.g., "Saffron"
   tagline: string; // e.g., "Executive Single Suite"
   propertyId: string;
-  type: 'Standard' | 'Superior' | 'Executive' | 'Deluxe' | 'Executive Deluxe' | 'Junior Suite' | 'Luxury Suite' | 'Presidential Suite' | 'Penthouse';
+  type:
+    | "Standard"
+    | "Superior"
+    | "Executive"
+    | "Deluxe"
+    | "Executive Deluxe"
+    | "Junior Suite"
+    | "Luxury Suite"
+    | "Presidential Suite"
+    | "Penthouse";
   address: string; // e.g., "14B, Providence Street, Lekki, Lagos"
   city: string; // e.g., "Lagos, Nigeria"
   badge?: string; // e.g., "TLC ⭐⭐⭐⭐⭐"
@@ -72,11 +82,24 @@ export interface Room {
 }
 
 export interface Property {
+  area?: string;
+  numberOfUnits?: number;
+  verificationStatus?:
+    "Draft" | "Pending Verification" | "Approved" | "Changes Required";
+  reviewNote?: string;
   id: string;
   slug: string;
   name: string; // e.g., "Stay Connect Lekki"
   tagline: string;
-  category: 'Luxury Hotel' | 'Serviced Apartment' | 'Luxury Residence' | 'Villa' | 'Shortlet' | 'Corporate Housing' | 'Resort' | 'Boutique Hotel';
+  category:
+    | "Luxury Hotel"
+    | "Serviced Apartment"
+    | "Luxury Residence"
+    | "Villa"
+    | "Shortlet"
+    | "Corporate Housing"
+    | "Resort"
+    | "Boutique Hotel";
   partnerId?: string;
   hostName?: string;
   isVerified?: boolean;
@@ -111,14 +134,22 @@ export interface Partner {
   contactName: string;
   email: string;
   phone: string;
-  propertyType: 'Hotel' | 'Serviced Apartment' | 'Luxury Residence' | 'Villa' | 'Shortlet' | 'Corporate Housing' | 'Boutique Hotel' | 'Resort';
+  propertyType:
+    | "Hotel"
+    | "Serviced Apartment"
+    | "Luxury Residence"
+    | "Villa"
+    | "Shortlet"
+    | "Corporate Housing"
+    | "Boutique Hotel"
+    | "Resort";
   propertyName: string;
   address: string;
   city: string;
   numberOfUnits: number;
   description: string;
   amenities: string[];
-  status: 'Pending' | 'Approved' | 'Rejected' | 'Suspended';
+  status: "Pending" | "Approved" | "Rejected" | "Suspended";
   commissionRate: number;
   createdAt: string;
 }
@@ -127,7 +158,14 @@ export interface MobilityVehicle {
   id: string;
   vehicleId: string;
   name: string;
-  category: 'SUV' | 'Luxury Sedan' | 'Executive Bus' | 'Van' | 'Sports Car' | 'Yacht' | 'Boat';
+  category:
+    | "SUV"
+    | "Luxury Sedan"
+    | "Executive Bus"
+    | "Van"
+    | "Sports Car"
+    | "Yacht"
+    | "Boat";
   capacity: number;
   hourlyRate: number;
   dailyRate: number;
@@ -143,7 +181,18 @@ export interface MobilityVehicle {
 export interface ConciergeRequest {
   id?: string;
   requestId: string;
-  serviceType: 'Airport Pickup' | 'Airport Drop-off' | 'Restaurant Reservation' | 'Birthday Setup' | 'Proposal Setup' | 'Private Chef' | 'Laundry' | 'Shopping Assistance' | 'VIP Security' | 'Personal Driver' | 'Translator';
+  serviceType:
+    | "Airport Pickup"
+    | "Airport Drop-off"
+    | "Restaurant Reservation"
+    | "Birthday Setup"
+    | "Proposal Setup"
+    | "Private Chef"
+    | "Laundry"
+    | "Shopping Assistance"
+    | "VIP Security"
+    | "Personal Driver"
+    | "Translator";
   guestName: string;
   guestEmail: string;
   guestPhone: string;
@@ -151,7 +200,7 @@ export interface ConciergeRequest {
   preferredTime: string;
   location: string;
   notes?: string;
-  status: 'Pending' | 'Confirmed' | 'Completed' | 'Cancelled';
+  status: "Pending" | "Confirmed" | "Completed" | "Cancelled";
   priceEstimate?: number;
 }
 
@@ -173,7 +222,15 @@ export interface DiningVenue {
 export interface ExperienceItem {
   id: string;
   title: string;
-  category: 'Boat Cruise' | 'Spa & Wellness' | 'Private Dinner' | 'Photography' | 'City Tour' | 'Cooking Class' | 'Water Sports' | 'VIP Event';
+  category:
+    | "Boat Cruise"
+    | "Spa & Wellness"
+    | "Private Dinner"
+    | "Photography"
+    | "City Tour"
+    | "Cooking Class"
+    | "Water Sports"
+    | "VIP Event";
   tagline?: string;
   description: string;
   image: string;
@@ -226,8 +283,14 @@ export interface Booking {
   taxesAndFees: number; // 7.5% VAT + 5% Consumption Tax
   discountAmount: number;
   totalPrice: number;
-  status: 'Pending' | 'Confirmed' | 'Checked In' | 'Checked Out' | 'Cancelled' | 'Refunded';
-  paymentMethod: 'Bank Transfer' | 'Paystack' | 'Stripe' | 'Pay at Hotel';
-  paymentStatus: 'Paid' | 'Unpaid' | 'Pending Verification';
+  status:
+    | "Pending"
+    | "Confirmed"
+    | "Checked In"
+    | "Checked Out"
+    | "Cancelled"
+    | "Refunded";
+  paymentMethod: "Bank Transfer" | "Paystack" | "Stripe" | "Pay at Hotel";
+  paymentStatus: "Paid" | "Unpaid" | "Pending Verification";
   createdAt: string;
 }

@@ -1,7 +1,14 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { Lock, KeyRound, ShieldCheck, ArrowRight, Eye, EyeOff } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import {
+  Lock,
+  KeyRound,
+  ShieldCheck,
+  ArrowRight,
+  Eye,
+  EyeOff,
+} from "lucide-react";
 
 interface AdminAuthGuardProps {
   children: React.ReactNode;
@@ -9,34 +16,40 @@ interface AdminAuthGuardProps {
 
 export default function AdminAuthGuard({ children }: AdminAuthGuardProps) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    const authStatus = sessionStorage.getItem('stayconnect_admin_auth');
-    if (authStatus === 'true') {
-      setIsAuthenticated(true);
-    } else {
-      setIsAuthenticated(false);
-    }
+    fetch("/api/admin/session")
+      .then((r) => r.json())
+      .then((j) => setIsAuthenticated(j.authenticated))
+      .catch(() => setIsAuthenticated(false));
   }, []);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === 'stayconnect1') {
-      sessionStorage.setItem('stayconnect_admin_auth', 'true');
+    try {
+      const res = await fetch("/api/admin/session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }),
+      });
+      if (!res.ok) throw new Error("Invalid Administrator Password.");
       setIsAuthenticated(true);
-      setError('');
-    } else {
-      setError('Invalid Administrator Password. Access Denied.');
+      setError("");
+      window.location.reload();
+    } catch (e: any) {
+      setError(e.message);
     }
   };
 
   if (isAuthenticated === null) {
     return (
       <div className="min-h-screen bg-[#111111] text-white flex items-center justify-center">
-        <div className="text-xs uppercase tracking-widest text-[#C6A15B]">Authenticating Admin Session...</div>
+        <div className="text-xs uppercase tracking-widest text-[#C6A15B]">
+          Authenticating Admin Session...
+        </div>
       </div>
     );
   }
@@ -52,9 +65,12 @@ export default function AdminAuthGuard({ children }: AdminAuthGuardProps) {
             <span className="text-[10px] uppercase tracking-[0.35em] text-[#C6A15B] font-semibold block">
               Executive PMS Portal
             </span>
-            <h1 className="font-serif text-3xl text-white font-normal">Administrator Access</h1>
+            <h1 className="font-serif text-3xl text-white font-normal">
+              Administrator Access
+            </h1>
             <p className="text-xs text-neutral-400 font-light">
-              Enter master access key for 14B Providence Street Property Management System.
+              Enter master access key for 14B Providence Street Property
+              Management System.
             </p>
           </div>
 
@@ -66,7 +82,7 @@ export default function AdminAuthGuard({ children }: AdminAuthGuardProps) {
               </label>
               <div className="relative">
                 <input
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   required
                   placeholder="Enter admin password..."
                   value={password}
@@ -78,7 +94,11 @@ export default function AdminAuthGuard({ children }: AdminAuthGuardProps) {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-white"
                 >
-                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  {showPassword ? (
+                    <EyeOff className="w-4 h-4" />
+                  ) : (
+                    <Eye className="w-4 h-4" />
+                  )}
                 </button>
               </div>
             </div>
@@ -100,7 +120,7 @@ export default function AdminAuthGuard({ children }: AdminAuthGuardProps) {
 
           <div className="pt-4 border-t border-[#2C2B29] text-center text-[10px] text-neutral-500 flex items-center justify-center gap-1.5">
             <ShieldCheck className="w-3.5 h-3.5 text-[#C6A15B]" />
-            <span>256-Bit Encrypted Admin Session</span>
+            <span>Protected administrator session</span>
           </div>
         </div>
       </div>
