@@ -86,6 +86,7 @@ const PropertySchema = new Schema(
     gallery: [{ type: String }],
     amenities: [{ type: String }],
     published: { type: Boolean, default: true },
+    archivedAt: String,
     policies: {
       checkInTime: { type: String, default: "3:00 PM" },
       checkOutTime: { type: String, default: "12:00 PM" },

@@ -35,7 +35,8 @@ export default function AdminAuthGuard({ children }: AdminAuthGuardProps) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password }),
       });
-      if (!res.ok) throw new Error("Invalid Administrator Password.");
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || "Unable to sign in. Please try again.");
       setIsAuthenticated(true);
       setError("");
       window.location.reload();
@@ -69,8 +70,7 @@ export default function AdminAuthGuard({ children }: AdminAuthGuardProps) {
               Administrator Access
             </h1>
             <p className="text-xs text-neutral-400 font-light">
-              Enter master access key for 14B Providence Street Property
-              Management System.
+              Enter your administrator password to manage Stay Connect.
             </p>
           </div>
 

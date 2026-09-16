@@ -21,17 +21,20 @@ import {
   RefreshCw,
   Utensils,
 } from "lucide-react";
-import { INITIAL_ROOMS, INITIAL_PARTNERS } from "@/lib/data/seedData";
 import { Room, Partner } from "@/types";
 import AdminAuthGuard from "@/components/admin/AdminAuthGuard";
 import AdminMobileNav from "@/components/admin/AdminMobileNav";
 
 export default function AdminRoomsPage() {
+  return <AdminAuthGuard><AdminRoomsPageContent /></AdminAuthGuard>;
+}
+
+function AdminRoomsPageContent() {
   const [properties, setProperties] = useState<any[]>([]);
   const [editing, setEditing] = useState("");
   const [error, setError] = useState("");
-  const [rooms, setRooms] = useState<Room[]>(INITIAL_ROOMS);
-  const [partners, setPartners] = useState<Partner[]>(INITIAL_PARTNERS);
+  const [rooms, setRooms] = useState<Room[]>([]);
+  const [partners, setPartners] = useState<Partner[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [loadingRooms, setLoadingRooms] = useState(false);
@@ -62,11 +65,12 @@ export default function AdminRoomsPage() {
     try {
       const res = await fetch("/api/partners");
       const json = await res.json();
+      if (!res.ok || !json.success) throw new Error(json.error || "Unable to load saved records");
       if (json.success && json.data) {
         setPartners(json.data);
       }
     } catch (e) {
-      console.warn("Fallback to local partners:", e);
+      setError(e instanceof Error ? e.message : "Unable to load saved records");
     }
   };
 
@@ -75,11 +79,12 @@ export default function AdminRoomsPage() {
       setLoadingRooms(true);
       const res = await fetch("/api/rooms?manage=true");
       const json = await res.json();
+      if (!res.ok || !json.success) throw new Error(json.error || "Unable to load saved records");
       if (json.success && json.data) {
         setRooms(json.data);
       }
     } catch (e) {
-      console.warn("Using local seed rooms fallback:", e);
+      setError(e instanceof Error ? e.message : "Unable to load saved records");
     } finally {
       setLoadingRooms(false);
     }
@@ -168,6 +173,7 @@ export default function AdminRoomsPage() {
       });
 
       const json = await res.json();
+      if (!res.ok || !json.success) throw new Error(json.error || "Unable to load saved records");
       if (json.success && json.data) {
         setRooms([json.data, ...rooms]);
       } else {
@@ -180,7 +186,7 @@ export default function AdminRoomsPage() {
   };
 
   return (
-    <AdminAuthGuard>
+    <>
       <div className="min-h-screen bg-[#111111] text-white font-sans flex flex-col md:flex-row">
         {/* Mobile Header Bar */}
         <AdminMobileNav />
@@ -710,6 +716,6 @@ export default function AdminRoomsPage() {
           </div>
         )}
       </div>
-    </AdminAuthGuard>
+    </>
   );
 }

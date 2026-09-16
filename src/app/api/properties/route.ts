@@ -75,7 +75,14 @@ export async function PATCH(request: Request) {
     const data = await transaction(async () => {
       const property = (await list("properties")).find((p) => p.id === body.id);
       if (!property) throw new Error("Property not found");
-      if (body.action === "approve" || body.action === "changes") {
+      if (body.action === "archive") {
+        const aliases = [property.id, String(property._id || ""), property.slug];
+        if ((await list("bookings")).some(b => aliases.includes(b.propertyId) && !["Cancelled", "Refunded", "Checked Out"].includes(b.status) && b.checkOut >= new Date().toISOString().slice(0, 10)))
+          throw new Error("Resolve upcoming reservations before archiving this property");
+        property.archivedAt = new Date().toISOString();
+        property.published = false;
+        property.isVerified = false;
+      } else if (body.action === "approve" || body.action === "changes") {
         if (property.verificationStatus !== "Pending Verification")
           throw new Error("Only submitted properties can be reviewed");
         if (body.action === "changes" && !body.reviewNote?.trim())

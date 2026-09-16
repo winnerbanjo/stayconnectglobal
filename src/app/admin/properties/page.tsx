@@ -23,18 +23,21 @@ import {
   Upload,
   Trash2,
 } from "lucide-react";
-import { INITIAL_PROPERTIES, INITIAL_PARTNERS } from "@/lib/data/seedData";
 import { Property, Partner } from "@/types";
 import AdminAuthGuard from "@/components/admin/AdminAuthGuard";
 import AdminMobileNav from "@/components/admin/AdminMobileNav";
 
 export default function AdminPropertiesPage() {
+  return <AdminAuthGuard><AdminPropertiesPageContent /></AdminAuthGuard>;
+}
+
+function AdminPropertiesPageContent() {
   const [error, setError] = useState("");
   const [editing, setEditing] = useState("");
   const [reviewNotes, setReviewNotes] = useState<Record<string, string>>({});
   const [reviewing, setReviewing] = useState(false);
-  const [properties, setProperties] = useState<Property[]>(INITIAL_PROPERTIES);
-  const [partners, setPartners] = useState<Partner[]>(INITIAL_PARTNERS);
+  const [properties, setProperties] = useState<Property[]>([]);
+  const [partners, setPartners] = useState<Partner[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [loadingProps, setLoadingProps] = useState(false);
@@ -55,11 +58,12 @@ export default function AdminPropertiesPage() {
     try {
       const res = await fetch("/api/partners");
       const json = await res.json();
+      if (!res.ok || !json.success) throw new Error(json.error || "Unable to load saved records");
       if (json.success && json.data) {
         setPartners(json.data);
       }
     } catch (e) {
-      console.warn("Fallback to local partners:", e);
+      setError(e instanceof Error ? e.message : "Unable to load saved records");
     }
   };
 
@@ -68,11 +72,12 @@ export default function AdminPropertiesPage() {
       setLoadingProps(true);
       const res = await fetch("/api/properties?manage=true");
       const json = await res.json();
+      if (!res.ok || !json.success) throw new Error(json.error || "Unable to load saved records");
       if (json.success && json.data) {
         setProperties(json.data);
       }
     } catch (e) {
-      console.warn("Fallback to local properties:", e);
+      setError(e instanceof Error ? e.message : "Unable to load saved records");
     } finally {
       setLoadingProps(false);
     }
@@ -127,6 +132,7 @@ export default function AdminPropertiesPage() {
         body: JSON.stringify({ id, action, reviewNote: reviewNotes[id] || "" }),
       });
       const json = await res.json();
+      if (!res.ok || !json.success) throw new Error(json.error || "Unable to load saved records");
       if (!res.ok) throw new Error(json.error);
       await fetchLiveProperties();
       await fetchLivePartners();
@@ -165,6 +171,7 @@ export default function AdminPropertiesPage() {
       });
 
       const json = await res.json();
+      if (!res.ok || !json.success) throw new Error(json.error || "Unable to load saved records");
       if (json.success && json.data) {
         setProperties([json.data, ...properties]);
       } else {
@@ -177,7 +184,7 @@ export default function AdminPropertiesPage() {
   };
 
   return (
-    <AdminAuthGuard>
+    <>
       <div className="min-h-screen bg-[#111111] text-white font-sans flex flex-col md:flex-row">
         {/* Mobile Header Bar */}
         <AdminMobileNav />
@@ -616,6 +623,6 @@ export default function AdminPropertiesPage() {
           </div>
         )}
       </div>
-    </AdminAuthGuard>
+    </>
   );
 }

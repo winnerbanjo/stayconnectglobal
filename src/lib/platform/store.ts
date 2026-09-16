@@ -4,6 +4,7 @@ import type { ClientSession } from "mongoose";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { connectToDatabase } from "@/lib/db";
+import { Fleet, Dining, Housekeeping } from "@/lib/models/Operations";
 import Property from "@/lib/models/Property";
 import Room from "@/lib/models/Room";
 import Booking from "@/lib/models/Booking";
@@ -11,8 +12,11 @@ import Partner from "@/lib/models/Partner";
 import { INITIAL_PROPERTIES, INITIAL_ROOMS } from "@/lib/data/seedData";
 
 export const localPreview = process.env.STAYCONNECT_LOCAL_PREVIEW === "true";
-type Collection = "properties" | "rooms" | "bookings" | "partners";
+type Collection = "properties" | "rooms" | "bookings" | "partners" | "fleet" | "dining" | "housekeeping";
 const models = {
+  fleet: Fleet,
+  dining: Dining,
+  housekeeping: Housekeeping,
   properties: Property,
   rooms: Room,
   bookings: Booking,
@@ -23,6 +27,9 @@ const file = path.join(dir, "platform.json");
 const initial = () => ({
   properties: INITIAL_PROPERTIES,
   rooms: INITIAL_ROOMS,
+  fleet: [],
+  dining: [],
+  housekeeping: [],
   bookings: [],
   partners: [],
 });
@@ -46,7 +53,7 @@ export async function transaction<T>(action: () => Promise<T>): Promise<T> {
 }
 async function readLocal(): Promise<Record<Collection, any[]>> {
   try {
-    return JSON.parse(await fs.readFile(file, "utf8"));
+    return { ...initial(), ...JSON.parse(await fs.readFile(file, "utf8")) };
   } catch (error: any) {
     if (error.code !== "ENOENT") throw error;
     return structuredClone(initial());
@@ -68,6 +75,10 @@ export function normalize(item: any, collection?: Collection): any {
     value.verificationStatus ||= value.isVerified !== false && value.published ? 'Approved' : 'Draft';
     if (defaults && ['Stay Connect Lekki', 'Stay Connect Sanctuary Lekki'].includes(value.name)) value.name = defaults.name;
   }
+  if (collection === 'bookings') {
+    value.bookingRef ||= `LEGACY-${value.id}`;
+    value.totalPrice = Number.isFinite(Number(value.totalPrice)) ? Number(value.totalPrice) : 0;
+  }
   if (collection === 'bookings' && value.status === 'Confirmed' && ['Unpaid', 'Pending Verification'].includes(value.paymentStatus)) value.status = 'Pending';
   if (collection === 'rooms') {
     value.features ||= {};
@@ -77,11 +88,14 @@ export function normalize(item: any, collection?: Collection): any {
   }
   return value;
 }
+// This database also contains another service's appointments. Only hospitality
+// reservations belong in this application's dashboard and inventory calculations.
+export const hotelBooking = (item: any) => typeof item.roomId === "string" && typeof item.checkIn === "string";
 export async function list(collection: Collection): Promise<any[]> {
-  if (localPreview) return (await readLocal())[collection].map(item => normalize(item, collection));
+  if (localPreview) return (await readLocal())[collection].filter(item => (collection !== "bookings" || hotelBooking(item)) && (collection !== "properties" || !item.archivedAt)).map(item => normalize(item, collection));
   const conn = await connectToDatabase();
   if (!conn) throw new Error("Database unavailable. Please try again shortly.");
-  return (await models[collection].find({}).session(sessions.getStore() || null).lean()).map(item => normalize(item, collection));
+  return (await models[collection].find(collection === "bookings" ? { roomId: { $type: "string" }, checkIn: { $type: "string" } } : collection === "properties" ? { archivedAt: { $exists: false } } : {}).session(sessions.getStore() || null).lean()).map(item => normalize(item, collection));
 }
 export async function save(collection: Collection, item: any): Promise<any> {
   if (localPreview) {
@@ -144,3 +158,19 @@ export function roomMatches(room: any, value: string) {
     (['standard-room', 'room-standard-1'].includes(value) && room.slug === 'executive-single-suite' && room.propertyId === 'prop-lekki-1');
 }
 export async function findPublicRoom(value: string) { return (await publicRooms()).find(room => roomMatches(room, value)); }
+
+export async function removeOperation(collection: "fleet" | "dining" | "housekeeping", id: string) {
+  return transaction(async () => {
+    if (localPreview) {
+      const db = await readLocal();
+      if (!db[collection].some(record => record.id === id)) throw new Error("Record not found");
+      db[collection] = db[collection].filter(record => record.id !== id);
+      await fs.mkdir(dir, { recursive: true });
+      await fs.writeFile(`${file}.tmp`, JSON.stringify(db, null, 2));
+      await fs.rename(`${file}.tmp`, file);
+    } else {
+      const result = await models[collection].deleteOne({ id }, { session: sessions.getStore() });
+      if (!result.deletedCount) throw new Error("Record not found");
+    }
+  });
+}

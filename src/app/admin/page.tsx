@@ -33,16 +33,18 @@ import {
   Upload,
   Image as ImageIcon,
 } from "lucide-react";
-import {
-  INITIAL_BOOKINGS,
-  INITIAL_ROOMS,
-  INITIAL_PARTNERS,
-} from "@/lib/data/seedData";
 import { Booking, Partner } from "@/types";
 import AdminAuthGuard from "@/components/admin/AdminAuthGuard";
 import AdminMobileNav from "@/components/admin/AdminMobileNav";
 
 export default function AdminPage() {
+  return <AdminAuthGuard><AdminPageContent /></AdminAuthGuard>;
+}
+
+function AdminPageContent() {
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [rooms, setRooms] = useState<any[]>([]);
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [partners, setPartners] = useState<Partner[]>([]);
   const [selectedPartnerModal, setSelectedPartnerModal] = useState<any>(null);
@@ -55,35 +57,28 @@ export default function AdminPage() {
   const [showAddWalkInModal, setShowAddWalkInModal] = useState(false);
 
   useEffect(() => {
-    // Fetch live real bookings from database API
-    fetch("/api/bookings")
-      .then((res) => res.json())
-      .then((json) => {
-        if (json.success && Array.isArray(json.data)) {
-          setBookings(json.data);
-        }
-      })
-      .catch((err) => console.error("Error fetching live bookings:", err));
-
-    // Fetch live real partner applications from database API
-    fetch("/api/partners")
-      .then((res) => res.json())
-      .then((json) => {
-        if (json.success && Array.isArray(json.data)) {
-          setPartners(json.data);
-        }
-      })
-      .catch((err) => console.error("Error fetching live partners:", err));
+    Promise.all(["/api/bookings", "/api/partners", "/api/rooms"].map(async url => {
+      const response = await fetch(url, { cache: "no-store" });
+      const json = await response.json();
+      if (!response.ok || !json.success) throw new Error(json.error || "Unable to load dashboard");
+      return json.data;
+    })).then(([bookings, partners, rooms]) => {
+      setBookings(bookings); setPartners(partners); setRooms(rooms);
+      setNewWalkIn(prev => ({ ...prev, roomId: rooms[0]?.id || "" }));
+    }).catch(e => setError(e.message)).finally(() => setLoading(false));
   }, []);
+  const today = new Date().toISOString().slice(0, 10);
+  const totalUnits = rooms.reduce((sum, room) => sum + (room.numberOfUnits || 1), 0);
+  const occupiedUnits = bookings.filter(b => ["Confirmed", "Checked In"].includes(b.status) && b.checkIn <= today && b.checkOut > today).length;
+  const occupancy = totalUnits ? Math.round(occupiedUnits / totalUnits * 100) : null;
   const [newWalkIn, setNewWalkIn] = useState({
     guestEmail: "",
     guestName: "",
     guestPhone: "",
-    roomName: "Standard Room (Executive Single Room)",
+    roomId: "",
     checkIn: new Date().toISOString().slice(0, 10),
     checkOut: new Date(Date.now() + 86400000).toISOString().slice(0, 10),
-    nights: 3,
-    totalPrice: 337500,
+
     paymentMethod: "Bank Transfer",
     channel: "Walk-In",
   });
@@ -99,7 +94,7 @@ export default function AdminPage() {
     .reduce((sum, b) => sum + b.totalPrice, 0);
   const walkInCount = bookings.filter(
     (b) =>
-      b.specialRequests?.includes("Walk-In") || b.bookingRef.includes("WALKIN"),
+      b.specialRequests?.includes("Walk-In") || b.bookingRef?.includes("WALKIN"),
   ).length;
   const digitalCount = bookings.length - walkInCount;
 
@@ -111,7 +106,7 @@ export default function AdminPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...newWalkIn,
-          roomId: "room-standard-1",
+          roomId: newWalkIn.roomId,
           adults: 2,
           specialRequests: "Walk-In reservation entered by Front Desk Admin",
         }),
@@ -127,14 +122,14 @@ export default function AdminPage() {
 
   const filteredBookings = bookings.filter((b) => {
     const isWalkIn =
-      b.specialRequests?.includes("Walk-In") || b.bookingRef.includes("WALKIN");
+      b.specialRequests?.includes("Walk-In") || b.bookingRef?.includes("WALKIN");
     if (activeFilter === "WALK_IN") return isWalkIn;
     if (activeFilter === "DIGITAL") return !isWalkIn;
     return true;
   });
 
   return (
-    <AdminAuthGuard>
+    <>
       <div className="min-h-screen bg-[#111111] text-white font-sans flex flex-col md:flex-row">
         {/* Mobile Header Bar */}
         <AdminMobileNav />
@@ -215,7 +210,7 @@ export default function AdminPage() {
               className="flex items-center gap-2 text-xs text-rose-400 hover:text-rose-300 transition-colors w-full text-left"
             >
               <Lock className="w-4 h-4" />
-              <span>Lock & Log Out (stayconnect1)</span>
+              <span>Lock & Log Out</span>
             </button>
             <Link
               href="/"
@@ -251,6 +246,8 @@ export default function AdminPage() {
             </div>
           </div>
 
+          {error && <p role="alert" className="text-rose-300">{error} <button onClick={() => window.location.reload()}>Retry</button></p>}
+          {loading && <p role="status">Loading saved records…</p>}
           {/* PMS High Level Metrics */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             <div className="p-6 bg-[#1A1918] border border-[#2C2B29] rounded-2xl space-y-2">
@@ -262,7 +259,7 @@ export default function AdminPage() {
                 ₦{totalRevenue.toLocaleString()}
               </div>
               <div className="text-[10px] text-emerald-400">
-                Live MongoDB Atlas Database
+                Confirmed payments
               </div>
             </div>
 
@@ -272,7 +269,7 @@ export default function AdminPage() {
                 <TrendingUp className="w-4 h-4 text-[#C6A15B]" />
               </div>
               <div className="font-serif text-2xl sm:text-3xl text-white font-bold">
-                85%
+                {occupancy === null ? "—" : `${occupancy}%`}
               </div>
               <div className="text-[10px] text-neutral-400">
                 14B Providence St, Lekki
@@ -288,7 +285,7 @@ export default function AdminPage() {
                 {digitalCount}
               </div>
               <div className="text-[10px] text-neutral-400">
-                Website & Mailtrap Vouchers
+                Website reservations
               </div>
             </div>
 
@@ -400,7 +397,7 @@ export default function AdminPage() {
                     {filteredBookings.map((b) => {
                       const isWalkIn =
                         b.specialRequests?.includes("Walk-In") ||
-                        b.bookingRef.includes("WALKIN");
+                        b.bookingRef?.includes("WALKIN");
                       return (
                         <tr
                           key={b.id}
@@ -688,21 +685,12 @@ export default function AdminPage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="text-neutral-300 font-medium">
-                      Total Amount (₦)
-                    </label>
-                    <input
-                      type="number"
-                      required
-                      value={newWalkIn.totalPrice}
-                      onChange={(e) =>
-                        setNewWalkIn({
-                          ...newWalkIn,
-                          totalPrice: Number(e.target.value),
-                        })
-                      }
-                      className="w-full bg-[#1A1918] border border-[#2C2B29] rounded-lg px-3 py-2 text-white mt-1"
-                    />
+                    <label className="text-neutral-300 font-medium">Room</label>
+                    <select required value={newWalkIn.roomId} onChange={e => setNewWalkIn({ ...newWalkIn, roomId: e.target.value })} className="w-full bg-[#1A1918] border border-[#2C2B29] rounded-lg px-3 py-2 text-white mt-1">
+                      <option value="">Choose a room</option>
+                      {rooms.map(room => <option key={room.id} value={room.id}>{room.name} — ₦{room.pricePerNight.toLocaleString()} / night</option>)}
+                    </select>
+                    <p className="text-neutral-400 mt-2">Total calculated from saved room rate and dates, including taxes and fees.</p>
                   </div>
                   <div>
                     <label className="text-neutral-300 font-medium">
@@ -719,9 +707,7 @@ export default function AdminPage() {
                       className="w-full bg-[#1A1918] border border-[#2C2B29] rounded-lg px-3 py-2 text-white mt-1"
                     >
                       <option value="Bank Transfer">Bank Transfer</option>
-                      <option value="Cash at Desk">Cash at Desk</option>
-                      <option value="POS Card">POS Terminal</option>
-                      <option value="Paystack">Paystack</option>
+                      <option value="Pay at Hotel">Pay at Hotel</option>
                     </select>
                   </div>
                 </div>
@@ -756,7 +742,7 @@ export default function AdminPage() {
                     <ShieldCheck className="w-4 h-4" />
                     <span>
                       Merchant Onboarding File •{" "}
-                      {selectedPartnerModal.partnerId || "PART-86871"}
+                      {selectedPartnerModal.partnerId || selectedPartnerModal.id}
                     </span>
                   </div>
                   <h3 className="font-serif text-2xl text-white mt-1">
@@ -785,7 +771,7 @@ export default function AdminPage() {
                     <span className="text-sm font-semibold text-white">
                       {selectedPartnerModal.contactName ||
                         selectedPartnerModal.name ||
-                        "WINNER OYEBANJO"}
+                        "Not provided"}
                     </span>
                   </div>
                   <div>
@@ -821,7 +807,7 @@ export default function AdminPage() {
                     <span className="font-serif text-base font-medium text-white">
                       {selectedPartnerModal.propertyName ||
                         selectedPartnerModal.businessName ||
-                        "MARY HOUSE"}
+                        "Not provided"}
                     </span>
                   </div>
                   <div>
@@ -938,46 +924,7 @@ export default function AdminPage() {
                     </span>
                   </div>
 
-                  {/* Direct Image File Picker Dropzone */}
-                  <div className="p-5 bg-[#111111] border-2 border-dashed border-[#C6A15B]/40 hover:border-[#C6A15B] rounded-xl text-center relative transition-colors cursor-pointer group space-y-2">
-                    <div className="w-10 h-10 rounded-full bg-[#1A1918] text-[#C6A15B] flex items-center justify-center mx-auto border border-[#C6A15B]/30 group-hover:scale-110 transition-transform">
-                      <Upload className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <div className="text-xs font-semibold text-white">
-                        Click to Upload / Add Property Photo Files
-                      </div>
-                      <div className="text-[10px] text-neutral-400 font-light mt-0.5">
-                        Select image files (JPG, PNG, WEBP) directly from
-                        device. No image links needed.
-                      </div>
-                    </div>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      multiple
-                      onChange={(e) => {
-                        const files = e.target.files;
-                        if (!files || files.length === 0) return;
-                        Array.from(files).forEach((file) => {
-                          const reader = new FileReader();
-                          reader.onloadend = () => {
-                            if (reader.result) {
-                              setSelectedPartnerModal((prev: any) => ({
-                                ...prev,
-                                images: [
-                                  ...(prev?.images || []),
-                                  reader.result as string,
-                                ],
-                              }));
-                            }
-                          };
-                          reader.readAsDataURL(file);
-                        });
-                      }}
-                      className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
-                    />
-                  </div>
+                  <p className="text-xs text-neutral-400">Manage and save property photos in <Link href="/admin/properties" className="text-[#C6A15B] underline">Properties</Link>.</p>
 
                   {/* Photo Thumbnails */}
                   {selectedPartnerModal.images &&
@@ -994,20 +941,7 @@ export default function AdminPage() {
                               alt={`Property Photo ${i + 1}`}
                               className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                             />
-                            <button
-                              type="button"
-                              onClick={() => {
-                                setSelectedPartnerModal((prev: any) => ({
-                                  ...prev,
-                                  images: prev.images.filter(
-                                    (_: any, idx: number) => idx !== i,
-                                  ),
-                                }));
-                              }}
-                              className="absolute top-1.5 right-1.5 p-1 bg-black/80 text-rose-400 rounded-full hover:bg-rose-950 transition-colors"
-                            >
-                              <X className="w-3.5 h-3.5" />
-                            </button>
+
                             <span className="absolute bottom-1 left-1.5 bg-black/75 px-2 py-0.5 rounded text-[9px] font-mono text-[#C6A15B]">
                               Photo #{i + 1}
                             </span>
@@ -1028,7 +962,7 @@ export default function AdminPage() {
               <div className="pt-4 border-t border-[#2C2B29] flex flex-col sm:flex-row items-center justify-between gap-3">
                 <a
                   href={`https://wa.me/${(selectedPartnerModal.phone || "+2347041008351").replace(/[^0-9]/g, "")}?text=${encodeURIComponent(
-                    `Hello ${selectedPartnerModal.contactName || "Partner"}, this is Stay Connect Global Admin regarding your property application for ${selectedPartnerModal.propertyName || selectedPartnerModal.businessName || "MARY HOUSE"}.`,
+                    `Hello ${selectedPartnerModal.contactName || "Partner"}, this is Stay Connect Global Admin regarding your property application for ${selectedPartnerModal.propertyName || selectedPartnerModal.businessName || "Not provided"}.`,
                   )}`}
                   target="_blank"
                   rel="noreferrer"
@@ -1060,6 +994,6 @@ export default function AdminPage() {
           </div>
         )}
       </div>
-    </AdminAuthGuard>
+    </>
   );
 }

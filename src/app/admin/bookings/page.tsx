@@ -14,11 +14,14 @@ import {
   RefreshCw,
   Utensils,
 } from "lucide-react";
-import { INITIAL_BOOKINGS } from "@/lib/data/seedData";
 import AdminAuthGuard from "@/components/admin/AdminAuthGuard";
 import AdminMobileNav from "@/components/admin/AdminMobileNav";
 
 export default function AdminBookingsPage() {
+  return <AdminAuthGuard><AdminBookingsPageContent /></AdminAuthGuard>;
+}
+
+function AdminBookingsPageContent() {
   const [bookings, setBookings] = React.useState<any[]>([]);
 
   const [error, setError] = React.useState("");
@@ -45,7 +48,7 @@ export default function AdminBookingsPage() {
   }
   React.useEffect(() => {
     fetch("/api/bookings")
-      .then((res) => res.json())
+      .then(async (res) => { const json = await res.json(); if (!res.ok) throw new Error(json.error); return json; })
       .then((json) => {
         if (json.success && Array.isArray(json.data)) {
           setBookings(json.data);
@@ -56,7 +59,7 @@ export default function AdminBookingsPage() {
   }, []);
 
   return (
-    <AdminAuthGuard>
+    <>
       <div className="min-h-screen bg-[#111111] text-white font-sans flex flex-col md:flex-row">
         {/* Mobile Header Bar */}
         <AdminMobileNav />
@@ -288,6 +291,6 @@ export default function AdminBookingsPage() {
           </div>
         </main>
       </div>
-    </AdminAuthGuard>
+    </>
   );
 }
