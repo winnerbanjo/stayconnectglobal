@@ -30,6 +30,7 @@ export interface IBooking extends Document {
     | "Refunded";
   paymentMethod: "Bank Transfer" | "Paystack" | "Stripe" | "Pay at Hotel";
   paymentStatus: "Paid" | "Unpaid" | "Pending Verification";
+  paymentReceipt?: string;
 }
 
 const BookingSchema = new Schema(
@@ -42,6 +43,7 @@ const BookingSchema = new Schema(
     lookupToken: String,
     paymentConfirmedAt: String,
     paymentConfirmedBy: String,
+    paymentReceipt: String,
     selectedAddOns: [String],
     bookingRef: { type: String, required: true, unique: true },
     propertyId: { type: String, required: true },

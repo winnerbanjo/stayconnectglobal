@@ -11,7 +11,7 @@ import {
   roomMatches,
 } from "@/lib/platform/store";
 import { requireAdmin, newToken } from "@/lib/platform/auth";
-import { errorResponse } from "@/lib/platform/validation";
+import { errorResponse, imageUrl } from "@/lib/platform/validation";
 const input = z.object({
   roomId: z.string().min(1),
   checkIn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
@@ -22,6 +22,7 @@ const input = z.object({
   guestPhone: z.string().trim().min(7),
   specialRequests: z.string().max(2000).default(""),
   paymentMethod: z.enum(["Bank Transfer", "Pay at Hotel"]),
+  paymentReceipt: imageUrl.optional(),
   selectedAddOns: z.array(z.string()).max(0, "Additional services must be arranged with the concierge").default([]),
   agentCode: z
     .string()
@@ -43,6 +44,8 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const body = input.parse(await req.json());
+    if (body.paymentMethod === "Bank Transfer" && !body.paymentReceipt)
+      throw new Error("Upload the bank transfer receipt before completing your reservation");
     const result = await transaction(async () => {
       const room = (await publicRooms()).find(
         (r) => roomMatches(r, body.roomId),
@@ -87,7 +90,7 @@ export async function POST(req: Request) {
         discountAmount: 0,
         totalPrice: subtotal + taxesAndFees,
         status: "Pending",
-        paymentStatus: "Unpaid",
+        paymentStatus: body.paymentMethod === "Bank Transfer" ? "Pending Verification" : "Unpaid",
         createdAt: new Date().toISOString(),
         lookupToken: newToken(),
       };

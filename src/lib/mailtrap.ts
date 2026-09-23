@@ -4,6 +4,7 @@ import nodemailer from "nodemailer";
 const TOKEN = process.env.MAILTRAP_TOKEN || "";
 const SENDER_EMAIL = "hello@nile.ng";
 const SENDER_NAME = "Stay Connect Hotels Lekki";
+const BOOKING_NOTIFICATION_EMAIL = process.env.BOOKING_NOTIFICATION_EMAIL || "";
 
 export interface BookingEmailPayload {
   bookingRef: string;
@@ -16,6 +17,7 @@ export interface BookingEmailPayload {
   nights: number;
   totalPrice: number;
   paymentMethod?: string;
+  paymentReceipt?: string;
 }
 
 export async function sendBookingConfirmationEmail(
@@ -58,6 +60,7 @@ export async function sendBookingConfirmationEmail(
         <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: #8E8B85;">Booking Reference Code</div>
         <div style="font-size: 28px; color: #00AEEF; font-weight: bold; letter-spacing: 4px; margin-top: 4px;">${bookingDetails.bookingRef}</div>
       </div>
+      ${bookingDetails.paymentReceipt ? `<p style="font-size: 13px; color: #D1CDC7; line-height: 1.6;">Your bank transfer receipt has been received and is awaiting verification. <a href="${bookingDetails.paymentReceipt}" style="color: #00AEEF;">View uploaded receipt</a></p>` : ""}
 
       <table style="width: 100%; border-collapse: collapse; font-size: 13px; color: #FAF9F6; margin: 20px 0;">
         <tr style="border-bottom: 1px solid #2C2B29;">
@@ -100,7 +103,12 @@ export async function sendBookingConfirmationEmail(
     const client = new MailtrapClient({ token: TOKEN });
     const res = await client.send({
       from: { email: SENDER_EMAIL, name: SENDER_NAME },
-      to: [{ email: bookingDetails.guestEmail }],
+      to: [
+        { email: bookingDetails.guestEmail },
+        ...(BOOKING_NOTIFICATION_EMAIL && BOOKING_NOTIFICATION_EMAIL !== bookingDetails.guestEmail
+          ? [{ email: BOOKING_NOTIFICATION_EMAIL }]
+          : []),
+      ],
       subject: `Luxury Reservation Voucher ${bookingDetails.bookingRef} | Stay Connect Hotels`,
       html: htmlContent,
     });

@@ -244,6 +244,11 @@ function AdminBookingsPageContent() {
                             <span className="px-2 py-0.5 rounded bg-white border border-slate-200 text-[10px] text-[#0077B6]">
                               {b.paymentMethod} · {b.paymentStatus}
                             </span>
+                            {b.paymentReceipt && (
+                              <a href={b.paymentReceipt} target="_blank" rel="noreferrer" className="mt-2 block text-[10px] font-semibold text-[#0077B6] underline">
+                                View transfer receipt
+                              </a>
+                            )}
                           </td>
                           <td className="py-4 px-4">
                             <span className="px-2.5 py-1 rounded-full text-[10px] uppercase font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">

@@ -292,5 +292,6 @@ export interface Booking {
     | "Refunded";
   paymentMethod: "Bank Transfer" | "Paystack" | "Stripe" | "Pay at Hotel";
   paymentStatus: "Paid" | "Unpaid" | "Pending Verification";
+  paymentReceipt?: string;
   createdAt: string;
 }
