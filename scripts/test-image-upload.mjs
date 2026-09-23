@@ -52,5 +52,7 @@ await assert.rejects(uploadImages([photo('offline.png')]),/Check your connection
 check(true,'Network errors include retry guidance');
 const payload={name:'Test Property',address:'Test address, Lagos',city:'Lagos',description:'A complete description of a real property.',heroImage:'https://example.com/first.png',gallery:['https://example.com/first.png']};
 check(validation.propertyInput.safeParse(payload).success,'Valid uploaded images and property fields satisfy the server schema');
+const normalized = validation.propertyInput.parse({ ...payload, tagline: "   " });
+check(normalized.tagline === 'A welcoming place to stay','Blank internal subtitle receives the server default');
 check(!validation.propertyInput.safeParse({...payload,city:'',description:'Fully Uploaded',gallery:['']}).success,'The originally failing form values are correctly rejected');
 console.log(`${passed} image upload and property-validation checks passed.`);

@@ -168,7 +168,7 @@ function AdminPropertiesPageContent() {
     const newPropPayload = {
       slug,
       name: formData.name,
-      tagline: formData.tagline,
+      tagline: formData.tagline.trim() || formData.name.trim(),
       address: formData.address,
       city: formData.city,
       description: formData.description,

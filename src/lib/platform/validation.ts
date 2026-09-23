@@ -11,7 +11,12 @@ export const imageUrl = z
   );
 export const propertyInput = z.object({
   name: z.string().trim().min(2),
-  tagline: z.string().trim().default("A welcoming place to stay"),
+  // Older admin forms did not expose a subtitle. Treat an empty value as absent
+  // so the server can safely supply the standard subtitle.
+  tagline: z.preprocess(
+    (value) => typeof value === "string" && !value.trim() ? undefined : value,
+    z.string().trim().default("A welcoming place to stay"),
+  ),
   category: z
     .enum([
       "Luxury Hotel",
