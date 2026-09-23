@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { uploadImages } from "@/lib/upload-images";
+import { uploadImages, type ImageUploadProgress } from "@/lib/upload-images";
+import ImageUploadStatus from "@/components/properties/ImageUploadStatus";
 import RoomEditor from "@/components/properties/RoomEditor";
 import Link from "next/link";
 import Image from "next/image";
@@ -37,6 +38,8 @@ function AdminRoomsPageContent() {
   const [partners, setPartners] = useState<Partner[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<ImageUploadProgress | null>(null);
+  const [saving, setSaving] = useState(false);
   const [loadingRooms, setLoadingRooms] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -104,36 +107,51 @@ function AdminRoomsPageContent() {
   const handleBulkImageUpload = async (
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    if (!e.target.files) return;
-    setUploading(true);
+    const input = e.currentTarget;
+    const files = Array.from(input.files || []);
+    if (!files.length || uploading || saving) return;
     setError("");
+    setUploadProgress(null);
+    if (formData.gallery.length + files.length > 40) {
+      setError("You can attach up to 40 photos. Remove some photos before uploading more.");
+      input.value = "";
+      return;
+    }
+    setUploading(true);
     try {
-      const urls = await uploadImages(e.target.files);
-      setFormData((prev) => ({
-        ...prev,
-        heroImage: prev.gallery.length ? prev.heroImage : urls[0],
-        gallery: [...prev.gallery, ...urls],
-      }));
-    } catch (e: any) {
-      setError(e.message);
+      await uploadImages(files, {
+        onProgress: setUploadProgress,
+        onUploaded: url => setFormData(prev => ({
+          ...prev,
+          heroImage: prev.heroImage || url,
+          gallery: [...prev.gallery, url],
+        })),
+      });
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : "Image upload failed. Please try again.");
     } finally {
       setUploading(false);
+      input.value = "";
     }
   };
+
   const removeGalleryImage = (index: number) => {
     setFormData((prev) => {
       const updated = prev.gallery.filter((_, i) => i !== index);
       return {
         ...prev,
         gallery: updated,
-        heroImage: updated[0] || prev.heroImage,
+        heroImage: updated[0] || "",
       };
     });
   };
 
-  const handleFileUpload = handleBulkImageUpload;
   const handleCreateRoom = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (uploading || saving) return;
+    setError("");
+    if (!formData.gallery.length) { setError("Upload at least one room photo before saving."); return; }
+    setSaving(true);
     const slug = formData.name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
     const newRoomPayload = {
       slug,
@@ -176,6 +194,8 @@ function AdminRoomsPageContent() {
       setIsModalOpen(false);
     } catch (e: any) {
       setError(e.message);
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -286,7 +306,7 @@ function AdminRoomsPageContent() {
             </button>
           </div>
 
-          {error && (
+          {error && !isModalOpen && (
             <p role="alert" className="text-rose-700">
               {error}
             </p>
@@ -382,6 +402,7 @@ function AdminRoomsPageContent() {
                   </h3>
                 </div>
                 <button
+                  disabled={uploading || saving}
                   onClick={() => setIsModalOpen(false)}
                   className="text-slate-600 hover:text-slate-900"
                 >
@@ -513,7 +534,7 @@ function AdminRoomsPageContent() {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <label className="text-slate-700 font-medium block">
-                      Suite Photos (Bulk Upload 6+ Photos At Once)
+                      Suite Photos
                     </label>
                     <span className="text-[10px] font-mono text-[#85672E] font-semibold">
                       {formData.gallery.length} Photo(s) Attached
@@ -522,24 +543,28 @@ function AdminRoomsPageContent() {
 
                   <div className="p-4 bg-slate-50 border-2 border-dashed border-slate-200 hover:border-[#C6A15B] rounded-xl text-center space-y-2 transition-colors relative cursor-pointer">
                     <div className="w-10 h-10 rounded-full bg-white text-[#85672E] flex items-center justify-center mx-auto border border-[#C6A15B]/40">
-                      <Upload className="w-5 h-5" />
+                      {uploading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Upload className="w-5 h-5" />}
                     </div>
                     <div className="space-y-1">
                       <div className="text-xs font-semibold text-slate-900">
-                        Click to Select & Upload At Least 6+ Image Files
+                        {uploading ? "Uploading photos…" : "Select photos to upload"}
                       </div>
                       <div className="text-[10px] text-slate-600">
-                        Multi-select JPG, PNG, WEBP files directly from device
+                        Select one or more JPG, PNG or WebP files, up to 8 MB each. At least one photo is required.
                       </div>
                     </div>
                     <input
                       type="file"
                       accept="image/jpeg,image/png,image/webp"
                       multiple
+                      aria-label="Upload property photos"
+                      disabled={uploading || saving}
                       onChange={handleBulkImageUpload}
-                      className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+                      className="absolute inset-0 opacity-0 cursor-pointer disabled:cursor-wait w-full h-full"
                     />
                   </div>
+
+                  <ImageUploadStatus progress={uploadProgress} uploading={uploading} />
 
                   {formData.gallery.length > 0 && (
                     <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 pt-2">
@@ -555,7 +580,9 @@ function AdminRoomsPageContent() {
                           />
                           <button
                             type="button"
-                            onClick={() => removeGalleryImage(idx)}
+                            onClick={() => { removeGalleryImage(idx); setUploadProgress(null); }}
+                            disabled={uploading || saving}
+                            aria-label={`Remove photo ${idx + 1}`}
                             className="absolute top-1 right-1 p-1 bg-white text-rose-700 rounded-full hover:bg-rose-50 transition-colors"
                           >
                             <X className="w-3 h-3" />
@@ -698,16 +725,18 @@ function AdminRoomsPageContent() {
                 <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200">
                   <button
                     type="button"
-                    onClick={() => setIsModalOpen(false)}
+                    disabled={uploading || saving}
+                  onClick={() => setIsModalOpen(false)}
                     className="px-4 py-2 text-slate-600 hover:text-slate-900"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-6 py-2.5 bg-[#C6A15B] text-[#111111] font-semibold uppercase tracking-widest rounded-lg shadow-xl"
+                    disabled={uploading || saving || formData.gallery.length === 0}
+                    className="px-6 py-2.5 bg-[#C6A15B] text-[#111111] font-semibold uppercase tracking-widest rounded-lg shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    Publish Suite Live
+                    {uploading ? "Uploading photos…" : saving ? "Saving room…" : "Publish Suite Live"}
                   </button>
                 </div>
               </form>

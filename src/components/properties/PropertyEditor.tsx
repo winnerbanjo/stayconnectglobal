@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
-import { uploadImages } from "@/lib/upload-images";
+import { uploadImages, type ImageUploadProgress } from "@/lib/upload-images";
+import ImageUploadStatus from "./ImageUploadStatus";
 const field =
   "block w-full mt-2 p-3 rounded-lg bg-[var(--editor-input,#111111)] border border-[var(--editor-border,#444)] text-[var(--editor-text,white)] text-sm";
 export default function PropertyEditor({
@@ -21,9 +22,12 @@ export default function PropertyEditor({
       .join(", "),
   });
   const [busy, setBusy] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<ImageUploadProgress | null>(null);
   const [error, setError] = useState("");
   async function submit(e: React.FormEvent) {
     e.preventDefault();
+    if (busy) return;
     setBusy(true);
     setError("");
     try {
@@ -167,24 +171,30 @@ export default function PropertyEditor({
           disabled={busy}
           className={field}
           onChange={async (e) => {
-            if (!e.target.files) return;
-            setBusy(true);
+            const input = e.currentTarget;
+            const files = Array.from(input.files || []);
+            if (!files.length || busy) return;
             setError("");
+            setUploadProgress(null);
+            if (data.gallery.length + files.length > 40) { setError("Attach no more than 40 photos."); input.value = ""; return; }
+            setBusy(true);
+            setUploading(true);
             try {
-              const urls = await uploadImages(e.target.files);
-              setData((d: any) => ({
-                ...d,
-                gallery: [...d.gallery, ...urls],
-                heroImage: d.heroImage || urls[0],
-              }));
+              await uploadImages(files, {
+                onProgress: setUploadProgress,
+                onUploaded: url => setData((d: any) => ({ ...d, gallery: [...d.gallery, url], heroImage: d.heroImage || url })),
+              });
             } catch (e: any) {
               setError(e.message);
             } finally {
               setBusy(false);
+              setUploading(false);
+              input.value = "";
             }
           }}
         />
       </label>
+      <ImageUploadStatus progress={uploadProgress} uploading={uploading} />
       {error && (
         <p role="alert" className="text-[var(--editor-error,#fda4af)] text-sm">
           {error}

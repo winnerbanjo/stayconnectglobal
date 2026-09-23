@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { uploadImages } from "@/lib/upload-images";
+import { uploadImages, type ImageUploadProgress } from "@/lib/upload-images";
+import ImageUploadStatus from "@/components/properties/ImageUploadStatus";
 import Navbar from "@/components/navigation/Navbar";
 import Footer from "@/components/navigation/Footer";
 import { motion, AnimatePresence } from "framer-motion";
@@ -22,6 +23,7 @@ export default function ListYourPropertyPage() {
   const [error, setError] = useState("");
   const [accessKey, setAccessKey] = useState("");
   const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<ImageUploadProgress | null>(null);
   const [customAmenity, setCustomAmenity] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -46,16 +48,23 @@ export default function ListYourPropertyPage() {
   const handleImageFileUpload = async (
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    if (!e.target.files) return;
-    setUploading(true);
+    const input = e.currentTarget;
+    const files = Array.from(input.files || []);
+    if (!files.length || uploading || loading) return;
     setError("");
+    setUploadProgress(null);
+    if (formData.images.length + files.length > 40) { setError("Attach no more than 40 photos."); input.value = ""; return; }
+    setUploading(true);
     try {
-      const urls = await uploadImages(e.target.files);
-      setFormData((prev) => ({ ...prev, images: [...prev.images, ...urls] }));
+      await uploadImages(files, {
+        onProgress: setUploadProgress,
+        onUploaded: url => setFormData(prev => ({ ...prev, images: [...prev.images, url] })),
+      });
     } catch (e: any) {
       setError(e.message);
     } finally {
       setUploading(false);
+      input.value = "";
     }
   };
 
@@ -105,6 +114,7 @@ export default function ListYourPropertyPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (uploading || loading) return;
     setLoading(true);
     setError("");
 
@@ -578,11 +588,14 @@ export default function ListYourPropertyPage() {
                       type="file"
                       accept="image/jpeg,image/png,image/webp"
                       multiple
+                      disabled={uploading || loading}
+                      aria-label="Upload property photos"
                       onChange={handleImageFileUpload}
                       className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
                     />
                   </div>
 
+                  <ImageUploadStatus progress={uploadProgress} uploading={uploading} />
                   {/* Thumbnail Previews */}
                   {formData.images.length > 0 && (
                     <div className="space-y-2 pt-2">
@@ -602,7 +615,8 @@ export default function ListYourPropertyPage() {
                             />
                             <button
                               type="button"
-                              onClick={() => removeUploadedImage(i)}
+                              disabled={uploading || loading}
+                              onClick={() => { removeUploadedImage(i); setUploadProgress(null); }}
                               className="absolute top-1.5 right-1.5 p-1 bg-black/80 text-rose-400 rounded-full hover:bg-rose-950 transition-colors"
                             >
                               <X className="w-3.5 h-3.5" />
