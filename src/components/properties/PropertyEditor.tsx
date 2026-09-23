@@ -13,11 +13,12 @@ export default function PropertyEditor({
   property: any;
   endpoint?: string;
   token?: string;
-  onSaved: () => void;
+  onSaved: () => void | Promise<void>;
 }) {
   const [data, setData] = useState({
     ...property,
-    amenities: property.amenities
+    tagline: property.tagline || property.name || "A welcoming place to stay",
+    amenities: (property.amenities || [])
       .map((a: any) => (typeof a === "string" ? a : a.name))
       .join(", "),
   });
@@ -31,6 +32,10 @@ export default function PropertyEditor({
     setBusy(true);
     setError("");
     try {
+      const gallery = data.gallery || [];
+      if (!gallery.length || !data.heroImage) {
+        throw new Error("Add at least one photo and select a cover image before saving.");
+      }
       const res = await fetch(endpoint, {
         method: "PATCH",
         headers: {
@@ -38,7 +43,20 @@ export default function PropertyEditor({
           ...(token ? { Authorization: `Bearer ${token}` } : {}),
         },
         body: JSON.stringify({
-          ...data,
+          id: data.id,
+          name: data.name,
+          tagline: data.tagline?.trim() || data.name?.trim(),
+          category: data.category || "Luxury Hotel",
+          address: data.address,
+          city: data.city,
+          area: data.area || "",
+          description: data.description,
+          numberOfUnits: Number(data.numberOfUnits) || 1,
+          pricingStartingFrom: Number(data.pricingStartingFrom) || 100000,
+          heroImage: data.heroImage,
+          gallery,
+          partnerId: data.partnerId || undefined,
+          hostName: data.hostName || undefined,
           amenities: data.amenities
             .split(",")
             .map((a: string) => a.trim())
@@ -46,8 +64,8 @@ export default function PropertyEditor({
         }),
       });
       const json = await res.json();
-      if (!res.ok) throw new Error(json.error);
-      onSaved();
+      if (!res.ok || !json.success) throw new Error(json.error || "Property could not be saved.");
+      await onSaved();
     } catch (e: any) {
       setError(e.message);
     } finally {
@@ -210,7 +228,7 @@ export default function PropertyEditor({
         disabled={busy}
         className="bg-[#C6A15B] text-black rounded-lg px-5 py-3 text-sm font-semibold disabled:opacity-50"
       >
-        {busy ? "Saving / uploading…" : "Save property"}
+        {busy ? "Saving property…" : "Save property"}
       </button>
     </form>
   );

@@ -34,6 +34,7 @@ export default function AdminPropertiesPage() {
 
 function AdminPropertiesPageContent() {
   const [error, setError] = useState("");
+  const [notice, setNotice] = useState("");
   const [editing, setEditing] = useState("");
   const [reviewNotes, setReviewNotes] = useState<Record<string, string>>({});
   const [reviewing, setReviewing] = useState(false);
@@ -301,7 +302,7 @@ function AdminPropertiesPageContent() {
               </h1>
             </div>
             <button
-              onClick={() => { setError(""); setIsModalOpen(true); }}
+              onClick={() => { setError(""); setNotice(""); setIsModalOpen(true); }}
               className="w-full sm:w-auto px-5 py-3 bg-[#C6A15B] hover:bg-[#B08C46] text-[#111111] font-semibold text-xs uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 shadow-xl transition-all active:scale-95"
             >
               <Plus className="w-4 h-4" />
@@ -315,6 +316,11 @@ function AdminPropertiesPageContent() {
               className="p-4 border border-rose-700 rounded-lg text-rose-700"
             >
               {error}
+            </p>
+          )}
+          {notice && (
+            <p role="status" className="p-4 border border-emerald-300 bg-emerald-50 rounded-lg text-emerald-800">
+              {notice}
             </p>
           )}
           {loadingProps ? (
@@ -378,9 +384,11 @@ function AdminPropertiesPageContent() {
                   )}
                   <div className="flex gap-4 flex-wrap text-sm">
                     <button
-                      onClick={() =>
-                        setEditing(editing === prop.id ? "" : prop.id)
-                      }
+                      onClick={() => {
+                        setError("");
+                        setNotice("");
+                        setEditing(editing === prop.id ? "" : prop.id);
+                      }}
                       className="underline"
                     >
                       Edit details & photos
@@ -433,9 +441,11 @@ function AdminPropertiesPageContent() {
                   {editing === prop.id && (
                     <PropertyEditor
                       property={prop}
-                      onSaved={() => {
+                      onSaved={async () => {
+                        setError("");
+                        setNotice("Property changes saved.");
                         setEditing("");
-                        fetchLiveProperties();
+                        await fetchLiveProperties();
                       }}
                     />
                   )}
