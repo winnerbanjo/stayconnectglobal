@@ -133,7 +133,7 @@ export default function PartnerPage() {
                     className="w-full sm:w-40 h-32 object-cover rounded-lg"
                   />
                   <div>
-                    <span className="text-xs bg-[#00AEEF]/20 text-[#E6C98C] px-3 py-1 rounded-full">
+                    <span className="text-xs bg-[#00AEEF]/20 text-[#65D5FF] px-3 py-1 rounded-full">
                       {p.verificationStatus}
                     </span>
                     <h2 className="font-serif text-3xl mt-3">{p.name}</h2>
@@ -219,7 +219,7 @@ export default function PartnerPage() {
                     {b.checkIn} → {b.checkOut}
                     <p>₦{b.totalPrice.toLocaleString()}</p>
                   </div>
-                  <div className="text-[#E6C98C]">
+                  <div className="text-[#65D5FF]">
                     {b.status === "Pending"
                       ? "Reservation / Pending payment"
                       : b.status}

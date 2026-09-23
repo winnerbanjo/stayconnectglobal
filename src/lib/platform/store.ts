@@ -140,7 +140,15 @@ export async function publicProperties() {
 }
 export async function publicRooms() {
   const properties = (await list('properties')).filter(visible);
-  return (await list('rooms')).filter(r => r.published && properties.some(p => belongsTo(r,p))).map(r => ({ ...r, propertyId: properties.find(p => belongsTo(r,p))!.id }));
+  return (await list('rooms')).filter(r => r.published && properties.some(p => belongsTo(r,p))).map(r => {
+    const property = properties.find(p => belongsTo(r, p))!;
+    return {
+      ...r,
+      propertyId: property.id,
+      address: property.address || r.address,
+      city: property.city || r.city,
+    };
+  });
 }
 // The room document acts as a per-room write lock inside the MongoDB transaction.
 // Conflicting confirmations retry with a fresh snapshot before counting occupied nights.

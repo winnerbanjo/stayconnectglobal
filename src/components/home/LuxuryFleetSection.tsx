@@ -81,7 +81,7 @@ export default function LuxuryFleetSection() {
 
                   <Link
                     href={`/car-rentals?vehicle=${vehicle.vehicleId}`}
-                    className="px-4 py-2 bg-[#00AEEF] hover:bg-[#d8b46e] text-[#111111] font-semibold text-xs rounded-lg transition-colors"
+                    className="px-4 py-2 bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-semibold text-xs rounded-lg transition-colors"
                   >
                     Reserve Vehicle
                   </Link>

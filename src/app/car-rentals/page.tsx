@@ -77,7 +77,7 @@ export default function CarRentalsPage() {
                 href="https://wa.me/2347041008351?text=Hello%20Stay%20Connect%20Concierge,%20I%20would%20like%20to%20request%20executive%20chauffeur%20mobility."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-6 py-3 bg-[#00AEEF] hover:bg-[#d8b46e] text-[#111111] font-bold text-xs uppercase tracking-widest rounded-xl transition-all shadow-md flex items-center gap-2"
+                className="px-6 py-3 bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-bold text-xs uppercase tracking-widest rounded-xl transition-all shadow-md flex items-center gap-2"
               >
                 <Phone className="w-4 h-4" />
                 <span>Request Chauffeur via WhatsApp</span>
@@ -128,7 +128,7 @@ export default function CarRentalsPage() {
                       href={`https://wa.me/2347041008351?text=Hi%20Stay%20Connect,%20I%20want%20to%20reserve%20the%20${encodeURIComponent(veh.name)}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-4 py-2 bg-[#00AEEF] hover:bg-[#d8b46e] text-[#111111] font-semibold text-xs rounded-lg transition-colors flex items-center gap-1.5"
+                      className="px-4 py-2 bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-semibold text-xs rounded-lg transition-colors flex items-center gap-1.5"
                     >
                       <Phone className="w-3.5 h-3.5" />
                       <span>Reserve</span>

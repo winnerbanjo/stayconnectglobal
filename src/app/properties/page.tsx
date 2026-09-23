@@ -22,7 +22,7 @@ export default async function PropertiesPage({
       <Navbar />
       <main className="pt-32 pb-20 max-w-7xl mx-auto px-5 sm:px-8">
         <header className="max-w-2xl mb-10 space-y-4">
-          <p className="text-xs uppercase tracking-[0.3em] text-[#947137]">
+          <p className="text-xs uppercase tracking-[0.3em] text-[#0077B6]">
             Find your place
           </p>
           <h1 className="font-serif text-4xl sm:text-6xl">

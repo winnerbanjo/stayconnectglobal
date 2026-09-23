@@ -349,7 +349,7 @@ export default function Navbar() {
             {/* Explore Stays */}
             <Link
               href="/rooms"
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#00AEEF] text-xs uppercase tracking-wider font-bold text-[#111111] hover:bg-[#d8b46e] transition-all shadow-md group shrink-0"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#00AEEF] text-xs uppercase tracking-wider font-bold text-[#111111] hover:bg-[#0088CC] transition-all shadow-md group shrink-0"
             >
               <Calendar className="w-3.5 h-3.5 text-[#111111]" />
               <span>Explore Stays</span>

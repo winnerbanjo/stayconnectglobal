@@ -40,7 +40,7 @@ export default function FeaturedRoomsSection() {
   if (!standardRoom)
     return (
       <section className="p-12 text-center">
-        <Link href="/properties" className="text-[#947137] underline">
+        <Link href="/properties" className="text-[#0077B6] underline">
           Explore hotels & residences →
         </Link>
       </section>
@@ -83,10 +83,7 @@ export default function FeaturedRoomsSection() {
                   Stay Connect Flagship
                 </span>
               </div>
-              <div className="absolute bottom-6 left-6 right-6 text-white flex items-center justify-between">
-                <div className="text-xs tracking-widest uppercase font-light text-neutral-300">
-                  📍 14B, Providence Street, Lekki Phase 1, Lagos
-                </div>
+              <div className="absolute bottom-6 left-6 right-6 text-white flex justify-end">
                 <div className="flex items-center gap-1 text-xs font-semibold text-[#00AEEF]">
                   <Star className="w-4 h-4 fill-[#00AEEF]" />
                   <span>{standardRoom.reviewCount > 0 ? `${standardRoom.rating.toFixed(1)} (${standardRoom.reviewCount} reviews)` : "No reviews yet"}</span>
@@ -173,7 +170,7 @@ export default function FeaturedRoomsSection() {
                 <div className="flex items-center gap-3">
                   <Link
                     href={`/rooms/${standardRoom.slug}`}
-                    className="px-6 py-3 bg-[#00AEEF] hover:bg-[#d8b46e] text-[#111111] text-xs font-semibold uppercase tracking-widest rounded-lg transition-all shadow-md flex items-center gap-2"
+                    className="px-6 py-3 bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] text-xs font-semibold uppercase tracking-widest rounded-lg transition-all shadow-md flex items-center gap-2"
                   >
                     <span>Book Your Stay</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -184,8 +181,8 @@ export default function FeaturedRoomsSection() {
           </div>
         </div>
 
-        {/* SECTION 2: PARTNER COLLECTION (Verified Third-Party Operator Listings) */}
-        <div className="space-y-12">
+        {/* Show partner properties only after a real, approved listing is available. */}
+        {partnerCollection.length > 0 && <div className="space-y-12">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#E8E5DF] dark:border-[#2C2B29] pb-8">
             <div>
               <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.35em] text-[#00AEEF] font-semibold">
@@ -197,91 +194,67 @@ export default function FeaturedRoomsSection() {
               </h2>
             </div>
             <p className="text-neutral-600 dark:text-neutral-400 text-sm font-light max-w-md">
-              Carefully selected hotels, apartments, villas, and residences
-              operated by verified partners across Lagos & Abuja.
+              Hotels, apartments, villas, and residences currently available
+              through verified Stay Connect partners.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Ikoyi Waterfront Residences",
-                location: "Ikoyi, Lagos",
-                category: "Luxury Residence",
-                desc: "Onboarding penthouses and waterfront villas overlooking Five Cowries Creek. Are you a property owner in Ikoyi?",
-                img: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1200&q=90",
-              },
-              {
-                title: "Maitama Diplomatic Suites",
-                location: "Maitama, Abuja",
-                category: "Serviced Apartment",
-                desc: "Onboarding high-security executive shortlet apartments in Abuja’s diplomatic enclave. Submit your property for verification.",
-                img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=90",
-              },
-              {
-                title: "Banana Island Luxury Villas",
-                location: "Banana Island, Lagos",
-                category: "Private Villa",
-                desc: "Onboarding private waterfront villas with infinity pools and helipad access for diplomatic stays.",
-                img: "https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1200&q=90",
-              },
-            ].map((prop, idx) => (
-              <div
-                key={idx}
+            {partnerCollection.map((prop) => (
+              <Link
+                key={prop.id}
+                href={`/properties/${prop.slug}`}
                 className="bg-white dark:bg-[#1A1918] rounded-2xl border border-[#E8E5DF] dark:border-[#2C2B29] overflow-hidden hover:border-[#00AEEF]/60 transition-all flex flex-col justify-between group shadow-md hover:shadow-xl"
               >
                 <div className="relative h-60 bg-neutral-900 overflow-hidden">
                   <img
-                    src={prop.img}
-                    alt={prop.title}
+                    src={prop.heroImage}
+                    alt={prop.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 filter brightness-90"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                   <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-md px-3 py-1 rounded-full border border-[#00AEEF]/40 text-[#00AEEF] text-[10px] uppercase tracking-widest font-semibold flex items-center gap-1.5">
                     <ShieldCheck className="w-3.5 h-3.5 text-[#00AEEF]" />
-                    <span>Onboarding Queue</span>
+                    <span>Verified Partner</span>
                   </div>
                   <div className="absolute top-4 right-4 bg-[#111111]/80 backdrop-blur-md px-3 py-1 rounded-full text-white text-[10px] uppercase tracking-widest font-medium">
                     {prop.category}
                   </div>
                   <div className="absolute bottom-4 left-4 text-xs font-semibold text-white">
-                    📍 {prop.location}
+                    📍 {prop.address}
                   </div>
                 </div>
 
                 <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
                   <div>
                     <h4 className="font-serif text-2xl text-[#111111] dark:text-white font-medium group-hover:text-[#00AEEF] transition-colors">
-                      {prop.title}
+                      {prop.name}
                     </h4>
                     <p className="text-xs text-neutral-600 dark:text-neutral-400 font-light mt-2 leading-relaxed">
-                      {prop.desc}
+                      {prop.description}
                     </p>
                   </div>
 
                   <div className="pt-4 border-t border-[#E8E5DF] dark:border-[#2C2B29] flex items-center justify-between">
                     <div>
                       <div className="text-[10px] uppercase text-neutral-500 font-medium">
-                        Partner Portal
+                        Available through
                       </div>
                       <div className="text-xs font-semibold text-[#00AEEF]">
-                        Open for Verification
+                        Stay Connect
                       </div>
                     </div>
 
-                    <Link
-                      href="/list-your-property"
-                      className="px-4 py-2 bg-[#00AEEF] hover:bg-[#d8b46e] text-[#111111] font-bold text-xs rounded-xl transition-all flex items-center gap-1.5 shadow-md active:scale-95"
-                    >
-                      <span>List Property</span>
+                    <span className="px-4 py-2 bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-bold text-xs rounded-xl transition-all flex items-center gap-1.5 shadow-md active:scale-95">
+                      <span>View Property</span>
                       <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
+                    </span>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
-        </div>
+        </div>}
       </div>
     </section>
   );

@@ -18,7 +18,7 @@ export default function FlightsPage() {
             className="absolute -right-28 top-10 w-[450px] h-[450px] text-[#00AEEF]/10 stroke-[0.5]"
           />
           <div className="relative max-w-2xl space-y-7">
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#00AEEF]/40 text-[#E6C98C] uppercase tracking-[0.2em] text-xs">
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#00AEEF]/40 text-[#65D5FF] uppercase tracking-[0.2em] text-xs">
               <Plane size={16} /> Flights · Coming soon
             </span>
             <h1 className="font-serif text-5xl sm:text-7xl leading-tight">

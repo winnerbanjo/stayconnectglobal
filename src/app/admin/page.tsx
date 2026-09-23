@@ -567,7 +567,7 @@ function AdminPageContent() {
                           <div className="flex items-center gap-3">
                             <button
                               onClick={() => setSelectedPartnerModal(p)}
-                              className="inline-flex items-center gap-1 px-3 py-1.5 rounded bg-[#00AEEF] text-[#111111] font-bold text-[10px] uppercase tracking-wider hover:bg-[#d8b46e] transition-colors shadow-sm"
+                              className="inline-flex items-center gap-1 px-3 py-1.5 rounded bg-[#00AEEF] text-[#111111] font-bold text-[10px] uppercase tracking-wider hover:bg-[#0088CC] transition-colors shadow-sm"
                             >
                               <Eye className="w-3 h-3" />
                               <span>View Onboarding Details</span>

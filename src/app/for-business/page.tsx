@@ -50,7 +50,7 @@ export default function ForBusinessPage() {
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/list-your-property"
-              className="px-8 py-4 bg-[#00AEEF] text-[#111111] font-semibold text-xs uppercase tracking-[0.2em] rounded-xl hover:bg-[#d8b46e] transition-all shadow-xl hover:scale-105"
+              className="px-8 py-4 bg-[#00AEEF] text-[#111111] font-semibold text-xs uppercase tracking-[0.2em] rounded-xl hover:bg-[#0088CC] transition-all shadow-xl hover:scale-105"
             >
               List Your Property
             </Link>

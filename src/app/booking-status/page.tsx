@@ -78,7 +78,7 @@ export default function BookingStatus() {
         )}
         {data && (
           <section className="bg-white border rounded-2xl p-6 space-y-4">
-            <p className="text-[#947137] font-semibold">
+            <p className="text-[#0077B6] font-semibold">
               {data.paymentStatus === "Paid"
                 ? "Confirmed Booking / Payment Confirmed"
                 : "Reservation / Pending Payment"}

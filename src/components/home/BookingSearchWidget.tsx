@@ -237,7 +237,7 @@ export default function BookingSearchWidget() {
                   <div className="lg:col-span-2 pt-1 lg:pt-5">
                     <button
                       type="submit"
-                      className="w-full min-h-[44px] bg-[#00AEEF] hover:bg-[#d8b46e] text-[#111111] font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-1.5 shadow-md active:scale-95 shrink-0"
+                      className="w-full min-h-[44px] bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-1.5 shadow-md active:scale-95 shrink-0"
                     >
                       <Search className="w-4 h-4 shrink-0" />
                       <span>Search</span>
@@ -307,7 +307,7 @@ export default function BookingSearchWidget() {
                   <div className="lg:col-span-3 pt-1 lg:pt-5">
                     <button
                       type="submit"
-                      className="w-full min-h-[44px] bg-[#00AEEF] hover:bg-[#d8b46e] text-[#111111] font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-1.5 shadow-md active:scale-95"
+                      className="w-full min-h-[44px] bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-1.5 shadow-md active:scale-95"
                     >
                       <Search className="w-4 h-4 shrink-0" />
                       <span>Search Mobility</span>
@@ -357,7 +357,7 @@ export default function BookingSearchWidget() {
                   <div className="lg:col-span-4 pt-1 lg:pt-5">
                     <button
                       type="submit"
-                      className="w-full min-h-[44px] bg-[#00AEEF] hover:bg-[#d8b46e] text-[#111111] font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-1.5 shadow-md active:scale-95"
+                      className="w-full min-h-[44px] bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-1.5 shadow-md active:scale-95"
                     >
                       <Search className="w-4 h-4 shrink-0" />
                       <span>Search Transfers</span>
@@ -413,7 +413,7 @@ export default function BookingSearchWidget() {
                   <div className="lg:col-span-3 pt-1 lg:pt-5">
                     <button
                       type="submit"
-                      className="w-full min-h-[44px] bg-[#00AEEF] hover:bg-[#d8b46e] text-[#111111] font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-1.5 shadow-md active:scale-95"
+                      className="w-full min-h-[44px] bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-1.5 shadow-md active:scale-95"
                     >
                       <Search className="w-4 h-4 shrink-0" />
                       <span>Search Services</span>

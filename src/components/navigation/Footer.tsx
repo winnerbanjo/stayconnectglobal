@@ -168,7 +168,7 @@ export default function Footer() {
             <div className="flex flex-col gap-2.5">
               <Link
                 href="/list-your-property"
-                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#00AEEF] text-[#111111] rounded-lg text-xs font-semibold hover:bg-[#d8b46e] transition-all"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#00AEEF] text-[#111111] rounded-lg text-xs font-semibold hover:bg-[#0088CC] transition-all"
               >
                 <span>List Your Property</span>
                 <ArrowRight className="w-3.5 h-3.5" />

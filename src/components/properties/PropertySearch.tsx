@@ -169,13 +169,13 @@ export default function PropertySearch({
                         className="w-full h-full object-cover"
                       />
                       {!p.partnerId && (
-                        <span className="absolute top-4 left-4 bg-[#111111] text-[#E6C98C] text-xs px-3 py-2 rounded-full">
+                        <span className="absolute top-4 left-4 bg-[#111111] text-[#65D5FF] text-xs px-3 py-2 rounded-full">
                           Stay Connect operated
                         </span>
                       )}
                     </div>
                     <div className="p-6 space-y-3">
-                      <p className="text-[10px] uppercase tracking-widest text-[#947137]">
+                      <p className="text-[10px] uppercase tracking-widest text-[#0077B6]">
                         {p.category}
                       </p>
                       <h3 className="font-serif text-3xl">{p.name}</h3>

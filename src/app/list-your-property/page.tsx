@@ -231,7 +231,7 @@ export default function ListYourPropertyPage() {
                 <div className="pt-4 flex items-center justify-center gap-4">
                   <a
                     href="/partner"
-                    className="px-8 py-3.5 bg-[#00AEEF] text-[#111111] font-semibold text-xs uppercase tracking-wider rounded-xl hover:bg-[#d8b46e] transition-colors"
+                    className="px-8 py-3.5 bg-[#00AEEF] text-[#111111] font-semibold text-xs uppercase tracking-wider rounded-xl hover:bg-[#0088CC] transition-colors"
                   >
                     Review & Submit Property
                   </a>
@@ -640,7 +640,7 @@ export default function ListYourPropertyPage() {
                   <button
                     type="submit"
                     disabled={loading || uploading}
-                    className="w-full sm:w-auto px-10 py-4 bg-[#00AEEF] hover:bg-[#d8b46e] text-[#111111] font-semibold text-xs uppercase tracking-[0.2em] rounded-xl transition-all shadow-xl hover:scale-105"
+                    className="w-full sm:w-auto px-10 py-4 bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-semibold text-xs uppercase tracking-[0.2em] rounded-xl transition-all shadow-xl hover:scale-105"
                   >
                     {uploading
                       ? "Uploading photos…"

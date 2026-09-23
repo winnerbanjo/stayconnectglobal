@@ -77,7 +77,7 @@ export default function TransfersPage() {
 
               <button
                 type="submit"
-                className="w-full py-4 bg-[#00AEEF] hover:bg-[#d8b46e] text-[#111111] font-semibold text-xs uppercase tracking-[0.2em] rounded-xl transition-all shadow-xl"
+                className="w-full py-4 bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-semibold text-xs uppercase tracking-[0.2em] rounded-xl transition-all shadow-xl"
               >
                 Confirm Airport Transfer Reservation →
               </button>

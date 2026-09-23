@@ -10,6 +10,6 @@ export default function ImageUploadStatus({ progress, uploading }: { progress: I
       <span>{uploading ? `${progress.stage === "preparing" ? "Preparing" : "Uploading"} photo ${Math.min(progress.completed + 1, progress.total)} of ${progress.total}…` : complete ? `${progress.total} ${progress.total === 1 ? "photo uploaded" : "photos uploaded"}` : `Upload stopped. ${progress.completed} of ${progress.total} photos uploaded.`}</span>
     </div>
     {uploading && <p className="break-all">{progress.fileName} — please wait until the upload finishes.</p>}
-    <progress aria-label="Photos uploaded" value={progress.completed} max={progress.total} className="block w-full h-2 accent-[#947137]" />
+    <progress aria-label="Photos uploaded" value={progress.completed} max={progress.total} className="block w-full h-2 accent-[#0077B6]" />
   </div>;
 }

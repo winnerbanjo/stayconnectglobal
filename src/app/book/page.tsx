@@ -375,7 +375,7 @@ export default function BookingPage() {
                     onClick={() => {
                       if (validateDates()) setCurrentStep(2);
                     }}
-                    className="w-full min-h-[50px] bg-[#00AEEF] hover:bg-[#d8b46e] text-[#111111] font-bold text-xs uppercase tracking-[0.2em] rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 mt-6 active:scale-95"
+                    className="w-full min-h-[50px] bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-bold text-xs uppercase tracking-[0.2em] rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 mt-6 active:scale-95"
                   >
                     <span>Continue to Guest Details</span>
                     <ArrowRight className="w-4 h-4" />
@@ -495,7 +495,7 @@ export default function BookingPage() {
                         }
                         setCurrentStep(3);
                       }}
-                      className="w-2/3 min-h-[48px] bg-[#00AEEF] hover:bg-[#d8b46e] text-[#111111] font-bold text-xs uppercase tracking-[0.2em] rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 active:scale-95"
+                      className="w-2/3 min-h-[48px] bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-bold text-xs uppercase tracking-[0.2em] rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 active:scale-95"
                     >
                       <span>Continue to Add-Ons</span>
                       <ArrowRight className="w-4 h-4" />
@@ -522,7 +522,7 @@ export default function BookingPage() {
                 </div>
 
                 <div className="space-y-3">
-                  <a href="https://wa.me/2347041008351" target="_blank" rel="noopener noreferrer" className="text-[#947137] underline">Ask the concierge about additional services</a>
+                  <a href="https://wa.me/2347041008351" target="_blank" rel="noopener noreferrer" className="text-[#0077B6] underline">Ask the concierge about additional services</a>
                 </div>
 
                 <div className="flex items-center gap-3 pt-2">
@@ -539,7 +539,7 @@ export default function BookingPage() {
                   <button
                     type="button"
                     onClick={() => setCurrentStep(4)}
-                    className="w-2/3 min-h-[48px] bg-[#00AEEF] hover:bg-[#d8b46e] text-[#111111] font-bold text-xs uppercase tracking-[0.2em] rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 active:scale-95"
+                    className="w-2/3 min-h-[48px] bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-bold text-xs uppercase tracking-[0.2em] rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 active:scale-95"
                   >
                     <span>Proceed to Payment</span>
                     <ArrowRight className="w-4 h-4" />
@@ -654,7 +654,7 @@ export default function BookingPage() {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-2/3 min-h-[48px] bg-[#00AEEF] hover:bg-[#d8b46e] text-[#111111] font-bold text-xs uppercase tracking-[0.2em] rounded-xl shadow-lg transition-all active:scale-95"
+                      className="w-2/3 min-h-[48px] bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-bold text-xs uppercase tracking-[0.2em] rounded-xl shadow-lg transition-all active:scale-95"
                     >
                       {isSubmitting
                         ? "Processing Voucher..."
@@ -694,14 +694,14 @@ export default function BookingPage() {
 
                 <Link
                   href={`/booking-status?ref=${bookingCompleted.bookingRef}#${bookingCompleted.lookupToken}`}
-                  className="block text-[#947137] underline"
+                  className="block text-[#0077B6] underline"
                 >
                   View reservation & payment status (save this private link)
                 </Link>
                 <div className="pt-4 border-t border-[#E8E5DF] dark:border-[#2C2B29] flex items-center justify-center">
                   <Link
                     href="/"
-                    className="px-8 py-3.5 bg-[#00AEEF] hover:bg-[#d8b46e] text-[#111111] font-bold uppercase tracking-widest rounded-xl text-xs shadow-lg transition-all"
+                    className="px-8 py-3.5 bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-bold uppercase tracking-widest rounded-xl text-xs shadow-lg transition-all"
                   >
                     Return to Homepage
                   </Link>

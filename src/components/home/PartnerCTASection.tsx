@@ -50,7 +50,7 @@ export default function PartnerCTASection() {
               <div className="pt-6 flex flex-col sm:flex-row items-center gap-4">
                 <Link
                   href="/list-your-property"
-                  className="w-full sm:w-auto px-8 py-4 rounded-xl bg-[#00AEEF] hover:bg-[#d8b46e] text-[#111111] font-semibold text-xs uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 shadow-xl hover:scale-105"
+                  className="w-full sm:w-auto px-8 py-4 rounded-xl bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-semibold text-xs uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 shadow-xl hover:scale-105"
                 >
                   <span>List Your Property Now</span>
                   <ArrowRight className="w-4 h-4" />
