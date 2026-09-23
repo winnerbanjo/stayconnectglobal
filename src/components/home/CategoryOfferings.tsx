@@ -61,7 +61,7 @@ export default function CategoryOfferings() {
     <section className="py-20 sm:py-28 bg-[#FAF9F6] dark:bg-[#111111] text-[#111111] dark:text-white border-t border-[#E8E5DF] dark:border-[#2C2B29] transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 space-y-12">
         <div className="text-center max-w-3xl mx-auto space-y-4">
-          <span className="text-[10px] uppercase tracking-[0.4em] text-[#C6A15B] font-semibold">
+          <span className="text-[10px] uppercase tracking-[0.4em] text-[#00AEEF] font-semibold">
             What We Offer
           </span>
           <h2 className="font-serif text-3xl sm:text-5xl font-normal leading-tight text-[#111111] dark:text-white">
@@ -85,14 +85,14 @@ export default function CategoryOfferings() {
               >
                 <Link
                   href={cat.link}
-                  className="group bg-white dark:bg-[#1A1918] border border-[#E8E5DF] dark:border-[#2C2B29] hover:border-[#C6A15B]/60 rounded-2xl p-6 flex flex-col justify-between h-full transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-1"
+                  className="group bg-white dark:bg-[#1A1918] border border-[#E8E5DF] dark:border-[#2C2B29] hover:border-[#00AEEF]/60 rounded-2xl p-6 flex flex-col justify-between h-full transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-1"
                 >
                   <div className="space-y-4">
-                    <div className="w-12 h-12 rounded-xl bg-[#FAF9F6] dark:bg-[#252422] border border-[#E8E5DF] dark:border-[#3A3935] flex items-center justify-center text-[#C6A15B] group-hover:scale-110 transition-transform">
+                    <div className="w-12 h-12 rounded-xl bg-[#FAF9F6] dark:bg-[#252422] border border-[#E8E5DF] dark:border-[#3A3935] flex items-center justify-center text-[#00AEEF] group-hover:scale-110 transition-transform">
                       <Icon className="w-6 h-6" />
                     </div>
                     <div>
-                      <h3 className="font-serif text-xl text-[#111111] dark:text-white font-medium group-hover:text-[#C6A15B] transition-colors">
+                      <h3 className="font-serif text-xl text-[#111111] dark:text-white font-medium group-hover:text-[#00AEEF] transition-colors">
                         {cat.title}
                       </h3>
                       <p className="text-xs text-neutral-600 dark:text-neutral-400 font-light leading-relaxed mt-2">
@@ -101,7 +101,7 @@ export default function CategoryOfferings() {
                     </div>
                   </div>
 
-                  <div className="pt-4 mt-6 border-t border-[#E8E5DF] dark:border-[#2C2B29] flex items-center justify-between text-xs text-[#C6A15B] font-semibold">
+                  <div className="pt-4 mt-6 border-t border-[#E8E5DF] dark:border-[#2C2B29] flex items-center justify-between text-xs text-[#00AEEF] font-semibold">
                     <span>Explore Category</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                   </div>

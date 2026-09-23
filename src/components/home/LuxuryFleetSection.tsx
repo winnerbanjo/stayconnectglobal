@@ -12,7 +12,7 @@ export default function LuxuryFleetSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 space-y-12">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="space-y-3 max-w-2xl">
-            <span className="text-[10px] uppercase tracking-[0.4em] text-[#C6A15B] font-semibold flex items-center gap-2">
+            <span className="text-[10px] uppercase tracking-[0.4em] text-[#00AEEF] font-semibold flex items-center gap-2">
               <Car className="w-4 h-4" />
               <span>Stay Connect Mobility Platform</span>
             </span>
@@ -26,7 +26,7 @@ export default function LuxuryFleetSection() {
 
           <Link
             href="/car-rentals"
-            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl border border-[#C6A15B] text-xs font-semibold uppercase tracking-wider text-[#C6A15B] hover:bg-[#C6A15B] hover:text-[#111111] transition-all shrink-0 self-start md:self-auto"
+            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl border border-[#00AEEF] text-xs font-semibold uppercase tracking-wider text-[#00AEEF] hover:bg-[#00AEEF] hover:text-[#111111] transition-all shrink-0 self-start md:self-auto"
           >
             <span>Browse Full Fleet</span>
             <ArrowRight className="w-4 h-4" />
@@ -41,7 +41,7 @@ export default function LuxuryFleetSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="bg-[#1A1918] border border-[#2C2B29] rounded-2xl overflow-hidden group hover:border-[#C6A15B]/50 transition-all flex flex-col justify-between"
+              className="bg-[#1A1918] border border-[#2C2B29] rounded-2xl overflow-hidden group hover:border-[#00AEEF]/50 transition-all flex flex-col justify-between"
             >
               <div className="relative h-56 w-full overflow-hidden">
                 <img
@@ -49,14 +49,14 @@ export default function LuxuryFleetSection() {
                   alt={vehicle.name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute top-4 left-4 px-3 py-1 bg-black/80 backdrop-blur-md border border-[#C6A15B]/40 text-[#C6A15B] text-[10px] uppercase tracking-wider font-semibold rounded-full">
+                <div className="absolute top-4 left-4 px-3 py-1 bg-black/80 backdrop-blur-md border border-[#00AEEF]/40 text-[#00AEEF] text-[10px] uppercase tracking-wider font-semibold rounded-full">
                   {vehicle.category}
                 </div>
               </div>
 
               <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
                 <div>
-                  <h3 className="font-serif text-xl font-medium text-white group-hover:text-[#C6A15B] transition-colors">
+                  <h3 className="font-serif text-xl font-medium text-white group-hover:text-[#00AEEF] transition-colors">
                     {vehicle.name}
                   </h3>
                   <div className="text-xs text-neutral-400 mt-1">Available in: {vehicle.availableCities.join(', ')}</div>
@@ -64,7 +64,7 @@ export default function LuxuryFleetSection() {
                   <ul className="mt-4 space-y-1.5 text-xs text-neutral-300 font-light">
                     {vehicle.features.slice(0, 3).map((feat: string, idx: number) => (
                       <li key={idx} className="flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#C6A15B]" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#00AEEF]" />
                         <span>{feat}</span>
                       </li>
                     ))}
@@ -74,14 +74,14 @@ export default function LuxuryFleetSection() {
                 <div className="pt-4 border-t border-[#2C2B29] flex items-center justify-between">
                   <div>
                     <div className="text-[10px] uppercase text-neutral-400">Daily Rate</div>
-                    <div className="text-lg font-semibold text-[#C6A15B]">
+                    <div className="text-lg font-semibold text-[#00AEEF]">
                       ₦{vehicle.dailyRate.toLocaleString()} <span className="text-xs text-neutral-400 font-normal">/ day</span>
                     </div>
                   </div>
 
                   <Link
                     href={`/car-rentals?vehicle=${vehicle.vehicleId}`}
-                    className="px-4 py-2 bg-[#C6A15B] hover:bg-[#d8b46e] text-[#111111] font-semibold text-xs rounded-lg transition-colors"
+                    className="px-4 py-2 bg-[#00AEEF] hover:bg-[#d8b46e] text-[#111111] font-semibold text-xs rounded-lg transition-colors"
                   >
                     Reserve Vehicle
                   </Link>

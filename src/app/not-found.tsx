@@ -6,7 +6,7 @@ export default function NotFound() {
       <p className="text-sm text-neutral-600">
         The listing may have moved or is not yet published.
       </p>
-      <Link href="/properties" className="bg-[#C6A15B] px-6 py-3 rounded-lg">
+      <Link href="/properties" className="bg-[#00AEEF] px-6 py-3 rounded-lg">
         Explore available stays
       </Link>
     </main>

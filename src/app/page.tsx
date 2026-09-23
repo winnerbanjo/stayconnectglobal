@@ -20,7 +20,7 @@ export const metadata = {
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-[#FAF9F6] dark:bg-[#111111] text-[#111111] dark:text-white font-sans selection:bg-[#C6A15B] selection:text-[#111111] transition-colors duration-300">
+    <div className="min-h-screen bg-[#FAF9F6] dark:bg-[#111111] text-[#111111] dark:text-white font-sans selection:bg-[#00AEEF] selection:text-[#111111] transition-colors duration-300">
       <Navbar />
 
       <main>

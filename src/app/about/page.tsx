@@ -17,7 +17,7 @@ export default function AboutPage() {
       <main className="pt-28 pb-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-12 space-y-20">
           <div className="text-center space-y-4 max-w-3xl mx-auto">
-            <span className="text-xs uppercase tracking-[0.35em] text-[#C6A15B] font-semibold">
+            <span className="text-xs uppercase tracking-[0.35em] text-[#00AEEF] font-semibold">
               Our Legacy & Vision
             </span>
             <h1 className="font-serif text-4xl md:text-6xl text-[#111111] font-normal">
@@ -39,7 +39,7 @@ export default function AboutPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white p-8 rounded-2xl border border-[#E8E5DF] shadow-md space-y-4">
-              <Compass className="w-8 h-8 text-[#C6A15B]" />
+              <Compass className="w-8 h-8 text-[#00AEEF]" />
               <h3 className="font-serif text-2xl text-[#111111]">Quiet Luxury</h3>
               <p className="text-xs text-neutral-600 font-light leading-relaxed">
                 We believe true luxury is calm, unhurried, and deeply intentional. Every space is designed with tactile marble, solid wood accents, and generous spatial proportions.
@@ -47,7 +47,7 @@ export default function AboutPage() {
             </div>
 
             <div className="bg-white p-8 rounded-2xl border border-[#E8E5DF] shadow-md space-y-4">
-              <ShieldCheck className="w-8 h-8 text-[#C6A15B]" />
+              <ShieldCheck className="w-8 h-8 text-[#00AEEF]" />
               <h3 className="font-serif text-2xl text-[#111111]">Uncompromised Security</h3>
               <p className="text-xs text-neutral-600 font-light leading-relaxed">
                 Guarded access, 24/7 dual redundant industrial power generators, and private airport VIP chauffeur services guarantee peace of mind.
@@ -55,7 +55,7 @@ export default function AboutPage() {
             </div>
 
             <div className="bg-white p-8 rounded-2xl border border-[#E8E5DF] shadow-md space-y-4">
-              <Award className="w-8 h-8 text-[#C6A15B]" />
+              <Award className="w-8 h-8 text-[#00AEEF]" />
               <h3 className="font-serif text-2xl text-[#111111]">Tailored Concierge</h3>
               <p className="text-xs text-neutral-600 font-light leading-relaxed">
                 Our team provides bespoke Nigerian warmth combined with international executive hospitality standards for discerning business leaders and international travelers.

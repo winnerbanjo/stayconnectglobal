@@ -150,7 +150,7 @@ export default function PropertyEditor({
             <button
               type="button"
               onClick={() => setData({ ...data, heroImage: url })}
-              className={`border-2 rounded-lg overflow-hidden ${data.heroImage === url ? "border-[#C6A15B]" : "border-transparent"}`}
+              className={`border-2 rounded-lg overflow-hidden ${data.heroImage === url ? "border-[#00AEEF]" : "border-transparent"}`}
             >
               <img
                 src={url}
@@ -175,7 +175,7 @@ export default function PropertyEditor({
               Remove
             </button>
             {data.heroImage === url && (
-              <p className="text-xs text-[#C6A15B]">Cover</p>
+              <p className="text-xs text-[#00AEEF]">Cover</p>
             )}
           </div>
         ))}
@@ -226,7 +226,7 @@ export default function PropertyEditor({
       )}
       <button
         disabled={busy}
-        className="bg-[#C6A15B] text-black rounded-lg px-5 py-3 text-sm font-semibold disabled:opacity-50"
+        className="bg-[#00AEEF] text-black rounded-lg px-5 py-3 text-sm font-semibold disabled:opacity-50"
       >
         {busy ? "Saving property…" : "Save property"}
       </button>

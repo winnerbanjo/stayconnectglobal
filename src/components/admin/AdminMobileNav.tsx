@@ -37,10 +37,10 @@ export default function AdminMobileNav() {
 
         <button
           onClick={() => setOpen(!open)}
-          className="p-2 text-slate-900 hover:text-[#85672E] focus:outline-none shrink-0"
+          className="p-2 text-slate-900 hover:text-[#0077B6] focus:outline-none shrink-0"
           aria-label="Toggle Admin Menu"
         >
-          {open ? <X className="w-7 h-7 text-[#85672E]" /> : <Menu className="w-7 h-7" />}
+          {open ? <X className="w-7 h-7 text-[#0077B6]" /> : <Menu className="w-7 h-7" />}
         </button>
       </div>
 
@@ -55,10 +55,10 @@ export default function AdminMobileNav() {
                 href={link.href}
                 onClick={() => setOpen(false)}
                 className={`flex items-center gap-3 px-3.5 py-3 rounded-lg text-xs uppercase tracking-widest font-medium transition-colors ${
-                  active ? 'bg-[#C6A15B] text-[#111111] font-semibold' : 'text-slate-700 hover:bg-slate-50'
+                  active ? 'bg-[#00AEEF] text-[#111111] font-semibold' : 'text-slate-700 hover:bg-slate-50'
                 }`}
               >
-                <Icon className={`w-4 h-4 ${active ? 'text-[#111111]' : 'text-[#85672E]'}`} />
+                <Icon className={`w-4 h-4 ${active ? 'text-[#111111]' : 'text-[#0077B6]'}`} />
                 <span>{link.name}</span>
               </Link>
             );

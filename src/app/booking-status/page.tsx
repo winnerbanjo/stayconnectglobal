@@ -67,7 +67,7 @@ export default function BookingStatus() {
               className="w-full p-3 mt-2 border rounded-lg"
             />
           </label>
-          <button disabled={busy} className="bg-[#C6A15B] px-5 py-3 rounded-lg">
+          <button disabled={busy} className="bg-[#00AEEF] px-5 py-3 rounded-lg">
             {busy ? "Checking…" : "Check / refresh status"}
           </button>
         </form>

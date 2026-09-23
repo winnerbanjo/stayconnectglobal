@@ -17,7 +17,7 @@ export default function AmenitiesPage() {
       <main className="pt-28 pb-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-12 space-y-12">
           <div className="text-center space-y-3">
-            <span className="text-xs uppercase tracking-[0.35em] text-[#C6A15B] font-semibold">
+            <span className="text-xs uppercase tracking-[0.35em] text-[#00AEEF] font-semibold">
               Bespoke Services & Infrastructure
             </span>
             <h1 className="font-serif text-4xl md:text-6xl text-[#111111] font-normal">

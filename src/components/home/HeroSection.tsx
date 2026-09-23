@@ -45,9 +45,9 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2 rounded-full bg-[#111111]/85 border border-[#C6A15B]/40 backdrop-blur-md text-[10px] sm:text-[11px] uppercase tracking-[0.25em] sm:tracking-[0.3em] text-white shadow-2xl"
+          className="inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2 rounded-full bg-[#111111]/85 border border-[#00AEEF]/40 backdrop-blur-md text-[10px] sm:text-[11px] uppercase tracking-[0.25em] sm:tracking-[0.3em] text-white shadow-2xl"
         >
-          <MapPin className="w-3.5 h-3.5 text-[#C6A15B] shrink-0" />
+          <MapPin className="w-3.5 h-3.5 text-[#00AEEF] shrink-0" />
           <span className="truncate">Flagship Destination • </span>
           <div className="relative inline-block overflow-hidden h-4 w-32 sm:w-36 text-left">
             <AnimatePresence mode="wait">
@@ -57,7 +57,7 @@ export default function HeroSection() {
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: -16, opacity: 0 }}
                 transition={{ duration: 0.4, ease: 'easeInOut' }}
-                className="absolute text-[#C6A15B] font-semibold truncate"
+                className="absolute text-[#00AEEF] font-semibold truncate"
               >
                 {locations[locationIndex]}
               </motion.span>
@@ -73,7 +73,7 @@ export default function HeroSection() {
           className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-normal leading-[1.1] tracking-tight text-white"
         >
           Stay Connected to <br className="hidden sm:inline" />
-          <span className="italic font-light text-[#C6A15B]">Exceptional Hospitality.</span>
+          <span className="italic font-light text-[#00AEEF]">Exceptional Hospitality.</span>
         </motion.h1>
 
         {/* Subtitle */}
@@ -95,16 +95,16 @@ export default function HeroSection() {
         >
           <Link
             href="/rooms"
-            className="w-full sm:w-auto px-8 py-3.5 sm:px-10 sm:py-4 rounded-lg bg-[#C6A15B] hover:bg-[#B08C46] text-[#111111] font-semibold text-xs uppercase tracking-[0.25em] transition-all duration-300 shadow-2xl hover:scale-105 active:scale-95 text-center"
+            className="w-full sm:w-auto px-8 py-3.5 sm:px-10 sm:py-4 rounded-lg bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-semibold text-xs uppercase tracking-[0.25em] transition-all duration-300 shadow-2xl hover:scale-105 active:scale-95 text-center"
           >
             Explore Stays
           </Link>
 
           <Link
             href="/list-your-property"
-            className="w-full sm:w-auto px-8 py-3.5 sm:px-10 sm:py-4 rounded-lg border border-white/40 hover:border-[#C6A15B] text-white hover:text-[#C6A15B] backdrop-blur-sm font-semibold text-xs uppercase tracking-[0.25em] transition-all duration-300 flex items-center justify-center gap-2 group active:scale-95"
+            className="w-full sm:w-auto px-8 py-3.5 sm:px-10 sm:py-4 rounded-lg border border-white/40 hover:border-[#00AEEF] text-white hover:text-[#00AEEF] backdrop-blur-sm font-semibold text-xs uppercase tracking-[0.25em] transition-all duration-300 flex items-center justify-center gap-2 group active:scale-95"
           >
-            <Compass className="w-4 h-4 text-[#C6A15B]" />
+            <Compass className="w-4 h-4 text-[#00AEEF]" />
             <span>List Your Property</span>
           </Link>
         </motion.div>
@@ -112,7 +112,7 @@ export default function HeroSection() {
 
       {/* Down Arrow Indicator */}
       <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 animate-bounce">
-        <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 text-[#C6A15B]/70" />
+        <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 text-[#00AEEF]/70" />
       </div>
     </section>
   );

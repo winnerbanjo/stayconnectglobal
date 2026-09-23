@@ -61,8 +61,8 @@ export default function BookingSearchWidget() {
 
   return (
     <div className="relative z-30 max-w-6xl mx-auto -mt-10 sm:-mt-16 px-4">
-      <div className="bg-white/95 dark:bg-[#111111]/95 backdrop-blur-xl border border-[#E8E5DF] dark:border-[#C6A15B]/30 rounded-2xl shadow-2xl p-4 sm:p-6 lg:p-8 text-[#111111] dark:text-white transition-colors duration-300">
-        <div className="text-xs uppercase tracking-[0.3em] text-[#C6A15B] font-semibold mb-3">
+      <div className="bg-white/95 dark:bg-[#111111]/95 backdrop-blur-xl border border-[#E8E5DF] dark:border-[#00AEEF]/30 rounded-2xl shadow-2xl p-4 sm:p-6 lg:p-8 text-[#111111] dark:text-white transition-colors duration-300">
+        <div className="text-xs uppercase tracking-[0.3em] text-[#00AEEF] font-semibold mb-3">
           What are you looking for?
         </div>
 
@@ -73,7 +73,7 @@ export default function BookingSearchWidget() {
             onClick={() => setActiveTab("stays")}
             className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs uppercase tracking-wider font-semibold transition-all ${
               activeTab === "stays"
-                ? "bg-[#C6A15B] text-[#111111]"
+                ? "bg-[#00AEEF] text-[#111111]"
                 : "bg-[#FAF9F6] dark:bg-[#1A1918] text-neutral-700 dark:text-neutral-400 hover:text-[#111111] dark:hover:text-white border border-[#E8E5DF] dark:border-transparent"
             }`}
           >
@@ -86,7 +86,7 @@ export default function BookingSearchWidget() {
             onClick={() => setActiveTab("mobility")}
             className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs uppercase tracking-wider font-semibold transition-all ${
               activeTab === "mobility"
-                ? "bg-[#C6A15B] text-[#111111]"
+                ? "bg-[#00AEEF] text-[#111111]"
                 : "bg-[#1A1918] text-neutral-400 hover:text-white"
             }`}
           >
@@ -99,7 +99,7 @@ export default function BookingSearchWidget() {
             onClick={() => setActiveTab("transfers")}
             className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs uppercase tracking-wider font-semibold transition-all ${
               activeTab === "transfers"
-                ? "bg-[#C6A15B] text-[#111111]"
+                ? "bg-[#00AEEF] text-[#111111]"
                 : "bg-[#1A1918] text-neutral-400 hover:text-white"
             }`}
           >
@@ -112,7 +112,7 @@ export default function BookingSearchWidget() {
             onClick={() => setActiveTab("experiences")}
             className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs uppercase tracking-wider font-semibold transition-all ${
               activeTab === "experiences"
-                ? "bg-[#C6A15B] text-[#111111]"
+                ? "bg-[#00AEEF] text-[#111111]"
                 : "bg-[#1A1918] text-neutral-400 hover:text-white"
             }`}
           >
@@ -125,7 +125,7 @@ export default function BookingSearchWidget() {
             onClick={() => setActiveTab("concierge")}
             className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs uppercase tracking-wider font-semibold transition-all ${
               activeTab === "concierge"
-                ? "bg-[#C6A15B] text-[#111111]"
+                ? "bg-[#00AEEF] text-[#111111]"
                 : "bg-[#1A1918] text-neutral-400 hover:text-white"
             }`}
           >
@@ -141,8 +141,8 @@ export default function BookingSearchWidget() {
               {activeTab === "stays" && (
                 <>
                   <div className="space-y-1 lg:col-span-3">
-                    <label className="text-[10px] uppercase tracking-[0.2em] text-[#C6A15B] font-semibold flex items-center gap-1.5">
-                      <MapPin className="w-3.5 h-3.5 text-[#C6A15B] shrink-0" />
+                    <label className="text-[10px] uppercase tracking-[0.2em] text-[#00AEEF] font-semibold flex items-center gap-1.5">
+                      <MapPin className="w-3.5 h-3.5 text-[#00AEEF] shrink-0" />
                       <span>Destination</span>
                     </label>
                     <input
@@ -162,14 +162,14 @@ export default function BookingSearchWidget() {
                   </div>
 
                   <div className="space-y-1 lg:col-span-3">
-                    <label className="text-[10px] uppercase tracking-[0.2em] text-[#C6A15B] font-semibold flex items-center gap-1.5">
-                      <Building2 className="w-3.5 h-3.5 text-[#C6A15B] shrink-0" />
+                    <label className="text-[10px] uppercase tracking-[0.2em] text-[#00AEEF] font-semibold flex items-center gap-1.5">
+                      <Building2 className="w-3.5 h-3.5 text-[#00AEEF] shrink-0" />
                       <span>Accommodation Type</span>
                     </label>
                     <select
                       value={propertyType}
                       onChange={(e) => setPropertyType(e.target.value)}
-                      className="w-full min-h-[44px] bg-white dark:bg-[#111111] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-xl px-3 py-2 text-xs text-[#111111] dark:text-white focus:border-[#C6A15B]"
+                      className="w-full min-h-[44px] bg-white dark:bg-[#111111] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-xl px-3 py-2 text-xs text-[#111111] dark:text-white focus:border-[#00AEEF]"
                     >
                       <option value="All">All Accommodation Types</option>
                       <option value="Luxury Hotel">Luxury Hotels</option>
@@ -184,8 +184,8 @@ export default function BookingSearchWidget() {
                   </div>
 
                   <div className="space-y-1 lg:col-span-2">
-                    <label className="text-[10px] uppercase tracking-[0.2em] text-[#C6A15B] font-semibold flex items-center gap-1.5">
-                      <CalendarIcon className="w-3.5 h-3.5 text-[#C6A15B] shrink-0" />
+                    <label className="text-[10px] uppercase tracking-[0.2em] text-[#00AEEF] font-semibold flex items-center gap-1.5">
+                      <CalendarIcon className="w-3.5 h-3.5 text-[#00AEEF] shrink-0" />
                       <span>Check-In / Out</span>
                     </label>
                     <input
@@ -217,8 +217,8 @@ export default function BookingSearchWidget() {
                   </div>
 
                   <div className="space-y-1 lg:col-span-2">
-                    <label className="text-[10px] uppercase tracking-[0.2em] text-[#C6A15B] font-semibold flex items-center gap-1.5">
-                      <Users className="w-3.5 h-3.5 text-[#C6A15B] shrink-0" />
+                    <label className="text-[10px] uppercase tracking-[0.2em] text-[#00AEEF] font-semibold flex items-center gap-1.5">
+                      <Users className="w-3.5 h-3.5 text-[#00AEEF] shrink-0" />
                       <span>Guests</span>
                     </label>
                     <select
@@ -237,7 +237,7 @@ export default function BookingSearchWidget() {
                   <div className="lg:col-span-2 pt-1 lg:pt-5">
                     <button
                       type="submit"
-                      className="w-full min-h-[44px] bg-[#C6A15B] hover:bg-[#d8b46e] text-[#111111] font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-1.5 shadow-md active:scale-95 shrink-0"
+                      className="w-full min-h-[44px] bg-[#00AEEF] hover:bg-[#d8b46e] text-[#111111] font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-1.5 shadow-md active:scale-95 shrink-0"
                     >
                       <Search className="w-4 h-4 shrink-0" />
                       <span>Search</span>
@@ -249,8 +249,8 @@ export default function BookingSearchWidget() {
               {activeTab === "mobility" && (
                 <>
                   <div className="space-y-1 lg:col-span-3">
-                    <label className="text-[10px] uppercase tracking-[0.2em] text-[#C6A15B] font-semibold flex items-center gap-1.5">
-                      <Car className="w-3.5 h-3.5 text-[#C6A15B] shrink-0" />
+                    <label className="text-[10px] uppercase tracking-[0.2em] text-[#00AEEF] font-semibold flex items-center gap-1.5">
+                      <Car className="w-3.5 h-3.5 text-[#00AEEF] shrink-0" />
                       <span>Vehicle Class</span>
                     </label>
                     <select
@@ -275,8 +275,8 @@ export default function BookingSearchWidget() {
                   </div>
 
                   <div className="space-y-1 lg:col-span-3">
-                    <label className="text-[10px] uppercase tracking-[0.2em] text-[#C6A15B] font-semibold flex items-center gap-1.5">
-                      <MapPin className="w-3.5 h-3.5 text-[#C6A15B] shrink-0" />
+                    <label className="text-[10px] uppercase tracking-[0.2em] text-[#00AEEF] font-semibold flex items-center gap-1.5">
+                      <MapPin className="w-3.5 h-3.5 text-[#00AEEF] shrink-0" />
                       <span>Pick-Up City</span>
                     </label>
                     <select
@@ -291,8 +291,8 @@ export default function BookingSearchWidget() {
                   </div>
 
                   <div className="space-y-1 lg:col-span-3">
-                    <label className="text-[10px] uppercase tracking-[0.2em] text-[#C6A15B] font-semibold flex items-center gap-1.5">
-                      <CalendarIcon className="w-3.5 h-3.5 text-[#C6A15B] shrink-0" />
+                    <label className="text-[10px] uppercase tracking-[0.2em] text-[#00AEEF] font-semibold flex items-center gap-1.5">
+                      <CalendarIcon className="w-3.5 h-3.5 text-[#00AEEF] shrink-0" />
                       <span>Rental Date</span>
                     </label>
                     <input
@@ -307,7 +307,7 @@ export default function BookingSearchWidget() {
                   <div className="lg:col-span-3 pt-1 lg:pt-5">
                     <button
                       type="submit"
-                      className="w-full min-h-[44px] bg-[#C6A15B] hover:bg-[#d8b46e] text-[#111111] font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-1.5 shadow-md active:scale-95"
+                      className="w-full min-h-[44px] bg-[#00AEEF] hover:bg-[#d8b46e] text-[#111111] font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-1.5 shadow-md active:scale-95"
                     >
                       <Search className="w-4 h-4 shrink-0" />
                       <span>Search Mobility</span>
@@ -319,8 +319,8 @@ export default function BookingSearchWidget() {
               {activeTab === "transfers" && (
                 <>
                   <div className="space-y-1 lg:col-span-4">
-                    <label className="text-[10px] uppercase tracking-[0.2em] text-[#C6A15B] font-semibold flex items-center gap-1.5">
-                      <Plane className="w-3.5 h-3.5 text-[#C6A15B] shrink-0" />
+                    <label className="text-[10px] uppercase tracking-[0.2em] text-[#00AEEF] font-semibold flex items-center gap-1.5">
+                      <Plane className="w-3.5 h-3.5 text-[#00AEEF] shrink-0" />
                       <span>Airport Location</span>
                     </label>
                     <select
@@ -341,8 +341,8 @@ export default function BookingSearchWidget() {
                   </div>
 
                   <div className="space-y-1 lg:col-span-4">
-                    <label className="text-[10px] uppercase tracking-[0.2em] text-[#C6A15B] font-semibold flex items-center gap-1.5">
-                      <CalendarIcon className="w-3.5 h-3.5 text-[#C6A15B] shrink-0" />
+                    <label className="text-[10px] uppercase tracking-[0.2em] text-[#00AEEF] font-semibold flex items-center gap-1.5">
+                      <CalendarIcon className="w-3.5 h-3.5 text-[#00AEEF] shrink-0" />
                       <span>Flight Arrival Date</span>
                     </label>
                     <input
@@ -357,7 +357,7 @@ export default function BookingSearchWidget() {
                   <div className="lg:col-span-4 pt-1 lg:pt-5">
                     <button
                       type="submit"
-                      className="w-full min-h-[44px] bg-[#C6A15B] hover:bg-[#d8b46e] text-[#111111] font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-1.5 shadow-md active:scale-95"
+                      className="w-full min-h-[44px] bg-[#00AEEF] hover:bg-[#d8b46e] text-[#111111] font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-1.5 shadow-md active:scale-95"
                     >
                       <Search className="w-4 h-4 shrink-0" />
                       <span>Search Transfers</span>
@@ -369,8 +369,8 @@ export default function BookingSearchWidget() {
               {(activeTab === "experiences" || activeTab === "concierge") && (
                 <>
                   <div className="space-y-1 lg:col-span-5">
-                    <label className="text-[10px] uppercase tracking-[0.2em] text-[#C6A15B] font-semibold flex items-center gap-1.5">
-                      <ConciergeBell className="w-3.5 h-3.5 text-[#C6A15B] shrink-0" />
+                    <label className="text-[10px] uppercase tracking-[0.2em] text-[#00AEEF] font-semibold flex items-center gap-1.5">
+                      <ConciergeBell className="w-3.5 h-3.5 text-[#00AEEF] shrink-0" />
                       <span>Service Type</span>
                     </label>
                     <select
@@ -397,8 +397,8 @@ export default function BookingSearchWidget() {
                   </div>
 
                   <div className="space-y-1 lg:col-span-4">
-                    <label className="text-[10px] uppercase tracking-[0.2em] text-[#C6A15B] font-semibold flex items-center gap-1.5">
-                      <CalendarIcon className="w-3.5 h-3.5 text-[#C6A15B] shrink-0" />
+                    <label className="text-[10px] uppercase tracking-[0.2em] text-[#00AEEF] font-semibold flex items-center gap-1.5">
+                      <CalendarIcon className="w-3.5 h-3.5 text-[#00AEEF] shrink-0" />
                       <span>Preferred Date</span>
                     </label>
                     <input
@@ -413,7 +413,7 @@ export default function BookingSearchWidget() {
                   <div className="lg:col-span-3 pt-1 lg:pt-5">
                     <button
                       type="submit"
-                      className="w-full min-h-[44px] bg-[#C6A15B] hover:bg-[#d8b46e] text-[#111111] font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-1.5 shadow-md active:scale-95"
+                      className="w-full min-h-[44px] bg-[#00AEEF] hover:bg-[#d8b46e] text-[#111111] font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-1.5 shadow-md active:scale-95"
                     >
                       <Search className="w-4 h-4 shrink-0" />
                       <span>Search Services</span>
@@ -426,7 +426,7 @@ export default function BookingSearchWidget() {
         </form>
 
         <div className="mt-3 pt-3 border-t border-[#E8E5DF] dark:border-[#2C2B29] flex flex-col sm:flex-row items-center justify-between text-[11px] text-neutral-600 dark:text-neutral-400 font-light gap-2 text-center sm:text-left">
-          <div className="flex items-center gap-2 text-[#C6A15B] font-semibold">
+          <div className="flex items-center gap-2 text-[#00AEEF] font-semibold">
             <ShieldCheck className="w-4 h-4 shrink-0" />
             <span>
               Verified Luxury Properties & Partners • Direct Platform Pricing

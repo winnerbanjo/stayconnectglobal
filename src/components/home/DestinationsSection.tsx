@@ -22,7 +22,7 @@ export default function DestinationsSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 space-y-12">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="space-y-3 max-w-2xl">
-            <span className="text-[10px] uppercase tracking-[0.4em] text-[#C6A15B] font-semibold flex items-center gap-2">
+            <span className="text-[10px] uppercase tracking-[0.4em] text-[#00AEEF] font-semibold flex items-center gap-2">
               <MapPin className="w-4 h-4" />
               <span>Featured Destinations</span>
             </span>
@@ -36,7 +36,7 @@ export default function DestinationsSection() {
 
           <Link
             href="/rooms"
-            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl border border-[#C6A15B] text-xs font-semibold uppercase tracking-wider text-[#C6A15B] hover:bg-[#C6A15B] hover:text-[#111111] transition-all shrink-0 self-start md:self-auto"
+            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl border border-[#00AEEF] text-xs font-semibold uppercase tracking-wider text-[#00AEEF] hover:bg-[#00AEEF] hover:text-[#111111] transition-all shrink-0 self-start md:self-auto"
           >
             <span>View All Locations</span>
             <ArrowRight className="w-4 h-4" />
@@ -54,7 +54,7 @@ export default function DestinationsSection() {
             >
               <Link
                 href={`/rooms?city=${encodeURIComponent(dest.slug)}`}
-                className="group relative block h-80 rounded-2xl overflow-hidden border border-[#2C2B29] hover:border-[#C6A15B]/60 transition-all shadow-xl"
+                className="group relative block h-80 rounded-2xl overflow-hidden border border-[#2C2B29] hover:border-[#00AEEF]/60 transition-all shadow-xl"
               >
                 <img
                   src={dest.image}
@@ -63,19 +63,19 @@ export default function DestinationsSection() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
 
-                <div className="absolute top-4 left-4 px-3 py-1 bg-black/80 backdrop-blur-md border border-[#C6A15B]/40 text-[#C6A15B] text-[10px] uppercase tracking-wider font-semibold rounded-full">
+                <div className="absolute top-4 left-4 px-3 py-1 bg-black/80 backdrop-blur-md border border-[#00AEEF]/40 text-[#00AEEF] text-[10px] uppercase tracking-wider font-semibold rounded-full">
                   {dest.tag}
                 </div>
 
                 <div className="absolute bottom-6 left-6 right-6 space-y-1 text-white">
                   <div className="text-xs text-neutral-300 font-light flex items-center gap-1.5">
-                    <MapPin className="w-3.5 h-3.5 text-[#C6A15B]" />
+                    <MapPin className="w-3.5 h-3.5 text-[#00AEEF]" />
                     <span>{dest.city}, Nigeria</span>
                   </div>
-                  <h3 className="font-serif text-2xl font-medium group-hover:text-[#C6A15B] transition-colors">
+                  <h3 className="font-serif text-2xl font-medium group-hover:text-[#00AEEF] transition-colors">
                     {dest.name}
                   </h3>
-                  <div className="text-xs text-[#C6A15B] font-semibold pt-1 flex items-center gap-1">
+                  <div className="text-xs text-[#00AEEF] font-semibold pt-1 flex items-center gap-1">
                     <span>{dest.propertiesCount}</span>
                     <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                   </div>

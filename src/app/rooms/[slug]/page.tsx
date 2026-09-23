@@ -31,7 +31,7 @@ export default async function RoomDetailPage({
   if (!room) notFound();
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6] text-[#111111] font-sans selection:bg-[#C6A15B] selection:text-[#111111]">
+    <div className="min-h-screen bg-[#FAF9F6] text-[#111111] font-sans selection:bg-[#00AEEF] selection:text-[#111111]">
       <Navbar />
       <main className="pt-24 pb-20">
         <RoomDetailClient room={room} />

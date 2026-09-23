@@ -39,7 +39,7 @@ export default function FAQPage() {
       <main className="pt-28 pb-20">
         <div className="max-w-4xl mx-auto px-6 lg:px-12 space-y-12">
           <div className="text-center space-y-3">
-            <span className="text-xs uppercase tracking-[0.35em] text-[#C6A15B] font-semibold">
+            <span className="text-xs uppercase tracking-[0.35em] text-[#00AEEF] font-semibold">
               Guest Assistance
             </span>
             <h1 className="font-serif text-4xl md:text-5xl text-[#111111] font-normal">

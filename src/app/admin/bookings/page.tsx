@@ -68,14 +68,14 @@ function AdminBookingsPageContent() {
         <aside className="w-64 border-r border-slate-200 p-6 flex flex-col justify-between hidden md:flex shrink-0">
           <div className="space-y-8">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-[#C6A15B]/20 border border-[#C6A15B] text-[#85672E] font-serif font-bold flex items-center justify-center text-sm">
+              <div className="w-8 h-8 rounded-full bg-[#00AEEF]/20 border border-[#00AEEF] text-[#0077B6] font-serif font-bold flex items-center justify-center text-sm">
                 SC
               </div>
               <div>
                 <div className="font-serif text-lg text-slate-900 font-medium">
                   Stay Connect
                 </div>
-                <div className="text-[10px] text-[#85672E] uppercase tracking-widest font-semibold">
+                <div className="text-[10px] text-[#0077B6] uppercase tracking-widest font-semibold">
                   Admin Portal
                 </div>
               </div>
@@ -86,47 +86,47 @@ function AdminBookingsPageContent() {
                 href="/admin"
                 className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-50"
               >
-                <BarChart3 className="w-4 h-4 text-[#85672E]" />
+                <BarChart3 className="w-4 h-4 text-[#0077B6]" />
                 <span>Dashboard</span>
               </Link>
               <Link
                 href="/admin/properties"
                 className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-50"
               >
-                <Building className="w-4 h-4 text-[#85672E]" />
+                <Building className="w-4 h-4 text-[#0077B6]" />
                 <span>Properties</span>
               </Link>
               <Link
                 href="/admin/rooms"
                 className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-50"
               >
-                <BedDouble className="w-4 h-4 text-[#85672E]" />
+                <BedDouble className="w-4 h-4 text-[#0077B6]" />
                 <span>Rooms Inventory</span>
               </Link>
               <Link
                 href="/admin/housekeeping"
                 className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-50"
               >
-                <RefreshCw className="w-4 h-4 text-[#85672E]" />
+                <RefreshCw className="w-4 h-4 text-[#0077B6]" />
                 <span>Housekeeping Ops</span>
               </Link>
               <Link
                 href="/admin/dining"
                 className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-50"
               >
-                <Utensils className="w-4 h-4 text-[#85672E]" />
+                <Utensils className="w-4 h-4 text-[#0077B6]" />
                 <span>Dining & Menu</span>
               </Link>
               <Link
                 href="/admin/fleet"
                 className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-50"
               >
-                <Car className="w-4 h-4 text-[#85672E]" />
+                <Car className="w-4 h-4 text-[#0077B6]" />
                 <span>Fleet Logistics</span>
               </Link>
               <Link
                 href="/admin/bookings"
-                className="flex items-center gap-3 px-4 py-3 rounded-lg bg-[#C6A15B] text-[#111111] font-semibold"
+                className="flex items-center gap-3 px-4 py-3 rounded-lg bg-[#00AEEF] text-[#111111] font-semibold"
               >
                 <Calendar className="w-4 h-4" />
                 <span>Reservations CRM</span>
@@ -137,7 +137,7 @@ function AdminBookingsPageContent() {
           <div className="pt-6 border-t border-slate-200">
             <Link
               href="/"
-              className="flex items-center gap-2 text-xs text-slate-600 hover:text-[#85672E]"
+              className="flex items-center gap-2 text-xs text-slate-600 hover:text-[#0077B6]"
             >
               <LogOut className="w-4 h-4" />
               <span>Return to Site</span>
@@ -149,7 +149,7 @@ function AdminBookingsPageContent() {
         <main className="flex-1 p-4 sm:p-8 lg:p-12 space-y-8 overflow-x-hidden">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-6">
             <div>
-              <span className="text-[10px] uppercase tracking-[0.35em] text-[#85672E] font-semibold">
+              <span className="text-[10px] uppercase tracking-[0.35em] text-[#0077B6] font-semibold">
                 Guest Reservations
               </span>
               <h1 className="font-serif text-2xl sm:text-3xl text-slate-900 font-normal mt-1">
@@ -158,7 +158,7 @@ function AdminBookingsPageContent() {
             </div>
             <Link
               href="/book"
-              className="w-full sm:w-auto text-center px-5 py-2.5 bg-[#C6A15B] text-[#111111] font-semibold text-xs uppercase tracking-widest rounded"
+              className="w-full sm:w-auto text-center px-5 py-2.5 bg-[#00AEEF] text-[#111111] font-semibold text-xs uppercase tracking-widest rounded"
             >
               + New Booking
             </Link>
@@ -181,7 +181,7 @@ function AdminBookingsPageContent() {
           <div className="bg-slate-50 rounded-xl border border-slate-200 overflow-hidden p-4 sm:p-6 space-y-4">
             {bookings.length === 0 ? (
               <div className="py-16 text-center space-y-3">
-                <Calendar className="w-10 h-10 text-[#85672E] mx-auto" />
+                <Calendar className="w-10 h-10 text-[#0077B6] mx-auto" />
                 <h3 className="font-serif text-xl text-slate-900">
                   No Reservations Yet
                 </h3>
@@ -193,7 +193,7 @@ function AdminBookingsPageContent() {
             ) : (
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs font-light text-slate-700 min-w-[640px]">
-                  <thead className="bg-white text-[#85672E] uppercase tracking-wider text-[10px] font-semibold">
+                  <thead className="bg-white text-[#0077B6] uppercase tracking-wider text-[10px] font-semibold">
                     <tr>
                       <th className="py-3 px-4">Ref Number</th>
                       <th className="py-3 px-4">Guest Name</th>
@@ -233,7 +233,7 @@ function AdminBookingsPageContent() {
                           </td>
                           <td className="py-4 px-4">
                             {b.checkIn} → {b.checkOut}
-                            <div className="text-[10px] text-[#85672E]">
+                            <div className="text-[10px] text-[#0077B6]">
                               {b.nights} Night(s)
                             </div>
                           </td>
@@ -241,7 +241,7 @@ function AdminBookingsPageContent() {
                             ₦{b.totalPrice?.toLocaleString()}
                           </td>
                           <td className="py-4 px-4">
-                            <span className="px-2 py-0.5 rounded bg-white border border-slate-200 text-[10px] text-[#85672E]">
+                            <span className="px-2 py-0.5 rounded bg-white border border-slate-200 text-[10px] text-[#0077B6]">
                               {b.paymentMethod} · {b.paymentStatus}
                             </span>
                           </td>
@@ -268,7 +268,7 @@ function AdminBookingsPageContent() {
                               <button
                                 disabled={busy === b.id}
                                 onClick={() => confirmPayment(b.id)}
-                                className="bg-[#C6A15B] text-black px-3 py-2 rounded-lg font-semibold"
+                                className="bg-[#00AEEF] text-black px-3 py-2 rounded-lg font-semibold"
                               >
                                 {busy === b.id
                                   ? "Confirming…"

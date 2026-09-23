@@ -67,24 +67,24 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
       {/* Top Breadcrumbs & Header */}
       <div className="space-y-3 sm:space-y-4">
         <div className="flex flex-wrap items-center gap-2 text-[10px] sm:text-xs uppercase tracking-widest text-neutral-400 font-medium">
-          <Link href="/" className="hover:text-[#C6A15B] transition-colors">
+          <Link href="/" className="hover:text-[#00AEEF] transition-colors">
             Home
           </Link>
           <span>/</span>
           <Link
             href="/rooms"
-            className="hover:text-[#C6A15B] transition-colors"
+            className="hover:text-[#00AEEF] transition-colors"
           >
             Suites
           </Link>
           <span>/</span>
-          <span className="text-[#C6A15B] font-semibold">{room.name}</span>
+          <span className="text-[#00AEEF] font-semibold">{room.name}</span>
         </div>
 
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 sm:gap-6 border-b border-[#E8E5DF] pb-6">
           <div className="space-y-2">
             <div className="flex flex-wrap items-center gap-2.5">
-              <span className="px-3 py-1 bg-[#111111] text-[#C6A15B] text-[10px] sm:text-xs font-semibold uppercase tracking-widest rounded-full">
+              <span className="px-3 py-1 bg-[#111111] text-[#00AEEF] text-[10px] sm:text-xs font-semibold uppercase tracking-widest rounded-full">
                 {room.badge || "TLC ⭐⭐⭐⭐⭐"}
               </span>
               <span className="text-[11px] sm:text-xs uppercase tracking-widest text-neutral-500 font-medium">
@@ -95,7 +95,7 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
               {room.name}
             </h1>
             <div className="flex items-center gap-2 text-xs text-neutral-600 font-light">
-              <MapPin className="w-4 h-4 text-[#C6A15B] shrink-0" />
+              <MapPin className="w-4 h-4 text-[#00AEEF] shrink-0" />
               <span>📍 {room.address}</span>
             </div>
           </div>
@@ -108,7 +108,7 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
               <div className="font-serif text-2xl sm:text-3xl font-bold text-[#111111]">
                 ₦{room.pricePerNight.toLocaleString()}
               </div>
-              <div className="text-[10px] sm:text-[11px] text-[#C6A15B]">
+              <div className="text-[10px] sm:text-[11px] text-[#00AEEF]">
                 Weekend: ₦{room.weekendPricePerNight?.toLocaleString()}
               </div>
             </div>
@@ -126,7 +126,7 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
             className="object-cover transition-all duration-700"
             priority
           />
-          <div className="absolute top-4 left-4 bg-[#111111]/80 backdrop-blur-md px-3.5 py-1 rounded-full text-[10px] sm:text-xs text-[#C6A15B] uppercase tracking-widest font-medium border border-[#C6A15B]/30">
+          <div className="absolute top-4 left-4 bg-[#111111]/80 backdrop-blur-md px-3.5 py-1 rounded-full text-[10px] sm:text-xs text-[#00AEEF] uppercase tracking-widest font-medium border border-[#00AEEF]/30">
             Editorial Photo Gallery
           </div>
         </div>
@@ -139,7 +139,7 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
               onClick={() => setSelectedImg(img)}
               className={`relative h-20 sm:h-24 lg:h-32 rounded-xl overflow-hidden border-2 transition-all shrink-0 ${
                 selectedImg === img
-                  ? "border-[#C6A15B] shadow-lg scale-[0.98]"
+                  ? "border-[#00AEEF] shadow-lg scale-[0.98]"
                   : "border-transparent opacity-75 hover:opacity-100"
               }`}
             >
@@ -165,7 +165,7 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
                 Maximum Capacity
               </span>
               <div className="flex items-center gap-1.5 font-serif text-base sm:text-lg text-[#111111] font-medium">
-                <Users className="w-4 h-4 text-[#C6A15B] shrink-0" />
+                <Users className="w-4 h-4 text-[#00AEEF] shrink-0" />
                 <span>👥 {room.maxGuests} GUESTS</span>
               </div>
             </div>
@@ -175,7 +175,7 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
                 Property Size
               </span>
               <div className="flex items-center gap-1.5 font-serif text-base sm:text-lg text-[#111111] font-medium">
-                <Maximize className="w-4 h-4 text-[#C6A15B] shrink-0" />
+                <Maximize className="w-4 h-4 text-[#00AEEF] shrink-0" />
                 <span>📐 {room.propertySize} m²</span>
               </div>
             </div>
@@ -185,7 +185,7 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
                 Bedrooms
               </span>
               <div className="flex items-center gap-1.5 font-serif text-base sm:text-lg text-[#111111] font-medium">
-                <Bed className="w-4 h-4 text-[#C6A15B] shrink-0" />
+                <Bed className="w-4 h-4 text-[#00AEEF] shrink-0" />
                 <span>🛏️ {room.bedrooms} BR</span>
               </div>
             </div>
@@ -195,7 +195,7 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
                 Bathrooms
               </span>
               <div className="flex items-center gap-1.5 font-serif text-base sm:text-lg text-[#111111] font-medium">
-                <Bath className="w-4 h-4 text-[#C6A15B] shrink-0" />
+                <Bath className="w-4 h-4 text-[#00AEEF] shrink-0" />
                 <span>🚿 {room.bathrooms} BA</span>
               </div>
             </div>
@@ -222,7 +222,7 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
                   key={i}
                   className="p-3.5 sm:p-4 bg-white rounded-xl border border-[#E8E5DF] flex items-center gap-2.5 text-xs font-medium text-[#111111]"
                 >
-                  <CheckCircle2 className="w-4 h-4 text-[#C6A15B] shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-[#00AEEF] shrink-0" />
                   <span>{am}</span>
                 </div>
               ))}
@@ -237,11 +237,11 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
                   Guest Ratings & Reviews
                 </h3>
                 <div className="flex items-center gap-2 mt-1">
-                  <div className="flex items-center text-[#C6A15B]">
+                  <div className="flex items-center text-[#00AEEF]">
                     {[...Array(room.reviewCount > 0 ? Math.round(room.rating) : 0)].map((_, i) => (
                       <Star
                         key={i}
-                        className="w-4 h-4 sm:w-5 sm:h-5 fill-[#C6A15B]"
+                        className="w-4 h-4 sm:w-5 sm:h-5 fill-[#00AEEF]"
                       />
                     ))}
                   </div>
@@ -261,10 +261,10 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
 
         {/* Right Column: Sticky Booking Card with Touch-Optimized Date Controls */}
         <div className="lg:col-span-4">
-          <div className="lg:sticky lg:top-28 bg-[#111111] text-white p-5 sm:p-8 rounded-2xl border border-[#C6A15B]/30 shadow-2xl space-y-6">
+          <div className="lg:sticky lg:top-28 bg-[#111111] text-white p-5 sm:p-8 rounded-2xl border border-[#00AEEF]/30 shadow-2xl space-y-6">
             <div className="flex items-center justify-between border-b border-[#2C2B29] pb-4">
               <div>
-                <span className="text-[10px] uppercase tracking-widest text-[#C6A15B] font-semibold">
+                <span className="text-[10px] uppercase tracking-widest text-[#00AEEF] font-semibold">
                   Reserve Suite
                 </span>
                 <div className="font-serif text-2xl sm:text-3xl font-medium text-white">
@@ -275,8 +275,8 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
                   </span>
                 </div>
               </div>
-              <div className="flex items-center gap-1 text-xs text-[#C6A15B] font-semibold bg-[#1A1918] px-3 py-1 rounded-full border border-[#2C2B29]">
-                <Star className="w-3.5 h-3.5 fill-[#C6A15B]" />
+              <div className="flex items-center gap-1 text-xs text-[#00AEEF] font-semibold bg-[#1A1918] px-3 py-1 rounded-full border border-[#2C2B29]">
+                <Star className="w-3.5 h-3.5 fill-[#00AEEF]" />
                 <span>{room.reviewCount > 0 ? room.rating.toFixed(1) : "Not yet rated"}</span>
               </div>
             </div>
@@ -284,8 +284,8 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
             <div className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="space-y-1.5 w-full">
-                  <label className="text-[10px] uppercase tracking-widest text-[#C6A15B] font-semibold flex items-center gap-1">
-                    <CalendarIcon className="w-3.5 h-3.5 text-[#C6A15B] shrink-0" />
+                  <label className="text-[10px] uppercase tracking-widest text-[#00AEEF] font-semibold flex items-center gap-1">
+                    <CalendarIcon className="w-3.5 h-3.5 text-[#00AEEF] shrink-0" />
                     <span>Check-In</span>
                   </label>
                   <input
@@ -293,13 +293,13 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
                     value={checkIn}
                     onChange={(e) => setCheckIn(e.target.value)}
                     style={{ colorScheme: "dark" }}
-                    className="w-full min-h-[46px] bg-[#1A1918] border border-[#2C2B29] rounded-xl px-3.5 py-2.5 text-sm sm:text-xs text-white font-medium focus:outline-none focus:border-[#C6A15B] appearance-none"
+                    className="w-full min-h-[46px] bg-[#1A1918] border border-[#2C2B29] rounded-xl px-3.5 py-2.5 text-sm sm:text-xs text-white font-medium focus:outline-none focus:border-[#00AEEF] appearance-none"
                   />
                 </div>
 
                 <div className="space-y-1.5 w-full">
-                  <label className="text-[10px] uppercase tracking-widest text-[#C6A15B] font-semibold flex items-center gap-1">
-                    <CalendarIcon className="w-3.5 h-3.5 text-[#C6A15B] shrink-0" />
+                  <label className="text-[10px] uppercase tracking-widest text-[#00AEEF] font-semibold flex items-center gap-1">
+                    <CalendarIcon className="w-3.5 h-3.5 text-[#00AEEF] shrink-0" />
                     <span>Check-Out</span>
                   </label>
                   <input
@@ -307,7 +307,7 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
                     value={checkOut}
                     onChange={(e) => setCheckOut(e.target.value)}
                     style={{ colorScheme: "dark" }}
-                    className="w-full min-h-[46px] bg-[#1A1918] border border-[#2C2B29] rounded-xl px-3.5 py-2.5 text-sm sm:text-xs text-white font-medium focus:outline-none focus:border-[#C6A15B] appearance-none"
+                    className="w-full min-h-[46px] bg-[#1A1918] border border-[#2C2B29] rounded-xl px-3.5 py-2.5 text-sm sm:text-xs text-white font-medium focus:outline-none focus:border-[#00AEEF] appearance-none"
                   />
                 </div>
               </div>
@@ -319,7 +319,7 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
                 <select
                   value={guests}
                   onChange={(e) => setGuests(e.target.value)}
-                  className="w-full min-h-[46px] bg-[#1A1918] border border-[#2C2B29] rounded-xl px-3.5 py-2.5 text-sm sm:text-xs text-white font-medium focus:outline-none focus:border-[#C6A15B]"
+                  className="w-full min-h-[46px] bg-[#1A1918] border border-[#2C2B29] rounded-xl px-3.5 py-2.5 text-sm sm:text-xs text-white font-medium focus:outline-none focus:border-[#00AEEF]"
                 >
                   <option value="1">1 Guest</option>
                   <option value="2">2 Guests (Max)</option>
@@ -345,7 +345,7 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
               </div>
               <div className="flex justify-between font-serif text-base sm:text-lg text-white font-semibold pt-3 border-t border-[#2C2B29]">
                 <span>Total Estimated</span>
-                <span className="text-[#C6A15B]">
+                <span className="text-[#00AEEF]">
                   ₦{total.toLocaleString()}
                 </span>
               </div>
@@ -355,7 +355,7 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
             <div className="space-y-3 pt-2">
               <Link
                 href={`/book?room=${room.slug}&checkIn=${checkIn}&checkOut=${checkOut}&adults=${guests}`}
-                className="w-full min-h-[48px] bg-[#C6A15B] hover:bg-[#B08C46] text-[#111111] font-semibold text-xs uppercase tracking-[0.2em] rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-xl group active:scale-95"
+                className="w-full min-h-[48px] bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-semibold text-xs uppercase tracking-[0.2em] rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-xl group active:scale-95"
               >
                 <span>Book Online</span>
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -365,9 +365,9 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full min-h-[48px] bg-[#1A1918] hover:bg-[#252422] text-white border border-[#2C2B29] hover:border-[#C6A15B] font-semibold text-xs uppercase tracking-[0.2em] rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg active:scale-95"
+                className="w-full min-h-[48px] bg-[#1A1918] hover:bg-[#252422] text-white border border-[#2C2B29] hover:border-[#00AEEF] font-semibold text-xs uppercase tracking-[0.2em] rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg active:scale-95"
               >
-                <MessageSquare className="w-4 h-4 text-[#C6A15B]" />
+                <MessageSquare className="w-4 h-4 text-[#00AEEF]" />
                 <span>Book on WhatsApp</span>
               </a>
             </div>

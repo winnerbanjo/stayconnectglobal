@@ -42,9 +42,9 @@ export async function sendBookingConfirmationEmail(
   const guestName = escape(bookingDetails.guestName);
   const roomName = escape(bookingDetails.roomName);
   const htmlContent = `
-    <div style="font-family: Georgia, serif; background-color: #111111; color: #FAF9F6; padding: 40px; border-radius: 16px; max-width: 600px; margin: 0 auto; border: 1px solid #C6A15B;">
+    <div style="font-family: Georgia, serif; background-color: #111111; color: #FAF9F6; padding: 40px; border-radius: 16px; max-width: 600px; margin: 0 auto; border: 1px solid #00AEEF;">
       <div style="text-align: center; margin-bottom: 24px;">
-        <h1 style="color: #C6A15B; font-size: 30px; letter-spacing: 2px; margin: 0;">STAY CONNECT HOTELS</h1>
+        <h1 style="color: #00AEEF; font-size: 30px; letter-spacing: 2px; margin: 0;">STAY CONNECT HOTELS</h1>
         <p style="text-transform: uppercase; font-size: 10px; letter-spacing: 3px; color: #8E8B85; margin-top: 6px;">14B Providence Street, Lekki Phase 1, Lagos, Nigeria</p>
       </div>
       
@@ -54,15 +54,15 @@ export async function sendBookingConfirmationEmail(
       <p style="font-size: 14px; color: #D1CDC7;">Dear <strong>${guestName}</strong>,</p>
       <p style="font-size: 13px; color: #A09D98; line-height: 1.6;">Your reservation request has been received. Payment is pending. Your booking is confirmed only after Stay Connect verifies payment and availability.</p>
 
-      <div style="background-color: #1A1918; border: 1px solid #C6A15B; padding: 20px; text-align: center; border-radius: 10px; margin: 24px 0;">
+      <div style="background-color: #1A1918; border: 1px solid #00AEEF; padding: 20px; text-align: center; border-radius: 10px; margin: 24px 0;">
         <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: #8E8B85;">Booking Reference Code</div>
-        <div style="font-size: 28px; color: #C6A15B; font-weight: bold; letter-spacing: 4px; margin-top: 4px;">${bookingDetails.bookingRef}</div>
+        <div style="font-size: 28px; color: #00AEEF; font-weight: bold; letter-spacing: 4px; margin-top: 4px;">${bookingDetails.bookingRef}</div>
       </div>
 
       <table style="width: 100%; border-collapse: collapse; font-size: 13px; color: #FAF9F6; margin: 20px 0;">
         <tr style="border-bottom: 1px solid #2C2B29;">
           <td style="padding: 12px 0; color: #8E8B85;">Reserved Suite</td>
-          <td style="padding: 12px 0; text-align: right; color: #C6A15B; font-weight: bold;">${roomName}</td>
+          <td style="padding: 12px 0; text-align: right; color: #00AEEF; font-weight: bold;">${roomName}</td>
         </tr>
         <tr style="border-bottom: 1px solid #2C2B29;">
           <td style="padding: 12px 0; color: #8E8B85;">Check-In Date</td>
@@ -82,14 +82,14 @@ export async function sendBookingConfirmationEmail(
         </tr>
         <tr>
           <td style="padding: 16px 0; font-size: 15px; font-weight: bold;">Total Reserved Amount</td>
-          <td style="padding: 16px 0; font-size: 20px; font-weight: bold; color: #C6A15B; text-align: right;">₦${bookingDetails.totalPrice.toLocaleString()}</td>
+          <td style="padding: 16px 0; font-size: 20px; font-weight: bold; color: #00AEEF; text-align: right;">₦${bookingDetails.totalPrice.toLocaleString()}</td>
         </tr>
       </table>
 
       <hr style="border: 0; border-top: 1px solid #2C2B29; margin: 24px 0;" />
 
       <div style="text-align: center; font-size: 12px; color: #8E8B85; line-height: 1.6;">
-        <p style="margin-bottom: 4px;">WhatsApp Concierge: <strong style="color: #C6A15B;">+234 704 100 8351</strong></p>
+        <p style="margin-bottom: 4px;">WhatsApp Concierge: <strong style="color: #00AEEF;">+234 704 100 8351</strong></p>
         <p style="margin: 0;">Location: 14B Providence Street, Lekki Phase 1, Lagos, Nigeria</p>
       </div>
     </div>

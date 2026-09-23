@@ -19,7 +19,7 @@ export default function OffersPage() {
       <main className="pt-28 pb-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-12 space-y-16">
           <div className="text-center space-y-3">
-            <span className="text-xs uppercase tracking-[0.35em] text-[#C6A15B] font-semibold">
+            <span className="text-xs uppercase tracking-[0.35em] text-[#00AEEF] font-semibold">
               Privileged Rates
             </span>
             <h1 className="font-serif text-4xl md:text-6xl text-[#111111] font-normal">
@@ -38,17 +38,17 @@ export default function OffersPage() {
               >
                 <div className="relative h-64 bg-neutral-900 overflow-hidden">
                   <Image src={off.image} alt={off.title} fill className="object-cover" />
-                  <div className="absolute top-4 left-4 bg-[#C6A15B] text-[#111111] text-xs uppercase font-bold tracking-widest px-3.5 py-1 rounded-full">
+                  <div className="absolute top-4 left-4 bg-[#00AEEF] text-[#111111] text-xs uppercase font-bold tracking-widest px-3.5 py-1 rounded-full">
                     {off.tag}
                   </div>
-                  <div className="absolute bottom-4 right-4 bg-[#111111]/90 text-white text-xs px-3 py-1 rounded font-mono border border-[#C6A15B]/30">
+                  <div className="absolute bottom-4 right-4 bg-[#111111]/90 text-white text-xs px-3 py-1 rounded font-mono border border-[#00AEEF]/30">
                     CODE: {off.code}
                   </div>
                 </div>
 
                 <div className="p-8 space-y-6">
                   <div className="space-y-2">
-                    <span className="text-xs text-[#C6A15B] font-semibold uppercase tracking-widest">
+                    <span className="text-xs text-[#00AEEF] font-semibold uppercase tracking-widest">
                       {off.discountPercentage}% Special Discount
                     </span>
                     <h3 className="font-serif text-3xl text-[#111111] font-normal">{off.title}</h3>
@@ -61,7 +61,7 @@ export default function OffersPage() {
                     <span className="text-xs text-neutral-400 font-light">Valid until {off.validUntil}</span>
                     <Link
                       href={`/book?promoCode=${off.code}`}
-                      className="px-6 py-3 bg-[#111111] hover:bg-[#C6A15B] text-white hover:text-[#111111] text-xs font-medium uppercase tracking-widest rounded transition-colors flex items-center gap-2"
+                      className="px-6 py-3 bg-[#111111] hover:bg-[#00AEEF] text-white hover:text-[#111111] text-xs font-medium uppercase tracking-widest rounded transition-colors flex items-center gap-2"
                     >
                       <span>Apply Offer</span>
                       <ArrowRight className="w-3.5 h-3.5" />

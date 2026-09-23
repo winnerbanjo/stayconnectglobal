@@ -141,13 +141,13 @@ export default function ListYourPropertyPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#111111] text-white font-sans selection:bg-[#C6A15B] selection:text-[#111111]">
+    <div className="min-h-screen bg-[#111111] text-white font-sans selection:bg-[#00AEEF] selection:text-[#111111]">
       <Navbar />
 
       <main className="pt-28 pb-24">
         {/* Header Hero */}
         <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4 mb-16">
-          <span className="text-[10px] uppercase tracking-[0.4em] text-[#C6A15B] font-semibold px-4 py-1.5 rounded-full bg-[#1A1918] border border-[#C6A15B]/30 inline-block">
+          <span className="text-[10px] uppercase tracking-[0.4em] text-[#00AEEF] font-semibold px-4 py-1.5 rounded-full bg-[#1A1918] border border-[#00AEEF]/30 inline-block">
             Partner Onboarding Portal
           </span>
           <h1 className="font-serif text-4xl sm:text-6xl font-normal leading-tight">
@@ -163,7 +163,7 @@ export default function ListYourPropertyPage() {
         {/* Why List With Stay Connect vs OTAs */}
         <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 space-y-8">
           <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="text-[10px] uppercase tracking-[0.3em] text-[#C6A15B] font-semibold">
+            <span className="text-[10px] uppercase tracking-[0.3em] text-[#00AEEF] font-semibold">
               The Stay Connect Advantage
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl text-white">
@@ -173,7 +173,7 @@ export default function ListYourPropertyPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-[#1A1918] border border-[#2C2B29] rounded-2xl p-6 space-y-3">
-              <div className="text-xs uppercase tracking-wider text-[#C6A15B] font-semibold">
+              <div className="text-xs uppercase tracking-wider text-[#00AEEF] font-semibold">
                 Direct Booking Engine & Web Presence
               </div>
               <p className="text-xs text-neutral-300 font-light leading-relaxed">
@@ -182,7 +182,7 @@ export default function ListYourPropertyPage() {
               </p>
             </div>
             <div className="bg-[#1A1918] border border-[#2C2B29] rounded-2xl p-6 space-y-3">
-              <div className="text-xs uppercase tracking-wider text-[#C6A15B] font-semibold">
+              <div className="text-xs uppercase tracking-wider text-[#00AEEF] font-semibold">
                 Complete Property Management Dashboard
               </div>
               <p className="text-xs text-neutral-300 font-light leading-relaxed">
@@ -191,7 +191,7 @@ export default function ListYourPropertyPage() {
               </p>
             </div>
             <div className="bg-[#1A1918] border border-[#2C2B29] rounded-2xl p-6 space-y-3">
-              <div className="text-xs uppercase tracking-wider text-[#C6A15B] font-semibold">
+              <div className="text-xs uppercase tracking-wider text-[#00AEEF] font-semibold">
                 Local Nigerian Support & Fleet Mobility
               </div>
               <p className="text-xs text-neutral-300 font-light leading-relaxed">
@@ -210,7 +210,7 @@ export default function ListYourPropertyPage() {
                 animate={{ opacity: 1, scale: 1 }}
                 className="text-center py-12 space-y-6"
               >
-                <div className="w-20 h-20 bg-[#C6A15B]/10 rounded-full border border-[#C6A15B] flex items-center justify-center text-[#C6A15B] mx-auto">
+                <div className="w-20 h-20 bg-[#00AEEF]/10 rounded-full border border-[#00AEEF] flex items-center justify-center text-[#00AEEF] mx-auto">
                   <CheckCircle2 className="w-10 h-10" />
                 </div>
                 <h2 className="font-serif text-3xl sm:text-4xl text-white">
@@ -222,7 +222,7 @@ export default function ListYourPropertyPage() {
                   verification.
                 </p>
                 <div className="text-left bg-black p-4 rounded-xl text-xs break-all">
-                  <p className="text-[#C6A15B] mb-2">
+                  <p className="text-[#00AEEF] mb-2">
                     Save your private access key. You will need it to reopen
                     your workspace.
                   </p>
@@ -231,7 +231,7 @@ export default function ListYourPropertyPage() {
                 <div className="pt-4 flex items-center justify-center gap-4">
                   <a
                     href="/partner"
-                    className="px-8 py-3.5 bg-[#C6A15B] text-[#111111] font-semibold text-xs uppercase tracking-wider rounded-xl hover:bg-[#d8b46e] transition-colors"
+                    className="px-8 py-3.5 bg-[#00AEEF] text-[#111111] font-semibold text-xs uppercase tracking-wider rounded-xl hover:bg-[#d8b46e] transition-colors"
                   >
                     Review & Submit Property
                   </a>
@@ -257,7 +257,7 @@ export default function ListYourPropertyPage() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6">
                     <div className="space-y-1.5">
-                      <label className="text-xs text-[#C6A15B] uppercase tracking-wider font-semibold">
+                      <label className="text-xs text-[#00AEEF] uppercase tracking-wider font-semibold">
                         Business / Operator Name *
                       </label>
                       <input
@@ -271,12 +271,12 @@ export default function ListYourPropertyPage() {
                             businessName: e.target.value,
                           })
                         }
-                        className="w-full bg-[#111111] border border-[#2C2B29] rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C6A15B]"
+                        className="w-full bg-[#111111] border border-[#2C2B29] rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#00AEEF]"
                       />
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="text-xs text-[#C6A15B] uppercase tracking-wider font-semibold">
+                      <label className="text-xs text-[#00AEEF] uppercase tracking-wider font-semibold">
                         Contact Person Name *
                       </label>
                       <input
@@ -290,12 +290,12 @@ export default function ListYourPropertyPage() {
                             contactName: e.target.value,
                           })
                         }
-                        className="w-full bg-[#111111] border border-[#2C2B29] rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C6A15B]"
+                        className="w-full bg-[#111111] border border-[#2C2B29] rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#00AEEF]"
                       />
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="text-xs text-[#C6A15B] uppercase tracking-wider font-semibold">
+                      <label className="text-xs text-[#00AEEF] uppercase tracking-wider font-semibold">
                         Email Address *
                       </label>
                       <input
@@ -306,12 +306,12 @@ export default function ListYourPropertyPage() {
                         onChange={(e) =>
                           setFormData({ ...formData, email: e.target.value })
                         }
-                        className="w-full bg-[#111111] border border-[#2C2B29] rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C6A15B]"
+                        className="w-full bg-[#111111] border border-[#2C2B29] rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#00AEEF]"
                       />
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="text-xs text-[#C6A15B] uppercase tracking-wider font-semibold">
+                      <label className="text-xs text-[#00AEEF] uppercase tracking-wider font-semibold">
                         Phone / WhatsApp Number *
                       </label>
                       <input
@@ -322,7 +322,7 @@ export default function ListYourPropertyPage() {
                         onChange={(e) =>
                           setFormData({ ...formData, phone: e.target.value })
                         }
-                        className="w-full bg-[#111111] border border-[#2C2B29] rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C6A15B]"
+                        className="w-full bg-[#111111] border border-[#2C2B29] rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#00AEEF]"
                       />
                     </div>
                   </div>
@@ -338,7 +338,7 @@ export default function ListYourPropertyPage() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6">
                     <div className="space-y-1.5">
-                      <label className="text-xs text-[#C6A15B] uppercase tracking-wider font-semibold">
+                      <label className="text-xs text-[#00AEEF] uppercase tracking-wider font-semibold">
                         Property Category *
                       </label>
                       <select
@@ -349,7 +349,7 @@ export default function ListYourPropertyPage() {
                             propertyType: e.target.value as any,
                           })
                         }
-                        className="w-full bg-[#111111] border border-[#2C2B29] rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C6A15B]"
+                        className="w-full bg-[#111111] border border-[#2C2B29] rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#00AEEF]"
                       >
                         <option value="Hotel">Luxury Hotel</option>
                         <option value="Serviced Apartment">
@@ -371,7 +371,7 @@ export default function ListYourPropertyPage() {
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="text-xs text-[#C6A15B] uppercase tracking-wider font-semibold">
+                      <label className="text-xs text-[#00AEEF] uppercase tracking-wider font-semibold">
                         Property Name *
                       </label>
                       <input
@@ -385,12 +385,12 @@ export default function ListYourPropertyPage() {
                             propertyName: e.target.value,
                           })
                         }
-                        className="w-full bg-[#111111] border border-[#2C2B29] rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C6A15B]"
+                        className="w-full bg-[#111111] border border-[#2C2B29] rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#00AEEF]"
                       />
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="text-xs text-[#C6A15B] uppercase tracking-wider font-semibold">
+                      <label className="text-xs text-[#00AEEF] uppercase tracking-wider font-semibold">
                         City / Location *
                       </label>
                       <select
@@ -398,7 +398,7 @@ export default function ListYourPropertyPage() {
                         onChange={(e) =>
                           setFormData({ ...formData, city: e.target.value })
                         }
-                        className="w-full bg-[#111111] border border-[#2C2B29] rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C6A15B]"
+                        className="w-full bg-[#111111] border border-[#2C2B29] rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#00AEEF]"
                       >
                         <option value="Lagos">Lagos</option>
                         <option value="Abuja">Abuja</option>
@@ -408,7 +408,7 @@ export default function ListYourPropertyPage() {
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="text-xs text-[#C6A15B] uppercase tracking-wider font-semibold">
+                      <label className="text-xs text-[#00AEEF] uppercase tracking-wider font-semibold">
                         Number of Units / Rooms *
                       </label>
                       <input
@@ -422,12 +422,12 @@ export default function ListYourPropertyPage() {
                             numberOfUnits: Number(e.target.value),
                           })
                         }
-                        className="w-full bg-[#111111] border border-[#2C2B29] rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C6A15B]"
+                        className="w-full bg-[#111111] border border-[#2C2B29] rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#00AEEF]"
                       />
                     </div>
 
                     <div className="sm:col-span-2 space-y-1.5">
-                      <label className="text-xs text-[#C6A15B] uppercase tracking-wider font-semibold">
+                      <label className="text-xs text-[#00AEEF] uppercase tracking-wider font-semibold">
                         Full Address *
                       </label>
                       <input
@@ -438,14 +438,14 @@ export default function ListYourPropertyPage() {
                         onChange={(e) =>
                           setFormData({ ...formData, address: e.target.value })
                         }
-                        className="w-full bg-[#111111] border border-[#2C2B29] rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C6A15B]"
+                        className="w-full bg-[#111111] border border-[#2C2B29] rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#00AEEF]"
                       />
                     </div>
                   </div>
                 </div>
 
                 <div className="grid sm:grid-cols-2 gap-6">
-                  <label className="block text-xs text-[#C6A15B]">
+                  <label className="block text-xs text-[#00AEEF]">
                     Area / neighbourhood
                     <input
                       value={formData.area}
@@ -456,7 +456,7 @@ export default function ListYourPropertyPage() {
                       className="block w-full mt-2 p-4 bg-black border border-[#444] rounded-lg text-white"
                     />
                   </label>
-                  <label className="block text-xs text-[#C6A15B]">
+                  <label className="block text-xs text-[#00AEEF]">
                     Starting nightly rate (₦) *
                     <input
                       type="number"
@@ -473,7 +473,7 @@ export default function ListYourPropertyPage() {
                     />
                   </label>
                 </div>
-                <label className="block text-xs text-[#C6A15B]">
+                <label className="block text-xs text-[#00AEEF]">
                   Property description *
                   <textarea
                     required
@@ -505,13 +505,13 @@ export default function ListYourPropertyPage() {
                           onClick={() => handleAmenityToggle(item)}
                           className={`p-3 rounded-xl border text-xs font-medium text-left flex items-center justify-between transition-colors ${
                             isSelected
-                              ? "bg-[#C6A15B]/20 border-[#C6A15B] text-white"
+                              ? "bg-[#00AEEF]/20 border-[#00AEEF] text-white"
                               : "bg-[#111111] border-[#2C2B29] text-neutral-400 hover:text-white"
                           }`}
                         >
                           <span>{item}</span>
                           {isSelected && (
-                            <CheckCircle2 className="w-4 h-4 text-[#C6A15B]" />
+                            <CheckCircle2 className="w-4 h-4 text-[#00AEEF]" />
                           )}
                         </button>
                       );
@@ -520,7 +520,7 @@ export default function ListYourPropertyPage() {
                 </div>
 
                 <div className="space-y-3">
-                  <label className="block text-xs text-[#C6A15B]">
+                  <label className="block text-xs text-[#00AEEF]">
                     Add another amenity
                     <input
                       value={customAmenity}
@@ -553,7 +553,7 @@ export default function ListYourPropertyPage() {
                           type="button"
                           key={a}
                           onClick={() => handleAmenityToggle(a)}
-                          className="px-3 py-2 bg-[#C6A15B]/20 rounded-lg text-xs"
+                          className="px-3 py-2 bg-[#00AEEF]/20 rounded-lg text-xs"
                         >
                           {a} ×
                         </button>
@@ -572,8 +572,8 @@ export default function ListYourPropertyPage() {
                     </p>
                   </div>
 
-                  <div className="p-6 bg-[#111111] border-2 border-dashed border-[#2C2B29] hover:border-[#C6A15B] rounded-2xl text-center space-y-3 transition-colors relative">
-                    <div className="w-12 h-12 rounded-full bg-[#1A1918] text-[#C6A15B] flex items-center justify-center mx-auto border border-[#C6A15B]/40">
+                  <div className="p-6 bg-[#111111] border-2 border-dashed border-[#2C2B29] hover:border-[#00AEEF] rounded-2xl text-center space-y-3 transition-colors relative">
+                    <div className="w-12 h-12 rounded-full bg-[#1A1918] text-[#00AEEF] flex items-center justify-center mx-auto border border-[#00AEEF]/40">
                       <ImageIcon className="w-6 h-6" />
                     </div>
                     <div className="space-y-1">
@@ -599,14 +599,14 @@ export default function ListYourPropertyPage() {
                   {/* Thumbnail Previews */}
                   {formData.images.length > 0 && (
                     <div className="space-y-2 pt-2">
-                      <div className="text-xs text-[#C6A15B] font-semibold">
+                      <div className="text-xs text-[#00AEEF] font-semibold">
                         Uploaded Photos ({formData.images.length})
                       </div>
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                         {formData.images.map((imgSrc, i) => (
                           <div
                             key={i}
-                            className="relative h-28 rounded-xl overflow-hidden border border-[#C6A15B]/50 group"
+                            className="relative h-28 rounded-xl overflow-hidden border border-[#00AEEF]/50 group"
                           >
                             <img
                               src={imgSrc}
@@ -630,7 +630,7 @@ export default function ListYourPropertyPage() {
 
                 <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4">
                   <div className="flex items-center gap-2 text-xs text-neutral-400 font-light">
-                    <ShieldCheck className="w-4 h-4 text-[#C6A15B]" />
+                    <ShieldCheck className="w-4 h-4 text-[#00AEEF]" />
                     <span>
                       Free registration. No upfront setup fees. Verified
                       payouts.
@@ -640,7 +640,7 @@ export default function ListYourPropertyPage() {
                   <button
                     type="submit"
                     disabled={loading || uploading}
-                    className="w-full sm:w-auto px-10 py-4 bg-[#C6A15B] hover:bg-[#d8b46e] text-[#111111] font-semibold text-xs uppercase tracking-[0.2em] rounded-xl transition-all shadow-xl hover:scale-105"
+                    className="w-full sm:w-auto px-10 py-4 bg-[#00AEEF] hover:bg-[#d8b46e] text-[#111111] font-semibold text-xs uppercase tracking-[0.2em] rounded-xl transition-all shadow-xl hover:scale-105"
                   >
                     {uploading
                       ? "Uploading photos…"

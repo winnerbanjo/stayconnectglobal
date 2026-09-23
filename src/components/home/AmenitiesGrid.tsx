@@ -52,7 +52,7 @@ export default function AmenitiesGrid() {
     <section className="py-24 bg-[#FAF9F6] text-[#111111]">
       <div className="max-w-7xl mx-auto px-6 lg:px-12 space-y-16">
         <div className="text-center max-w-2xl mx-auto space-y-3">
-          <span className="text-xs uppercase tracking-[0.35em] text-[#C6A15B] font-semibold">
+          <span className="text-xs uppercase tracking-[0.35em] text-[#00AEEF] font-semibold">
             Uncompromising Excellence
           </span>
           <h2 className="font-serif text-4xl md:text-5xl text-[#111111] font-normal">
@@ -71,7 +71,7 @@ export default function AmenitiesGrid() {
                 key={idx}
                 className="bg-white p-8 rounded-xl border border-[#E8E5DF] shadow-sm hover:shadow-xl transition-all duration-300 group hover:-translate-y-1"
               >
-                <div className="w-12 h-12 rounded-lg bg-[#111111] text-[#C6A15B] flex items-center justify-center mb-6 group-hover:bg-[#C6A15B] group-hover:text-[#111111] transition-colors">
+                <div className="w-12 h-12 rounded-lg bg-[#111111] text-[#00AEEF] flex items-center justify-center mb-6 group-hover:bg-[#00AEEF] group-hover:text-[#111111] transition-colors">
                   <Icon className="w-6 h-6" />
                 </div>
                 <h3 className="font-serif text-xl text-[#111111] font-medium mb-2">{item.title}</h3>
@@ -84,7 +84,7 @@ export default function AmenitiesGrid() {
         <div className="text-center pt-6">
           <Link
             href="/amenities"
-            className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#111111] hover:bg-[#C6A15B] text-white hover:text-[#111111] text-xs font-medium uppercase tracking-[0.2em] rounded transition-all shadow-md"
+            className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#111111] hover:bg-[#00AEEF] text-white hover:text-[#111111] text-xs font-medium uppercase tracking-[0.2em] rounded transition-all shadow-md"
           >
             <span>Explore All 24+ Amenities</span>
           </Link>

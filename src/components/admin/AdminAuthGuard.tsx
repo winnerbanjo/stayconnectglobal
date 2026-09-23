@@ -54,7 +54,7 @@ export default function AdminAuthGuard({ children }: AdminAuthGuardProps) {
   if (isAuthenticated === null) {
     return (
       <div className="min-h-screen bg-white text-slate-900 flex items-center justify-center">
-        <div className="text-xs uppercase tracking-widest text-[#85672E]">
+        <div className="text-xs uppercase tracking-widest text-[#0077B6]">
           Authenticating Admin Session...
         </div>
       </div>
@@ -64,12 +64,12 @@ export default function AdminAuthGuard({ children }: AdminAuthGuardProps) {
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-white text-slate-900 font-sans flex items-center justify-center p-4">
-        <div className="bg-slate-50 border border-[#C6A15B]/30 p-8 sm:p-10 rounded-2xl max-w-md w-full space-y-6 shadow-2xl relative overflow-hidden">
+        <div className="bg-slate-50 border border-[#00AEEF]/30 p-8 sm:p-10 rounded-2xl max-w-md w-full space-y-6 shadow-2xl relative overflow-hidden">
           <div className="text-center space-y-3">
-            <div className="w-12 h-12 rounded-full bg-[#C6A15B]/20 border border-[#C6A15B] text-[#85672E] font-serif font-bold flex items-center justify-center text-xl mx-auto">
+            <div className="w-12 h-12 rounded-full bg-[#00AEEF]/20 border border-[#00AEEF] text-[#0077B6] font-serif font-bold flex items-center justify-center text-xl mx-auto">
               SC
             </div>
-            <span className="text-[10px] uppercase tracking-[0.35em] text-[#85672E] font-semibold block">
+            <span className="text-[10px] uppercase tracking-[0.35em] text-[#0077B6] font-semibold block">
               Executive PMS Portal
             </span>
             <h1 className="font-serif text-3xl text-slate-900 font-normal">
@@ -83,7 +83,7 @@ export default function AdminAuthGuard({ children }: AdminAuthGuardProps) {
           <form onSubmit={handleLogin} className="space-y-4">
             <div className="space-y-1">
               <label htmlFor="admin-password" className="text-xs text-slate-700 font-medium flex items-center gap-1.5">
-                <Lock className="w-3.5 h-3.5 text-[#85672E]" />
+                <Lock className="w-3.5 h-3.5 text-[#0077B6]" />
                 <span>Admin Password</span>
               </label>
               <div className="relative">
@@ -96,7 +96,7 @@ export default function AdminAuthGuard({ children }: AdminAuthGuardProps) {
                   placeholder="Enter admin password..."
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-white border border-slate-200 focus:border-[#C6A15B] rounded-lg px-4 py-3 text-xs text-slate-900 placeholder-neutral-500 focus:outline-none transition-colors pr-10"
+                  className="w-full bg-white border border-slate-200 focus:border-[#00AEEF] rounded-lg px-4 py-3 text-xs text-slate-900 placeholder-neutral-500 focus:outline-none transition-colors pr-10"
                 />
                 <button
                   type="button"
@@ -122,7 +122,7 @@ export default function AdminAuthGuard({ children }: AdminAuthGuardProps) {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-3.5 bg-[#C6A15B] hover:bg-[#B08C46] text-[#111111] font-semibold text-xs uppercase tracking-[0.2em] rounded-lg transition-all duration-300 flex items-center justify-center gap-2 shadow-xl group active:scale-95"
+              className="w-full py-3.5 bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-semibold text-xs uppercase tracking-[0.2em] rounded-lg transition-all duration-300 flex items-center justify-center gap-2 shadow-xl group active:scale-95"
             >
               <span>{isSubmitting ? "Signing in…" : "Unlock Admin Panel"}</span>
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -130,7 +130,7 @@ export default function AdminAuthGuard({ children }: AdminAuthGuardProps) {
           </form>
 
           <div className="pt-4 border-t border-slate-200 text-center text-[10px] text-slate-500 flex items-center justify-center gap-1.5">
-            <ShieldCheck className="w-3.5 h-3.5 text-[#85672E]" />
+            <ShieldCheck className="w-3.5 h-3.5 text-[#0077B6]" />
             <span>Protected administrator session</span>
           </div>
         </div>

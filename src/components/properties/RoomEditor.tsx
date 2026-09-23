@@ -88,7 +88,7 @@ export default function RoomEditor({
             <button
               type="button"
               onClick={() => setCover(url)}
-              className={`border-2 ${cover === url ? "border-[#C6A15B]" : "border-transparent"}`}
+              className={`border-2 ${cover === url ? "border-[#00AEEF]" : "border-transparent"}`}
             >
               <img
                 src={url}
@@ -140,7 +140,7 @@ export default function RoomEditor({
       )}
       <button
         disabled={busy}
-        className="bg-[#C6A15B] text-black p-3 rounded-lg"
+        className="bg-[#00AEEF] text-black p-3 rounded-lg"
       >
         {busy ? "Saving / uploading…" : "Save room"}
       </button>

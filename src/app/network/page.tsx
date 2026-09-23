@@ -53,13 +53,13 @@ const ECOSYSTEM_PILLARS = [
 
 export default function NetworkPage() {
   return (
-    <div className="min-h-screen bg-[#111111] text-white font-sans selection:bg-[#C6A15B] selection:text-[#111111]">
+    <div className="min-h-screen bg-[#111111] text-white font-sans selection:bg-[#00AEEF] selection:text-[#111111]">
       <Navbar />
 
       <main className="pt-28 pb-24">
         {/* Header Hero */}
         <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6 mb-20">
-          <span className="text-[10px] uppercase tracking-[0.4em] text-[#C6A15B] font-semibold px-4 py-1.5 rounded-full bg-[#1A1918] border border-[#C6A15B]/30 inline-block">
+          <span className="text-[10px] uppercase tracking-[0.4em] text-[#00AEEF] font-semibold px-4 py-1.5 rounded-full bg-[#1A1918] border border-[#00AEEF]/30 inline-block">
             Stay Connect Global Network
           </span>
           <h1 className="font-serif text-4xl sm:text-6xl font-normal leading-tight">
@@ -78,20 +78,20 @@ export default function NetworkPage() {
               return (
                 <div
                   key={i}
-                  className="bg-[#1A1918] border border-[#2C2B29] hover:border-[#C6A15B]/50 rounded-2xl p-8 flex flex-col justify-between transition-all group hover:-translate-y-1 shadow-xl"
+                  className="bg-[#1A1918] border border-[#2C2B29] hover:border-[#00AEEF]/50 rounded-2xl p-8 flex flex-col justify-between transition-all group hover:-translate-y-1 shadow-xl"
                 >
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <div className="w-12 h-12 rounded-xl bg-[#252422] border border-[#3A3935] flex items-center justify-center text-[#C6A15B] group-hover:scale-110 transition-transform">
+                      <div className="w-12 h-12 rounded-xl bg-[#252422] border border-[#3A3935] flex items-center justify-center text-[#00AEEF] group-hover:scale-110 transition-transform">
                         <Icon className="w-6 h-6" />
                       </div>
-                      <span className="px-3 py-1 bg-[#111111] border border-[#C6A15B]/40 text-[#C6A15B] text-[10px] uppercase font-semibold rounded-full">
+                      <span className="px-3 py-1 bg-[#111111] border border-[#00AEEF]/40 text-[#00AEEF] text-[10px] uppercase font-semibold rounded-full">
                         {pillar.badge}
                       </span>
                     </div>
 
                     <div>
-                      <h3 className="font-serif text-2xl font-medium text-white group-hover:text-[#C6A15B] transition-colors">
+                      <h3 className="font-serif text-2xl font-medium text-white group-hover:text-[#00AEEF] transition-colors">
                         {pillar.title}
                       </h3>
                       <p className="text-xs text-neutral-400 font-light leading-relaxed mt-3">{pillar.desc}</p>
@@ -101,7 +101,7 @@ export default function NetworkPage() {
                   <div className="pt-6 mt-6 border-t border-[#2C2B29]">
                     <Link
                       href={pillar.link}
-                      className="inline-flex items-center gap-2 text-xs font-semibold text-[#C6A15B] hover:text-white transition-colors"
+                      className="inline-flex items-center gap-2 text-xs font-semibold text-[#00AEEF] hover:text-white transition-colors"
                     >
                       <span>Explore {pillar.title}</span>
                       <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />

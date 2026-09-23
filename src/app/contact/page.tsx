@@ -21,7 +21,7 @@ export default function ContactPage() {
       <main className="pt-28 pb-20 space-y-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-12 space-y-12">
           <div className="text-center space-y-3">
-            <span className="text-xs uppercase tracking-[0.35em] text-[#C6A15B] font-semibold">
+            <span className="text-xs uppercase tracking-[0.35em] text-[#00AEEF] font-semibold">
               Personalized Assistance
             </span>
             <h1 className="font-serif text-4xl md:text-6xl text-[#111111] font-normal">
@@ -38,8 +38,8 @@ export default function ContactPage() {
               <h2 className="font-serif text-3xl text-[#111111] font-normal">Send a Direct Message</h2>
 
               {submitted ? (
-                <div className="p-6 rounded-xl bg-[#FAF9F6] border border-[#C6A15B] text-center text-sm text-[#C6A15B] space-y-2">
-                  <CheckCircle2 className="w-8 h-8 text-[#C6A15B] mx-auto" />
+                <div className="p-6 rounded-xl bg-[#FAF9F6] border border-[#00AEEF] text-center text-sm text-[#00AEEF] space-y-2">
+                  <CheckCircle2 className="w-8 h-8 text-[#00AEEF] mx-auto" />
                   <div className="font-serif text-lg text-[#111111]">Message Received</div>
                   <p className="text-xs text-neutral-600 font-light">Our head concierge will contact you within 30 minutes.</p>
                 </div>
@@ -87,7 +87,7 @@ export default function ContactPage() {
 
                   <button
                     type="submit"
-                    className="w-full py-4 bg-[#C6A15B] hover:bg-[#B08C46] text-[#111111] font-medium text-xs uppercase tracking-[0.2em] rounded shadow-md flex items-center justify-center gap-2"
+                    className="w-full py-4 bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-medium text-xs uppercase tracking-[0.2em] rounded shadow-md flex items-center justify-center gap-2"
                   >
                     <Send className="w-4 h-4" />
                     <span>Send Inquiry to Concierge</span>
@@ -98,14 +98,14 @@ export default function ContactPage() {
 
             {/* Direct Contact Cards */}
             <div className="lg:col-span-5 space-y-6">
-              <div className="bg-[#111111] text-white p-8 rounded-2xl border border-[#C6A15B]/30 space-y-6 shadow-xl">
-                <div className="font-serif text-2xl text-[#C6A15B] border-b border-[#2C2B29] pb-3">
+              <div className="bg-[#111111] text-white p-8 rounded-2xl border border-[#00AEEF]/30 space-y-6 shadow-xl">
+                <div className="font-serif text-2xl text-[#00AEEF] border-b border-[#2C2B29] pb-3">
                   Flagship Contact Directory
                 </div>
 
                 <div className="space-y-4 text-xs font-light text-neutral-300">
                   <div className="flex items-start gap-3">
-                    <MapPin className="w-5 h-5 text-[#C6A15B] shrink-0 mt-0.5" />
+                    <MapPin className="w-5 h-5 text-[#00AEEF] shrink-0 mt-0.5" />
                     <div>
                       <div className="text-white font-medium">Hotel Address</div>
                       <div>14B, Providence Street, Lekki Phase 1, Lagos, Nigeria</div>
@@ -113,7 +113,7 @@ export default function ContactPage() {
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <Phone className="w-5 h-5 text-[#C6A15B] shrink-0 mt-0.5" />
+                    <Phone className="w-5 h-5 text-[#00AEEF] shrink-0 mt-0.5" />
                     <div>
                       <div className="text-white font-medium">Direct Telephone & WhatsApp</div>
                       <div>+234 803 123 4567 / +234 901 888 0000</div>
@@ -121,7 +121,7 @@ export default function ContactPage() {
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <Mail className="w-5 h-5 text-[#C6A15B] shrink-0 mt-0.5" />
+                    <Mail className="w-5 h-5 text-[#00AEEF] shrink-0 mt-0.5" />
                     <div>
                       <div className="text-white font-medium">Email Desk</div>
                       <div>concierge@stayconnecthotels.com</div>

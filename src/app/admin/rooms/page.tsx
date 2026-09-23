@@ -227,14 +227,14 @@ function AdminRoomsPageContent() {
         <aside className="w-64 border-r border-slate-200 p-6 flex flex-col justify-between hidden md:flex shrink-0">
           <div className="space-y-8">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-[#C6A15B]/20 border border-[#C6A15B] text-[#85672E] font-serif font-bold flex items-center justify-center text-sm">
+              <div className="w-8 h-8 rounded-full bg-[#00AEEF]/20 border border-[#00AEEF] text-[#0077B6] font-serif font-bold flex items-center justify-center text-sm">
                 SC
               </div>
               <div>
                 <div className="font-serif text-lg text-slate-900 font-medium">
                   Stay Connect
                 </div>
-                <div className="text-[10px] text-[#85672E] uppercase tracking-widest font-semibold">
+                <div className="text-[10px] text-[#0077B6] uppercase tracking-widest font-semibold">
                   Admin Portal
                 </div>
               </div>
@@ -245,19 +245,19 @@ function AdminRoomsPageContent() {
                 href="/admin"
                 className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-50"
               >
-                <BarChart3 className="w-4 h-4 text-[#85672E]" />
+                <BarChart3 className="w-4 h-4 text-[#0077B6]" />
                 <span>Dashboard</span>
               </Link>
               <Link
                 href="/admin/properties"
                 className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-50"
               >
-                <Building className="w-4 h-4 text-[#85672E]" />
+                <Building className="w-4 h-4 text-[#0077B6]" />
                 <span>Properties</span>
               </Link>
               <Link
                 href="/admin/rooms"
-                className="flex items-center gap-3 px-4 py-3 rounded-lg bg-[#C6A15B] text-[#111111] font-semibold"
+                className="flex items-center gap-3 px-4 py-3 rounded-lg bg-[#00AEEF] text-[#111111] font-semibold"
               >
                 <BedDouble className="w-4 h-4" />
                 <span>Rooms & Inventory</span>
@@ -266,28 +266,28 @@ function AdminRoomsPageContent() {
                 href="/admin/housekeeping"
                 className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-50"
               >
-                <RefreshCw className="w-4 h-4 text-[#85672E]" />
+                <RefreshCw className="w-4 h-4 text-[#0077B6]" />
                 <span>Housekeeping Ops</span>
               </Link>
               <Link
                 href="/admin/dining"
                 className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-50"
               >
-                <Utensils className="w-4 h-4 text-[#85672E]" />
+                <Utensils className="w-4 h-4 text-[#0077B6]" />
                 <span>Dining & Menu</span>
               </Link>
               <Link
                 href="/admin/fleet"
                 className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-50"
               >
-                <Car className="w-4 h-4 text-[#85672E]" />
+                <Car className="w-4 h-4 text-[#0077B6]" />
                 <span>Fleet Logistics</span>
               </Link>
               <Link
                 href="/admin/bookings"
                 className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-50"
               >
-                <Calendar className="w-4 h-4 text-[#85672E]" />
+                <Calendar className="w-4 h-4 text-[#0077B6]" />
                 <span>Reservations CRM</span>
               </Link>
             </nav>
@@ -296,7 +296,7 @@ function AdminRoomsPageContent() {
           <div className="pt-6 border-t border-slate-200">
             <Link
               href="/"
-              className="flex items-center gap-2 text-xs text-slate-600 hover:text-[#85672E]"
+              className="flex items-center gap-2 text-xs text-slate-600 hover:text-[#0077B6]"
             >
               <LogOut className="w-4 h-4" />
               <span>Return to Site</span>
@@ -308,7 +308,7 @@ function AdminRoomsPageContent() {
         <main className="flex-1 p-4 sm:p-8 lg:p-12 space-y-8 sm:space-y-10 overflow-x-hidden">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-6">
             <div>
-              <span className="text-[10px] uppercase tracking-[0.35em] text-[#85672E] font-semibold">
+              <span className="text-[10px] uppercase tracking-[0.35em] text-[#0077B6] font-semibold">
                 Inventory Manager
               </span>
               <h1 className="font-serif text-2xl sm:text-3xl text-slate-900 font-normal mt-1">
@@ -317,7 +317,7 @@ function AdminRoomsPageContent() {
             </div>
             <button
               onClick={() => setIsModalOpen(true)}
-              className="w-full sm:w-auto px-5 py-3 bg-[#C6A15B] hover:bg-[#B08C46] text-[#111111] font-semibold text-xs uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 shadow-xl transition-all active:scale-95"
+              className="w-full sm:w-auto px-5 py-3 bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-semibold text-xs uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 shadow-xl transition-all active:scale-95"
             >
               <Plus className="w-4 h-4" />
               <span>+ Create New Room</span>
@@ -330,7 +330,7 @@ function AdminRoomsPageContent() {
             </p>
           )}
           {loadingRooms ? (
-            <div className="flex items-center justify-center p-12 text-[#85672E] gap-3">
+            <div className="flex items-center justify-center p-12 text-[#0077B6] gap-3">
               <Loader2 className="w-6 h-6 animate-spin" />
               <span className="text-xs uppercase tracking-widest">
                 Loading room inventory…
@@ -361,7 +361,7 @@ function AdminRoomsPageContent() {
                   </p>
                   <button
                     onClick={() => setEditing(editing === rm.id ? "" : rm.id)}
-                    className="text-xs text-[#85672E] underline"
+                    className="text-xs text-[#0077B6] underline"
                   >
                     Edit inventory, price & photos
                   </button>
@@ -378,7 +378,7 @@ function AdminRoomsPageContent() {
                     <h3 className="font-serif text-xl sm:text-2xl text-slate-900">
                       {rm.name}
                     </h3>
-                    <span className="text-xs font-serif text-[#85672E] font-bold">
+                    <span className="text-xs font-serif text-[#0077B6] font-bold">
                       ₦{rm.pricePerNight.toLocaleString()} / night
                     </span>
                   </div>
@@ -395,7 +395,7 @@ function AdminRoomsPageContent() {
                     </span>
                     <Link
                       href={`/rooms/${rm.slug}`}
-                      className="text-slate-900 hover:text-[#85672E] underline"
+                      className="text-slate-900 hover:text-[#0077B6] underline"
                     >
                       View Suite →
                     </Link>
@@ -409,10 +409,10 @@ function AdminRoomsPageContent() {
         {/* Create Room Modal */}
         {isModalOpen && (
           <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-            <div className="bg-white text-slate-900 p-6 sm:p-8 rounded-2xl border border-[#C6A15B]/40 max-w-xl w-full space-y-6 shadow-2xl overflow-y-auto max-h-[90vh]">
+            <div className="bg-white text-slate-900 p-6 sm:p-8 rounded-2xl border border-[#00AEEF]/40 max-w-xl w-full space-y-6 shadow-2xl overflow-y-auto max-h-[90vh]">
               <div className="flex items-center justify-between border-b border-slate-200 pb-4">
                 <div>
-                  <span className="text-[10px] uppercase tracking-widest text-[#85672E] font-semibold">
+                  <span className="text-[10px] uppercase tracking-widest text-[#0077B6] font-semibold">
                     Inventory Manager
                   </span>
                   <h3 className="font-serif text-2xl text-slate-900">
@@ -481,7 +481,7 @@ function AdminRoomsPageContent() {
                 <div>
                   <label className="text-slate-700 font-medium flex items-center justify-between">
                     <span>Property Owner / Partner Merchant</span>
-                    <span className="text-[10px] text-[#85672E] font-semibold">
+                    <span className="text-[10px] text-[#0077B6] font-semibold">
                       Approved Merchants Only
                     </span>
                   </label>
@@ -502,7 +502,7 @@ function AdminRoomsPageContent() {
                           : "Stay Connect Direct Flagship",
                       });
                     }}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3.5 py-2.5 text-slate-900 mt-1 focus:border-[#C6A15B]"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3.5 py-2.5 text-slate-900 mt-1 focus:border-[#00AEEF]"
                   >
                     <option value="">
                       Stay Connect Global (Direct Flagship Managed)
@@ -555,13 +555,13 @@ function AdminRoomsPageContent() {
                     <label className="text-slate-700 font-medium block">
                       Suite Photos
                     </label>
-                    <span className="text-[10px] font-mono text-[#85672E] font-semibold">
+                    <span className="text-[10px] font-mono text-[#0077B6] font-semibold">
                       {formData.gallery.length} Photo(s) Attached
                     </span>
                   </div>
 
-                  <div className="p-4 bg-slate-50 border-2 border-dashed border-slate-200 hover:border-[#C6A15B] rounded-xl text-center space-y-2 transition-colors relative cursor-pointer">
-                    <div className="w-10 h-10 rounded-full bg-white text-[#85672E] flex items-center justify-center mx-auto border border-[#C6A15B]/40">
+                  <div className="p-4 bg-slate-50 border-2 border-dashed border-slate-200 hover:border-[#00AEEF] rounded-xl text-center space-y-2 transition-colors relative cursor-pointer">
+                    <div className="w-10 h-10 rounded-full bg-white text-[#0077B6] flex items-center justify-center mx-auto border border-[#00AEEF]/40">
                       {uploading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Upload className="w-5 h-5" />}
                     </div>
                     <div className="space-y-1">
@@ -590,7 +590,7 @@ function AdminRoomsPageContent() {
                       {formData.gallery.map((imgSrc, idx) => (
                         <div
                           key={idx}
-                          className="relative h-20 rounded-lg overflow-hidden border border-[#C6A15B]/50 group bg-slate-100"
+                          className="relative h-20 rounded-lg overflow-hidden border border-[#00AEEF]/50 group bg-slate-100"
                         >
                           <img
                             src={imgSrc}
@@ -607,7 +607,7 @@ function AdminRoomsPageContent() {
                             <X className="w-3 h-3" />
                           </button>
                           {idx === 0 && (
-                            <span className="absolute bottom-1 left-1 bg-[#C6A15B] text-[#111111] text-[8px] font-bold px-1.5 py-0.5 rounded uppercase">
+                            <span className="absolute bottom-1 left-1 bg-[#00AEEF] text-[#111111] text-[8px] font-bold px-1.5 py-0.5 rounded uppercase">
                               Primary Photo
                             </span>
                           )}
@@ -753,7 +753,7 @@ function AdminRoomsPageContent() {
                   <button
                     type="submit"
                     disabled={uploading || saving || formData.gallery.length === 0}
-                    className="px-6 py-2.5 bg-[#C6A15B] text-[#111111] font-semibold uppercase tracking-widest rounded-lg shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="px-6 py-2.5 bg-[#00AEEF] text-[#111111] font-semibold uppercase tracking-widest rounded-lg shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {uploading ? "Uploading photos…" : saving ? "Saving room…" : "Publish Suite Live"}
                   </button>

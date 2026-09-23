@@ -19,7 +19,7 @@ export default function DiningPage() {
         {/* Header */}
         <div className="max-w-7xl mx-auto px-6 lg:px-12 space-y-16">
           <div className="text-center space-y-3">
-            <span className="text-xs uppercase tracking-[0.35em] text-[#C6A15B] font-semibold">
+            <span className="text-xs uppercase tracking-[0.35em] text-[#00AEEF] font-semibold">
               Culinary Artistry
             </span>
             <h1 className="font-serif text-4xl md:text-6xl text-[#111111] font-normal">
@@ -44,14 +44,14 @@ export default function DiningPage() {
                     fill
                     className="object-cover"
                   />
-                  <div className="absolute top-4 left-4 bg-[#111111]/80 text-[#C6A15B] text-xs font-semibold uppercase tracking-widest px-3.5 py-1 rounded-full border border-[#C6A15B]/30">
+                  <div className="absolute top-4 left-4 bg-[#111111]/80 text-[#00AEEF] text-xs font-semibold uppercase tracking-widest px-3.5 py-1 rounded-full border border-[#00AEEF]/30">
                     {venue.cuisine}
                   </div>
                 </div>
 
                 <div className="lg:col-span-6 p-8 lg:p-12 flex flex-col justify-between space-y-6">
                   <div className="space-y-4">
-                    <span className="text-xs uppercase tracking-widest text-[#C6A15B] font-semibold">{venue.tagline}</span>
+                    <span className="text-xs uppercase tracking-widest text-[#00AEEF] font-semibold">{venue.tagline}</span>
                     <h2 className="font-serif text-3xl lg:text-4xl text-[#111111] font-normal">{venue.name}</h2>
                     <p className="text-neutral-600 text-xs md:text-sm font-light leading-relaxed">
                       {venue.description}
@@ -60,7 +60,7 @@ export default function DiningPage() {
                     {/* Operating Hours */}
                     <div className="p-4 bg-[#FAF9F6] rounded-xl border border-[#E8E5DF] space-y-2 text-xs text-neutral-700">
                       <div className="font-semibold uppercase tracking-wider text-[#111111] flex items-center gap-1.5">
-                        <Clock className="w-3.5 h-3.5 text-[#C6A15B]" />
+                        <Clock className="w-3.5 h-3.5 text-[#00AEEF]" />
                         <span>Dining Hours</span>
                       </div>
                       <div className="grid grid-cols-3 gap-2 text-[11px] pt-1">
@@ -72,7 +72,7 @@ export default function DiningPage() {
 
                     {/* Highlights */}
                     <div className="space-y-2">
-                      <span className="text-[10px] uppercase tracking-widest text-[#C6A15B] font-semibold">Highlights</span>
+                      <span className="text-[10px] uppercase tracking-widest text-[#00AEEF] font-semibold">Highlights</span>
                       <div className="flex flex-wrap gap-2">
                         {venue.highlights.map((h, i) => (
                           <span key={i} className="px-3 py-1 bg-[#111111] text-white text-[11px] rounded-full font-light">
@@ -86,7 +86,7 @@ export default function DiningPage() {
                   <div className="pt-4 border-t border-[#E8E5DF] flex items-center justify-between">
                     <a
                       href="tel:+2348031234567"
-                      className="px-6 py-3 bg-[#C6A15B] hover:bg-[#B08C46] text-[#111111] font-medium text-xs uppercase tracking-widest rounded shadow-md inline-flex items-center gap-2"
+                      className="px-6 py-3 bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-medium text-xs uppercase tracking-widest rounded shadow-md inline-flex items-center gap-2"
                     >
                       <Utensils className="w-3.5 h-3.5" />
                       <span>Reserve Dining Table</span>

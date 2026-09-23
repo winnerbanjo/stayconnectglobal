@@ -22,7 +22,7 @@ export default function Footer() {
         {/* Top Newsletter & Brand Statement */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 pb-12 sm:pb-20 border-b border-[#2C2B29]">
           <div className="lg:col-span-7 space-y-3 sm:space-y-4">
-            <span className="text-[10px] uppercase tracking-[0.4em] text-[#C6A15B] font-semibold">
+            <span className="text-[10px] uppercase tracking-[0.4em] text-[#00AEEF] font-semibold">
               The Hospitality Journal
             </span>
             <h3 className="font-serif text-2xl sm:text-4xl md:text-5xl text-white font-normal leading-[1.15]">
@@ -35,8 +35,8 @@ export default function Footer() {
 
           <div className="lg:col-span-5 flex flex-col justify-center">
             {subscribed ? (
-              <div className="p-5 sm:p-6 rounded-xl bg-[#1A1918] border border-[#C6A15B]/40 flex items-center gap-3 text-xs text-[#C6A15B]">
-                <CheckCircle2 className="w-5 h-5 text-[#C6A15B] shrink-0" />
+              <div className="p-5 sm:p-6 rounded-xl bg-[#1A1918] border border-[#00AEEF]/40 flex items-center gap-3 text-xs text-[#00AEEF]">
+                <CheckCircle2 className="w-5 h-5 text-[#00AEEF] shrink-0" />
                 <span>Thank you for subscribing to Stay Connect Global.</span>
               </div>
             ) : (
@@ -47,11 +47,11 @@ export default function Footer() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email address"
                   required
-                  className="flex-1 bg-[#1A1918] border border-[#2C2B29] px-5 py-3.5 sm:px-6 sm:py-4 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-[#C6A15B] transition-colors rounded-none"
+                  className="flex-1 bg-[#1A1918] border border-[#2C2B29] px-5 py-3.5 sm:px-6 sm:py-4 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-[#00AEEF] transition-colors rounded-none"
                 />
                 <button
                   type="submit"
-                  className="px-6 py-3.5 sm:px-8 sm:py-4 bg-[#C6A15B] hover:bg-[#B08C46] text-[#111111] font-semibold text-[11px] uppercase tracking-[0.25em] transition-all flex items-center justify-center gap-2 shrink-0 active:scale-95"
+                  className="px-6 py-3.5 sm:px-8 sm:py-4 bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-semibold text-[11px] uppercase tracking-[0.25em] transition-all flex items-center justify-center gap-2 shrink-0 active:scale-95"
                 >
                   <span>Join Registry</span>
                   <ArrowRight className="w-4 h-4" />
@@ -82,15 +82,15 @@ export default function Footer() {
             </p>
             <div className="space-y-2.5 text-xs text-neutral-300 font-light">
               <div className="flex items-start gap-3">
-                <MapPin className="w-4 h-4 text-[#C6A15B] shrink-0 mt-0.5" />
+                <MapPin className="w-4 h-4 text-[#00AEEF] shrink-0 mt-0.5" />
                 <span>Headquarters: Providence Street, Lekki Phase 1, Lagos, Nigeria</span>
               </div>
               <div className="flex items-center gap-3">
-                <Phone className="w-4 h-4 text-[#C6A15B] shrink-0" />
+                <Phone className="w-4 h-4 text-[#00AEEF] shrink-0" />
                 <span>+234 704 100 8351</span>
               </div>
               <div className="flex items-center gap-3">
-                <Mail className="w-4 h-4 text-[#C6A15B] shrink-0" />
+                <Mail className="w-4 h-4 text-[#00AEEF] shrink-0" />
                 <span>partners@stayconnectglobal.com</span>
               </div>
             </div>
@@ -98,28 +98,28 @@ export default function Footer() {
 
           {/* Column 1: Accommodation Categories */}
           <div className="lg:col-span-3 space-y-3 sm:space-y-4">
-            <div className="text-[10px] uppercase tracking-[0.3em] text-[#C6A15B] font-semibold flex items-center gap-1.5">
+            <div className="text-[10px] uppercase tracking-[0.3em] text-[#00AEEF] font-semibold flex items-center gap-1.5">
               <Building2 className="w-3.5 h-3.5" />
               <span>Explore Collection</span>
             </div>
             <ul className="space-y-2.5 text-xs text-neutral-300 font-light">
               <li>
-                <Link href="/rooms?category=Luxury+Hotel" className="hover:text-[#C6A15B] transition-colors">
+                <Link href="/rooms?category=Luxury+Hotel" className="hover:text-[#00AEEF] transition-colors">
                   Luxury Hotels & Resorts
                 </Link>
               </li>
               <li>
-                <Link href="/rooms?category=Serviced+Apartment" className="hover:text-[#C6A15B] transition-colors">
+                <Link href="/rooms?category=Serviced+Apartment" className="hover:text-[#00AEEF] transition-colors">
                   Serviced Executive Apartments
                 </Link>
               </li>
               <li>
-                <Link href="/rooms?category=Luxury+Residence" className="hover:text-[#C6A15B] transition-colors">
+                <Link href="/rooms?category=Luxury+Residence" className="hover:text-[#00AEEF] transition-colors">
                   Private Penthouses & Villas
                 </Link>
               </li>
               <li>
-                <Link href="/rooms" className="hover:text-[#C6A15B] transition-colors font-medium text-[#C6A15B]">
+                <Link href="/rooms" className="hover:text-[#00AEEF] transition-colors font-medium text-[#00AEEF]">
                   Browse All Stays →
                 </Link>
               </li>
@@ -128,28 +128,28 @@ export default function Footer() {
 
           {/* Column 2: Mobility & Concierge */}
           <div className="lg:col-span-2 space-y-3 sm:space-y-4">
-            <div className="text-[10px] uppercase tracking-[0.3em] text-[#C6A15B] font-semibold flex items-center gap-1.5">
+            <div className="text-[10px] uppercase tracking-[0.3em] text-[#00AEEF] font-semibold flex items-center gap-1.5">
               <Car className="w-3.5 h-3.5" />
               <span>Mobility & Services</span>
             </div>
             <ul className="space-y-2.5 text-xs text-neutral-300 font-light">
               <li>
-                <Link href="/car-rentals" className="hover:text-[#C6A15B] transition-colors">
+                <Link href="/car-rentals" className="hover:text-[#00AEEF] transition-colors">
                   Luxury Fleet & SUVs
                 </Link>
               </li>
               <li>
-                <Link href="/transfers" className="hover:text-[#C6A15B] transition-colors">
+                <Link href="/transfers" className="hover:text-[#00AEEF] transition-colors">
                   Airport Transfers & Pickups
                 </Link>
               </li>
               <li>
-                <Link href="/experiences" className="hover:text-[#C6A15B] transition-colors">
+                <Link href="/experiences" className="hover:text-[#00AEEF] transition-colors">
                   Yacht Charters & Dining
                 </Link>
               </li>
               <li>
-                <Link href="/concierge" className="hover:text-[#C6A15B] transition-colors">
+                <Link href="/concierge" className="hover:text-[#00AEEF] transition-colors">
                   VIP Concierge & Security
                 </Link>
               </li>
@@ -158,7 +158,7 @@ export default function Footer() {
 
           {/* Column 3: For Hospitality Partners */}
           <div className="lg:col-span-3 space-y-3 sm:space-y-4">
-            <div className="text-[10px] uppercase tracking-[0.3em] text-[#C6A15B] font-semibold flex items-center gap-1.5">
+            <div className="text-[10px] uppercase tracking-[0.3em] text-[#00AEEF] font-semibold flex items-center gap-1.5">
               <Crown className="w-3.5 h-3.5" />
               <span>Hospitality Partners</span>
             </div>
@@ -168,14 +168,14 @@ export default function Footer() {
             <div className="flex flex-col gap-2.5">
               <Link
                 href="/list-your-property"
-                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#C6A15B] text-[#111111] rounded-lg text-xs font-semibold hover:bg-[#d8b46e] transition-all"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#00AEEF] text-[#111111] rounded-lg text-xs font-semibold hover:bg-[#d8b46e] transition-all"
               >
                 <span>List Your Property</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
               <Link
                 href="/for-business"
-                className="inline-flex items-center justify-center gap-2 text-xs text-[#C6A15B] hover:underline mt-1"
+                className="inline-flex items-center justify-center gap-2 text-xs text-[#00AEEF] hover:underline mt-1"
               >
                 <span>Business Solutions & Corporate Travel →</span>
               </Link>
@@ -190,7 +190,7 @@ export default function Footer() {
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8">
-            <a href="https://instagram.com" target="_blank" rel="noreferrer" className="hover:text-[#C6A15B] transition-colors">
+            <a href="https://instagram.com" target="_blank" rel="noreferrer" className="hover:text-[#00AEEF] transition-colors">
               <Instagram className="w-4 h-4" />
             </a>
             <Link href="/contact" className="hover:text-white transition-colors">Contact Support</Link>

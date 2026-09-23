@@ -77,11 +77,11 @@ export default function Navbar() {
                 onBlur={() => setTimeout(() => setCollectionOpen(false), 200)}
                 className={`flex items-center gap-1.5 text-xs uppercase tracking-wider font-bold px-3 py-2 rounded-xl transition-colors ${
                   !scrolled && isHome
-                    ? "text-white hover:text-[#C6A15B]"
-                    : "text-neutral-800 dark:text-neutral-200 hover:text-[#C6A15B]"
+                    ? "text-white hover:text-[#00AEEF]"
+                    : "text-neutral-800 dark:text-neutral-200 hover:text-[#00AEEF]"
                 }`}
               >
-                <MapPin className="w-3.5 h-3.5 text-[#C6A15B]" />
+                <MapPin className="w-3.5 h-3.5 text-[#00AEEF]" />
                 <span>Collection</span>
                 <ChevronDown
                   className={`w-3 h-3 transition-transform duration-300 ${collectionOpen ? "rotate-180" : ""}`}
@@ -126,7 +126,7 @@ export default function Navbar() {
                         href={item.href}
                         className="block px-3 py-2.5 rounded-xl hover:bg-[#FAF9F6] dark:hover:bg-[#252422] transition-colors"
                       >
-                        <div className="text-xs font-semibold text-[#111111] dark:text-white hover:text-[#C6A15B]">
+                        <div className="text-xs font-semibold text-[#111111] dark:text-white hover:text-[#00AEEF]">
                           {item.name}
                         </div>
                         <div className="text-[11px] text-neutral-500 font-light">
@@ -150,11 +150,11 @@ export default function Navbar() {
                 onBlur={() => setTimeout(() => setMobilityOpen(false), 200)}
                 className={`flex items-center gap-1.5 text-xs uppercase tracking-wider font-bold px-3 py-2 rounded-xl transition-colors ${
                   !scrolled && isHome
-                    ? "text-white hover:text-[#C6A15B]"
-                    : "text-neutral-800 dark:text-neutral-200 hover:text-[#C6A15B]"
+                    ? "text-white hover:text-[#00AEEF]"
+                    : "text-neutral-800 dark:text-neutral-200 hover:text-[#00AEEF]"
                 }`}
               >
-                <Car className="w-3.5 h-3.5 text-[#C6A15B]" />
+                <Car className="w-3.5 h-3.5 text-[#00AEEF]" />
                 <span>Mobility</span>
                 <ChevronDown
                   className={`w-3 h-3 transition-transform duration-300 ${mobilityOpen ? "rotate-180" : ""}`}
@@ -199,7 +199,7 @@ export default function Navbar() {
                           href={item.href}
                           className="flex items-start gap-3 px-3 py-2.5 rounded-xl hover:bg-[#FAF9F6] dark:hover:bg-[#252422] transition-colors"
                         >
-                          <Icon className="w-4 h-4 text-[#C6A15B] shrink-0 mt-0.5" />
+                          <Icon className="w-4 h-4 text-[#00AEEF] shrink-0 mt-0.5" />
                           <div>
                             <div className="text-xs font-semibold text-[#111111] dark:text-white">
                               {item.name}
@@ -227,11 +227,11 @@ export default function Navbar() {
                 onBlur={() => setTimeout(() => setExperiencesOpen(false), 200)}
                 className={`flex items-center gap-1.5 text-xs uppercase tracking-wider font-bold px-3 py-2 rounded-xl transition-colors ${
                   !scrolled && isHome
-                    ? "text-white hover:text-[#C6A15B]"
-                    : "text-neutral-800 dark:text-neutral-200 hover:text-[#C6A15B]"
+                    ? "text-white hover:text-[#00AEEF]"
+                    : "text-neutral-800 dark:text-neutral-200 hover:text-[#00AEEF]"
                 }`}
               >
-                <Compass className="w-3.5 h-3.5 text-[#C6A15B]" />
+                <Compass className="w-3.5 h-3.5 text-[#00AEEF]" />
                 <span>Experiences & Network</span>
                 <ChevronDown
                   className={`w-3 h-3 transition-transform duration-300 ${experiencesOpen ? "rotate-180" : ""}`}
@@ -282,7 +282,7 @@ export default function Navbar() {
                           href={item.href}
                           className="flex items-start gap-3 px-3 py-2.5 rounded-xl hover:bg-[#FAF9F6] dark:hover:bg-[#252422] transition-colors"
                         >
-                          <Icon className="w-4 h-4 text-[#C6A15B] shrink-0 mt-0.5" />
+                          <Icon className="w-4 h-4 text-[#00AEEF] shrink-0 mt-0.5" />
                           <div>
                             <div className="text-xs font-semibold text-[#111111] dark:text-white">
                               {item.name}
@@ -310,18 +310,18 @@ export default function Navbar() {
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border font-semibold text-xs transition-all duration-300 shadow-sm ${
                 !scrolled && isHome
                   ? "border-white/40 text-white bg-black/40 hover:bg-black/60"
-                  : "border-[#C6A15B]/50 bg-white dark:bg-[#1A1918] text-[#111111] dark:text-white hover:border-[#C6A15B]"
+                  : "border-[#00AEEF]/50 bg-white dark:bg-[#1A1918] text-[#111111] dark:text-white hover:border-[#00AEEF]"
               }`}
             >
               {theme === "light" ? (
                 <>
-                  <Sun className="w-3.5 h-3.5 text-[#C6A15B]" />
+                  <Sun className="w-3.5 h-3.5 text-[#00AEEF]" />
                   <span className="uppercase tracking-wider">Light</span>
                 </>
               ) : (
                 <>
-                  <Moon className="w-3.5 h-3.5 text-[#C6A15B]" />
-                  <span className="uppercase tracking-wider text-[#C6A15B]">
+                  <Moon className="w-3.5 h-3.5 text-[#00AEEF]" />
+                  <span className="uppercase tracking-wider text-[#00AEEF]">
                     Dark
                   </span>
                 </>
@@ -330,7 +330,7 @@ export default function Navbar() {
 
             <Link
               href="/flights"
-              className="text-xs uppercase tracking-wider font-semibold text-[#C6A15B] py-2"
+              className="text-xs uppercase tracking-wider font-semibold text-[#00AEEF] py-2"
             >
               Flights
             </Link>
@@ -339,8 +339,8 @@ export default function Navbar() {
               href="/list-your-property"
               className={`text-xs uppercase tracking-wider font-bold py-2 px-3.5 border rounded-xl transition-all ${
                 !scrolled && isHome
-                  ? "border-white/40 text-white hover:border-[#C6A15B] hover:text-[#C6A15B]"
-                  : "border-[#E8E5DF] dark:border-[#2C2B29] text-neutral-800 dark:text-neutral-200 hover:border-[#C6A15B] hover:text-[#C6A15B]"
+                  ? "border-white/40 text-white hover:border-[#00AEEF] hover:text-[#00AEEF]"
+                  : "border-[#E8E5DF] dark:border-[#2C2B29] text-neutral-800 dark:text-neutral-200 hover:border-[#00AEEF] hover:text-[#00AEEF]"
               }`}
             >
               List Property
@@ -349,7 +349,7 @@ export default function Navbar() {
             {/* Explore Stays */}
             <Link
               href="/rooms"
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#C6A15B] text-xs uppercase tracking-wider font-bold text-[#111111] hover:bg-[#d8b46e] transition-all shadow-md group shrink-0"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#00AEEF] text-xs uppercase tracking-wider font-bold text-[#111111] hover:bg-[#d8b46e] transition-all shadow-md group shrink-0"
             >
               <Calendar className="w-3.5 h-3.5 text-[#111111]" />
               <span>Explore Stays</span>
@@ -359,11 +359,11 @@ export default function Navbar() {
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className={`lg:hidden p-2 ${!scrolled && isHome ? "text-white" : "text-neutral-900 dark:text-white"} hover:text-[#C6A15B] transition-colors focus:outline-none shrink-0`}
+            className={`lg:hidden p-2 ${!scrolled && isHome ? "text-white" : "text-neutral-900 dark:text-white"} hover:text-[#00AEEF] transition-colors focus:outline-none shrink-0`}
             aria-label="Toggle Menu"
           >
             {mobileMenuOpen ? (
-              <X className="w-7 h-7 text-[#C6A15B]" />
+              <X className="w-7 h-7 text-[#00AEEF]" />
             ) : (
               <Menu className="w-7 h-7" />
             )}
@@ -390,7 +390,7 @@ export default function Navbar() {
                     className="w-full h-full object-contain"
                   />
                 </div>
-                <span className="text-[9px] uppercase tracking-[0.3em] text-[#C6A15B] font-semibold">
+                <span className="text-[9px] uppercase tracking-[0.3em] text-[#00AEEF] font-semibold">
                   Global Platform
                 </span>
               </div>
@@ -411,7 +411,7 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="font-serif text-xl text-white hover:text-[#C6A15B] transition-colors py-1.5 border-b border-[#2C2B29]/40"
+                  className="font-serif text-xl text-white hover:text-[#00AEEF] transition-colors py-1.5 border-b border-[#2C2B29]/40"
                 >
                   {link.name}
                 </Link>
@@ -421,9 +421,9 @@ export default function Navbar() {
                 <Link
                   href="/list-your-property"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block p-4 rounded-xl bg-[#1A1918] border border-[#C6A15B]/50 hover:border-[#C6A15B]"
+                  className="block p-4 rounded-xl bg-[#1A1918] border border-[#00AEEF]/50 hover:border-[#00AEEF]"
                 >
-                  <div className="text-[#C6A15B] font-serif text-lg">
+                  <div className="text-[#00AEEF] font-serif text-lg">
                     List Your Property
                   </div>
                   <div className="text-xs text-neutral-400 mt-1">
@@ -440,7 +440,7 @@ export default function Navbar() {
               <Link
                 href="/rooms"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full text-center py-4 rounded bg-[#C6A15B] text-[#111111] font-semibold text-xs uppercase tracking-widest shadow-xl active:scale-95 transition-transform"
+                className="w-full text-center py-4 rounded bg-[#00AEEF] text-[#111111] font-semibold text-xs uppercase tracking-widest shadow-xl active:scale-95 transition-transform"
               >
                 Explore Stays
               </Link>

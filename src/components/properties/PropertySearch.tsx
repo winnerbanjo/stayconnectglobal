@@ -55,7 +55,7 @@ export default function PropertySearch({
         <label className="text-xs font-medium text-neutral-600">
           City, area or property name
           <div className="flex items-center gap-2 mt-2">
-            <MapPin size={18} className="text-[#C6A15B]" />
+            <MapPin size={18} className="text-[#00AEEF]" />
             <input
               aria-label="Search location"
               list="locations"
@@ -103,7 +103,7 @@ export default function PropertySearch({
             ))}
           </select>
         </label>
-        <button className="self-end flex items-center justify-center gap-2 bg-[#C6A15B] text-black px-6 py-3 rounded-lg text-sm font-semibold">
+        <button className="self-end flex items-center justify-center gap-2 bg-[#00AEEF] text-black px-6 py-3 rounded-lg text-sm font-semibold">
           <Search size={17} />
           Search stays
         </button>
@@ -132,7 +132,7 @@ export default function PropertySearch({
       </p>
       {!filtered.length && (
         <div className="bg-white border rounded-2xl p-12 text-center space-y-4">
-          <Building2 className="mx-auto text-[#C6A15B]" size={36} />
+          <Building2 className="mx-auto text-[#00AEEF]" size={36} />
           <h2 className="font-serif text-3xl">No properties found here yet</h2>
           <p className="text-sm text-neutral-500">
             Try another location or browse all available properties.

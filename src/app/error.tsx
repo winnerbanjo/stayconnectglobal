@@ -6,7 +6,7 @@ export default function ErrorPage({ reset }: { reset: () => void }) {
       <p className="text-neutral-600 text-sm">
         Please try again. Your saved information is still safe.
       </p>
-      <button onClick={reset} className="px-6 py-3 bg-[#C6A15B] rounded-lg">
+      <button onClick={reset} className="px-6 py-3 bg-[#00AEEF] rounded-lg">
         Try again
       </button>
     </main>

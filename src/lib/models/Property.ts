@@ -82,7 +82,7 @@ const PropertySchema = new Schema(
     heroImage: { type: String, required: true },
     heroVideo: { type: String },
     logoUrl: { type: String },
-    themeColor: { type: String, default: "#C6A15B" },
+    themeColor: { type: String, default: "#00AEEF" },
     gallery: [{ type: String }],
     amenities: [{ type: String }],
     published: { type: Boolean, default: true },

@@ -53,7 +53,7 @@ export default function FeaturedRoomsSection() {
         <div className="space-y-12">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#E8E5DF] dark:border-[#2C2B29] pb-8">
             <div>
-              <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.35em] text-[#C6A15B] font-semibold">
+              <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.35em] text-[#00AEEF] font-semibold">
                 <Crown className="w-4 h-4" />
                 <span>Stay Connect Collection</span>
               </div>
@@ -68,7 +68,7 @@ export default function FeaturedRoomsSection() {
           </div>
 
           {/* Hero Spotlight Card: STANDARD EXECUTIVE ROOM */}
-          <div className="bg-[#1A1918] rounded-2xl border border-[#2C2B29] hover:border-[#C6A15B]/40 shadow-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-0 group">
+          <div className="bg-[#1A1918] rounded-2xl border border-[#2C2B29] hover:border-[#00AEEF]/40 shadow-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-0 group">
             {/* Image Showcase */}
             <div className="lg:col-span-7 relative min-h-[420px] bg-neutral-900 overflow-hidden">
               <Image
@@ -79,7 +79,7 @@ export default function FeaturedRoomsSection() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
               <div className="absolute top-6 left-6 flex items-center gap-2">
-                <span className="px-3.5 py-1 bg-[#111111]/90 backdrop-blur-md text-[#C6A15B] text-xs uppercase tracking-widest font-semibold rounded-full border border-[#C6A15B]/40">
+                <span className="px-3.5 py-1 bg-[#111111]/90 backdrop-blur-md text-[#00AEEF] text-xs uppercase tracking-widest font-semibold rounded-full border border-[#00AEEF]/40">
                   Stay Connect Flagship
                 </span>
               </div>
@@ -87,8 +87,8 @@ export default function FeaturedRoomsSection() {
                 <div className="text-xs tracking-widest uppercase font-light text-neutral-300">
                   📍 14B, Providence Street, Lekki Phase 1, Lagos
                 </div>
-                <div className="flex items-center gap-1 text-xs font-semibold text-[#C6A15B]">
-                  <Star className="w-4 h-4 fill-[#C6A15B]" />
+                <div className="flex items-center gap-1 text-xs font-semibold text-[#00AEEF]">
+                  <Star className="w-4 h-4 fill-[#00AEEF]" />
                   <span>{standardRoom.reviewCount > 0 ? `${standardRoom.rating.toFixed(1)} (${standardRoom.reviewCount} reviews)` : "No reviews yet"}</span>
                 </div>
               </div>
@@ -98,7 +98,7 @@ export default function FeaturedRoomsSection() {
             <div className="lg:col-span-5 p-8 lg:p-12 flex flex-col justify-between space-y-6">
               <div>
                 <div className="flex items-center justify-between text-xs text-neutral-400 font-light mb-2">
-                  <span className="uppercase tracking-widest text-[#C6A15B] font-semibold">
+                  <span className="uppercase tracking-widest text-[#00AEEF] font-semibold">
                     {standardRoom.type} Room
                   </span>
                   <span>Managed Directly</span>
@@ -117,7 +117,7 @@ export default function FeaturedRoomsSection() {
                       Capacity
                     </span>
                     <span className="text-xs font-semibold text-white flex items-center gap-1 mt-0.5">
-                      <Users className="w-3.5 h-3.5 text-[#C6A15B]" />
+                      <Users className="w-3.5 h-3.5 text-[#00AEEF]" />
                       <span>{standardRoom.maxGuests} Guests</span>
                     </span>
                   </div>
@@ -127,7 +127,7 @@ export default function FeaturedRoomsSection() {
                       Size
                     </span>
                     <span className="text-xs font-semibold text-white flex items-center gap-1 mt-0.5">
-                      <Maximize className="w-3.5 h-3.5 text-[#C6A15B]" />
+                      <Maximize className="w-3.5 h-3.5 text-[#00AEEF]" />
                       <span>{standardRoom.propertySize} m²</span>
                     </span>
                   </div>
@@ -137,7 +137,7 @@ export default function FeaturedRoomsSection() {
                       Bedrooms
                     </span>
                     <span className="text-xs font-semibold text-white flex items-center gap-1 mt-0.5">
-                      <Bed className="w-3.5 h-3.5 text-[#C6A15B]" />
+                      <Bed className="w-3.5 h-3.5 text-[#00AEEF]" />
                       <span>{standardRoom.bedrooms} BR</span>
                     </span>
                   </div>
@@ -147,7 +147,7 @@ export default function FeaturedRoomsSection() {
                       Bathrooms
                     </span>
                     <span className="text-xs font-semibold text-white flex items-center gap-1 mt-0.5">
-                      <Bath className="w-3.5 h-3.5 text-[#C6A15B]" />
+                      <Bath className="w-3.5 h-3.5 text-[#00AEEF]" />
                       <span>{standardRoom.bathrooms} BA</span>
                     </span>
                   </div>
@@ -161,7 +161,7 @@ export default function FeaturedRoomsSection() {
                     Nightly Rate
                   </span>
                   <div className="flex items-baseline gap-1">
-                    <span className="font-serif text-3xl font-semibold text-[#C6A15B]">
+                    <span className="font-serif text-3xl font-semibold text-[#00AEEF]">
                       ₦{standardRoom.pricePerNight.toLocaleString()}
                     </span>
                     <span className="text-xs text-neutral-400 font-light">
@@ -173,7 +173,7 @@ export default function FeaturedRoomsSection() {
                 <div className="flex items-center gap-3">
                   <Link
                     href={`/rooms/${standardRoom.slug}`}
-                    className="px-6 py-3 bg-[#C6A15B] hover:bg-[#d8b46e] text-[#111111] text-xs font-semibold uppercase tracking-widest rounded-lg transition-all shadow-md flex items-center gap-2"
+                    className="px-6 py-3 bg-[#00AEEF] hover:bg-[#d8b46e] text-[#111111] text-xs font-semibold uppercase tracking-widest rounded-lg transition-all shadow-md flex items-center gap-2"
                   >
                     <span>Book Your Stay</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -188,7 +188,7 @@ export default function FeaturedRoomsSection() {
         <div className="space-y-12">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#E8E5DF] dark:border-[#2C2B29] pb-8">
             <div>
-              <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.35em] text-[#C6A15B] font-semibold">
+              <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.35em] text-[#00AEEF] font-semibold">
                 <Building2 className="w-4 h-4" />
                 <span>Partner Collection</span>
               </div>
@@ -228,7 +228,7 @@ export default function FeaturedRoomsSection() {
             ].map((prop, idx) => (
               <div
                 key={idx}
-                className="bg-white dark:bg-[#1A1918] rounded-2xl border border-[#E8E5DF] dark:border-[#2C2B29] overflow-hidden hover:border-[#C6A15B]/60 transition-all flex flex-col justify-between group shadow-md hover:shadow-xl"
+                className="bg-white dark:bg-[#1A1918] rounded-2xl border border-[#E8E5DF] dark:border-[#2C2B29] overflow-hidden hover:border-[#00AEEF]/60 transition-all flex flex-col justify-between group shadow-md hover:shadow-xl"
               >
                 <div className="relative h-60 bg-neutral-900 overflow-hidden">
                   <img
@@ -237,8 +237,8 @@ export default function FeaturedRoomsSection() {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 filter brightness-90"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                  <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-md px-3 py-1 rounded-full border border-[#C6A15B]/40 text-[#C6A15B] text-[10px] uppercase tracking-widest font-semibold flex items-center gap-1.5">
-                    <ShieldCheck className="w-3.5 h-3.5 text-[#C6A15B]" />
+                  <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-md px-3 py-1 rounded-full border border-[#00AEEF]/40 text-[#00AEEF] text-[10px] uppercase tracking-widest font-semibold flex items-center gap-1.5">
+                    <ShieldCheck className="w-3.5 h-3.5 text-[#00AEEF]" />
                     <span>Onboarding Queue</span>
                   </div>
                   <div className="absolute top-4 right-4 bg-[#111111]/80 backdrop-blur-md px-3 py-1 rounded-full text-white text-[10px] uppercase tracking-widest font-medium">
@@ -251,7 +251,7 @@ export default function FeaturedRoomsSection() {
 
                 <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
                   <div>
-                    <h4 className="font-serif text-2xl text-[#111111] dark:text-white font-medium group-hover:text-[#C6A15B] transition-colors">
+                    <h4 className="font-serif text-2xl text-[#111111] dark:text-white font-medium group-hover:text-[#00AEEF] transition-colors">
                       {prop.title}
                     </h4>
                     <p className="text-xs text-neutral-600 dark:text-neutral-400 font-light mt-2 leading-relaxed">
@@ -264,14 +264,14 @@ export default function FeaturedRoomsSection() {
                       <div className="text-[10px] uppercase text-neutral-500 font-medium">
                         Partner Portal
                       </div>
-                      <div className="text-xs font-semibold text-[#C6A15B]">
+                      <div className="text-xs font-semibold text-[#00AEEF]">
                         Open for Verification
                       </div>
                     </div>
 
                     <Link
                       href="/list-your-property"
-                      className="px-4 py-2 bg-[#C6A15B] hover:bg-[#d8b46e] text-[#111111] font-bold text-xs rounded-xl transition-all flex items-center gap-1.5 shadow-md active:scale-95"
+                      className="px-4 py-2 bg-[#00AEEF] hover:bg-[#d8b46e] text-[#111111] font-bold text-xs rounded-xl transition-all flex items-center gap-1.5 shadow-md active:scale-95"
                     >
                       <span>List Property</span>
                       <ArrowRight className="w-3.5 h-3.5" />

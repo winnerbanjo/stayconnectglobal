@@ -41,7 +41,7 @@ export default function RootLayout({
       lang="en"
       className={`${cormorant.variable} ${inter.variable} scroll-smooth`}
     >
-      <body className="bg-[#FAF9F6] dark:bg-[#111111] text-[#111111] dark:text-white font-sans antialiased selection:bg-[#C6A15B] selection:text-[#111111] relative transition-colors duration-300">
+      <body className="bg-[#FAF9F6] dark:bg-[#111111] text-[#111111] dark:text-white font-sans antialiased selection:bg-[#00AEEF] selection:text-[#111111] relative transition-colors duration-300">
         <ThemeProvider>
           <ReferralCapture />
           {children}

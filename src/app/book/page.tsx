@@ -212,7 +212,7 @@ export default function BookingPage() {
         )}
         {/* Checkout Header */}
         <div className="text-center space-y-2">
-          <span className="text-[10px] uppercase tracking-[0.4em] text-[#C6A15B] font-semibold px-4 py-1.5 rounded-full bg-white dark:bg-[#1A1918] border border-[#E8E5DF] dark:border-[#C6A15B]/30 inline-block shadow-sm">
+          <span className="text-[10px] uppercase tracking-[0.4em] text-[#00AEEF] font-semibold px-4 py-1.5 rounded-full bg-white dark:bg-[#1A1918] border border-[#E8E5DF] dark:border-[#00AEEF]/30 inline-block shadow-sm">
             Encrypted Checkout Process
           </span>
           <h1 className="font-serif text-3xl sm:text-5xl font-normal leading-tight text-[#111111] dark:text-white">
@@ -236,9 +236,9 @@ export default function BookingPage() {
                 key={st.num}
                 className={`py-2 px-2 rounded-xl transition-all ${
                   currentStep === st.num
-                    ? "bg-[#C6A15B] text-[#111111] font-bold shadow-md"
+                    ? "bg-[#00AEEF] text-[#111111] font-bold shadow-md"
                     : currentStep > st.num
-                      ? "bg-[#C6A15B]/20 text-[#C6A15B] font-semibold"
+                      ? "bg-[#00AEEF]/20 text-[#00AEEF] font-semibold"
                       : "text-neutral-400 font-medium"
                 }`}
               >
@@ -298,7 +298,7 @@ export default function BookingPage() {
                           });
                         }
                       }}
-                      className="w-full min-h-[48px] bg-[#FAF9F6] dark:bg-[#111111] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-xl px-4 py-3 text-sm text-[#111111] dark:text-white font-serif font-bold focus:outline-none focus:border-[#C6A15B]"
+                      className="w-full min-h-[48px] bg-[#FAF9F6] dark:bg-[#111111] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-xl px-4 py-3 text-sm text-[#111111] dark:text-white font-serif font-bold focus:outline-none focus:border-[#00AEEF]"
                     >
                       {rooms.map((rm) => (
                         <option key={rm.slug} value={rm.slug}>
@@ -320,7 +320,7 @@ export default function BookingPage() {
                         onChange={(e) =>
                           setFormData({ ...formData, checkIn: e.target.value })
                         }
-                        className="w-full min-h-[48px] bg-[#FAF9F6] dark:bg-[#111111] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-xl px-4 py-3 text-xs text-[#111111] dark:text-white focus:outline-none focus:border-[#C6A15B]"
+                        className="w-full min-h-[48px] bg-[#FAF9F6] dark:bg-[#111111] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-xl px-4 py-3 text-xs text-[#111111] dark:text-white focus:outline-none focus:border-[#00AEEF]"
                       />
                     </div>
                     <div>
@@ -333,7 +333,7 @@ export default function BookingPage() {
                         onChange={(e) =>
                           setFormData({ ...formData, checkOut: e.target.value })
                         }
-                        className="w-full min-h-[48px] bg-[#FAF9F6] dark:bg-[#111111] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-xl px-4 py-3 text-xs text-[#111111] dark:text-white focus:outline-none focus:border-[#C6A15B]"
+                        className="w-full min-h-[48px] bg-[#FAF9F6] dark:bg-[#111111] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-xl px-4 py-3 text-xs text-[#111111] dark:text-white focus:outline-none focus:border-[#00AEEF]"
                       />
                     </div>
                   </div>
@@ -350,7 +350,7 @@ export default function BookingPage() {
                           guests: Number(e.target.value),
                         })
                       }
-                      className="w-full min-h-[48px] bg-[#FAF9F6] dark:bg-[#111111] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-xl px-4 py-3 text-xs text-[#111111] dark:text-white focus:outline-none focus:border-[#C6A15B]"
+                      className="w-full min-h-[48px] bg-[#FAF9F6] dark:bg-[#111111] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-xl px-4 py-3 text-xs text-[#111111] dark:text-white focus:outline-none focus:border-[#00AEEF]"
                     >
                       <option value={1}>1 Guest</option>
                       <option value={2}>2 Guests</option>
@@ -375,7 +375,7 @@ export default function BookingPage() {
                     onClick={() => {
                       if (validateDates()) setCurrentStep(2);
                     }}
-                    className="w-full min-h-[50px] bg-[#C6A15B] hover:bg-[#d8b46e] text-[#111111] font-bold text-xs uppercase tracking-[0.2em] rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 mt-6 active:scale-95"
+                    className="w-full min-h-[50px] bg-[#00AEEF] hover:bg-[#d8b46e] text-[#111111] font-bold text-xs uppercase tracking-[0.2em] rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 mt-6 active:scale-95"
                   >
                     <span>Continue to Guest Details</span>
                     <ArrowRight className="w-4 h-4" />
@@ -414,7 +414,7 @@ export default function BookingPage() {
                       onChange={(e) =>
                         setFormData({ ...formData, guestName: e.target.value })
                       }
-                      className="w-full min-h-[48px] bg-[#FAF9F6] dark:bg-[#111111] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-xl px-4 py-3 text-xs text-[#111111] dark:text-white focus:outline-none focus:border-[#C6A15B]"
+                      className="w-full min-h-[48px] bg-[#FAF9F6] dark:bg-[#111111] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-xl px-4 py-3 text-xs text-[#111111] dark:text-white focus:outline-none focus:border-[#00AEEF]"
                     />
                   </div>
 
@@ -434,7 +434,7 @@ export default function BookingPage() {
                             guestEmail: e.target.value,
                           })
                         }
-                        className="w-full min-h-[48px] bg-[#FAF9F6] dark:bg-[#111111] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-xl px-4 py-3 text-xs text-[#111111] dark:text-white focus:outline-none focus:border-[#C6A15B]"
+                        className="w-full min-h-[48px] bg-[#FAF9F6] dark:bg-[#111111] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-xl px-4 py-3 text-xs text-[#111111] dark:text-white focus:outline-none focus:border-[#00AEEF]"
                       />
                     </div>
                     <div>
@@ -452,7 +452,7 @@ export default function BookingPage() {
                             guestPhone: e.target.value,
                           })
                         }
-                        className="w-full min-h-[48px] bg-[#FAF9F6] dark:bg-[#111111] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-xl px-4 py-3 text-xs text-[#111111] dark:text-white focus:outline-none focus:border-[#C6A15B]"
+                        className="w-full min-h-[48px] bg-[#FAF9F6] dark:bg-[#111111] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-xl px-4 py-3 text-xs text-[#111111] dark:text-white focus:outline-none focus:border-[#00AEEF]"
                       />
                     </div>
                   </div>
@@ -471,7 +471,7 @@ export default function BookingPage() {
                           specialRequests: e.target.value,
                         })
                       }
-                      className="w-full bg-[#FAF9F6] dark:bg-[#111111] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-xl px-4 py-3 text-xs text-[#111111] dark:text-white focus:outline-none focus:border-[#C6A15B]"
+                      className="w-full bg-[#FAF9F6] dark:bg-[#111111] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-xl px-4 py-3 text-xs text-[#111111] dark:text-white focus:outline-none focus:border-[#00AEEF]"
                     />
                   </div>
 
@@ -495,7 +495,7 @@ export default function BookingPage() {
                         }
                         setCurrentStep(3);
                       }}
-                      className="w-2/3 min-h-[48px] bg-[#C6A15B] hover:bg-[#d8b46e] text-[#111111] font-bold text-xs uppercase tracking-[0.2em] rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 active:scale-95"
+                      className="w-2/3 min-h-[48px] bg-[#00AEEF] hover:bg-[#d8b46e] text-[#111111] font-bold text-xs uppercase tracking-[0.2em] rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 active:scale-95"
                     >
                       <span>Continue to Add-Ons</span>
                       <ArrowRight className="w-4 h-4" />
@@ -539,7 +539,7 @@ export default function BookingPage() {
                   <button
                     type="button"
                     onClick={() => setCurrentStep(4)}
-                    className="w-2/3 min-h-[48px] bg-[#C6A15B] hover:bg-[#d8b46e] text-[#111111] font-bold text-xs uppercase tracking-[0.2em] rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 active:scale-95"
+                    className="w-2/3 min-h-[48px] bg-[#00AEEF] hover:bg-[#d8b46e] text-[#111111] font-bold text-xs uppercase tracking-[0.2em] rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 active:scale-95"
                   >
                     <span>Proceed to Payment</span>
                     <ArrowRight className="w-4 h-4" />
@@ -580,11 +580,11 @@ export default function BookingPage() {
                       }
                       className={`p-4 rounded-2xl border cursor-pointer transition-all flex items-start gap-4 ${
                         formData.paymentMethod === "Bank Transfer"
-                          ? "border-[#C6A15B] bg-[#C6A15B]/10 shadow-md"
+                          ? "border-[#00AEEF] bg-[#00AEEF]/10 shadow-md"
                           : "border-[#E8E5DF] dark:border-[#2C2B29] bg-[#FAF9F6] dark:bg-[#111111]"
                       }`}
                     >
-                      <Building2 className="w-6 h-6 text-[#C6A15B] shrink-0 mt-1" />
+                      <Building2 className="w-6 h-6 text-[#00AEEF] shrink-0 mt-1" />
                       <div className="space-y-1">
                         <div className="font-serif text-base text-[#111111] dark:text-white font-medium">
                           Direct Bank Transfer (Manual Verification)
@@ -607,11 +607,11 @@ export default function BookingPage() {
                       }
                       className={`p-4 rounded-2xl border cursor-pointer transition-all flex items-start gap-4 ${
                         formData.paymentMethod === "Pay at Hotel"
-                          ? "border-[#C6A15B] bg-[#C6A15B]/10 shadow-md"
+                          ? "border-[#00AEEF] bg-[#00AEEF]/10 shadow-md"
                           : "border-[#E8E5DF] dark:border-[#2C2B29] bg-[#FAF9F6] dark:bg-[#111111]"
                       }`}
                     >
-                      <CreditCard className="w-6 h-6 text-[#C6A15B] shrink-0 mt-1" />
+                      <CreditCard className="w-6 h-6 text-[#00AEEF] shrink-0 mt-1" />
                       <div className="space-y-1">
                         <div className="font-serif text-base text-[#111111] dark:text-white font-medium">
                           Pay at Property
@@ -654,7 +654,7 @@ export default function BookingPage() {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-2/3 min-h-[48px] bg-[#C6A15B] hover:bg-[#d8b46e] text-[#111111] font-bold text-xs uppercase tracking-[0.2em] rounded-xl shadow-lg transition-all active:scale-95"
+                      className="w-2/3 min-h-[48px] bg-[#00AEEF] hover:bg-[#d8b46e] text-[#111111] font-bold text-xs uppercase tracking-[0.2em] rounded-xl shadow-lg transition-all active:scale-95"
                     >
                       {isSubmitting
                         ? "Processing Voucher..."
@@ -672,12 +672,12 @@ export default function BookingPage() {
                 animate={{ opacity: 1, scale: 1 }}
                 className="text-center space-y-6"
               >
-                <div className="w-16 h-16 rounded-full bg-[#C6A15B]/20 border border-[#C6A15B] text-[#C6A15B] flex items-center justify-center mx-auto">
+                <div className="w-16 h-16 rounded-full bg-[#00AEEF]/20 border border-[#00AEEF] text-[#00AEEF] flex items-center justify-center mx-auto">
                   <CheckCircle className="w-8 h-8" />
                 </div>
 
                 <div className="space-y-2">
-                  <span className="text-[10px] uppercase tracking-[0.35em] text-[#C6A15B] font-semibold">
+                  <span className="text-[10px] uppercase tracking-[0.35em] text-[#00AEEF] font-semibold">
                     {bookingCompleted.paymentStatus === "Paid"
                       ? "Booking Confirmed / Payment Confirmed"
                       : "Reservation / Pending Payment"}
@@ -701,7 +701,7 @@ export default function BookingPage() {
                 <div className="pt-4 border-t border-[#E8E5DF] dark:border-[#2C2B29] flex items-center justify-center">
                   <Link
                     href="/"
-                    className="px-8 py-3.5 bg-[#C6A15B] hover:bg-[#d8b46e] text-[#111111] font-bold uppercase tracking-widest rounded-xl text-xs shadow-lg transition-all"
+                    className="px-8 py-3.5 bg-[#00AEEF] hover:bg-[#d8b46e] text-[#111111] font-bold uppercase tracking-widest rounded-xl text-xs shadow-lg transition-all"
                   >
                     Return to Homepage
                   </Link>
@@ -739,7 +739,7 @@ export default function BookingPage() {
               {formData.selectedAddOns.length > 0 && (
                 <div className="flex justify-between items-center text-neutral-600 dark:text-neutral-400 border-t border-dashed border-[#E8E5DF] dark:border-[#2C2B29] pt-2">
                   <span>Selected Add-On Services</span>
-                  <span className="font-semibold text-[#C6A15B]">
+                  <span className="font-semibold text-[#00AEEF]">
                     +₦{addOnsTotal.toLocaleString()}
                   </span>
                 </div>
@@ -762,14 +762,14 @@ export default function BookingPage() {
                 <span className="font-bold text-[#111111] dark:text-white">
                   Grand Total
                 </span>
-                <span className="font-serif text-2xl font-bold text-[#C6A15B]">
+                <span className="font-serif text-2xl font-bold text-[#00AEEF]">
                   ₦{grandTotal.toLocaleString()}
                 </span>
               </div>
             </div>
 
             <div className="p-4 bg-[#FAF9F6] dark:bg-[#111111] rounded-2xl border border-[#E8E5DF] dark:border-[#2C2B29] space-y-2 text-xs">
-              <div className="flex items-center gap-2 text-[#C6A15B] font-bold">
+              <div className="flex items-center gap-2 text-[#00AEEF] font-bold">
                 <ShieldCheck className="w-4 h-4" />
                 <span>Stay Connect Direct Guarantee</span>
               </div>

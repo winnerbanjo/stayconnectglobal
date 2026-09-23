@@ -28,7 +28,7 @@ export default function GalleryPage() {
       <main className="pt-28 pb-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-12 space-y-12">
           <div className="text-center space-y-3">
-            <span className="text-xs uppercase tracking-[0.35em] text-[#C6A15B] font-semibold">
+            <span className="text-xs uppercase tracking-[0.35em] text-[#00AEEF] font-semibold">
               Editorial Visuals
             </span>
             <h1 className="font-serif text-4xl md:text-6xl text-[#111111] font-normal">
@@ -47,7 +47,7 @@ export default function GalleryPage() {
                 onClick={() => setActiveCategory(cat)}
                 className={`px-5 py-2 rounded-full text-xs uppercase tracking-widest transition-all font-medium ${
                   activeCategory === cat
-                    ? 'bg-[#111111] text-[#C6A15B]'
+                    ? 'bg-[#111111] text-[#00AEEF]'
                     : 'bg-white border border-[#E8E5DF] text-neutral-600 hover:text-[#111111]'
                 }`}
               >
@@ -70,7 +70,7 @@ export default function GalleryPage() {
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-6 flex flex-col justify-end text-white">
-                  <span className="text-[10px] uppercase tracking-widest text-[#C6A15B] font-semibold">{photo.category}</span>
+                  <span className="text-[10px] uppercase tracking-widest text-[#00AEEF] font-semibold">{photo.category}</span>
                   <div className="font-serif text-xl font-normal">{photo.title}</div>
                 </div>
               </div>

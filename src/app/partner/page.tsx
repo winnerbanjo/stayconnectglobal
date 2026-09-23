@@ -60,7 +60,7 @@ export default function PartnerPage() {
       <Navbar />
       <main className="pt-32 pb-20 max-w-5xl mx-auto px-5 space-y-8">
         <header>
-          <p className="text-[#C6A15B] text-xs uppercase tracking-widest">
+          <p className="text-[#00AEEF] text-xs uppercase tracking-widest">
             Partner workspace
           </p>
           <h1 className="font-serif text-4xl mt-3">
@@ -96,7 +96,7 @@ export default function PartnerPage() {
             </label>
             <button
               disabled={busy}
-              className="bg-[#C6A15B] text-black px-5 py-3 rounded-lg"
+              className="bg-[#00AEEF] text-black px-5 py-3 rounded-lg"
             >
               {busy ? "Opening…" : "Open my properties"}
             </button>
@@ -105,7 +105,7 @@ export default function PartnerPage() {
             </p>
             <Link
               href="/list-your-property"
-              className="block text-[#C6A15B] text-sm"
+              className="block text-[#00AEEF] text-sm"
             >
               Create a property →
             </Link>
@@ -116,7 +116,7 @@ export default function PartnerPage() {
               <h2 className="font-serif text-2xl">{data.businessName}</h2>
               <button
                 onClick={() => refresh()}
-                className="text-[#C6A15B] text-sm"
+                className="text-[#00AEEF] text-sm"
               >
                 Refresh status
               </button>
@@ -133,7 +133,7 @@ export default function PartnerPage() {
                     className="w-full sm:w-40 h-32 object-cover rounded-lg"
                   />
                   <div>
-                    <span className="text-xs bg-[#C6A15B]/20 text-[#E6C98C] px-3 py-1 rounded-full">
+                    <span className="text-xs bg-[#00AEEF]/20 text-[#E6C98C] px-3 py-1 rounded-full">
                       {p.verificationStatus}
                     </span>
                     <h2 className="font-serif text-3xl mt-3">{p.name}</h2>
@@ -164,14 +164,14 @@ export default function PartnerPage() {
                     <button
                       disabled={busy}
                       onClick={() => submit(p.id)}
-                      className="bg-[#C6A15B] text-black px-5 py-3 rounded-lg text-sm"
+                      className="bg-[#00AEEF] text-black px-5 py-3 rounded-lg text-sm"
                     >
                       Submit for verification
                     </button>
                   )}
                   {p.published && (
                     <Link
-                      className="text-[#C6A15B]"
+                      className="text-[#00AEEF]"
                       href={`/properties/${p.slug}`}
                     >
                       View public listing →

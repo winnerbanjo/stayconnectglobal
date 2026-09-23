@@ -17,7 +17,7 @@ export default function EventsPage() {
       <main className="pt-28 pb-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-12 space-y-16">
           <div className="text-center space-y-3">
-            <span className="text-xs uppercase tracking-[0.35em] text-[#C6A15B] font-semibold">
+            <span className="text-xs uppercase tracking-[0.35em] text-[#00AEEF] font-semibold">
               Celebrations & Gatherings
             </span>
             <h1 className="font-serif text-4xl md:text-6xl text-[#111111] font-normal">
@@ -39,7 +39,7 @@ export default function EventsPage() {
                 />
               </div>
               <div className="space-y-2">
-                <span className="text-xs text-[#C6A15B] uppercase tracking-widest font-semibold">Bespoke Celebrations</span>
+                <span className="text-xs text-[#00AEEF] uppercase tracking-widest font-semibold">Bespoke Celebrations</span>
                 <h2 className="font-serif text-3xl text-[#111111] font-normal">Luxury Weddings & Birthdays</h2>
                 <p className="text-xs text-neutral-600 font-light leading-relaxed">
                   From intimate wedding receptions to milestone birthday dinners, our event directors tailor every detail with fine floral styling, tasting menus, and luxury suite accommodations.
@@ -47,7 +47,7 @@ export default function EventsPage() {
               </div>
               <div className="pt-4 border-t border-[#E8E5DF] flex items-center justify-between text-xs">
                 <span>Capacity: Up to 250 Guests</span>
-                <a href="tel:+2348031234567" className="text-[#C6A15B] font-semibold hover:underline">Inquire Venue →</a>
+                <a href="tel:+2348031234567" className="text-[#00AEEF] font-semibold hover:underline">Inquire Venue →</a>
               </div>
             </div>
 
@@ -61,7 +61,7 @@ export default function EventsPage() {
                 />
               </div>
               <div className="space-y-2">
-                <span className="text-xs text-[#C6A15B] uppercase tracking-widest font-semibold">Executive Meetings</span>
+                <span className="text-xs text-[#00AEEF] uppercase tracking-widest font-semibold">Executive Meetings</span>
                 <h2 className="font-serif text-3xl text-[#111111] font-normal">Corporate Conferences & Retreats</h2>
                 <p className="text-xs text-neutral-600 font-light leading-relaxed">
                   Equipped with high-definition audio-visual systems, video conferencing suites, ergonomic seating, and coffee breaks catered by Aura Restaurant.
@@ -69,7 +69,7 @@ export default function EventsPage() {
               </div>
               <div className="pt-4 border-t border-[#E8E5DF] flex items-center justify-between text-xs">
                 <span>Capacity: Up to 120 Executives</span>
-                <a href="tel:+2348031234567" className="text-[#C6A15B] font-semibold hover:underline">Inquire Venue →</a>
+                <a href="tel:+2348031234567" className="text-[#00AEEF] font-semibold hover:underline">Inquire Venue →</a>
               </div>
             </div>
           </div>

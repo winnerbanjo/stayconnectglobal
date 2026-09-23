@@ -138,14 +138,14 @@ function AdminPageContent() {
         <aside className="w-64 border-r border-slate-200 p-6 flex flex-col justify-between hidden md:flex shrink-0">
           <div className="space-y-8">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full bg-[#C6A15B]/20 border border-[#C6A15B] text-[#85672E] font-serif font-bold flex items-center justify-center text-sm">
+              <div className="w-9 h-9 rounded-full bg-[#00AEEF]/20 border border-[#00AEEF] text-[#0077B6] font-serif font-bold flex items-center justify-center text-sm">
                 SC
               </div>
               <div>
                 <div className="font-serif text-lg text-slate-900 font-medium">
                   Stay Connect
                 </div>
-                <div className="text-[10px] text-[#85672E] uppercase tracking-widest font-semibold">
+                <div className="text-[10px] text-[#0077B6] uppercase tracking-widest font-semibold">
                   PMS Executive Panel
                 </div>
               </div>
@@ -154,7 +154,7 @@ function AdminPageContent() {
             <nav className="space-y-2 text-xs uppercase tracking-widest font-medium">
               <Link
                 href="/admin"
-                className="flex items-center gap-3 px-4 py-3 rounded-lg bg-[#C6A15B] text-[#111111] font-semibold"
+                className="flex items-center gap-3 px-4 py-3 rounded-lg bg-[#00AEEF] text-[#111111] font-semibold"
               >
                 <BarChart3 className="w-4 h-4" />
                 <span>PMS Dashboard</span>
@@ -163,42 +163,42 @@ function AdminPageContent() {
                 href="/admin/properties"
                 className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-50"
               >
-                <Building className="w-4 h-4 text-[#85672E]" />
+                <Building className="w-4 h-4 text-[#0077B6]" />
                 <span>Properties</span>
               </Link>
               <Link
                 href="/admin/rooms"
                 className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-50"
               >
-                <BedDouble className="w-4 h-4 text-[#85672E]" />
+                <BedDouble className="w-4 h-4 text-[#0077B6]" />
                 <span>Rooms Inventory</span>
               </Link>
               <Link
                 href="/admin/housekeeping"
                 className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-50"
               >
-                <RefreshCw className="w-4 h-4 text-[#85672E]" />
+                <RefreshCw className="w-4 h-4 text-[#0077B6]" />
                 <span>Housekeeping Ops</span>
               </Link>
               <Link
                 href="/admin/dining"
                 className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-50"
               >
-                <Utensils className="w-4 h-4 text-[#85672E]" />
+                <Utensils className="w-4 h-4 text-[#0077B6]" />
                 <span>Dining & Menu</span>
               </Link>
               <Link
                 href="/admin/fleet"
                 className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-50"
               >
-                <Car className="w-4 h-4 text-[#85672E]" />
+                <Car className="w-4 h-4 text-[#0077B6]" />
                 <span>Fleet Logistics</span>
               </Link>
               <Link
                 href="/admin/bookings"
                 className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-50"
               >
-                <Calendar className="w-4 h-4 text-[#85672E]" />
+                <Calendar className="w-4 h-4 text-[#0077B6]" />
                 <span>Reservations CRM</span>
               </Link>
             </nav>
@@ -214,7 +214,7 @@ function AdminPageContent() {
             </button>
             <Link
               href="/"
-              className="flex items-center gap-2 text-xs text-slate-600 hover:text-[#85672E] transition-colors"
+              className="flex items-center gap-2 text-xs text-slate-600 hover:text-[#0077B6] transition-colors"
             >
               <LogOut className="w-4 h-4" />
               <span>Return to Public Website</span>
@@ -227,7 +227,7 @@ function AdminPageContent() {
           {/* Header Bar */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-6">
             <div>
-              <span className="text-[10px] uppercase tracking-[0.35em] text-[#85672E] font-semibold">
+              <span className="text-[10px] uppercase tracking-[0.35em] text-[#0077B6] font-semibold">
                 Property Management System (PMS)
               </span>
               <h1 className="font-serif text-2xl sm:text-4xl text-slate-900 font-normal mt-1">
@@ -238,7 +238,7 @@ function AdminPageContent() {
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setShowAddWalkInModal(true)}
-                className="w-full sm:w-auto px-5 py-3 bg-[#C6A15B] hover:bg-[#B08C46] text-[#111111] font-semibold text-xs uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 shadow-xl transition-all active:scale-95"
+                className="w-full sm:w-auto px-5 py-3 bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-semibold text-xs uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 shadow-xl transition-all active:scale-95"
               >
                 <UserCheck className="w-4 h-4" />
                 <span>+ Record Walk-In Guest</span>
@@ -253,7 +253,7 @@ function AdminPageContent() {
             <div className="p-6 bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
               <div className="flex items-center justify-between text-slate-600 text-xs font-medium">
                 <span>Total Revenue</span>
-                <DollarSign className="w-4 h-4 text-[#85672E]" />
+                <DollarSign className="w-4 h-4 text-[#0077B6]" />
               </div>
               <div className="font-serif text-2xl sm:text-3xl text-slate-900 font-bold">
                 ₦{totalRevenue.toLocaleString()}
@@ -266,7 +266,7 @@ function AdminPageContent() {
             <div className="p-6 bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
               <div className="flex items-center justify-between text-slate-600 text-xs font-medium">
                 <span>Occupancy Rate</span>
-                <TrendingUp className="w-4 h-4 text-[#85672E]" />
+                <TrendingUp className="w-4 h-4 text-[#0077B6]" />
               </div>
               <div className="font-serif text-2xl sm:text-3xl text-slate-900 font-bold">
                 {occupancy === null ? "—" : `${occupancy}%`}
@@ -279,9 +279,9 @@ function AdminPageContent() {
             <div className="p-6 bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
               <div className="flex items-center justify-between text-slate-600 text-xs font-medium">
                 <span>Digital Online Bookings</span>
-                <Calendar className="w-4 h-4 text-[#85672E]" />
+                <Calendar className="w-4 h-4 text-[#0077B6]" />
               </div>
-              <div className="font-serif text-2xl sm:text-3xl text-[#85672E] font-bold">
+              <div className="font-serif text-2xl sm:text-3xl text-[#0077B6] font-bold">
                 {digitalCount}
               </div>
               <div className="text-[10px] text-slate-600">
@@ -292,7 +292,7 @@ function AdminPageContent() {
             <div className="p-6 bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
               <div className="flex items-center justify-between text-slate-600 text-xs font-medium">
                 <span>Walk-In Front Desk</span>
-                <UserCheck className="w-4 h-4 text-[#85672E]" />
+                <UserCheck className="w-4 h-4 text-[#0077B6]" />
               </div>
               <div className="font-serif text-2xl sm:text-3xl text-slate-900 font-bold">
                 {walkInCount}
@@ -309,7 +309,7 @@ function AdminPageContent() {
               onClick={() => setActiveTab("BOOKINGS")}
               className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs uppercase tracking-wider font-bold transition-all ${
                 activeTab === "BOOKINGS"
-                  ? "bg-[#C6A15B] text-[#111111]"
+                  ? "bg-[#00AEEF] text-[#111111]"
                   : "bg-slate-50 text-slate-600 hover:text-slate-900"
               }`}
             >
@@ -320,7 +320,7 @@ function AdminPageContent() {
               onClick={() => setActiveTab("PARTNERS")}
               className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs uppercase tracking-wider font-bold transition-all ${
                 activeTab === "PARTNERS"
-                  ? "bg-[#C6A15B] text-[#111111]"
+                  ? "bg-[#00AEEF] text-[#111111]"
                   : "bg-slate-50 text-slate-600 hover:text-slate-900"
               }`}
             >
@@ -342,7 +342,7 @@ function AdminPageContent() {
                       onClick={() => setActiveFilter("ALL")}
                       className={`px-3 py-1.5 rounded text-xs font-semibold uppercase tracking-wider transition-colors shrink-0 ${
                         activeFilter === "ALL"
-                          ? "bg-[#C6A15B] text-[#111111]"
+                          ? "bg-[#00AEEF] text-[#111111]"
                           : "text-slate-600 hover:text-slate-900"
                       }`}
                     >
@@ -352,7 +352,7 @@ function AdminPageContent() {
                       onClick={() => setActiveFilter("DIGITAL")}
                       className={`px-3 py-1.5 rounded text-xs font-semibold uppercase tracking-wider transition-colors shrink-0 ${
                         activeFilter === "DIGITAL"
-                          ? "bg-[#C6A15B] text-[#111111]"
+                          ? "bg-[#00AEEF] text-[#111111]"
                           : "text-slate-600 hover:text-slate-900"
                       }`}
                     >
@@ -362,7 +362,7 @@ function AdminPageContent() {
                       onClick={() => setActiveFilter("WALK_IN")}
                       className={`px-3 py-1.5 rounded text-xs font-semibold uppercase tracking-wider transition-colors shrink-0 ${
                         activeFilter === "WALK_IN"
-                          ? "bg-[#C6A15B] text-[#111111]"
+                          ? "bg-[#00AEEF] text-[#111111]"
                           : "text-slate-600 hover:text-slate-900"
                       }`}
                     >
@@ -373,7 +373,7 @@ function AdminPageContent() {
 
                 <div className="text-xs text-slate-600 font-light">
                   WhatsApp Concierge Admin:{" "}
-                  <span className="text-[#85672E] font-mono">
+                  <span className="text-[#0077B6] font-mono">
                     +234 704 100 8351
                   </span>
                 </div>
@@ -382,7 +382,7 @@ function AdminPageContent() {
               {/* Reservations Table */}
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs font-light text-slate-700 min-w-[640px]">
-                  <thead className="bg-white text-[#85672E] uppercase tracking-wider text-[10px] font-semibold">
+                  <thead className="bg-white text-[#0077B6] uppercase tracking-wider text-[10px] font-semibold">
                     <tr>
                       <th className="py-3 px-4">Ref Code</th>
                       <th className="py-3 px-4">Channel</th>
@@ -436,7 +436,7 @@ function AdminPageContent() {
                             <div>
                               {b.checkIn} → {b.checkOut}
                             </div>
-                            <div className="text-[10px] text-[#85672E]">
+                            <div className="text-[10px] text-[#0077B6]">
                               {b.nights} Night(s)
                             </div>
                           </td>
@@ -447,7 +447,7 @@ function AdminPageContent() {
                             </div>
                           </td>
                           <td className="py-4 px-4 space-y-1">
-                            <p className="text-[#85672E]">
+                            <p className="text-[#0077B6]">
                               {b.status === "Pending"
                                 ? "Reservation / Pending payment"
                                 : b.status}
@@ -479,14 +479,14 @@ function AdminPageContent() {
                     portal.
                   </p>
                 </div>
-                <div className="text-xs text-[#85672E] font-semibold">
+                <div className="text-xs text-[#0077B6] font-semibold">
                   {partners.length} Total Applicants
                 </div>
               </div>
 
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs font-light text-slate-700 min-w-[700px]">
-                  <thead className="bg-white text-[#85672E] uppercase tracking-wider text-[10px] font-semibold">
+                  <thead className="bg-white text-[#0077B6] uppercase tracking-wider text-[10px] font-semibold">
                     <tr>
                       <th className="py-3 px-4">Partner ID</th>
                       <th className="py-3 px-4">Applicant & Contact</th>
@@ -507,7 +507,7 @@ function AdminPageContent() {
                         onClick={() => setSelectedPartnerModal(p)}
                         className="hover:bg-slate-100 transition-colors cursor-pointer group"
                       >
-                        <td className="py-4 px-4 font-mono text-slate-900 font-medium group-hover:text-[#85672E] transition-colors">
+                        <td className="py-4 px-4 font-mono text-slate-900 font-medium group-hover:text-[#0077B6] transition-colors">
                           {p.partnerId || "PART-NEW"}
                         </td>
                         <td className="py-4 px-4">
@@ -517,7 +517,7 @@ function AdminPageContent() {
                           <div className="text-[10px] text-slate-600 font-mono">
                             {p.email}
                           </div>
-                          <div className="text-[10px] text-[#85672E] font-mono">
+                          <div className="text-[10px] text-[#0077B6] font-mono">
                             {p.phone}
                           </div>
                         </td>
@@ -542,7 +542,7 @@ function AdminPageContent() {
                             {p.numberOfUnits || p.totalUnits || 1} Units Offered
                           </div>
                         </td>
-                        <td className="py-4 px-4 font-serif text-sm text-[#85672E] font-semibold">
+                        <td className="py-4 px-4 font-serif text-sm text-[#0077B6] font-semibold">
                           ₦
                           {(
                             p.expectedRate ||
@@ -567,7 +567,7 @@ function AdminPageContent() {
                           <div className="flex items-center gap-3">
                             <button
                               onClick={() => setSelectedPartnerModal(p)}
-                              className="inline-flex items-center gap-1 px-3 py-1.5 rounded bg-[#C6A15B] text-[#111111] font-bold text-[10px] uppercase tracking-wider hover:bg-[#d8b46e] transition-colors shadow-sm"
+                              className="inline-flex items-center gap-1 px-3 py-1.5 rounded bg-[#00AEEF] text-[#111111] font-bold text-[10px] uppercase tracking-wider hover:bg-[#d8b46e] transition-colors shadow-sm"
                             >
                               <Eye className="w-3 h-3" />
                               <span>View Onboarding Details</span>
@@ -578,7 +578,7 @@ function AdminPageContent() {
                               )}`}
                               target="_blank"
                               rel="noreferrer"
-                              className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#85672E] hover:text-slate-900 transition-colors"
+                              className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#0077B6] hover:text-slate-900 transition-colors"
                             >
                               <MessageSquare className="w-3.5 h-3.5" />
                               <span>WhatsApp</span>
@@ -597,10 +597,10 @@ function AdminPageContent() {
         {/* Record Walk-In Modal */}
         {showAddWalkInModal && (
           <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-            <div className="bg-white text-slate-900 p-6 sm:p-8 rounded-2xl border border-[#C6A15B]/40 max-w-lg w-full space-y-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div className="bg-white text-slate-900 p-6 sm:p-8 rounded-2xl border border-[#00AEEF]/40 max-w-lg w-full space-y-6 shadow-2xl max-h-[90vh] overflow-y-auto">
               <div className="flex items-center justify-between border-b border-slate-200 pb-4">
                 <div>
-                  <span className="text-[10px] uppercase tracking-widest text-[#85672E] font-semibold">
+                  <span className="text-[10px] uppercase tracking-widest text-[#0077B6] font-semibold">
                     Front Desk Reception
                   </span>
                   <h3 className="font-serif text-2xl text-slate-900">
@@ -730,7 +730,7 @@ function AdminPageContent() {
                   </button>
                   <button
                     type="submit"
-                    className="px-6 py-2.5 bg-[#C6A15B] text-[#111111] font-semibold uppercase tracking-widest rounded-lg shadow-xl"
+                    className="px-6 py-2.5 bg-[#00AEEF] text-[#111111] font-semibold uppercase tracking-widest rounded-lg shadow-xl"
                   >
                     Save Walk-In Reservation
                   </button>
@@ -743,10 +743,10 @@ function AdminPageContent() {
         {/* Merchant Onboarding Application Details Modal */}
         {selectedPartnerModal && (
           <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
-            <div className="bg-white text-slate-900 p-6 sm:p-8 rounded-3xl border border-[#C6A15B]/50 max-w-2xl w-full space-y-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div className="bg-white text-slate-900 p-6 sm:p-8 rounded-3xl border border-[#00AEEF]/50 max-w-2xl w-full space-y-6 shadow-2xl max-h-[90vh] overflow-y-auto">
               <div className="flex items-center justify-between border-b border-slate-200 pb-4">
                 <div>
-                  <div className="inline-flex items-center gap-2 text-[10px] uppercase tracking-widest text-[#85672E] font-semibold">
+                  <div className="inline-flex items-center gap-2 text-[10px] uppercase tracking-widest text-[#0077B6] font-semibold">
                     <ShieldCheck className="w-4 h-4" />
                     <span>
                       Merchant Onboarding File •{" "}
@@ -768,7 +768,7 @@ function AdminPageContent() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs">
                 {/* Contact Information */}
                 <div className="space-y-3 bg-slate-50 p-5 rounded-2xl border border-slate-200">
-                  <div className="text-[10px] uppercase tracking-wider text-[#85672E] font-bold flex items-center gap-1.5">
+                  <div className="text-[10px] uppercase tracking-wider text-[#0077B6] font-bold flex items-center gap-1.5">
                     <UserCheck className="w-3.5 h-3.5" />
                     <span>1. Applicant Contact Info</span>
                   </div>
@@ -787,7 +787,7 @@ function AdminPageContent() {
                       Email Address
                     </span>
                     <span className="font-mono text-slate-900 flex items-center gap-1.5 mt-0.5">
-                      <Mail className="w-3.5 h-3.5 text-[#85672E]" />
+                      <Mail className="w-3.5 h-3.5 text-[#0077B6]" />
                       {selectedPartnerModal.email}
                     </span>
                   </div>
@@ -795,7 +795,7 @@ function AdminPageContent() {
                     <span className="text-slate-600 block text-[10px]">
                       Phone / WhatsApp
                     </span>
-                    <span className="font-mono text-[#85672E] font-bold flex items-center gap-1.5 mt-0.5">
+                    <span className="font-mono text-[#0077B6] font-bold flex items-center gap-1.5 mt-0.5">
                       <PhoneCall className="w-3.5 h-3.5" />
                       {selectedPartnerModal.phone}
                     </span>
@@ -804,7 +804,7 @@ function AdminPageContent() {
 
                 {/* Property Details */}
                 <div className="space-y-3 bg-slate-50 p-5 rounded-2xl border border-slate-200">
-                  <div className="text-[10px] uppercase tracking-wider text-[#85672E] font-bold flex items-center gap-1.5">
+                  <div className="text-[10px] uppercase tracking-wider text-[#0077B6] font-bold flex items-center gap-1.5">
                     <Building2 className="w-3.5 h-3.5" />
                     <span>2. Property Specifications</span>
                   </div>
@@ -832,7 +832,7 @@ function AdminPageContent() {
                       Location & Address
                     </span>
                     <span className="text-slate-900 flex items-center gap-1 mt-0.5">
-                      <MapPin className="w-3.5 h-3.5 text-[#85672E] shrink-0" />
+                      <MapPin className="w-3.5 h-3.5 text-[#0077B6] shrink-0" />
                       <span>
                         {selectedPartnerModal.address
                           ? `${selectedPartnerModal.address}, ${selectedPartnerModal.city || "Lagos"}`
@@ -845,7 +845,7 @@ function AdminPageContent() {
                 {/* Commercials & Units */}
                 <div className="space-y-3 bg-slate-50 p-5 rounded-2xl border border-slate-200 sm:col-span-2">
                   <div className="flex items-center justify-between border-b border-slate-200 pb-3">
-                    <div className="text-[10px] uppercase tracking-wider text-[#85672E] font-bold">
+                    <div className="text-[10px] uppercase tracking-wider text-[#0077B6] font-bold">
                       3. Commercials & Inventory Offered
                     </div>
                     <span
@@ -875,7 +875,7 @@ function AdminPageContent() {
                       <span className="text-slate-600 block text-[10px]">
                         Expected Nightly Rate
                       </span>
-                      <span className="text-sm font-serif font-bold text-[#85672E]">
+                      <span className="text-sm font-serif font-bold text-[#0077B6]">
                         ₦
                         {(
                           selectedPartnerModal.expectedRate ||
@@ -900,7 +900,7 @@ function AdminPageContent() {
                 {selectedPartnerModal.amenities &&
                   selectedPartnerModal.amenities.length > 0 && (
                     <div className="space-y-3 bg-slate-50 p-5 rounded-2xl border border-slate-200 sm:col-span-2">
-                      <div className="text-[10px] uppercase tracking-wider text-[#85672E] font-bold">
+                      <div className="text-[10px] uppercase tracking-wider text-[#0077B6] font-bold">
                         4. Submitted Property Amenities
                       </div>
                       <div className="flex flex-wrap gap-2 pt-1">
@@ -908,9 +908,9 @@ function AdminPageContent() {
                           (item: string, idx: number) => (
                             <span
                               key={idx}
-                              className="px-3 py-1 bg-white border border-[#C6A15B]/30 rounded-lg text-[11px] text-slate-700 flex items-center gap-1.5"
+                              className="px-3 py-1 bg-white border border-[#00AEEF]/30 rounded-lg text-[11px] text-slate-700 flex items-center gap-1.5"
                             >
-                              <CheckCircle2 className="w-3 h-3 text-[#85672E]" />
+                              <CheckCircle2 className="w-3 h-3 text-[#0077B6]" />
                               <span>{item}</span>
                             </span>
                           ),
@@ -922,7 +922,7 @@ function AdminPageContent() {
                 {/* Property Photos & Direct File Upload */}
                 <div className="space-y-4 bg-slate-50 p-5 rounded-2xl border border-slate-200 sm:col-span-2">
                   <div className="flex items-center justify-between">
-                    <div className="text-[10px] uppercase tracking-wider text-[#85672E] font-bold flex items-center gap-1.5">
+                    <div className="text-[10px] uppercase tracking-wider text-[#0077B6] font-bold flex items-center gap-1.5">
                       <ImageIcon className="w-3.5 h-3.5" />
                       <span>5. Property Photos (Direct File Uploads)</span>
                     </div>
@@ -932,7 +932,7 @@ function AdminPageContent() {
                     </span>
                   </div>
 
-                  <p className="text-xs text-slate-600">Manage and save property photos in <Link href="/admin/properties" className="text-[#85672E] underline">Properties</Link>.</p>
+                  <p className="text-xs text-slate-600">Manage and save property photos in <Link href="/admin/properties" className="text-[#0077B6] underline">Properties</Link>.</p>
 
                   {/* Photo Thumbnails */}
                   {selectedPartnerModal.images &&
@@ -942,7 +942,7 @@ function AdminPageContent() {
                         (imgSrc: string, i: number) => (
                           <div
                             key={i}
-                            className="relative h-28 rounded-xl overflow-hidden border border-[#C6A15B]/40 bg-slate-100 group"
+                            className="relative h-28 rounded-xl overflow-hidden border border-[#00AEEF]/40 bg-slate-100 group"
                           >
                             <img
                               src={imgSrc}
@@ -950,7 +950,7 @@ function AdminPageContent() {
                               className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                             />
 
-                            <span className="absolute bottom-1 left-1.5 bg-white px-2 py-0.5 rounded text-[9px] font-mono text-[#85672E]">
+                            <span className="absolute bottom-1 left-1.5 bg-white px-2 py-0.5 rounded text-[9px] font-mono text-[#0077B6]">
                               Photo #{i + 1}
                             </span>
                           </div>
@@ -985,7 +985,7 @@ function AdminPageContent() {
                 <div className="flex items-center gap-3 w-full sm:w-auto">
                   <Link
                     href="/admin/properties"
-                    className="bg-[#C6A15B] text-black px-5 py-3 rounded-lg text-xs"
+                    className="bg-[#00AEEF] text-black px-5 py-3 rounded-lg text-xs"
                   >
                     Review property verification →
                   </Link>
