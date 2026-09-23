@@ -88,10 +88,7 @@ export async function POST(request: Request) {
     });
   } catch (error: any) {
     console.error("Error creating room:", error);
-    return NextResponse.json(
-      { success: false, error: error.message },
-      { status: 500 },
-    );
+    return errorResponse(error);
   }
 }
 

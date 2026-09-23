@@ -96,7 +96,21 @@ function AdminRoomsPageContent() {
     fetch("/api/properties?manage=true")
       .then((r) => r.json())
       .then((j) => {
-        if (j.success) setProperties(j.data);
+        if (j.success) {
+          const savedProperties = j.data || [];
+          setProperties(savedProperties);
+          setFormData((current) => {
+            if (current.propertyId || !savedProperties.length) return current;
+            const property = savedProperties[0];
+            return {
+              ...current,
+              propertyId: property.id,
+              address: property.address || "",
+              partnerId: property.partnerId || "",
+              hostName: property.hostName || "",
+            };
+          });
+        }
       });
     fetchLiveRooms();
     fetchLivePartners();
@@ -150,6 +164,10 @@ function AdminRoomsPageContent() {
     e.preventDefault();
     if (uploading || saving) return;
     setError("");
+    if (!formData.propertyId) {
+      setError("Select the property this suite belongs to before saving.");
+      return;
+    }
     if (!formData.gallery.length) { setError("Upload at least one room photo before saving."); return; }
     setSaving(true);
     const slug = formData.name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
@@ -433,6 +451,7 @@ function AdminRoomsPageContent() {
                     }}
                     className="w-full p-3 bg-white border border-slate-300 rounded-lg mt-2"
                   >
+                    {!properties.length && <option value="">No saved properties available</option>}
                     {properties.map((p) => (
                       <option key={p.id} value={p.id}>
                         {p.name}
