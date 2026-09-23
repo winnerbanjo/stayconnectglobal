@@ -30,6 +30,7 @@ export interface IRoom extends Document {
 const RoomSchema = new Schema(
   {
     id: { type: String, index: true },
+    archivedAt: String,
     inventoryVersion: { type: Number, default: 0 },
     numberOfUnits: { type: Number, min: 1, default: 1 },
     slug: { type: String, required: true, unique: true },

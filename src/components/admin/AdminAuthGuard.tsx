@@ -53,8 +53,8 @@ export default function AdminAuthGuard({ children }: AdminAuthGuardProps) {
 
   if (isAuthenticated === null) {
     return (
-      <div className="min-h-screen bg-[#111111] text-white flex items-center justify-center">
-        <div className="text-xs uppercase tracking-widest text-[#C6A15B]">
+      <div className="min-h-screen bg-white text-slate-900 flex items-center justify-center">
+        <div className="text-xs uppercase tracking-widest text-[#85672E]">
           Authenticating Admin Session...
         </div>
       </div>
@@ -63,27 +63,27 @@ export default function AdminAuthGuard({ children }: AdminAuthGuardProps) {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-[#111111] text-white font-sans flex items-center justify-center p-4">
-        <div className="bg-[#1A1918] border border-[#C6A15B]/30 p-8 sm:p-10 rounded-2xl max-w-md w-full space-y-6 shadow-2xl relative overflow-hidden">
+      <div className="min-h-screen bg-white text-slate-900 font-sans flex items-center justify-center p-4">
+        <div className="bg-slate-50 border border-[#C6A15B]/30 p-8 sm:p-10 rounded-2xl max-w-md w-full space-y-6 shadow-2xl relative overflow-hidden">
           <div className="text-center space-y-3">
-            <div className="w-12 h-12 rounded-full bg-[#C6A15B]/20 border border-[#C6A15B] text-[#C6A15B] font-serif font-bold flex items-center justify-center text-xl mx-auto">
+            <div className="w-12 h-12 rounded-full bg-[#C6A15B]/20 border border-[#C6A15B] text-[#85672E] font-serif font-bold flex items-center justify-center text-xl mx-auto">
               SC
             </div>
-            <span className="text-[10px] uppercase tracking-[0.35em] text-[#C6A15B] font-semibold block">
+            <span className="text-[10px] uppercase tracking-[0.35em] text-[#85672E] font-semibold block">
               Executive PMS Portal
             </span>
-            <h1 className="font-serif text-3xl text-white font-normal">
+            <h1 className="font-serif text-3xl text-slate-900 font-normal">
               Administrator Access
             </h1>
-            <p className="text-xs text-neutral-400 font-light">
+            <p className="text-xs text-slate-600 font-light">
               Enter your administrator password to manage Stay Connect.
             </p>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-4">
             <div className="space-y-1">
-              <label htmlFor="admin-password" className="text-xs text-neutral-300 font-medium flex items-center gap-1.5">
-                <Lock className="w-3.5 h-3.5 text-[#C6A15B]" />
+              <label htmlFor="admin-password" className="text-xs text-slate-700 font-medium flex items-center gap-1.5">
+                <Lock className="w-3.5 h-3.5 text-[#85672E]" />
                 <span>Admin Password</span>
               </label>
               <div className="relative">
@@ -96,13 +96,13 @@ export default function AdminAuthGuard({ children }: AdminAuthGuardProps) {
                   placeholder="Enter admin password..."
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-[#111111] border border-[#2C2B29] focus:border-[#C6A15B] rounded-lg px-4 py-3 text-xs text-white placeholder-neutral-500 focus:outline-none transition-colors pr-10"
+                  className="w-full bg-white border border-slate-200 focus:border-[#C6A15B] rounded-lg px-4 py-3 text-xs text-slate-900 placeholder-neutral-500 focus:outline-none transition-colors pr-10"
                 />
                 <button
                   type="button"
                   aria-label={showPassword ? "Hide password" : "Show password"}
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-white"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-600 hover:text-slate-900"
                 >
                   {showPassword ? (
                     <EyeOff className="w-4 h-4" />
@@ -114,7 +114,7 @@ export default function AdminAuthGuard({ children }: AdminAuthGuardProps) {
             </div>
 
             {error && (
-              <div role="alert" className="p-3 rounded-lg bg-rose-950/60 border border-rose-800 text-rose-300 text-xs text-center">
+              <div role="alert" className="p-3 rounded-lg bg-rose-50/60 border border-rose-200 text-rose-700 text-xs text-center">
                 {error}
               </div>
             )}
@@ -129,8 +129,8 @@ export default function AdminAuthGuard({ children }: AdminAuthGuardProps) {
             </button>
           </form>
 
-          <div className="pt-4 border-t border-[#2C2B29] text-center text-[10px] text-neutral-500 flex items-center justify-center gap-1.5">
-            <ShieldCheck className="w-3.5 h-3.5 text-[#C6A15B]" />
+          <div className="pt-4 border-t border-slate-200 text-center text-[10px] text-slate-500 flex items-center justify-center gap-1.5">
+            <ShieldCheck className="w-3.5 h-3.5 text-[#85672E]" />
             <span>Protected administrator session</span>
           </div>
         </div>

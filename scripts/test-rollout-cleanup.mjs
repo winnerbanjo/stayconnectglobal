@@ -12,7 +12,7 @@ async function request(path, body, auth = true) {
 }
 try {
   // Explicit temporary fixtures are confined to local preview and restored in finally.
-  const fixture = { properties: [{id:'linked-property',partnerId:'linked-partner'}], rooms:[{id:'test-room',rating:5,reviewCount:1}], bookings:[
+  const fixture = { properties: [{id:'linked-property',partnerId:'linked-partner'}], rooms:[{id:'test-room',rating:5,reviewCount:1}, {id:'empty-room',rating:0,reviewCount:0}], bookings:[
     {id:'past', roomId:'test-room',checkIn:'2020-01-01',checkOut:'2020-01-02',paymentStatus:'Unpaid',status:'Pending'},
     {id:'paid', roomId:'test-room',checkIn:'2020-01-01',checkOut:'2020-01-02',paymentStatus:'Paid',status:'Confirmed'},
     {id:'future', roomId:'test-room',checkIn:'2099-01-01',checkOut:'2099-01-02',paymentStatus:'Unpaid',status:'Pending'},
@@ -33,6 +33,9 @@ try {
   check((await request('/api/partners',{id:'test-partner',action:'archive'})).json.success,'Unlinked pending test application can be archived');
   check((await request('/api/partners')).json.data.length===1,'Archived partner is excluded from queue');
   check((await request('/api/rooms',{id:'test-room',action:'clear-reviews'})).json.data.reviewCount===0,'Synthetic review count is cleared');
+  check(!(await request('/api/rooms',{id:'test-room',action:'archive'})).json.success,'Upcoming reservations prevent room archival');
+  check((await request('/api/rooms',{id:'empty-room',action:'archive'})).json.success,'Unused room can be archived');
+  check(!(await request('/api/rooms?manage=true')).json.data.some(r=>r.id==='empty-room'),'Archived room is excluded from admin inventory');
   const stored=JSON.parse(await fs.readFile(file,'utf8'));
   check(stored.bookings.length===4 && stored.bookings.find(b=>b.id==='past').archivedAt,'Archive retains recoverable records and unrelated appointments');
   console.log(`${passed} cleanup checks passed.`);

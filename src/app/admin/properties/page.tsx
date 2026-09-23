@@ -44,10 +44,10 @@ function AdminPropertiesPageContent() {
 
   const [formData, setFormData] = useState({
     name: "",
-    tagline: "Refined Sanctuary in Lekki Phase 1",
-    address: "14B Providence Street, Lekki Phase 1, Lagos",
-    city: "Lagos, Nigeria",
-    description: "An ultra-exclusive collection of luxury serviced suites.",
+    tagline: "",
+    address: "",
+    city: "",
+    description: "",
     heroImage: "",
     gallery: [] as string[],
     partnerId: "",
@@ -185,22 +185,22 @@ function AdminPropertiesPageContent() {
 
   return (
     <>
-      <div className="min-h-screen bg-[#111111] text-white font-sans flex flex-col md:flex-row">
+      <div className="min-h-screen bg-white text-slate-900 font-sans flex flex-col md:flex-row">
         {/* Mobile Header Bar */}
         <AdminMobileNav />
 
         {/* Sidebar */}
-        <aside className="w-64 border-r border-[#2C2B29] p-6 flex flex-col justify-between hidden md:flex shrink-0">
+        <aside className="w-64 border-r border-slate-200 p-6 flex flex-col justify-between hidden md:flex shrink-0">
           <div className="space-y-8">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-[#C6A15B]/20 border border-[#C6A15B] text-[#C6A15B] font-serif font-bold flex items-center justify-center text-sm">
+              <div className="w-8 h-8 rounded-full bg-[#C6A15B]/20 border border-[#C6A15B] text-[#85672E] font-serif font-bold flex items-center justify-center text-sm">
                 SC
               </div>
               <div>
-                <div className="font-serif text-lg text-white font-medium">
+                <div className="font-serif text-lg text-slate-900 font-medium">
                   Stay Connect
                 </div>
-                <div className="text-[10px] text-[#C6A15B] uppercase tracking-widest font-semibold">
+                <div className="text-[10px] text-[#85672E] uppercase tracking-widest font-semibold">
                   Admin Portal
                 </div>
               </div>
@@ -209,9 +209,9 @@ function AdminPropertiesPageContent() {
             <nav className="space-y-2 text-xs uppercase tracking-widest font-medium">
               <Link
                 href="/admin"
-                className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]"
+                className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-50"
               >
-                <BarChart3 className="w-4 h-4 text-[#C6A15B]" />
+                <BarChart3 className="w-4 h-4 text-[#85672E]" />
                 <span>Dashboard</span>
               </Link>
               <Link
@@ -223,46 +223,46 @@ function AdminPropertiesPageContent() {
               </Link>
               <Link
                 href="/admin/rooms"
-                className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]"
+                className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-50"
               >
-                <BedDouble className="w-4 h-4 text-[#C6A15B]" />
+                <BedDouble className="w-4 h-4 text-[#85672E]" />
                 <span>Rooms Inventory</span>
               </Link>
               <Link
                 href="/admin/housekeeping"
-                className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]"
+                className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-50"
               >
-                <RefreshCw className="w-4 h-4 text-[#C6A15B]" />
+                <RefreshCw className="w-4 h-4 text-[#85672E]" />
                 <span>Housekeeping Ops</span>
               </Link>
               <Link
                 href="/admin/dining"
-                className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]"
+                className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-50"
               >
-                <Utensils className="w-4 h-4 text-[#C6A15B]" />
+                <Utensils className="w-4 h-4 text-[#85672E]" />
                 <span>Dining & Menu</span>
               </Link>
               <Link
                 href="/admin/fleet"
-                className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]"
+                className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-50"
               >
-                <Car className="w-4 h-4 text-[#C6A15B]" />
+                <Car className="w-4 h-4 text-[#85672E]" />
                 <span>Fleet Logistics</span>
               </Link>
               <Link
                 href="/admin/bookings"
-                className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-[#1A1918]"
+                className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-50"
               >
-                <Calendar className="w-4 h-4 text-[#C6A15B]" />
+                <Calendar className="w-4 h-4 text-[#85672E]" />
                 <span>Reservations CRM</span>
               </Link>
             </nav>
           </div>
 
-          <div className="pt-6 border-t border-[#2C2B29]">
+          <div className="pt-6 border-t border-slate-200">
             <Link
               href="/"
-              className="flex items-center gap-2 text-xs text-neutral-400 hover:text-[#C6A15B]"
+              className="flex items-center gap-2 text-xs text-slate-600 hover:text-[#85672E]"
             >
               <LogOut className="w-4 h-4" />
               <span>Return to Site</span>
@@ -272,12 +272,12 @@ function AdminPropertiesPageContent() {
 
         {/* Main Content */}
         <main className="flex-1 p-4 sm:p-8 lg:p-12 space-y-8 sm:space-y-10 overflow-x-hidden">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#2C2B29] pb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-6">
             <div>
-              <span className="text-[10px] uppercase tracking-[0.35em] text-[#C6A15B] font-semibold">
+              <span className="text-[10px] uppercase tracking-[0.35em] text-[#85672E] font-semibold">
                 Multi-Hotel Portfolio
               </span>
-              <h1 className="font-serif text-2xl sm:text-3xl text-white font-normal mt-1">
+              <h1 className="font-serif text-2xl sm:text-3xl text-slate-900 font-normal mt-1">
                 Properties Manager
               </h1>
             </div>
@@ -293,18 +293,23 @@ function AdminPropertiesPageContent() {
           {error && (
             <p
               role="alert"
-              className="p-4 border border-rose-700 rounded-lg text-rose-300"
+              className="p-4 border border-rose-700 rounded-lg text-rose-700"
             >
               {error}
             </p>
           )}
           {loadingProps ? (
-            <div className="flex items-center justify-center p-12 text-[#C6A15B] gap-3">
+            <div className="flex items-center justify-center p-12 text-[#85672E] gap-3">
               <Loader2 className="w-6 h-6 animate-spin" />
               <span className="text-xs uppercase tracking-widest">
                 Loading Live Properties...
               </span>
             </div>
+          ) : properties.length === 0 && !error ? (
+            <section className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-12 text-center" role="status">
+              <h2 className="font-serif text-2xl text-slate-900">No properties yet</h2>
+              <p className="mt-3 text-sm text-slate-600">Add your first property to start setting up your inventory.</p>
+            </section>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
               {properties.map((prop, idx) => (
@@ -312,9 +317,9 @@ function AdminPropertiesPageContent() {
                   key={
                     (prop as any)._id || prop.id || prop.slug || `prop-${idx}`
                   }
-                  className="p-6 sm:p-8 bg-[#1A1918] border border-[#2C2B29] rounded-2xl space-y-4 shadow-xl"
+                  className="p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl space-y-4 shadow-xl"
                 >
-                  <div className="relative h-44 rounded-xl overflow-hidden bg-neutral-900 mb-2">
+                  <div className="relative h-44 rounded-xl overflow-hidden bg-slate-100 mb-2">
                     <img
                       src={
                         prop.heroImage ||
@@ -325,32 +330,32 @@ function AdminPropertiesPageContent() {
                       className="w-full h-full object-cover"
                     />
                     {prop.partnerId && (
-                      <span className="absolute top-2 right-2 bg-amber-950 text-amber-400 text-[10px] font-bold px-2.5 py-1 rounded-full border border-amber-800 uppercase font-mono">
+                      <span className="absolute top-2 right-2 bg-amber-50 text-amber-800 text-[10px] font-bold px-2.5 py-1 rounded-full border border-amber-200 uppercase font-mono">
                         Merchant: {prop.hostName || prop.partnerId}
                       </span>
                     )}
                   </div>
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                    <h3 className="font-serif text-xl sm:text-2xl text-white">
+                    <h3 className="font-serif text-xl sm:text-2xl text-slate-900">
                       {prop.name}
                     </h3>
-                    <span className="px-3 py-1 bg-emerald-950 text-emerald-400 text-[10px] uppercase font-bold rounded-full border border-emerald-800 self-start sm:self-auto">
+                    <span className="px-3 py-1 bg-emerald-50 text-emerald-700 text-[10px] uppercase font-bold rounded-full border border-emerald-200 self-start sm:self-auto">
                       {prop.verificationStatus || "Approved"}
                     </span>
                   </div>
-                  <div className="text-xs text-neutral-400 flex items-center gap-2">
-                    <MapPin className="w-4 h-4 text-[#C6A15B] shrink-0" />
+                  <div className="text-xs text-slate-600 flex items-center gap-2">
+                    <MapPin className="w-4 h-4 text-[#85672E] shrink-0" />
                     <span>{prop.address}</span>
                   </div>
-                  <p className="text-xs text-neutral-400 font-light leading-relaxed line-clamp-2">
+                  <p className="text-xs text-slate-600 font-light leading-relaxed line-clamp-2">
                     {prop.description}
                   </p>
-                  <p className="text-xs text-neutral-400">
+                  <p className="text-xs text-slate-600">
                     {prop.numberOfUnits || 1} rooms / units · From ₦
                     {prop.pricingStartingFrom?.toLocaleString()}
                   </p>
                   {prop.reviewNote && (
-                    <p className="text-sm text-amber-300">{prop.reviewNote}</p>
+                    <p className="text-sm text-amber-800">{prop.reviewNote}</p>
                   )}
                   <div className="flex gap-4 flex-wrap text-sm">
                     <button
@@ -367,7 +372,7 @@ function AdminPropertiesPageContent() {
                       <button
                         disabled={reviewing}
                         onClick={() => review(prop.id, "submit")}
-                        className="text-[#C6A15B]"
+                        className="text-[#85672E]"
                       >
                         Submit for verification
                       </button>
@@ -385,7 +390,7 @@ function AdminPropertiesPageContent() {
                               [prop.id]: e.target.value,
                             })
                           }
-                          className="w-full p-3 mt-2 bg-black border border-[#444] rounded-lg"
+                          className="w-full p-3 mt-2 bg-white border border-slate-300 rounded-lg"
                         />
                       </label>
                       <div className="flex gap-3">
@@ -415,11 +420,11 @@ function AdminPropertiesPageContent() {
                       }}
                     />
                   )}
-                  <div className="pt-4 border-t border-[#2C2B29] flex items-center justify-between text-xs">
-                    <span className="text-[#C6A15B]">ID: {prop.slug}</span>
+                  <div className="pt-4 border-t border-slate-200 flex items-center justify-between text-xs">
+                    <span className="text-[#85672E]">ID: {prop.slug}</span>
                     <Link
                       href={`/properties/${prop.slug}`}
-                      className="text-white hover:text-[#C6A15B] underline"
+                      className="text-slate-900 hover:text-[#85672E] underline"
                     >
                       View Public Page →
                     </Link>
@@ -433,21 +438,21 @@ function AdminPropertiesPageContent() {
         {/* Modal */}
         {isModalOpen && (
           <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-            <div className="bg-[#111111] text-white p-6 sm:p-8 rounded-2xl border border-[#C6A15B]/40 max-w-lg w-full space-y-6 shadow-2xl max-h-[90vh] overflow-y-auto">
-              <div className="flex items-center justify-between border-b border-[#2C2B29] pb-4">
-                <h3 className="font-serif text-2xl text-white">
+            <div className="bg-white text-slate-900 p-6 sm:p-8 rounded-2xl border border-[#C6A15B]/40 max-w-lg w-full space-y-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+              <div className="flex items-center justify-between border-b border-slate-200 pb-4">
+                <h3 className="font-serif text-2xl text-slate-900">
                   Add New Property
                 </h3>
                 <button
                   onClick={() => setIsModalOpen(false)}
-                  className="text-neutral-400 hover:text-white"
+                  className="text-slate-600 hover:text-slate-900"
                 >
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
               {error && (
-                <p role="alert" className="text-rose-300 text-sm">
+                <p role="alert" className="text-rose-700 text-sm">
                   {error}
                 </p>
               )}
@@ -457,9 +462,9 @@ function AdminPropertiesPageContent() {
               >
                 {/* Property Owner / Partner Selection */}
                 <div>
-                  <label className="text-neutral-300 font-medium flex items-center justify-between">
+                  <label className="text-slate-700 font-medium flex items-center justify-between">
                     <span>Property Owner / Partner Merchant</span>
-                    <span className="text-[10px] text-[#C6A15B] font-semibold">
+                    <span className="text-[10px] text-[#85672E] font-semibold">
                       Approved Merchants Only
                     </span>
                   </label>
@@ -480,7 +485,7 @@ function AdminPropertiesPageContent() {
                           : "Stay Connect Direct Flagship",
                       });
                     }}
-                    className="w-full bg-[#1A1918] border border-[#2C2B29] rounded-lg px-3.5 py-2.5 text-white mt-1 focus:border-[#C6A15B]"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3.5 py-2.5 text-slate-900 mt-1 focus:border-[#C6A15B]"
                   >
                     <option value="">
                       Stay Connect Global (Direct Flagship Managed)
@@ -495,7 +500,7 @@ function AdminPropertiesPageContent() {
                 </div>
 
                 <div>
-                  <label className="text-neutral-300 font-medium">
+                  <label className="text-slate-700 font-medium">
                     Property Name
                   </label>
                   <input
@@ -506,12 +511,12 @@ function AdminPropertiesPageContent() {
                     onChange={(e) =>
                       setFormData({ ...formData, name: e.target.value })
                     }
-                    className="w-full bg-[#1A1918] border border-[#2C2B29] rounded-lg px-3.5 py-2.5 text-white mt-1"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3.5 py-2.5 text-slate-900 mt-1"
                   />
                 </div>
 
                 <div>
-                  <label className="text-neutral-300 font-medium">
+                  <label className="text-slate-700 font-medium">
                     Full Address
                   </label>
                   <input
@@ -522,30 +527,30 @@ function AdminPropertiesPageContent() {
                     onChange={(e) =>
                       setFormData({ ...formData, address: e.target.value })
                     }
-                    className="w-full bg-[#1A1918] border border-[#2C2B29] rounded-lg px-3.5 py-2.5 text-white mt-1"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3.5 py-2.5 text-slate-900 mt-1"
                   />
                 </div>
 
                 {/* Bulk Image Upload Field (6+ images at once) */}
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <label className="text-neutral-300 font-medium block">
+                    <label className="text-slate-700 font-medium block">
                       Property Photos (Bulk Upload 6+ Photos At Once)
                     </label>
-                    <span className="text-[10px] font-mono text-[#C6A15B] font-semibold">
+                    <span className="text-[10px] font-mono text-[#85672E] font-semibold">
                       {formData.gallery.length} Photo(s) Attached
                     </span>
                   </div>
 
-                  <div className="p-4 bg-[#1A1918] border-2 border-dashed border-[#2C2B29] hover:border-[#C6A15B] rounded-xl text-center space-y-2 transition-colors relative cursor-pointer">
-                    <div className="w-10 h-10 rounded-full bg-[#111111] text-[#C6A15B] flex items-center justify-center mx-auto border border-[#C6A15B]/40">
+                  <div className="p-4 bg-slate-50 border-2 border-dashed border-slate-200 hover:border-[#C6A15B] rounded-xl text-center space-y-2 transition-colors relative cursor-pointer">
+                    <div className="w-10 h-10 rounded-full bg-white text-[#85672E] flex items-center justify-center mx-auto border border-[#C6A15B]/40">
                       <Upload className="w-5 h-5" />
                     </div>
                     <div className="space-y-1">
-                      <div className="text-xs font-semibold text-white">
+                      <div className="text-xs font-semibold text-slate-900">
                         Click to Select & Upload At Least 6+ Image Files
                       </div>
-                      <div className="text-[10px] text-neutral-400">
+                      <div className="text-[10px] text-slate-600">
                         Multi-select JPG, PNG, WEBP files directly from device
                       </div>
                     </div>
@@ -563,7 +568,7 @@ function AdminPropertiesPageContent() {
                       {formData.gallery.map((imgSrc, idx) => (
                         <div
                           key={idx}
-                          className="relative h-20 rounded-lg overflow-hidden border border-[#C6A15B]/50 group bg-neutral-900"
+                          className="relative h-20 rounded-lg overflow-hidden border border-[#C6A15B]/50 group bg-slate-100"
                         >
                           <img
                             src={imgSrc}
@@ -573,7 +578,7 @@ function AdminPropertiesPageContent() {
                           <button
                             type="button"
                             onClick={() => removeGalleryImage(idx)}
-                            className="absolute top-1 right-1 p-1 bg-black/80 text-rose-400 rounded-full hover:bg-rose-950 transition-colors"
+                            className="absolute top-1 right-1 p-1 bg-white text-rose-700 rounded-full hover:bg-rose-50 transition-colors"
                           >
                             <X className="w-3 h-3" />
                           </button>
@@ -589,7 +594,7 @@ function AdminPropertiesPageContent() {
                 </div>
 
                 <div>
-                  <label className="text-neutral-300 font-medium">
+                  <label className="text-slate-700 font-medium">
                     Description
                   </label>
                   <textarea
@@ -599,15 +604,15 @@ function AdminPropertiesPageContent() {
                     onChange={(e) =>
                       setFormData({ ...formData, description: e.target.value })
                     }
-                    className="w-full bg-[#1A1918] border border-[#2C2B29] rounded-lg px-3.5 py-2.5 text-white mt-1"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3.5 py-2.5 text-slate-900 mt-1"
                   />
                 </div>
 
-                <div className="flex items-center justify-end gap-3 pt-4 border-t border-[#2C2B29]">
+                <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200">
                   <button
                     type="button"
                     onClick={() => setIsModalOpen(false)}
-                    className="px-4 py-2 text-neutral-400 hover:text-white"
+                    className="px-4 py-2 text-slate-600 hover:text-slate-900"
                   >
                     Cancel
                   </button>

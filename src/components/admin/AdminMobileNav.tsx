@@ -25,7 +25,7 @@ export default function AdminMobileNav() {
   ];
 
   return (
-    <div className="md:hidden border-b border-[#2C2B29] bg-[#111111] px-4 py-3 sticky top-0 z-40">
+    <div className="md:hidden border-b border-slate-200 bg-white px-4 py-3 sticky top-0 z-40">
       <div className="flex items-center justify-between">
         <Link href="/admin" className="relative h-10 w-44">
           <img
@@ -37,15 +37,15 @@ export default function AdminMobileNav() {
 
         <button
           onClick={() => setOpen(!open)}
-          className="p-2 text-white hover:text-[#C6A15B] focus:outline-none shrink-0"
+          className="p-2 text-slate-900 hover:text-[#85672E] focus:outline-none shrink-0"
           aria-label="Toggle Admin Menu"
         >
-          {open ? <X className="w-7 h-7 text-[#C6A15B]" /> : <Menu className="w-7 h-7" />}
+          {open ? <X className="w-7 h-7 text-[#85672E]" /> : <Menu className="w-7 h-7" />}
         </button>
       </div>
 
       {open && (
-        <div className="mt-3 pt-3 border-t border-[#2C2B29] space-y-2 pb-2">
+        <div className="mt-3 pt-3 border-t border-slate-200 space-y-2 pb-2">
           {navLinks.map((link) => {
             const Icon = link.icon;
             const active = pathname === link.href;
@@ -55,24 +55,24 @@ export default function AdminMobileNav() {
                 href={link.href}
                 onClick={() => setOpen(false)}
                 className={`flex items-center gap-3 px-3.5 py-3 rounded-lg text-xs uppercase tracking-widest font-medium transition-colors ${
-                  active ? 'bg-[#C6A15B] text-[#111111] font-semibold' : 'text-neutral-300 hover:bg-[#1A1918]'
+                  active ? 'bg-[#C6A15B] text-[#111111] font-semibold' : 'text-slate-700 hover:bg-slate-50'
                 }`}
               >
-                <Icon className={`w-4 h-4 ${active ? 'text-[#111111]' : 'text-[#C6A15B]'}`} />
+                <Icon className={`w-4 h-4 ${active ? 'text-[#111111]' : 'text-[#85672E]'}`} />
                 <span>{link.name}</span>
               </Link>
             );
           })}
 
-          <div className="pt-3 border-t border-[#2C2B29] flex flex-col gap-2">
+          <div className="pt-3 border-t border-slate-200 flex flex-col gap-2">
             <button
               onClick={handleLogout}
-              className="flex items-center gap-2 text-xs text-rose-400 px-3.5 py-2.5 w-full text-left"
+              className="flex items-center gap-2 text-xs text-rose-700 px-3.5 py-2.5 w-full text-left"
             >
               <Lock className="w-4 h-4" />
               <span>Lock & Log Out</span>
             </button>
-            <Link href="/" className="flex items-center gap-2 text-xs text-neutral-400 px-3.5 py-2.5">
+            <Link href="/" className="flex items-center gap-2 text-xs text-slate-600 px-3.5 py-2.5">
               <LogOut className="w-4 h-4" />
               <span>Return to Public Website</span>
             </Link>

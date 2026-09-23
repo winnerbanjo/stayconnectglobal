@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { uploadImages } from "@/lib/upload-images";
 const field =
-  "block w-full mt-2 p-3 rounded-lg bg-[#111111] border border-[#444] text-white text-sm";
+  "block w-full mt-2 p-3 rounded-lg bg-[var(--editor-input,#111111)] border border-[var(--editor-border,#444)] text-[var(--editor-text,white)] text-sm";
 export default function PropertyEditor({
   property,
   endpoint = "/api/properties",
@@ -53,7 +53,7 @@ export default function PropertyEditor({
   return (
     <form
       onSubmit={submit}
-      className="space-y-4 bg-[#1A1918] rounded-xl p-5 border border-[#444] text-white"
+      className="space-y-4 bg-[var(--editor-panel,#1A1918)] rounded-xl p-5 border border-[var(--editor-border,#444)] text-[var(--editor-text,white)]"
     >
       <h3 className="font-serif text-2xl">Edit property details</h3>
       <div className="grid sm:grid-cols-2 gap-4">
@@ -63,7 +63,7 @@ export default function PropertyEditor({
           ["city", "City"],
           ["area", "Area / neighbourhood"],
         ].map(([key, label]) => (
-          <label key={key} className="text-xs text-neutral-300">
+          <label key={key} className="text-xs text-[var(--editor-muted,#d4d4d4)]">
             {label}
             <input
               required={key !== "area"}
@@ -138,7 +138,7 @@ export default function PropertyEditor({
             </button>
             <button
               type="button"
-              className="text-xs text-rose-300"
+              className="text-xs text-[var(--editor-error,#fda4af)]"
               onClick={() =>
                 setData({
                   ...data,
@@ -186,7 +186,7 @@ export default function PropertyEditor({
         />
       </label>
       {error && (
-        <p role="alert" className="text-rose-300 text-sm">
+        <p role="alert" className="text-[var(--editor-error,#fda4af)] text-sm">
           {error}
         </p>
       )}
