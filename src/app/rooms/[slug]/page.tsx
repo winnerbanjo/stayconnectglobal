@@ -33,7 +33,7 @@ export default async function RoomDetailPage({
   return (
     <div className="min-h-screen bg-[#FAF9F6] text-[#111111] font-sans selection:bg-[#00AEEF] selection:text-[#111111]">
       <Navbar />
-      <main className="pt-24 pb-20">
+      <main className="pt-20 sm:pt-24 pb-12 sm:pb-20">
         <RoomDetailClient room={room} />
       </main>
       <Footer />

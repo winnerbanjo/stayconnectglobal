@@ -1,20 +1,13 @@
 import "./globals.css";
 import ReferralCapture from "@/components/ui/ReferralCapture";
-import { Cormorant_Garamond, Inter } from "next/font/google";
+import { Poppins } from "next/font/google";
 import WhatsAppFloatingWidget from "@/components/ui/WhatsAppFloatingWidget";
 import { ThemeProvider } from "@/context/ThemeContext";
 
-const cormorant = Cormorant_Garamond({
+const poppins = Poppins({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-cormorant",
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-inter",
+  variable: "--font-poppins",
   display: "swap",
 });
 
@@ -39,7 +32,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${cormorant.variable} ${inter.variable} scroll-smooth`}
+      className={`${poppins.variable} scroll-smooth`}
     >
       <body className="bg-[#FAF9F6] dark:bg-[#111111] text-[#111111] dark:text-white font-sans antialiased selection:bg-[#00AEEF] selection:text-[#111111] relative transition-colors duration-300">
         <ThemeProvider>

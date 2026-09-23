@@ -61,9 +61,9 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
   const whatsappUrl = `https://wa.me/2347041008351?text=${whatsappMessage}`;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 space-y-8 sm:space-y-12">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 space-y-6 sm:space-y-10">
       {/* Top Breadcrumbs & Header */}
-      <div className="space-y-3 sm:space-y-4">
+      <div className="space-y-2 sm:space-y-4">
         <div className="flex flex-wrap items-center gap-2 text-[10px] sm:text-xs uppercase tracking-widest text-neutral-400 font-medium">
           <Link href="/" className="hover:text-[#00AEEF] transition-colors">
             Home
@@ -79,7 +79,7 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
           <span className="text-[#00AEEF] font-semibold">{room.name}</span>
         </div>
 
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 sm:gap-6 border-b border-[#E8E5DF] pb-6">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-3 sm:gap-6 border-b border-[#E8E5DF] pb-4 sm:pb-6">
           <div className="space-y-2">
             <div className="flex flex-wrap items-center gap-2.5">
               <span className="px-3 py-1 bg-[#111111] text-[#00AEEF] text-[10px] sm:text-xs font-semibold uppercase tracking-widest rounded-full">
@@ -89,7 +89,7 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
                 {room.city} ({room.tagline})
               </span>
             </div>
-            <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl text-[#111111] font-normal leading-tight">
+            <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl text-[#111111] font-semibold tracking-tight leading-tight">
               {room.name}
             </h1>
             <div className="flex items-center gap-2 text-xs text-neutral-600 font-light">
@@ -116,7 +116,7 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
 
       {/* Image Gallery Showcase */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-        <div className="lg:col-span-8 relative h-[280px] sm:h-[420px] lg:h-[540px] rounded-2xl overflow-hidden bg-neutral-900 shadow-xl border border-[#E8E5DF]">
+        <div className="lg:col-span-8 relative h-[250px] sm:h-[420px] lg:h-[540px] rounded-2xl overflow-hidden bg-neutral-900 shadow-xl border border-[#E8E5DF]">
           <Image
             src={selectedImg}
             alt={room.name}
