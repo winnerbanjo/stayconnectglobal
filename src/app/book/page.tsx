@@ -599,10 +599,50 @@ export default function BookingPage() {
                           Direct Bank Transfer (Manual Verification)
                         </div>
                         <p className="text-[11px] text-neutral-500 dark:text-neutral-400">
-                          Request verified payment instructions from Stay
-                          Connect. Your booking remains pending until payment is
-                          confirmed.
+                          Transfer to Stay Connect, upload your receipt, and
+                          we will verify the payment before confirming.
                         </p>
+                        {formData.paymentMethod === "Bank Transfer" && (
+                          <div className="mt-4 space-y-4 rounded-xl border border-[#00AEEF]/50 bg-white p-4 dark:bg-[#111111]" onClick={(event) => event.stopPropagation()}>
+                            <div>
+                              <p className="font-semibold text-sm text-[#111111] dark:text-white">Bank transfer details</p>
+                              <p className="mt-1 text-[11px] text-neutral-600 dark:text-neutral-300">Transfer ₦{grandTotal.toLocaleString()} and use your name as the narration.</p>
+                            </div>
+                            <dl className="grid gap-2 text-xs text-[#111111] dark:text-white">
+                              <div className="flex items-center justify-between gap-4"><dt className="text-neutral-500">Account name</dt><dd className="font-semibold text-right">Stay Connect Solutions Ltd</dd></div>
+                              <div className="flex items-center justify-between gap-4"><dt className="text-neutral-500">Bank</dt><dd className="font-semibold">Parallex Bank</dd></div>
+                              <div className="flex items-center justify-between gap-4"><dt className="text-neutral-500">Account number</dt><dd className="flex items-center gap-2 font-bold tracking-wider">1000364331 <button type="button" onClick={async () => { try { await navigator.clipboard.writeText("1000364331"); setCopiedAccount(true); } catch { setError("Copy is unavailable on this browser. Please enter 1000364331 manually."); } }} className="rounded border border-[#00AEEF] px-2 py-1 text-[10px] font-semibold text-[#0077B6]">{copiedAccount ? "Copied" : "Copy"}</button></dd></div>
+                            </dl>
+                            <label className="block text-xs font-semibold text-[#111111] dark:text-white">
+                              Upload payment receipt *
+                              <input
+                                type="file"
+                                accept="image/jpeg,image/png,image/webp"
+                                disabled={receiptUploading || isSubmitting}
+                                className="mt-2 block w-full rounded-lg border border-[#00AEEF]/40 bg-white p-2 text-xs text-slate-700 dark:bg-black dark:text-white"
+                                onChange={async (e) => {
+                                  const file = e.currentTarget.files?.[0];
+                                  if (!file) return;
+                                  setError("");
+                                  setReceiptProgress(null);
+                                  setReceiptUploading(true);
+                                  try {
+                                    const [url] = await uploadImages([file], { onProgress: setReceiptProgress });
+                                    setPaymentReceipt(url);
+                                  } catch (uploadError) {
+                                    setPaymentReceipt("");
+                                    setError(uploadError instanceof Error ? uploadError.message : "Receipt upload failed. Please try again.");
+                                  } finally {
+                                    setReceiptUploading(false);
+                                    e.currentTarget.value = "";
+                                  }
+                                }}
+                              />
+                            </label>
+                            {receiptUploading && <p role="status" className="text-[11px] text-[#0077B6]">{receiptProgress?.stage === "preparing" ? "Preparing receipt…" : "Uploading receipt…"}</p>}
+                            {paymentReceipt && <p role="status" className="text-[11px] font-semibold text-emerald-700">Receipt uploaded and ready for verification.</p>}
+                          </div>
+                        )}
                       </div>
                     </div>
 
@@ -633,47 +673,6 @@ export default function BookingPage() {
                     </div>
                   </div>
 
-                  {formData.paymentMethod === "Bank Transfer" && (
-                    <div className="space-y-4 rounded-xl border border-[#00AEEF]/50 bg-[#00AEEF]/10 p-4">
-                      <div>
-                        <p className="font-semibold text-sm text-[#111111] dark:text-white">Transfer to this account</p>
-                        <p className="mt-1 text-[11px] text-neutral-600 dark:text-neutral-300">Use your name as the transfer narration, then upload the receipt below. Your reservation is held pending verification.</p>
-                      </div>
-                      <dl className="grid gap-2 text-xs text-[#111111] dark:text-white">
-                        <div className="flex items-center justify-between gap-4"><dt className="text-neutral-500">Account name</dt><dd className="font-semibold">Stay Connect Solutions Ltd</dd></div>
-                        <div className="flex items-center justify-between gap-4"><dt className="text-neutral-500">Bank</dt><dd className="font-semibold">Parallex Bank</dd></div>
-                        <div className="flex items-center justify-between gap-4"><dt className="text-neutral-500">Account number</dt><dd className="flex items-center gap-2 font-bold tracking-wider">1000364331 <button type="button" onClick={async () => { await navigator.clipboard.writeText("1000364331"); setCopiedAccount(true); }} className="rounded border border-[#00AEEF] px-2 py-1 text-[10px] font-semibold text-[#0077B6]">{copiedAccount ? "Copied" : "Copy"}</button></dd></div>
-                      </dl>
-                      <label className="block text-xs font-semibold text-[#111111] dark:text-white">
-                        Upload payment receipt *
-                        <input
-                          type="file"
-                          accept="image/jpeg,image/png,image/webp"
-                          disabled={receiptUploading || isSubmitting}
-                          className="mt-2 block w-full rounded-lg border border-[#00AEEF]/40 bg-white p-2 text-xs text-slate-700 dark:bg-black dark:text-white"
-                          onChange={async (e) => {
-                            const file = e.currentTarget.files?.[0];
-                            if (!file) return;
-                            setError("");
-                            setReceiptProgress(null);
-                            setReceiptUploading(true);
-                            try {
-                              const [url] = await uploadImages([file], { onProgress: setReceiptProgress });
-                              setPaymentReceipt(url);
-                            } catch (uploadError) {
-                              setPaymentReceipt("");
-                              setError(uploadError instanceof Error ? uploadError.message : "Receipt upload failed. Please try again.");
-                            } finally {
-                              setReceiptUploading(false);
-                              e.currentTarget.value = "";
-                            }
-                          }}
-                        />
-                      </label>
-                      {receiptUploading && <p role="status" className="text-[11px] text-[#0077B6]">{receiptProgress?.stage === "preparing" ? "Preparing receipt…" : "Uploading receipt…"}</p>}
-                      {paymentReceipt && <p role="status" className="text-[11px] font-semibold text-emerald-700">Receipt uploaded and ready for verification.</p>}
-                    </div>
-                  )}
                   <label className="block text-xs">
                     Agent referral code (optional)
                     <input
