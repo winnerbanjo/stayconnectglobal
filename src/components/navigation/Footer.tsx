@@ -69,11 +69,11 @@ export default function Footer() {
           {/* Brand & Address */}
           <div className="lg:col-span-4 space-y-5 sm:space-y-6">
             <Link href="/" className="inline-block">
-              <div className="relative h-12 sm:h-16 w-52 sm:w-64">
+              <div className="relative h-12 sm:h-16 w-52 sm:w-64 overflow-hidden rounded-sm bg-white">
                 <img
                   src="/images/logo.png"
                   alt="Stay Connect Global Logo"
-                  className="w-full h-full object-contain filter brightness-110"
+                  className="w-full h-full object-contain"
                 />
               </div>
             </Link>
