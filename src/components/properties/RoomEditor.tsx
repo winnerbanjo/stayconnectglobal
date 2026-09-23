@@ -16,7 +16,7 @@ export default function RoomEditor({
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const field =
-    "block w-full p-3 mt-2 bg-black border border-[#444] rounded-lg";
+    "block w-full p-3 mt-2 bg-white border border-slate-300 text-slate-900 placeholder:text-slate-400 rounded-lg focus:outline-none focus:border-[#00AEEF]";
   return (
     <form
       className="space-y-4 text-xs"
@@ -98,7 +98,7 @@ export default function RoomEditor({
             </button>
             <button
               type="button"
-              className="block text-rose-300"
+              className="block text-rose-700"
               onClick={() => {
                 setGallery(gallery.filter((u) => u !== url));
                 if (cover === url)
@@ -134,7 +134,7 @@ export default function RoomEditor({
         />
       </label>
       {error && (
-        <p role="alert" className="text-rose-300">
+        <p role="alert" className="text-rose-700">
           {error}
         </p>
       )}

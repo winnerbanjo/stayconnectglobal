@@ -53,9 +53,7 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
   const nights = Math.max(1, Math.ceil(diffTime / (1000 * 60 * 60 * 24)));
 
   const subtotal = room.pricePerNight * nights;
-  const vat = subtotal * 0.075;
-  const consumptionTax = subtotal * 0.05;
-  const total = subtotal + vat + consumptionTax;
+  const total = subtotal;
 
   const whatsappMessage = encodeURIComponent(
     `Hello Stay Connect Concierge, I would like to book the ${room.name} (${room.type} Suite) at ${room.address} from ${checkIn} to ${checkOut} (${nights} nights) for ${guests} guest(s). Total estimated: ₦${total.toLocaleString()}.`,
@@ -335,16 +333,8 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
                 </span>
                 <span>₦{subtotal.toLocaleString()}</span>
               </div>
-              <div className="flex justify-between">
-                <span>7.5% VAT</span>
-                <span>₦{vat.toLocaleString()}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>5% Lagos Consumption Tax</span>
-                <span>₦{consumptionTax.toLocaleString()}</span>
-              </div>
               <div className="flex justify-between font-serif text-base sm:text-lg text-white font-semibold pt-3 border-t border-[#2C2B29]">
-                <span>Total Estimated</span>
+                <span>Total room charge</span>
                 <span className="text-[#00AEEF]">
                   ₦{total.toLocaleString()}
                 </span>

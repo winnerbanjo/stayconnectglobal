@@ -73,8 +73,7 @@ export async function POST(req: Request) {
         );
       // A reservation is a request until payment is confirmed; it does not silently consume inventory.
       const subtotal = room.pricePerNight * nights;
-      const taxesAndFees =
-        Math.round(subtotal * 0.075) + Math.round(subtotal * 0.05);
+      const taxesAndFees = 0;
       const booking = {
         ...body,
         id: `book-${randomUUID()}`,
@@ -88,7 +87,7 @@ export async function POST(req: Request) {
         subtotal,
         taxesAndFees,
         discountAmount: 0,
-        totalPrice: subtotal + taxesAndFees,
+        totalPrice: subtotal,
         status: "Pending",
         paymentStatus: body.paymentMethod === "Bank Transfer" ? "Pending Verification" : "Unpaid",
         createdAt: new Date().toISOString(),

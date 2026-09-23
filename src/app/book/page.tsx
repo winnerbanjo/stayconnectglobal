@@ -127,11 +127,7 @@ export default function BookingPage() {
 
   // Calculate pricing breakdown dynamically
   const nightlyTotal = formData.pricePerNight * formData.nights;
-  const addOnsTotal = 0;
-  const subtotal = nightlyTotal + addOnsTotal;
-  const vatAmount = Math.round(subtotal * 0.075);
-  const stateTax = Math.round(subtotal * 0.05);
-  const grandTotal = subtotal + vatAmount + stateTax;
+  const grandTotal = nightlyTotal;
 
   const toggleAddOn = (addonId: string) => {
     setFormData((prev) => {
@@ -778,31 +774,9 @@ export default function BookingPage() {
                 </span>
               </div>
 
-              {formData.selectedAddOns.length > 0 && (
-                <div className="flex justify-between items-center text-neutral-600 dark:text-neutral-400 border-t border-dashed border-[#E8E5DF] dark:border-[#2C2B29] pt-2">
-                  <span>Selected Add-On Services</span>
-                  <span className="font-semibold text-[#00AEEF]">
-                    +₦{addOnsTotal.toLocaleString()}
-                  </span>
-                </div>
-              )}
-
-              <div className="flex justify-between items-center text-neutral-600 dark:text-neutral-400">
-                <span>VAT (7.5%)</span>
-                <span className="text-[#111111] dark:text-white">
-                  ₦{vatAmount.toLocaleString()}
-                </span>
-              </div>
-              <div className="flex justify-between items-center text-neutral-600 dark:text-neutral-400">
-                <span>State Hospitality Tax (5%)</span>
-                <span className="text-[#111111] dark:text-white">
-                  ₦{stateTax.toLocaleString()}
-                </span>
-              </div>
-
               <div className="border-t border-[#E8E5DF] dark:border-[#2C2B29] pt-4 flex justify-between items-center text-sm">
                 <span className="font-bold text-[#111111] dark:text-white">
-                  Grand Total
+                  Total room charge
                 </span>
                 <span className="font-serif text-2xl font-bold text-[#00AEEF]">
                   ₦{grandTotal.toLocaleString()}

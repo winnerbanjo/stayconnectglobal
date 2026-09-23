@@ -280,7 +280,7 @@ export interface Booking {
   arrivalTime?: string;
   promoCode?: string;
   subtotal: number;
-  taxesAndFees: number; // 7.5% VAT + 5% Consumption Tax
+  taxesAndFees: number; // Always zero: guests are charged the room rate only.
   discountAmount: number;
   totalPrice: number;
   status:
