@@ -55,7 +55,7 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
           {/* Logo */}
           <Link href="/" className="group flex items-center shrink-0">
-            <div className="relative h-10 sm:h-12 w-40 sm:w-52 overflow-hidden rounded-sm bg-white transition-transform duration-300 group-hover:scale-105">
+            <div className="relative h-10 sm:h-12 w-40 sm:w-52 overflow-hidden rounded-sm bg-[#111111] transition-transform duration-300 group-hover:scale-105">
               <img
                 src="/images/logo.png"
                 alt="Stay Connect Global Logo"
@@ -383,7 +383,7 @@ export default function Navbar() {
           >
             <div className="flex flex-col gap-4">
               <div className="flex items-center justify-between border-b border-[#2C2B29] pb-4">
-                <div className="relative h-10 w-44 overflow-hidden rounded-sm bg-white">
+                <div className="relative h-10 w-44 overflow-hidden rounded-sm bg-[#111111]">
                   <img
                     src="/images/logo.png"
                     alt="Stay Connect Global Logo"

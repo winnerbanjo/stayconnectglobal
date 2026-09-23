@@ -27,7 +27,7 @@ export default function AdminMobileNav() {
   return (
     <div className="md:hidden border-b border-slate-200 bg-white px-4 py-3 sticky top-0 z-40">
       <div className="flex items-center justify-between">
-        <Link href="/admin" className="relative h-10 w-44 overflow-hidden rounded-sm bg-white">
+        <Link href="/admin" className="relative h-10 w-44 overflow-hidden rounded-sm bg-[#111111]">
           <img
             src="/images/logo.png"
             alt="Stay Connect Admin Logo"
