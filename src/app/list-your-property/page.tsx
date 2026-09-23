@@ -567,7 +567,7 @@ export default function ListYourPropertyPage() {
                       4. Property Photos (Direct File Upload)
                     </h3>
                     <p className="text-xs text-neutral-400 font-light mt-1">
-                      Add JPEG, PNG or WebP images up to 8 MB each. The first
+                      Add JPEG, PNG or WebP images up to 25 MB each (large photos are optimized automatically). The first
                       image is your cover. You can change it in your workspace.
                     </p>
                   </div>

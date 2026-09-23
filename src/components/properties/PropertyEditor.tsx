@@ -163,7 +163,7 @@ export default function PropertyEditor({
         ))}
       </div>
       <label className="block text-xs">
-        Add photos — JPEG, PNG, WebP, up to 8 MB each
+        Add photos — JPEG, PNG, WebP, up to 25 MB each (large photos are optimized automatically)
         <input
           type="file"
           multiple

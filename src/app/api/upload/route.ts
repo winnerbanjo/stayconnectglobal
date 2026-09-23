@@ -1,3 +1,4 @@
+import { MAX_IMAGE_UPLOAD_BYTES } from "@/lib/image-upload-limits";
 import { NextResponse } from "next/server";
 import cloudinary from "@/lib/cloudinary";
 import { localPreview } from "@/lib/platform/store";
@@ -11,8 +12,8 @@ export async function POST(request: Request) {
     if (!(file instanceof File)) throw new Error("Choose an image to upload");
     if (!["image/jpeg", "image/png", "image/webp"].includes(file.type))
       throw new Error("Use a JPEG, PNG or WebP image");
-    if (file.size > 8 * 1024 * 1024 || file.size === 0)
-      throw new Error("Each image must be between 1 byte and 8 MB");
+    if (file.size > MAX_IMAGE_UPLOAD_BYTES || file.size === 0)
+      throw new Error("This photo was not prepared for upload. Refresh the page and select it again.");
     const buffer = Buffer.from(await file.arrayBuffer());
     const jpeg = buffer[0] === 0xff && buffer[1] === 0xd8;
     const png = buffer

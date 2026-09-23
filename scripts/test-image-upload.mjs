@@ -11,8 +11,14 @@ function compile(path, customRequire = require, globals = {}) {
   return exports;
 }
 const validation = compile('src/lib/platform/validation.ts');
+const limits = compile('src/lib/image-upload-limits.ts');
 let fetchImpl, calls = 0;
-const { uploadImages } = compile('src/lib/upload-images.ts', id => id === '@/lib/platform/validation' ? validation : require(id), { FormData, fetch: (...args) => { calls++; return fetchImpl(...args); } });
+const { uploadImages } = compile('src/lib/upload-images.ts', id => {
+  if (id === '@/lib/platform/validation') return validation;
+  if (id === './image-upload-limits') return limits;
+  if (id === './prepare-upload-image') return { prepareUploadImage: async file => file };
+  return require(id);
+}, { FormData, fetch: (...args) => { calls++; return fetchImpl(...args); } });
 const photo = name => new File(['photo-bytes'], name, { type: 'image/png' });
 const ok = url => Response.json({success:true,url});
 let passed = 0;
@@ -21,6 +27,7 @@ const progress=[], attached=[];
 let resolveFirst;
 fetchImpl = () => new Promise(resolve => {resolveFirst = resolve;});
 const pending=uploadImages([photo('first.png'),photo('second.png')],{onProgress:p=>progress.push({...p}),onUploaded:url=>attached.push(url)});
+await new Promise(resolve => setImmediate(resolve));
 check(progress[0].completed===0&&progress[0].total===2&&progress[0].fileName==='first.png'&&attached.length===0,'Uploading state starts before the first request finishes');
 fetchImpl=async()=>Response.json({success:false,error:'Image storage unavailable'},{status:400});
 resolveFirst(ok('https://example.com/first.png'));
@@ -38,8 +45,8 @@ fetchImpl=async()=>Response.json({success:true});
 await assert.rejects(uploadImages([photo('missing-url.png')]),/Upload failed/);
 check(true,'A success response without a valid image URL is rejected');
 fetchImpl=async()=>new Response('Request too large',{status:413});
-await assert.rejects(uploadImages([photo('large.png')]),/too large/);
-check(true,'Server size limits give actionable feedback');
+await assert.rejects(uploadImages([photo('large.png')]),/upload gateway/);
+check(true,'Server payload limits give actionable retry feedback');
 fetchImpl=async()=>{throw new TypeError('Failed to fetch');};
 await assert.rejects(uploadImages([photo('offline.png')]),/Check your connection/);
 check(true,'Network errors include retry guidance');

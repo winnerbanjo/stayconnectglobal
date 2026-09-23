@@ -583,7 +583,7 @@ function AdminPropertiesPageContent() {
                         {uploading ? "Uploading photos…" : "Select photos to upload"}
                       </div>
                       <div className="text-[10px] text-slate-600">
-                        Select one or more JPG, PNG or WebP files, up to 8 MB each. At least one photo is required.
+                        Select one or more JPG, PNG or WebP files, up to 25 MB each (large photos are optimized automatically). At least one photo is required.
                       </div>
                     </div>
                     <input
