@@ -34,6 +34,7 @@ export interface IPartner extends Document {
 const PartnerSchema = new Schema(
   {
     id: { type: String, index: true },
+    archivedAt: String,
     accessTokenHash: String,
     propertyId: String,
     images: [String],

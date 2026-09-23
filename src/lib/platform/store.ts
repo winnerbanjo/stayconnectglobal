@@ -9,7 +9,6 @@ import Property from "@/lib/models/Property";
 import Room from "@/lib/models/Room";
 import Booking from "@/lib/models/Booking";
 import Partner from "@/lib/models/Partner";
-import { INITIAL_PROPERTIES, INITIAL_ROOMS } from "@/lib/data/seedData";
 
 export const localPreview = process.env.STAYCONNECT_LOCAL_PREVIEW === "true";
 type Collection = "properties" | "rooms" | "bookings" | "partners" | "fleet" | "dining" | "housekeeping";
@@ -25,8 +24,8 @@ const models = {
 const dir = path.join(process.cwd(), ".local-data");
 const file = path.join(dir, "platform.json");
 const initial = () => ({
-  properties: INITIAL_PROPERTIES,
-  rooms: INITIAL_ROOMS,
+  properties: [],
+  rooms: [],
   fleet: [],
   dining: [],
   housekeeping: [],
@@ -61,19 +60,19 @@ async function readLocal(): Promise<Record<Collection, any[]>> {
 }
 export function normalize(item: any, collection?: Collection): any {
   const value = JSON.parse(JSON.stringify(item));
-  const legacy = [...INITIAL_PROPERTIES, ...INITIAL_ROOMS].find(p => p.slug === value.slug);
-  value.id = value.id || legacy?.id || value._id || value.partnerId;
+  // Keep historical links stable without importing sample listing contents.
+  const legacyId = collection === "properties" && value.slug === "stay-connect-lekki"
+    ? "prop-lekki-1"
+    : collection === "rooms" && value.slug === "standard-room" ? "room-standard-1" : undefined;
+  value.id = value.id || legacyId || value._id || value.partnerId;
   if (collection === 'properties') {
-    const defaults = INITIAL_PROPERTIES.find(p => p.slug === value.slug);
-    value.category ||= defaults?.category || 'Luxury Hotel';
-    value.area ||= defaults?.area || '';
-    value.hostName ||= defaults?.hostName;
-    value.coordinates ||= defaults?.coordinates || { lat: 0, lng: 0 };
-    value.policies = { checkInTime: '3:00 PM', checkOutTime: '12:00 PM', cancellation: 'Contact the property for cancellation terms.', petsAllowed: false, smokingAllowed: false, ...(defaults?.policies || {}), ...(value.policies || {}) };
+    value.category ||= 'Luxury Hotel';
+    value.area ||= '';
+    value.coordinates ||= { lat: 0, lng: 0 };
+    value.policies = { checkInTime: '3:00 PM', checkOutTime: '12:00 PM', cancellation: 'Contact the property for cancellation terms.', petsAllowed: false, smokingAllowed: false, ...(value.policies || {}) };
     value.gallery ||= value.heroImage ? [value.heroImage] : [];
-    value.amenities = (value.amenities || defaults?.amenities || []).map((a: any, i: number) => typeof a === 'string' ? { id: `amenity-${i}`, name: a, category: 'general', icon: 'CheckCircle2' } : a);
+    value.amenities = (value.amenities || []).map((a: any, i: number) => typeof a === 'string' ? { id: `amenity-${i}`, name: a, category: 'general', icon: 'CheckCircle2' } : a);
     value.verificationStatus ||= value.isVerified !== false && value.published ? 'Approved' : 'Draft';
-    if (defaults && ['Stay Connect Lekki', 'Stay Connect Sanctuary Lekki'].includes(value.name)) value.name = defaults.name;
   }
   if (collection === 'bookings') {
     value.bookingRef ||= `LEGACY-${value.id}`;
@@ -92,10 +91,10 @@ export function normalize(item: any, collection?: Collection): any {
 // reservations belong in this application's dashboard and inventory calculations.
 export const hotelBooking = (item: any) => typeof item.roomId === "string" && typeof item.checkIn === "string";
 export async function list(collection: Collection): Promise<any[]> {
-  if (localPreview) return (await readLocal())[collection].filter(item => (collection !== "bookings" || hotelBooking(item)) && (collection !== "properties" || !item.archivedAt)).map(item => normalize(item, collection));
+  if (localPreview) return (await readLocal())[collection].filter(item => (collection !== "bookings" || hotelBooking(item)) && !item.archivedAt).map(item => normalize(item, collection));
   const conn = await connectToDatabase();
   if (!conn) throw new Error("Database unavailable. Please try again shortly.");
-  return (await models[collection].find(collection === "bookings" ? { roomId: { $type: "string" }, checkIn: { $type: "string" } } : collection === "properties" ? { archivedAt: { $exists: false } } : {}).session(sessions.getStore() || null).lean()).map(item => normalize(item, collection));
+  return (await models[collection].find({ archivedAt: { $exists: false }, ...(collection === "bookings" ? { roomId: { $type: "string" }, checkIn: { $type: "string" } } : {}) }).session(sessions.getStore() || null).lean()).map(item => normalize(item, collection));
 }
 export async function save(collection: Collection, item: any): Promise<any> {
   if (localPreview) {

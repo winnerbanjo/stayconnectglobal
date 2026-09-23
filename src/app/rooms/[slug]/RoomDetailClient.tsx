@@ -46,9 +46,6 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
         String(Math.min(Number(params.get("guests")) || 2, room.maxGuests)),
       );
   }, [room.maxGuests]);
-  const [reviewModalOpen, setReviewModalOpen] = useState(false);
-  const [reviewSuccess, setReviewSuccess] = useState(false);
-
   // Calculate nights
   const d1 = new Date(checkIn);
   const d2 = new Date(checkOut);
@@ -64,15 +61,6 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
     `Hello Stay Connect Concierge, I would like to book the ${room.name} (${room.type} Suite) at ${room.address} from ${checkIn} to ${checkOut} (${nights} nights) for ${guests} guest(s). Total estimated: ₦${total.toLocaleString()}.`,
   );
   const whatsappUrl = `https://wa.me/2347041008351?text=${whatsappMessage}`;
-
-  const handleReviewSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setReviewSuccess(true);
-    setTimeout(() => {
-      setReviewModalOpen(false);
-      setReviewSuccess(false);
-    }, 2000);
-  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 space-y-8 sm:space-y-12">
@@ -250,7 +238,7 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
                 </h3>
                 <div className="flex items-center gap-2 mt-1">
                   <div className="flex items-center text-[#C6A15B]">
-                    {[...Array(5)].map((_, i) => (
+                    {[...Array(room.reviewCount > 0 ? Math.round(room.rating) : 0)].map((_, i) => (
                       <Star
                         key={i}
                         className="w-4 h-4 sm:w-5 sm:h-5 fill-[#C6A15B]"
@@ -258,7 +246,7 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
                     ))}
                   </div>
                   <span className="font-serif text-lg sm:text-xl font-bold text-[#111111]">
-                    {room.rating.toFixed(1)} out of 5 stars
+                    {room.reviewCount > 0 ? `${room.rating.toFixed(1)} out of 5 stars` : "No reviews yet"}
                   </span>
                   <span className="text-xs text-neutral-500 font-light">
                     ({room.reviewCount} review)
@@ -266,12 +254,7 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
                 </div>
               </div>
 
-              <button
-                onClick={() => setReviewModalOpen(true)}
-                className="px-5 py-2.5 bg-[#111111] hover:bg-[#C6A15B] text-white hover:text-[#111111] text-xs font-medium uppercase tracking-widest rounded-lg transition-colors self-start sm:self-center"
-              >
-                Submit a Review
-              </button>
+
             </div>
           </div>
         </div>
@@ -294,7 +277,7 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
               </div>
               <div className="flex items-center gap-1 text-xs text-[#C6A15B] font-semibold bg-[#1A1918] px-3 py-1 rounded-full border border-[#2C2B29]">
                 <Star className="w-3.5 h-3.5 fill-[#C6A15B]" />
-                <span>{room.rating.toFixed(1)}</span>
+                <span>{room.reviewCount > 0 ? room.rating.toFixed(1) : "Not yet rated"}</span>
               </div>
             </div>
 

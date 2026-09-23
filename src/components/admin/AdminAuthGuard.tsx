@@ -19,6 +19,7 @@ export default function AdminAuthGuard({ children }: AdminAuthGuardProps) {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     fetch("/api/admin/session")
@@ -29,6 +30,9 @@ export default function AdminAuthGuard({ children }: AdminAuthGuardProps) {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+    setError("");
     try {
       const res = await fetch("/api/admin/session", {
         method: "POST",
@@ -40,8 +44,10 @@ export default function AdminAuthGuard({ children }: AdminAuthGuardProps) {
       setIsAuthenticated(true);
       setError("");
       window.location.reload();
-    } catch (e: any) {
-      setError(e.message);
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : "Unable to sign in. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -76,12 +82,15 @@ export default function AdminAuthGuard({ children }: AdminAuthGuardProps) {
 
           <form onSubmit={handleLogin} className="space-y-4">
             <div className="space-y-1">
-              <label className="text-xs text-neutral-300 font-medium flex items-center gap-1.5">
+              <label htmlFor="admin-password" className="text-xs text-neutral-300 font-medium flex items-center gap-1.5">
                 <Lock className="w-3.5 h-3.5 text-[#C6A15B]" />
                 <span>Admin Password</span>
               </label>
               <div className="relative">
                 <input
+                  id="admin-password"
+                  name="password"
+                  autoComplete="current-password"
                   type={showPassword ? "text" : "password"}
                   required
                   placeholder="Enter admin password..."
@@ -91,6 +100,7 @@ export default function AdminAuthGuard({ children }: AdminAuthGuardProps) {
                 />
                 <button
                   type="button"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-white"
                 >
@@ -104,16 +114,17 @@ export default function AdminAuthGuard({ children }: AdminAuthGuardProps) {
             </div>
 
             {error && (
-              <div className="p-3 rounded-lg bg-rose-950/60 border border-rose-800 text-rose-300 text-xs text-center">
+              <div role="alert" className="p-3 rounded-lg bg-rose-950/60 border border-rose-800 text-rose-300 text-xs text-center">
                 {error}
               </div>
             )}
 
             <button
               type="submit"
+              disabled={isSubmitting}
               className="w-full py-3.5 bg-[#C6A15B] hover:bg-[#B08C46] text-[#111111] font-semibold text-xs uppercase tracking-[0.2em] rounded-lg transition-all duration-300 flex items-center justify-center gap-2 shadow-xl group active:scale-95"
             >
-              <span>Unlock Admin Panel</span>
+              <span>{isSubmitting ? "Signing in…" : "Unlock Admin Panel"}</span>
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </button>
           </form>

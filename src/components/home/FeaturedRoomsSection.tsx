@@ -17,7 +17,6 @@ import {
   Crown,
   CheckCircle2,
 } from "lucide-react";
-import { INITIAL_ROOMS, INITIAL_PROPERTIES } from "@/lib/data/seedData";
 
 export default function FeaturedRoomsSection() {
   const [liveRooms, setLiveRooms] = useState<Room[]>([]);
@@ -90,7 +89,7 @@ export default function FeaturedRoomsSection() {
                 </div>
                 <div className="flex items-center gap-1 text-xs font-semibold text-[#C6A15B]">
                   <Star className="w-4 h-4 fill-[#C6A15B]" />
-                  <span>5.0 (Verified Sanctuary)</span>
+                  <span>{standardRoom.reviewCount > 0 ? `${standardRoom.rating.toFixed(1)} (${standardRoom.reviewCount} reviews)` : "No reviews yet"}</span>
                 </div>
               </div>
             </div>

@@ -47,7 +47,7 @@ const RoomSchema = new Schema(
     pricePerNight: { type: Number, required: true },
     weekendPricePerNight: { type: Number },
     holidayPricePerNight: { type: Number },
-    rating: { type: Number, default: 5.0 },
+    rating: { type: Number, default: 0 },
     reviewCount: { type: Number, default: 0 },
     description: { type: String, required: true },
     heroImage: { type: String, required: true },

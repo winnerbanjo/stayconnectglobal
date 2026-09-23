@@ -24,31 +24,6 @@ import {
 } from "lucide-react";
 import Navbar from "@/components/navigation/Navbar";
 import Footer from "@/components/navigation/Footer";
-import { INITIAL_ROOMS } from "@/lib/data/seedData";
-
-const ADDON_SERVICES = [
-  {
-    id: "chauffeur-rr",
-    name: "Range Rover Chauffeur Mobility",
-    price: 150000,
-    desc: "Dedicated Range Rover Autobiography SUV with diplomatic protocol chauffeur.",
-    icon: Car,
-  },
-  {
-    id: "tarmac-escort",
-    name: "Airport VIP Tarmac Escort",
-    price: 75000,
-    desc: "MMIA / ABV tarmac escort, VIP lounge access, and expedited luggage handling.",
-    icon: Plane,
-  },
-  {
-    id: "private-chef",
-    name: "In-Suite Private Chef Service",
-    price: 90000,
-    desc: "Michelin-trained private chef for customized 3-course suite dining.",
-    icon: ConciergeBell,
-  },
-];
 
 export default function BookingPage() {
   const [rooms, setRooms] = useState<any[]>([]);
@@ -61,9 +36,9 @@ export default function BookingPage() {
   const [bookingCompleted, setBookingCompleted] = useState<any>(null);
 
   const [formData, setFormData] = useState({
-    suiteSlug: "standard-room",
-    suiteName: "Standard Room (14B Providence)",
-    pricePerNight: 100000,
+    suiteSlug: "",
+    suiteName: "",
+    pricePerNight: 0,
     checkIn: new Date().toISOString().slice(0, 10),
     checkOut: new Date(Date.now() + 86400000).toISOString().slice(0, 10),
     nights: 1,
@@ -148,10 +123,7 @@ export default function BookingPage() {
 
   // Calculate pricing breakdown dynamically
   const nightlyTotal = formData.pricePerNight * formData.nights;
-  const addOnsTotal = formData.selectedAddOns.reduce((acc, addonId) => {
-    const item = ADDON_SERVICES.find((a) => a.id === addonId);
-    return acc + (item ? item.price : 0);
-  }, 0);
+  const addOnsTotal = 0;
   const subtotal = nightlyTotal + addOnsTotal;
   const vatAmount = Math.round(subtotal * 0.075);
   const stateTax = Math.round(subtotal * 0.05);
@@ -545,44 +517,12 @@ export default function BookingPage() {
                     Step 3: Enhance Your Stay
                   </h3>
                   <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                    Bundle Range Rover chauffeur mobility, airport VIP escorts,
-                    or private chefs.
+                    Additional services are arranged separately with our concierge, subject to availability and a confirmed quote.
                   </p>
                 </div>
 
                 <div className="space-y-3">
-                  {ADDON_SERVICES.map((addon) => {
-                    const Icon = addon.icon;
-                    const selected = formData.selectedAddOns.includes(addon.id);
-                    return (
-                      <div
-                        key={addon.id}
-                        onClick={() => toggleAddOn(addon.id)}
-                        className={`p-4 rounded-2xl border cursor-pointer transition-all flex items-start gap-4 ${
-                          selected
-                            ? "border-[#C6A15B] bg-[#C6A15B]/10 shadow-md"
-                            : "border-[#E8E5DF] dark:border-[#2C2B29] bg-[#FAF9F6] dark:bg-[#111111]"
-                        }`}
-                      >
-                        <div className="w-10 h-10 rounded-xl bg-white dark:bg-[#1A1918] border border-[#E8E5DF] dark:border-[#2C2B29] flex items-center justify-center text-[#C6A15B] shrink-0 mt-0.5">
-                          <Icon className="w-5 h-5" />
-                        </div>
-                        <div className="flex-1 space-y-1">
-                          <div className="flex items-center justify-between">
-                            <h4 className="font-serif text-base text-[#111111] dark:text-white font-medium">
-                              {addon.name}
-                            </h4>
-                            <span className="text-xs font-semibold text-[#C6A15B]">
-                              +₦{addon.price.toLocaleString()}
-                            </span>
-                          </div>
-                          <p className="text-xs text-neutral-500 dark:text-neutral-400 font-light">
-                            {addon.desc}
-                          </p>
-                        </div>
-                      </div>
-                    );
-                  })}
+                  <a href="https://wa.me/2347041008351" target="_blank" rel="noopener noreferrer" className="text-[#947137] underline">Ask the concierge about additional services</a>
                 </div>
 
                 <div className="flex items-center gap-3 pt-2">

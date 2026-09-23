@@ -22,20 +22,13 @@ const input = z.object({
   guestPhone: z.string().trim().min(7),
   specialRequests: z.string().max(2000).default(""),
   paymentMethod: z.enum(["Bank Transfer", "Pay at Hotel"]),
-  selectedAddOns: z
-    .array(z.enum(["chauffeur-rr", "tarmac-escort", "private-chef"]))
-    .default([]),
+  selectedAddOns: z.array(z.string()).max(0, "Additional services must be arranged with the concierge").default([]),
   agentCode: z
     .string()
     .regex(/^[a-zA-Z0-9_-]{2,40}$/)
     .optional(),
   visitorId: z.string().max(100).optional(),
 });
-const addOns = {
-  "chauffeur-rr": 150000,
-  "tarmac-escort": 75000,
-  "private-chef": 90000,
-};
 export async function GET() {
   try {
     await requireAdmin();
@@ -76,12 +69,7 @@ export async function POST(req: Request) {
           `This room accommodates up to ${room.maxGuests} guests`,
         );
       // A reservation is a request until payment is confirmed; it does not silently consume inventory.
-      const subtotal =
-        room.pricePerNight * nights +
-        [...new Set(body.selectedAddOns)].reduce(
-          (sum, id) => sum + addOns[id],
-          0,
-        );
+      const subtotal = room.pricePerNight * nights;
       const taxesAndFees =
         Math.round(subtotal * 0.075) + Math.round(subtotal * 0.05);
       const booking = {
@@ -123,12 +111,17 @@ export async function PATCH(req: Request) {
   try {
     await requireAdmin();
     const { id, action } = await req.json();
-    if (action !== "confirm-payment")
+    if (!["confirm-payment", "archive"].includes(action))
       throw new Error("Unsupported booking action");
     const data = await transaction(async () => {
       const bookings = await list("bookings");
       const booking = bookings.find((b) => b.id === id);
       if (!booking) throw new Error("Booking not found");
+      if (action === "archive") {
+        if (booking.paymentStatus === "Paid" || booking.status === "Checked In" || booking.checkOut >= new Date().toISOString().slice(0, 10))
+          throw new Error("Only past unpaid reservations can be archived");
+        return save("bookings", { ...booking, archivedAt: new Date().toISOString() });
+      }
       if (booking.paymentStatus === "Paid") return booking;
       if (["Cancelled", "Refunded", "Checked Out"].includes(booking.status))
         throw new Error("Payment cannot be confirmed for this booking status");

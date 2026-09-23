@@ -1,62 +1,22 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { MapPin, ArrowRight } from 'lucide-react';
 
-const DESTINATIONS = [
-  {
-    name: 'Lekki Phase 1',
-    city: 'Lagos',
-    propertiesCount: '18 Places to Stay',
-    image: '/images/saffron/saffron-1.jpg',
-    tag: 'Flagship Sanctuary',
-    slug: 'Lagos',
-  },
-  {
-    name: 'Ikoyi',
-    city: 'Lagos',
-    propertiesCount: '12 Luxury Residences',
-    image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1200&q=90',
-    tag: 'Waterfront Penthouses',
-    slug: 'Lagos',
-  },
-  {
-    name: 'Banana Island',
-    city: 'Lagos',
-    propertiesCount: '6 Private Villas',
-    image: 'https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1200&q=90',
-    tag: 'Ultra-Private Enclave',
-    slug: 'Lagos',
-  },
-  {
-    name: 'Victoria Island',
-    city: 'Lagos',
-    propertiesCount: '15 Executive Suites',
-    image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1200&q=90',
-    tag: 'Financial District',
-    slug: 'Lagos',
-  },
-  {
-    name: 'Maitama & Asokoro',
-    city: 'Abuja',
-    propertiesCount: '10 Diplomatic Residences',
-    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=90',
-    tag: 'Diplomatic Enclave',
-    slug: 'Abuja',
-  },
-  {
-    name: 'GRA & Waterlines',
-    city: 'Port Harcourt',
-    propertiesCount: '8 Executive Shortlets',
-    image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=90',
-    tag: 'Oil & Gas Hub',
-    slug: 'Port Harcourt',
-  },
-];
-
 export default function DestinationsSection() {
+  const [properties, setProperties] = useState<any[]>([]);
+  useEffect(() => {
+    fetch('/api/properties').then(r => r.json()).then(j => {
+      if (j.success) setProperties(j.data);
+    }).catch(() => {});
+  }, []);
+  const destinations = [...new Set(properties.map(p => p.area || p.city))].filter(Boolean).map(name => {
+    const listings = properties.filter(p => (p.area || p.city) === name);
+    return { name, city: listings[0].city, propertiesCount: `${listings.length} ${listings.length === 1 ? 'property' : 'properties'}`, image: listings[0].heroImage, tag: 'Explore stays', slug: name };
+  });
+  if (!destinations.length) return null;
   return (
     <section className="py-20 sm:py-28 bg-[#FAF9F6] dark:bg-[#111111] text-[#111111] dark:text-white border-t border-[#E8E5DF] dark:border-[#2C2B29] transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 space-y-12">
@@ -84,7 +44,7 @@ export default function DestinationsSection() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {DESTINATIONS.map((dest, i) => (
+          {destinations.map((dest, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}

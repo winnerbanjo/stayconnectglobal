@@ -40,25 +40,24 @@ function AdminRoomsPageContent() {
   const [loadingRooms, setLoadingRooms] = useState(false);
 
   const [formData, setFormData] = useState({
-    propertyId: "prop-lekki-1",
+    propertyId: "",
     numberOfUnits: 1,
     name: "",
-    tagline: "Executive Single Suite",
+    tagline: "",
     type: "Executive",
-    pricePerNight: 100000,
-    weekendPricePerNight: 120000,
+    pricePerNight: 0,
+    weekendPricePerNight: 0,
     maxGuests: 2,
-    propertySize: 160,
+    propertySize: 0,
     bedrooms: 1,
     bathrooms: 1,
-    address: "14B, Providence Street, Lekki, Lagos",
+    address: "",
     description: "",
-    heroImage: "/images/saffron/saffron-1.jpg",
+    heroImage: "",
     gallery: [] as string[],
     partnerId: "",
     hostName: "",
-    amenities:
-      "WiFi, Air Conditioning, Smart TV, Netflix, Coffee Machine, Room Service",
+    amenities: "",
   });
 
   const fetchLivePartners = async () => {
@@ -144,25 +143,20 @@ function AdminRoomsPageContent() {
       numberOfUnits: formData.numberOfUnits,
       type: formData.type,
       address: formData.address,
-      city: "Lagos, Nigeria",
+      city: properties.find(p => p.id === formData.propertyId)?.city || "",
       maxGuests: Number(formData.maxGuests),
       propertySize: Number(formData.propertySize),
       bedrooms: Number(formData.bedrooms),
       bathrooms: Number(formData.bathrooms),
       pricePerNight: Number(formData.pricePerNight),
       weekendPricePerNight: Number(formData.weekendPricePerNight),
-      description:
-        formData.description ||
-        "Newly added luxury executive suite in Lekki Phase 1.",
-      heroImage:
-        formData.heroImage ||
-        formData.gallery[0] ||
-        "/images/saffron/saffron-1.jpg",
+      description: formData.description,
+      heroImage: formData.heroImage || formData.gallery[0] || "",
       gallery:
         formData.gallery.length > 0 ? formData.gallery : [formData.heroImage],
       partnerId: formData.partnerId || undefined,
       hostName: formData.hostName || undefined,
-      amenities: formData.amenities.split(",").map((s) => s.trim()),
+      amenities: formData.amenities.split(",").map((s) => s.trim()).filter(Boolean),
     };
 
     try {

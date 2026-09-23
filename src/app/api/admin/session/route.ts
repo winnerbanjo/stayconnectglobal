@@ -1,14 +1,21 @@
 import { NextResponse } from "next/server";
-import { isAdmin, sign, matches } from "@/lib/platform/auth";
+import { isAdmin, sign, matches, adminPassword, adminConfigured } from "@/lib/platform/auth";
 import { localPreview } from "@/lib/platform/store";
 export async function GET() {
   return NextResponse.json({ authenticated: await isAdmin(), localPreview });
 }
 export async function POST(req: Request) {
-  const { password } = await req.json();
-  const expected =
-    process.env.ADMIN_PASSWORD || (localPreview ? "stayconnect1" : "");
-  if (!expected || typeof password !== "string" || !matches(password, expected))
+  if (!adminConfigured()) {
+    return NextResponse.json(
+      { error: "Administrator access is not configured on the server. Set ADMIN_PASSWORD and ADMIN_SESSION_SECRET in the hosting environment, then redeploy." },
+      { status: 503 },
+    );
+  }
+  let body;
+  try { body = await req.json(); }
+  catch { return NextResponse.json({ error: "Enter your administrator password." }, { status: 400 }); }
+  const password = body?.password;
+  if (typeof password !== "string" || !matches(password, adminPassword()))
     return NextResponse.json(
       { error: "Invalid administrator password" },
       { status: 401 },

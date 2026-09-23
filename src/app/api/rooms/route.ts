@@ -43,21 +43,21 @@ export async function POST(request: Request) {
       id: `room-${randomUUID()}`,
       slug,
       name: body.name,
-      tagline: body.tagline || "Luxury Executive Suite",
-      propertyId: body.propertyId || "prop-lekki-1",
+      tagline: body.tagline || body.name,
+      propertyId: property.id,
       type: body.type || "Executive",
-      address: body.address || "14B, Providence Street, Lekki, Lagos",
+      address: body.address || property.address,
       city: property.city,
       numberOfUnits: Number(body.numberOfUnits) || 1,
-      badge: "TLC ⭐⭐⭐⭐⭐",
+      badge: "",
       maxGuests: Number(body.maxGuests) || 2,
-      propertySize: Number(body.propertySize) || 150,
+      propertySize: Number(body.propertySize) || 0,
       bedrooms: Number(body.bedrooms) || 1,
       bathrooms: Number(body.bathrooms) || 1,
-      pricePerNight: Number(body.pricePerNight) || 100000,
-      weekendPricePerNight: Number(body.weekendPricePerNight) || 120000,
-      holidayPricePerNight: Number(body.holidayPricePerNight) || 150000,
-      rating: 5.0,
+      pricePerNight: Number(body.pricePerNight),
+      weekendPricePerNight: Number(body.weekendPricePerNight) || Number(body.pricePerNight),
+      holidayPricePerNight: Number(body.holidayPricePerNight) || Number(body.pricePerNight),
+      rating: 0,
       reviewCount: 0,
       ratingBreakdown: {
         fiveStar: 0,
@@ -71,30 +71,12 @@ export async function POST(request: Request) {
       gallery: body.gallery || [
         body.heroImage || "/images/saffron/saffron-1.jpg",
       ],
-      amenities: body.amenities || [
-        "WiFi",
-        "Air Conditioning",
-        "Smart TV",
-        "Coffee Machine",
-      ],
+      amenities: body.amenities || [],
       features: {
-        bedType: "King Size Pillow-top",
-        view: "Lekki Skyline View",
-        floor: "Executive Level",
-        balcony: true,
-        workspace: true,
-        miniBar: true,
-        coffeeMachine: true,
-        smartTV: true,
-        netflix: true,
-        wifi: true,
-        safe: true,
-        closet: true,
-        hairDryer: true,
-        refrigerator: true,
-        cable: true,
-        roomService: true,
-        housekeeping: true,
+        bedType: "", view: "", floor: "", balcony: false, workspace: false,
+        miniBar: false, coffeeMachine: false, smartTV: false, netflix: false,
+        wifi: false, safe: false, closet: false, hairDryer: false,
+        refrigerator: false, cable: false, roomService: false, housekeeping: false,
       },
       published: true,
       featured: true,
@@ -120,6 +102,10 @@ export async function PATCH(request: Request) {
     const data = await transaction(async () => {
       const room = (await list("rooms")).find((r) => r.id === body.id);
       if (!room) throw new Error("Room not found");
+      if (body.action === "clear-reviews") {
+        return save("rooms", { ...room, rating: 0, reviewCount: 0,
+          ratingBreakdown: { fiveStar: 0, fourStar: 0, threeStar: 0, twoStar: 0, oneStar: 0 } });
+      }
       const update = z
         .object({
           numberOfUnits: z.coerce.number().int().min(1).max(100000),

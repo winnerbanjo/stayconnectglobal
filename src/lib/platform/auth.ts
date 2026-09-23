@@ -4,6 +4,8 @@ import { localPreview } from "./store";
 const key = () =>
   process.env.ADMIN_SESSION_SECRET ||
   (localPreview ? "local-preview-session-only" : "");
+export const adminPassword = () => process.env.ADMIN_PASSWORD || (localPreview ? "stayconnect1" : "");
+export const adminConfigured = () => !!adminPassword() && !!key();
 export function sign(value: string) {
   if (!key()) throw new Error("Admin session secret is not configured");
   return createHmac("sha256", key()).update(value).digest("hex");

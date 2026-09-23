@@ -6,6 +6,7 @@ import { Star, Quote, CheckCircle2 } from 'lucide-react';
 import { INITIAL_REVIEWS } from '@/lib/data/seedData';
 
 export default function TestimonialsSection() {
+  if (!INITIAL_REVIEWS.length) return null;
   return (
     <section className="py-24 bg-[#FAF9F6] text-[#111111]">
       <div className="max-w-7xl mx-auto px-6 lg:px-12 space-y-16">

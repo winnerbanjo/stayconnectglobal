@@ -19,6 +19,21 @@ export async function GET() {
     return errorResponse(e);
   }
 }
+export async function PATCH(req: Request) {
+  try {
+    await requireAdmin();
+    const { id } = z.object({ id: z.string().min(1), action: z.literal("archive") }).parse(await req.json());
+    await transaction(async () => {
+      const partner = (await list("partners")).find(p => p.id === id);
+      if (!partner) throw new Error("Partner not found");
+      if (partner.status !== "Pending") throw new Error("Only pending applications can be archived");
+      if ((await list("properties")).some(p => p.partnerId === partner.partnerId || p.id === partner.propertyId))
+        throw new Error("Archive linked properties before archiving this application");
+      await save("partners", { ...partner, archivedAt: new Date().toISOString() });
+    });
+    return NextResponse.json({ success: true });
+  } catch (e) { return errorResponse(e); }
+}
 export async function POST(req: Request) {
   try {
     const body = await req.json();

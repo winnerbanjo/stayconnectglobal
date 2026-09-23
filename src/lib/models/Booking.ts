@@ -35,6 +35,7 @@ export interface IBooking extends Document {
 const BookingSchema = new Schema(
   {
     id: { type: String, index: true },
+    archivedAt: String,
     agentCode: String,
     agentName: String,
     visitorId: String,
