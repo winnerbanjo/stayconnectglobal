@@ -364,7 +364,13 @@ function AdminPropertiesPageContent() {
                     <h3 className="font-serif text-xl sm:text-2xl text-slate-900">
                       {prop.name}
                     </h3>
-                    <span className="px-3 py-1 bg-emerald-50 text-emerald-700 text-[10px] uppercase font-bold rounded-full border border-emerald-200 self-start sm:self-auto">
+                    <span
+                      className={`px-3 py-1 text-[10px] uppercase font-bold rounded-full border self-start sm:self-auto ${
+                        prop.verificationStatus === "Approved"
+                          ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                          : "bg-amber-50 text-amber-800 border-amber-200"
+                      }`}
+                    >
                       {prop.verificationStatus || "Approved"}
                     </span>
                   </div>
@@ -382,7 +388,7 @@ function AdminPropertiesPageContent() {
                   {prop.reviewNote && (
                     <p className="text-sm text-amber-800">{prop.reviewNote}</p>
                   )}
-                  <div className="flex gap-4 flex-wrap text-sm">
+                  <div className="flex gap-4 items-center flex-wrap text-sm">
                     <button
                       onClick={() => {
                         setError("");
@@ -393,15 +399,22 @@ function AdminPropertiesPageContent() {
                     >
                       Edit details & photos
                     </button>
-                    {["Draft", "Changes Required"].includes(
-                      prop.verificationStatus || "",
-                    ) && (
+                    {prop.verificationStatus !== "Approved" ? (
                       <button
                         disabled={reviewing}
-                        onClick={() => review(prop.id, "submit")}
-                        className="text-[#0077B6]"
+                        onClick={() => review(prop.id, "approve")}
+                        className="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs rounded-lg flex items-center gap-1.5 shadow-sm transition-all"
                       >
-                        Submit for verification
+                        <CheckCircle className="w-3.5 h-3.5" />
+                        <span>Approve & Publish to Site</span>
+                      </button>
+                    ) : (
+                      <button
+                        disabled={reviewing}
+                        onClick={() => review(prop.id, "unpublish")}
+                        className="text-xs text-slate-500 hover:text-rose-600 underline"
+                      >
+                        Unpublish
                       </button>
                     )}
                   </div>

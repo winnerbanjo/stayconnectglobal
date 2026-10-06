@@ -126,9 +126,15 @@ export async function save(collection: Collection, item: any): Promise<any> {
   return normalize(result, collection);
 }
 export const visible = (p: any) =>
-  p.published &&
-  (p.verificationStatus === "Approved" ||
-    (!p.verificationStatus && p.isVerified !== false));
+  !p.archivedAt &&
+  p.verificationStatus !== "Rejected" &&
+  p.verificationStatus !== "Unpublished" &&
+  (
+    p.verificationStatus === "Approved" ||
+    p.published === true ||
+    !p.partnerId ||
+    (!p.verificationStatus && p.isVerified !== false)
+  );
 export const belongsTo = (room: any, property: any) => [property.id, property._id, property.slug].filter(Boolean).includes(String(room.propertyId));
 export async function publicProperties() {
   const properties = (await list('properties')).filter(visible);

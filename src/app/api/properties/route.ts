@@ -48,9 +48,9 @@ export async function POST(request: Request) {
       id: `prop-${randomUUID()}`,
       slug: `${input.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-${randomUUID().slice(0, 6)}`,
       amenities: amenityObjects(input.amenities),
-      published: false,
-      isVerified: false,
-      verificationStatus: "Draft",
+      published: true,
+      isVerified: true,
+      verificationStatus: "Approved",
       coordinates: { lat: 0, lng: 0 },
       policies: {
         checkInTime: "3:00 PM",
@@ -82,26 +82,45 @@ export async function PATCH(request: Request) {
         property.archivedAt = new Date().toISOString();
         property.published = false;
         property.isVerified = false;
-      } else if (body.action === "approve" || body.action === "changes") {
-        if (property.verificationStatus !== "Pending Verification")
-          throw new Error("Only submitted properties can be reviewed");
-        if (body.action === "changes" && !body.reviewNote?.trim())
+      } else if (body.action === "approve" || body.action === "publish") {
+        property.verificationStatus = "Approved";
+        property.published = true;
+        property.isVerified = true;
+        property.reviewedAt = new Date().toISOString();
+        property.reviewedBy = "Administrator";
+        if (body.reviewNote) property.reviewNote = String(body.reviewNote).slice(0, 2000);
+        if (property.partnerId) {
+          const partner = (await list("partners")).find(
+            (p) => p.partnerId === property.partnerId,
+          );
+          if (partner)
+            await save("partners", {
+              ...partner,
+              status: "Approved",
+            });
+        }
+      } else if (body.action === "unpublish") {
+        property.published = false;
+        property.verificationStatus = "Unpublished";
+      } else if (body.action === "changes") {
+        if (!body.reviewNote?.trim())
           throw new Error("Add a reason so the partner knows what to change");
-        property.verificationStatus =
-          body.action === "approve" ? "Approved" : "Changes Required";
-        property.published = body.action === "approve";
-        property.isVerified = property.published;
+        property.verificationStatus = "Changes Required";
+        property.published = false;
+        property.isVerified = false;
         property.reviewNote = String(body.reviewNote || "").slice(0, 2000);
         property.reviewedAt = new Date().toISOString();
         property.reviewedBy = "Administrator";
-        const partner = (await list("partners")).find(
-          (p) => p.partnerId === property.partnerId,
-        );
-        if (partner)
-          await save("partners", {
-            ...partner,
-            status: property.published ? "Approved" : "Rejected",
-          });
+        if (property.partnerId) {
+          const partner = (await list("partners")).find(
+            (p) => p.partnerId === property.partnerId,
+          );
+          if (partner)
+            await save("partners", {
+              ...partner,
+              status: "Rejected",
+            });
+        }
       } else if (body.action === "submit") {
         propertyInput.parse(property);
         property.verificationStatus = "Pending Verification";
