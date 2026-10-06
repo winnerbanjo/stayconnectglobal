@@ -3,21 +3,12 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { Room, Property } from "@/types";
 import Link from "next/link";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import {
-  Star,
-  Users,
-  Maximize,
-  Bed,
-  Bath,
   ArrowRight,
   ShieldCheck,
-  Building2,
   Crown,
   MapPin,
-  Sparkles,
-  CheckCircle2,
 } from "lucide-react";
 
 function cleanDescription(desc: string = ""): string {
@@ -55,11 +46,6 @@ export default function FeaturedRoomsSection() {
       .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
-
-  // Pick the flagship room/property
-  const flagshipRoom =
-    liveRooms.find((r) => r.slug === "executive-single-suite" || r.slug === "standard-room") ||
-    liveRooms[0];
 
   // Locations for tabs
   const locationTabs = useMemo(() => {
@@ -118,137 +104,6 @@ export default function FeaturedRoomsSection() {
             </Link>
           </div>
         </div>
-
-        {/* FLAGSHIP HERO SPOTLIGHT CARD (If available) */}
-        {flagshipRoom && (
-          <div className="space-y-6">
-            <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-[#00AEEF] font-semibold">
-              <Sparkles className="w-4 h-4" />
-              <span>Featured Flagship Residence</span>
-            </div>
-
-            <div className="bg-[#1A1918] rounded-2xl border border-[#2C2B29] hover:border-[#00AEEF]/40 shadow-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-0 group">
-              {/* Image Showcase */}
-              <div className="lg:col-span-7 relative min-h-[360px] sm:min-h-[440px] bg-neutral-900 overflow-hidden">
-                <Image
-                  src={flagshipRoom.heroImage || "/images/saffron/saffron-1.jpg"}
-                  alt={flagshipRoom.name}
-                  fill
-                  className="object-cover transition-transform duration-1000 group-hover:scale-105"
-                  priority
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                <div className="absolute top-6 left-6 flex items-center gap-2">
-                  <span className="px-3.5 py-1 bg-[#111111]/90 backdrop-blur-md text-[#00AEEF] text-xs uppercase tracking-widest font-semibold rounded-full border border-[#00AEEF]/40">
-                    Stay Connect Flagship
-                  </span>
-                </div>
-                <div className="absolute bottom-6 left-6 right-6 text-white flex items-center justify-between">
-                  <div className="text-xs text-neutral-300 font-light flex items-center gap-1.5">
-                    <MapPin className="w-3.5 h-3.5 text-[#00AEEF]" />
-                    <span>{flagshipRoom.address}</span>
-                  </div>
-                  <div className="flex items-center gap-1 text-xs font-semibold text-[#00AEEF]">
-                    <Star className="w-4 h-4 fill-[#00AEEF]" />
-                    <span>
-                      {flagshipRoom.reviewCount > 0
-                        ? `${flagshipRoom.rating.toFixed(1)} (${flagshipRoom.reviewCount} reviews)`
-                        : "Verified Stay"}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Content Details */}
-              <div className="lg:col-span-5 p-6 sm:p-10 lg:p-12 flex flex-col justify-between space-y-6">
-                <div>
-                  <div className="flex items-center justify-between text-xs text-neutral-400 font-light mb-2">
-                    <span className="uppercase tracking-widest text-[#00AEEF] font-semibold">
-                      {flagshipRoom.type || "Executive"} Suite
-                    </span>
-                    <span className="text-emerald-400 text-[10px] uppercase font-bold tracking-wider">
-                      Directly Managed
-                    </span>
-                  </div>
-                  <h3 className="font-serif text-3xl lg:text-4xl text-white font-normal mb-3">
-                    {flagshipRoom.name}
-                  </h3>
-                  <p className="text-neutral-300 text-xs sm:text-sm font-light leading-relaxed mb-6 line-clamp-3">
-                    {cleanDescription(flagshipRoom.description)}
-                  </p>
-
-                  {/* Spec Badges Grid */}
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 py-4 border-y border-[#2C2B29] mb-4">
-                    <div className="flex flex-col">
-                      <span className="text-[10px] uppercase tracking-wider text-neutral-400 font-medium">
-                        Capacity
-                      </span>
-                      <span className="text-xs font-semibold text-white flex items-center gap-1 mt-0.5">
-                        <Users className="w-3.5 h-3.5 text-[#00AEEF]" />
-                        <span>{flagshipRoom.maxGuests || 2} Guests</span>
-                      </span>
-                    </div>
-
-                    <div className="flex flex-col">
-                      <span className="text-[10px] uppercase tracking-wider text-neutral-400 font-medium">
-                        Bedrooms
-                      </span>
-                      <span className="text-xs font-semibold text-white flex items-center gap-1 mt-0.5">
-                        <Bed className="w-3.5 h-3.5 text-[#00AEEF]" />
-                        <span>{flagshipRoom.bedrooms || 1} BR</span>
-                      </span>
-                    </div>
-
-                    <div className="flex flex-col">
-                      <span className="text-[10px] uppercase tracking-wider text-neutral-400 font-medium">
-                        Bathrooms
-                      </span>
-                      <span className="text-xs font-semibold text-white flex items-center gap-1 mt-0.5">
-                        <Bath className="w-3.5 h-3.5 text-[#00AEEF]" />
-                        <span>{flagshipRoom.bathrooms || 1} BA</span>
-                      </span>
-                    </div>
-
-                    <div className="flex flex-col">
-                      <span className="text-[10px] uppercase tracking-wider text-neutral-400 font-medium">
-                        Size
-                      </span>
-                      <span className="text-xs font-semibold text-white flex items-center gap-1 mt-0.5">
-                        <Maximize className="w-3.5 h-3.5 text-[#00AEEF]" />
-                        <span>{flagshipRoom.propertySize || 65} m²</span>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Pricing & CTA */}
-                <div className="pt-4 border-t border-[#2C2B29] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                  <div>
-                    <span className="text-[10px] uppercase tracking-widest text-neutral-400">
-                      Nightly Rate
-                    </span>
-                    <div className="flex items-baseline gap-1">
-                      <span className="font-serif text-3xl font-semibold text-[#00AEEF]">
-                        ₦{flagshipRoom.pricePerNight?.toLocaleString()}
-                      </span>
-                      <span className="text-xs text-neutral-400 font-light">
-                        / night
-                      </span>
-                    </div>
-                  </div>
-
-                  <Link
-                    href={`/rooms/${flagshipRoom.slug}`}
-                    className="px-6 py-3 bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] text-xs font-semibold uppercase tracking-widest rounded-xl transition-all shadow-md flex items-center justify-center gap-2"
-                  >
-                    <span>Book Your Stay</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
 
         {/* ALL STAYS & RESIDENCES GRID */}
         <div className="space-y-8">
@@ -339,7 +194,7 @@ export default function FeaturedRoomsSection() {
                   <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
                     <div>
                       <div className="text-[10px] uppercase tracking-widest text-[#00AEEF] font-semibold mb-1">
-                        {prop.area || prop.city} · {prop.numberOfUnits || 1} {Number(prop.numberOfUnits) === 1 ? "Unit" : "Units"}
+                        {prop.area || prop.city} {prop.bedrooms ? `· ${prop.bedrooms} Bed · ${prop.bathrooms || 1} Bath` : prop.numberOfUnits ? `· ${prop.numberOfUnits} ${Number(prop.numberOfUnits) === 1 ? "Unit" : "Units"}` : ""}
                       </div>
                       <h4 className="font-serif text-2xl text-[#111111] dark:text-white font-medium group-hover:text-[#00AEEF] transition-colors">
                         {prop.name}
@@ -382,7 +237,7 @@ export default function FeaturedRoomsSection() {
                       </div>
 
                       <span className="px-4 py-2 bg-[#00AEEF] group-hover:bg-[#0088CC] text-[#111111] font-bold text-xs rounded-xl transition-all flex items-center gap-1.5 shadow-sm">
-                        <span>View Stay</span>
+                        <span>{prop.propertyType === "Apartment" ? "Book Apartment" : "View Stay"}</span>
                         <ArrowRight className="w-3.5 h-3.5" />
                       </span>
                     </div>
