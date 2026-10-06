@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { Room } from "@/types";
-import { list, save, transaction, publicRooms, lockRoomInventory, roomMatches } from "@/lib/platform/store";
+import { list, save, remove, transaction, publicRooms, lockRoomInventory, roomMatches } from "@/lib/platform/store";
 import { requireAdmin } from "@/lib/platform/auth";
 import { errorResponse, imageUrl } from "@/lib/platform/validation";
 import { z } from "zod";
@@ -99,6 +99,13 @@ export async function PATCH(request: Request) {
     const data = await transaction(async () => {
       const room = (await list("rooms")).find((r) => r.id === body.id);
       if (!room) throw new Error("Room not found");
+      if (body.action === "delete") {
+        if ((await list("bookings")).some(b => roomMatches(room, b.roomId) &&
+          !["Cancelled", "Refunded", "Checked Out"].includes(b.status) && b.checkOut >= new Date().toISOString().slice(0, 10)))
+          throw new Error("Resolve upcoming reservations before deleting this room");
+        await remove("rooms", room.id);
+        return { deleted: true, id: room.id };
+      }
       if (body.action === "archive") {
         if ((await list("bookings")).some(b => roomMatches(room, b.roomId) &&
           !["Cancelled", "Refunded", "Checked Out"].includes(b.status) && b.checkOut >= new Date().toISOString().slice(0, 10)))
@@ -122,6 +129,43 @@ export async function PATCH(request: Request) {
         .parse(body);
       await lockRoomInventory(room);
       return save("rooms", { ...room, ...update });
+    });
+    return NextResponse.json({ success: true, data });
+  } catch (e) {
+    return errorResponse(e);
+  }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    await requireAdmin();
+    const url = new URL(request.url);
+    let id = url.searchParams.get("id");
+    if (!id && request.headers.get("content-type")?.includes("application/json")) {
+      const body = await request.json().catch(() => ({}));
+      id = body.id;
+    }
+    if (!id) throw new Error("Room ID is required");
+
+    const data = await transaction(async () => {
+      const room = (await list("rooms")).find(
+        (r) => r.id === id || r.slug === id || String(r._id) === id,
+      );
+      if (!room) throw new Error("Room not found");
+      if (
+        (await list("bookings")).some(
+          (b) =>
+            roomMatches(room, b.roomId) &&
+            !["Cancelled", "Refunded", "Checked Out"].includes(b.status) &&
+            b.checkOut >= new Date().toISOString().slice(0, 10),
+        )
+      ) {
+        throw new Error(
+          "Resolve upcoming reservations before deleting this room",
+        );
+      }
+      await remove("rooms", room.id);
+      return { deleted: true, id: room.id };
     });
     return NextResponse.json({ success: true, data });
   } catch (e) {

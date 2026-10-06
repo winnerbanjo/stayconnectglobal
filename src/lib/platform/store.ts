@@ -172,18 +172,33 @@ export function roomMatches(room: any, value: string) {
 }
 export async function findPublicRoom(value: string) { return (await publicRooms()).find(room => roomMatches(room, value)); }
 
-export async function removeOperation(collection: "fleet" | "dining" | "housekeeping", id: string) {
+export async function remove(collection: Collection, id: string) {
   return transaction(async () => {
     if (localPreview) {
       const db = await readLocal();
-      if (!db[collection].some(record => record.id === id)) throw new Error("Record not found");
-      db[collection] = db[collection].filter(record => record.id !== id);
+      db[collection] = db[collection].filter(
+        (record: any) =>
+          record.id !== id && String(record._id) !== id && record.slug !== id,
+      );
       await fs.mkdir(dir, { recursive: true });
       await fs.writeFile(`${file}.tmp`, JSON.stringify(db, null, 2));
       await fs.rename(`${file}.tmp`, file);
     } else {
-      const result = await models[collection].deleteOne({ id }, { session: sessions.getStore() });
-      if (!result.deletedCount) throw new Error("Record not found");
+      await connectToDatabase();
+      const filter = {
+        $or: [
+          { id },
+          { slug: id },
+          ...(id.match(/^[0-9a-fA-F]{24}$/) ? [{ _id: id }] : []),
+        ],
+      };
+      await models[collection].deleteMany(filter, {
+        session: sessions.getStore(),
+      });
     }
   });
+}
+
+export async function removeOperation(collection: "fleet" | "dining" | "housekeeping", id: string) {
+  return remove(collection, id);
 }

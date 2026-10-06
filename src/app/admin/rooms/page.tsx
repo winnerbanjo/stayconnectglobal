@@ -21,6 +21,7 @@ import {
   Loader2,
   RefreshCw,
   Utensils,
+  Trash2,
 } from "lucide-react";
 import { Room, Partner } from "@/types";
 import AdminAuthGuard from "@/components/admin/AdminAuthGuard";
@@ -41,6 +42,28 @@ function AdminRoomsPageContent() {
   const [uploadProgress, setUploadProgress] = useState<ImageUploadProgress | null>(null);
   const [saving, setSaving] = useState(false);
   const [loadingRooms, setLoadingRooms] = useState(false);
+  const [deletingId, setDeletingId] = useState("");
+
+  const handleDeleteRoom = async (rm: Room) => {
+    const confirmed = window.confirm(
+      `Are you sure you want to delete "${rm.name}"?\n\nThis will permanently remove this room type from inventory.`
+    );
+    if (!confirmed) return;
+    setError("");
+    setDeletingId(rm.id);
+    try {
+      const res = await fetch(`/api/rooms?id=${encodeURIComponent(rm.id)}`, {
+        method: "DELETE",
+      });
+      const json = await res.json();
+      if (!res.ok || !json.success) throw new Error(json.error || "Unable to delete room");
+      await fetchLiveRooms();
+    } catch (e: any) {
+      setError(e.message || "Unable to delete room");
+    } finally {
+      setDeletingId("");
+    }
+  };
 
   const [formData, setFormData] = useState({
     propertyId: "",
@@ -393,12 +416,23 @@ function AdminRoomsPageContent() {
                     <span className="text-emerald-700 flex items-center gap-1">
                       <CheckCircle className="w-3.5 h-3.5" /> Room type saved
                     </span>
-                    <Link
-                      href={`/rooms/${rm.slug}`}
-                      className="text-slate-900 hover:text-[#0077B6] underline"
-                    >
-                      View Suite →
-                    </Link>
+                    <div className="flex items-center gap-3">
+                      <button
+                        disabled={deletingId === rm.id}
+                        onClick={() => handleDeleteRoom(rm)}
+                        className="text-xs text-rose-600 hover:text-rose-800 flex items-center gap-1 font-semibold transition-colors hover:bg-rose-50 px-2 py-1 rounded border border-rose-200"
+                        title={`Delete ${rm.name}`}
+                      >
+                        <Trash2 className="w-3.5 h-3.5 text-rose-500" />
+                        <span>{deletingId === rm.id ? "Deleting..." : "Delete Room"}</span>
+                      </button>
+                      <Link
+                        href={`/rooms/${rm.slug}`}
+                        className="text-slate-900 hover:text-[#0077B6] underline"
+                      >
+                        View Suite →
+                      </Link>
+                    </div>
                   </div>
                 </div>
               ))}

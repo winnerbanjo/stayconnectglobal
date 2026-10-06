@@ -45,6 +45,30 @@ function AdminPropertiesPageContent() {
   const [uploadProgress, setUploadProgress] = useState<ImageUploadProgress | null>(null);
   const [saving, setSaving] = useState(false);
   const [loadingProps, setLoadingProps] = useState(false);
+  const [deletingId, setDeletingId] = useState("");
+
+  const handleDeleteProperty = async (prop: Property) => {
+    const confirmed = window.confirm(
+      `Are you sure you want to delete "${prop.name}"?\n\nThis will permanently remove this property and its inventory from Stay Connect.`
+    );
+    if (!confirmed) return;
+    setError("");
+    setNotice("");
+    setDeletingId(prop.id);
+    try {
+      const res = await fetch(`/api/properties?id=${encodeURIComponent(prop.id)}`, {
+        method: "DELETE",
+      });
+      const json = await res.json();
+      if (!res.ok || !json.success) throw new Error(json.error || "Unable to delete property");
+      setNotice(`"${prop.name}" was permanently deleted.`);
+      await fetchLiveProperties();
+    } catch (e: any) {
+      setError(e.message || "Unable to delete property");
+    } finally {
+      setDeletingId("");
+    }
+  };
 
   const [formData, setFormData] = useState({
     name: "",
@@ -417,6 +441,15 @@ function AdminPropertiesPageContent() {
                         Unpublish
                       </button>
                     )}
+                    <button
+                      disabled={deletingId === prop.id}
+                      onClick={() => handleDeleteProperty(prop)}
+                      className="text-xs text-rose-600 hover:text-rose-800 flex items-center gap-1.5 font-semibold transition-colors ml-auto hover:bg-rose-50 px-2.5 py-1.5 rounded-lg border border-rose-200"
+                      title={`Delete ${prop.name}`}
+                    >
+                      <Trash2 className="w-3.5 h-3.5 text-rose-500" />
+                      <span>{deletingId === prop.id ? "Deleting..." : "Delete Property"}</span>
+                    </button>
                   </div>
                   {prop.verificationStatus === "Pending Verification" && (
                     <div className="space-y-3">

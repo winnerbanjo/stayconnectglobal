@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import {
   list,
   save,
+  remove,
   transaction,
   publicProperties,
 } from "@/lib/platform/store";
@@ -75,7 +76,17 @@ export async function PATCH(request: Request) {
     const data = await transaction(async () => {
       const property = (await list("properties")).find((p) => p.id === body.id);
       if (!property) throw new Error("Property not found");
-      if (body.action === "archive") {
+      if (body.action === "delete") {
+        const aliases = [property.id, String(property._id || ""), property.slug];
+        if ((await list("bookings")).some(b => aliases.includes(b.propertyId) && !["Cancelled", "Refunded", "Checked Out"].includes(b.status) && b.checkOut >= new Date().toISOString().slice(0, 10)))
+          throw new Error("Resolve upcoming reservations before deleting this property");
+        await remove("properties", property.id);
+        const rooms = (await list("rooms")).filter(r => aliases.includes(String(r.propertyId)));
+        for (const rm of rooms) {
+          await remove("rooms", rm.id);
+        }
+        return { deleted: true, id: property.id };
+      } else if (body.action === "archive") {
         const aliases = [property.id, String(property._id || ""), property.slug];
         if ((await list("bookings")).some(b => aliases.includes(b.propertyId) && !["Cancelled", "Refunded", "Checked Out"].includes(b.status) && b.checkOut >= new Date().toISOString().slice(0, 10)))
           throw new Error("Resolve upcoming reservations before archiving this property");
@@ -134,6 +145,50 @@ export async function PATCH(request: Request) {
         });
       }
       return save("properties", property);
+    });
+    return NextResponse.json({ success: true, data });
+  } catch (e) {
+    return errorResponse(e);
+  }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    await requireAdmin();
+    const url = new URL(request.url);
+    let id = url.searchParams.get("id");
+    if (!id && request.headers.get("content-type")?.includes("application/json")) {
+      const body = await request.json().catch(() => ({}));
+      id = body.id;
+    }
+    if (!id) throw new Error("Property ID is required");
+
+    const data = await transaction(async () => {
+      const property = (await list("properties")).find(
+        (p) => p.id === id || p.slug === id || String(p._id) === id,
+      );
+      if (!property) throw new Error("Property not found");
+      const aliases = [property.id, String(property._id || ""), property.slug];
+      if (
+        (await list("bookings")).some(
+          (b) =>
+            aliases.includes(b.propertyId) &&
+            !["Cancelled", "Refunded", "Checked Out"].includes(b.status) &&
+            b.checkOut >= new Date().toISOString().slice(0, 10),
+        )
+      ) {
+        throw new Error(
+          "Resolve upcoming reservations before deleting this property",
+        );
+      }
+      await remove("properties", property.id);
+      const rooms = (await list("rooms")).filter((r) =>
+        aliases.includes(String(r.propertyId)),
+      );
+      for (const rm of rooms) {
+        await remove("rooms", rm.id);
+      }
+      return { deleted: true, id: property.id };
     });
     return NextResponse.json({ success: true, data });
   } catch (e) {
