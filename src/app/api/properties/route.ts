@@ -63,7 +63,47 @@ export async function POST(request: Request) {
     };
     return NextResponse.json({
       success: true,
-      data: await transaction(() => save("properties", property)),
+      data: await transaction(async () => {
+        const saved = await save("properties", property);
+        if (property.propertyType !== "Hotel") {
+          const directRoom = {
+            id: `room-${saved.id}`,
+            slug: saved.slug,
+            name: saved.name,
+            tagline: saved.tagline || saved.name,
+            propertyId: saved.id,
+            type: "Executive" as const,
+            address: saved.address,
+            city: saved.city,
+            numberOfUnits: saved.numberOfUnits || 1,
+            badge: "Direct Apartment",
+            maxGuests: saved.maxGuests || 2,
+            propertySize: saved.propertySize || 0,
+            bedrooms: saved.bedrooms || 1,
+            bathrooms: saved.bathrooms || 1,
+            pricePerNight: saved.pricingStartingFrom || 100000,
+            weekendPricePerNight: saved.pricingStartingFrom || 100000,
+            holidayPricePerNight: saved.pricingStartingFrom || 100000,
+            rating: 5,
+            reviewCount: 0,
+            ratingBreakdown: { fiveStar: 0, fourStar: 0, threeStar: 0, twoStar: 0, oneStar: 0 },
+            description: saved.description,
+            heroImage: saved.heroImage,
+            gallery: saved.gallery,
+            amenities: (saved.amenities || []).map((a: any) => typeof a === "string" ? a : a.name),
+            features: {
+              bedType: "", view: "", floor: "", balcony: false, workspace: false,
+              miniBar: false, coffeeMachine: false, smartTV: false, netflix: false,
+              wifi: false, safe: false, closet: false, hairDryer: false,
+              refrigerator: false, cable: false, roomService: false, housekeeping: false,
+            },
+            published: true,
+            featured: true,
+          };
+          await save("rooms", directRoom);
+        }
+        return saved;
+      }),
     });
   } catch (e) {
     return errorResponse(e);
@@ -144,7 +184,45 @@ export async function PATCH(request: Request) {
           amenities: amenityObjects(update.amenities),
         });
       }
-      return save("properties", property);
+      const saved = await save("properties", property);
+      if (property.propertyType !== "Hotel") {
+        const directRoom = {
+          id: `room-${property.id}`,
+          slug: property.slug,
+          name: property.name,
+          tagline: property.tagline || property.name,
+          propertyId: property.id,
+          type: "Executive" as const,
+          address: property.address,
+          city: property.city,
+          numberOfUnits: property.numberOfUnits || 1,
+          badge: "Direct Apartment",
+          maxGuests: property.maxGuests || 2,
+          propertySize: property.propertySize || 0,
+          bedrooms: property.bedrooms || 1,
+          bathrooms: property.bathrooms || 1,
+          pricePerNight: property.pricingStartingFrom || 100000,
+          weekendPricePerNight: property.pricingStartingFrom || 100000,
+          holidayPricePerNight: property.pricingStartingFrom || 100000,
+          rating: 5,
+          reviewCount: 0,
+          ratingBreakdown: { fiveStar: 0, fourStar: 0, threeStar: 0, twoStar: 0, oneStar: 0 },
+          description: property.description,
+          heroImage: property.heroImage,
+          gallery: property.gallery,
+          amenities: (property.amenities || []).map((a: any) => typeof a === "string" ? a : a.name),
+          features: {
+            bedType: "", view: "", floor: "", balcony: false, workspace: false,
+            miniBar: false, coffeeMachine: false, smartTV: false, netflix: false,
+            wifi: false, safe: false, closet: false, hairDryer: false,
+            refrigerator: false, cable: false, roomService: false, housekeeping: false,
+          },
+          published: property.published ?? true,
+          featured: true,
+        };
+        await save("rooms", directRoom);
+      }
+      return saved;
     });
     return NextResponse.json({ success: true, data });
   } catch (e) {

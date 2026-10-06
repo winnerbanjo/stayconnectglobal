@@ -17,6 +17,15 @@ export default function PropertyEditor({
 }) {
   const [data, setData] = useState({
     ...property,
+    propertyType:
+      property.propertyType ||
+      (property.category === "Luxury Hotel" || property.category === "Hotel"
+        ? "Hotel"
+        : "Apartment"),
+    bedrooms: property.bedrooms || 1,
+    bathrooms: property.bathrooms || 1,
+    maxGuests: property.maxGuests || 2,
+    propertySize: property.propertySize || 0,
     tagline: property.tagline || property.name || "A welcoming place to stay",
     amenities: (property.amenities || [])
       .map((a: any) => (typeof a === "string" ? a : a.name))
@@ -45,8 +54,13 @@ export default function PropertyEditor({
         body: JSON.stringify({
           id: data.id,
           name: data.name,
+          propertyType: data.propertyType,
+          bedrooms: Number(data.bedrooms) || 1,
+          bathrooms: Number(data.bathrooms) || 1,
+          maxGuests: Number(data.maxGuests) || 2,
+          propertySize: Number(data.propertySize) || 0,
           tagline: data.tagline?.trim() || data.name?.trim(),
-          category: data.category || "Luxury Hotel",
+          category: data.propertyType === "Hotel" ? "Luxury Hotel" : "Serviced Apartment",
           address: data.address,
           city: data.city,
           area: data.area || "",
@@ -78,6 +92,57 @@ export default function PropertyEditor({
       className="space-y-4 bg-[var(--editor-panel,#1A1918)] rounded-xl p-5 border border-[var(--editor-border,#444)] text-[var(--editor-text,white)]"
     >
       <h3 className="font-serif text-2xl">Edit property details</h3>
+
+      {/* Property Classification */}
+      <div className="p-3 bg-[var(--editor-bg,#111111)] border border-[var(--editor-border,#444)] rounded-lg space-y-2">
+        <label className="text-xs font-semibold block text-neutral-300">
+          Property Classification
+        </label>
+        <div className="grid sm:grid-cols-2 gap-3">
+          <label className={`flex items-start gap-2.5 p-2.5 rounded border text-xs cursor-pointer transition-all ${
+            data.propertyType === "Apartment"
+              ? "border-[#00AEEF] bg-[#00AEEF]/10 text-white"
+              : "border-neutral-700 text-neutral-400 hover:border-neutral-500"
+          }`}>
+            <input
+              type="radio"
+              name="editorPropertyType"
+              value="Apartment"
+              checked={data.propertyType === "Apartment"}
+              onChange={() => setData({ ...data, propertyType: "Apartment" })}
+              className="mt-0.5 text-[#00AEEF] focus:ring-[#00AEEF]"
+            />
+            <div>
+              <div className="font-medium text-white">Apartment / Residence</div>
+              <div className="text-[10px] text-neutral-400 mt-0.5 leading-snug">
+                Direct booking. Nightly rate and specs set here without separate room inventory.
+              </div>
+            </div>
+          </label>
+
+          <label className={`flex items-start gap-2.5 p-2.5 rounded border text-xs cursor-pointer transition-all ${
+            data.propertyType === "Hotel"
+              ? "border-[#00AEEF] bg-[#00AEEF]/10 text-white"
+              : "border-neutral-700 text-neutral-400 hover:border-neutral-500"
+          }`}>
+            <input
+              type="radio"
+              name="editorPropertyType"
+              value="Hotel"
+              checked={data.propertyType === "Hotel"}
+              onChange={() => setData({ ...data, propertyType: "Hotel" })}
+              className="mt-0.5 text-[#00AEEF] focus:ring-[#00AEEF]"
+            />
+            <div>
+              <div className="font-medium text-white">Hotel / Multi-Suite</div>
+              <div className="text-[10px] text-neutral-400 mt-0.5 leading-snug">
+                Multiple room types (Standard, Executive, Deluxe) managed in Rooms inventory.
+              </div>
+            </div>
+          </label>
+        </div>
+      </div>
+
       <div className="grid sm:grid-cols-2 gap-4">
         {[
           ["name", "Property name"],
@@ -95,26 +160,14 @@ export default function PropertyEditor({
             />
           </label>
         ))}
+
         <label className="text-xs">
-          Rooms / units
+          {data.propertyType === "Apartment" ? "Nightly price (₦)" : "Starting nightly price (₦)"}
           <input
             type="number"
             required
-            min="1"
-            step="1"
-            className={field}
-            value={data.numberOfUnits || 1}
-            onChange={(e) =>
-              setData({ ...data, numberOfUnits: Number(e.target.value) })
-            }
-          />
-        </label>
-        <label className="text-xs">
-          Starting nightly price (₦)
-          <input
-            type="number"
-            required
-            min="1"
+            min="1000"
+            step="1000"
             className={field}
             value={data.pricingStartingFrom}
             onChange={(e) =>
@@ -122,6 +175,68 @@ export default function PropertyEditor({
             }
           />
         </label>
+
+        {data.propertyType === "Apartment" ? (
+          <>
+            <label className="text-xs">
+              Bedrooms
+              <input
+                type="number"
+                required
+                min="1"
+                step="1"
+                className={field}
+                value={data.bedrooms || 1}
+                onChange={(e) =>
+                  setData({ ...data, bedrooms: Number(e.target.value) })
+                }
+              />
+            </label>
+            <label className="text-xs">
+              Bathrooms
+              <input
+                type="number"
+                required
+                min="1"
+                step="1"
+                className={field}
+                value={data.bathrooms || 1}
+                onChange={(e) =>
+                  setData({ ...data, bathrooms: Number(e.target.value) })
+                }
+              />
+            </label>
+            <label className="text-xs">
+              Max Guests
+              <input
+                type="number"
+                required
+                min="1"
+                step="1"
+                className={field}
+                value={data.maxGuests || 2}
+                onChange={(e) =>
+                  setData({ ...data, maxGuests: Number(e.target.value) })
+                }
+              />
+            </label>
+          </>
+        ) : (
+          <label className="text-xs">
+            Rooms / units
+            <input
+              type="number"
+              required
+              min="1"
+              step="1"
+              className={field}
+              value={data.numberOfUnits || 1}
+              onChange={(e) =>
+                setData({ ...data, numberOfUnits: Number(e.target.value) })
+              }
+            />
+          </label>
+        )}
       </div>
       <label className="block text-xs">
         Description

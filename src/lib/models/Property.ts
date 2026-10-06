@@ -54,6 +54,11 @@ const PropertySchema = new Schema(
     slug: { type: String, required: true, unique: true },
     name: { type: String, required: true },
     tagline: { type: String, required: true },
+    propertyType: { type: String, enum: ["Apartment", "Hotel"], default: "Apartment" },
+    bedrooms: { type: Number, default: 1 },
+    bathrooms: { type: Number, default: 1 },
+    maxGuests: { type: Number, default: 2 },
+    propertySize: { type: Number, default: 0 },
     category: {
       type: String,
       enum: [

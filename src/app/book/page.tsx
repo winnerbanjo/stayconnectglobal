@@ -103,9 +103,14 @@ export default function BookingPage() {
     setFormData((prev) => ({ ...prev, nights }));
   }, [formData.checkIn, formData.checkOut]);
   const selectedRoom = rooms.find((r) => r.slug === formData.suiteSlug);
+  const isApartment = Boolean(
+    selectedRoom?.badge?.toLowerCase().includes("apartment") ||
+    selectedRoom?.type?.toLowerCase().includes("apartment") ||
+    selectedRoom?.category?.toLowerCase().includes("apartment")
+  );
   function validateDates() {
     if (!selectedRoom) {
-      setError("Please select an available room.");
+      setError("Please select an available accommodation.");
       return false;
     }
     if (
@@ -117,7 +122,7 @@ export default function BookingPage() {
     }
     if (formData.guests > selectedRoom.maxGuests) {
       setError(
-        `This room accommodates up to ${selectedRoom.maxGuests} guests.`,
+        `This ${isApartment ? "apartment" : "suite"} accommodates up to ${selectedRoom.maxGuests} guests.`,
       );
       return false;
     }
@@ -232,7 +237,7 @@ export default function BookingPage() {
         <div className="max-w-3xl mx-auto bg-white dark:bg-[#1A1918] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-2xl p-4 shadow-sm">
           <div className="grid grid-cols-4 gap-2 text-center">
             {[
-              { num: 1, label: "Dates & Suite" },
+              { num: 1, label: isApartment ? "Dates & Apartment" : "Dates & Suite" },
               { num: 2, label: "Guest Info" },
               { num: 3, label: "Add-On Services" },
               { num: 4, label: "Payment" },
@@ -271,7 +276,7 @@ export default function BookingPage() {
               >
                 <div className="border-b border-[#E8E5DF] dark:border-[#2C2B29] pb-4">
                   <h3 className="font-serif text-2xl text-[#111111] dark:text-white">
-                    Step 1: Choose Suite & Dates
+                    Step 1: Choose {isApartment ? "Apartment" : "Suite"} & Dates
                   </h3>
                   <p className="text-xs text-neutral-500 dark:text-neutral-400">
                     Select your preferred accommodation and reservation stay
@@ -282,7 +287,7 @@ export default function BookingPage() {
                 <div className="space-y-4 text-xs">
                   <div>
                     <label className="text-[#111111] dark:text-neutral-300 font-semibold block mb-1.5">
-                      Select Suite / Residence
+                      {isApartment ? "Select Apartment / Residence" : "Select Suite / Room"}
                     </label>
                     <select
                       value={formData.suiteSlug}
@@ -756,7 +761,7 @@ export default function BookingPage() {
 
             <div className="space-y-3.5 text-xs">
               <div className="flex justify-between items-center text-neutral-600 dark:text-neutral-400">
-                <span>Selected Suite</span>
+                <span>Selected {isApartment ? "Apartment" : "Suite"}</span>
                 <span className="font-semibold text-[#111111] dark:text-white">
                   {formData.suiteName}
                 </span>
@@ -776,7 +781,7 @@ export default function BookingPage() {
 
               <div className="border-t border-[#E8E5DF] dark:border-[#2C2B29] pt-4 flex justify-between items-center text-sm">
                 <span className="font-bold text-[#111111] dark:text-white">
-                  Total room charge
+                  Total {isApartment ? "apartment" : "room"} charge
                 </span>
                 <span className="font-serif text-2xl font-bold text-[#00AEEF]">
                   ₦{grandTotal.toLocaleString()}

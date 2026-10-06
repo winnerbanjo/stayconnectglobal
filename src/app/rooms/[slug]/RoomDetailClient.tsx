@@ -54,11 +54,17 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
   const diffTime = Math.max(0, d2.getTime() - d1.getTime());
   const nights = Math.max(1, Math.ceil(diffTime / (1000 * 60 * 60 * 24)));
 
+  const isApartment = Boolean(
+    room.badge?.toLowerCase().includes("apartment") ||
+    room.type?.toLowerCase().includes("apartment") ||
+    (room as any).category?.toLowerCase().includes("apartment")
+  );
+
   const subtotal = room.pricePerNight * nights;
   const total = subtotal;
 
   const whatsappMessage = encodeURIComponent(
-    `Hello Stay Connect Concierge, I would like to book the ${room.name} (${room.type} Suite) at ${room.address} from ${checkIn} to ${checkOut} (${nights} nights) for ${guests} guest(s). Total estimated: ₦${total.toLocaleString()}.`,
+    `Hello Stay Connect Concierge, I would like to book the ${room.name} (${isApartment ? "Apartment" : room.type + " Suite"}) at ${room.address} from ${checkIn} to ${checkOut} (${nights} nights) for ${guests} guest(s). Total estimated: ₦${total.toLocaleString()}.`,
   );
   const whatsappUrl = `https://wa.me/2349042854834?text=${whatsappMessage}`;
 
@@ -75,7 +81,7 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
             href="/rooms"
             className="hover:text-[#00AEEF] transition-colors"
           >
-            Suites
+            {isApartment ? "Apartments" : "Suites"}
           </Link>
           <span>/</span>
           <span className="text-[#00AEEF] font-semibold">{room.name}</span>
@@ -300,7 +306,7 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
             <div className="flex items-center justify-between border-b border-[#2C2B29] pb-4">
               <div>
                 <span className="text-[10px] uppercase tracking-widest text-[#00AEEF] font-semibold">
-                  Reserve Suite
+                  Reserve {isApartment ? "Apartment" : "Suite"}
                 </span>
                 <div className="font-serif text-2xl sm:text-3xl font-medium text-white">
                   ₦{room.pricePerNight.toLocaleString()}
@@ -357,7 +363,15 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
                   className="w-full min-h-[46px] bg-[#1A1918] border border-[#2C2B29] rounded-xl px-3.5 py-2.5 text-sm sm:text-xs text-white font-medium focus:outline-none focus:border-[#00AEEF]"
                 >
                   <option value="1">1 Guest</option>
-                  <option value="2">2 Guests (Max)</option>
+                  <option value="2">2 Guests</option>
+                  {Array.from(
+                    { length: Math.max(0, (room.maxGuests || 2) - 2) },
+                    (_, i) => (
+                      <option key={i + 3} value={String(i + 3)}>
+                        {i + 3} Guests
+                      </option>
+                    ),
+                  )}
                 </select>
               </div>
             </div>
@@ -371,7 +385,7 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
                 <span>₦{subtotal.toLocaleString()}</span>
               </div>
               <div className="flex justify-between font-serif text-base sm:text-lg text-white font-semibold pt-3 border-t border-[#2C2B29]">
-                <span>Total room charge</span>
+                <span>Total {isApartment ? "apartment" : "room"} charge</span>
                 <span className="text-[#00AEEF]">
                   ₦{total.toLocaleString()}
                 </span>
@@ -384,7 +398,7 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
                 href={`/book?room=${room.slug}&checkIn=${checkIn}&checkOut=${checkOut}&adults=${guests}`}
                 className="w-full min-h-[48px] bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-semibold text-xs uppercase tracking-[0.2em] rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-xl group active:scale-95"
               >
-                <span>Book Online</span>
+                <span>{isApartment ? "Book Apartment" : "Book Online"}</span>
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
 
@@ -400,8 +414,7 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
             </div>
 
             <div className="text-[10px] sm:text-[11px] text-center text-neutral-400 font-light pt-1">
-              🔒 Instant Confirmation • Guaranteed Best Rate at 14B Providence
-              St.
+              🔒 Instant Confirmation • Guaranteed Direct Platform Pricing
             </div>
           </div>
         </div>

@@ -91,6 +91,11 @@ export interface Property {
   slug: string;
   name: string; // e.g., "Stay Connect Lekki"
   tagline: string;
+  propertyType?: "Apartment" | "Hotel";
+  bedrooms?: number;
+  bathrooms?: number;
+  maxGuests?: number;
+  propertySize?: number;
   category:
     | "Luxury Hotel"
     | "Serviced Apartment"

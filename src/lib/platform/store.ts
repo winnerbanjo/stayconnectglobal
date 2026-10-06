@@ -146,7 +146,8 @@ export async function publicProperties() {
 }
 export async function publicRooms() {
   const properties = (await list('properties')).filter(visible);
-  return (await list('rooms')).filter(r => r.published && properties.some(p => belongsTo(r,p))).map(r => {
+  const rawRooms = await list('rooms');
+  const existingRooms = rawRooms.filter(r => r.published && properties.some(p => belongsTo(r,p))).map(r => {
     const property = properties.find(p => belongsTo(r, p))!;
     return {
       ...r,
@@ -155,6 +156,46 @@ export async function publicRooms() {
       city: property.city || r.city,
     };
   });
+
+  // Direct apartments: properties that do not have separate room inventory
+  const directApartmentRooms = properties
+    .filter(p => !existingRooms.some(r => belongsTo(r, p)))
+    .map(p => ({
+      id: `room-${p.id}`,
+      slug: p.slug,
+      name: p.name,
+      tagline: p.tagline || p.name,
+      propertyId: p.id,
+      type: "Executive" as const,
+      address: p.address,
+      city: p.city,
+      numberOfUnits: p.numberOfUnits || 1,
+      badge: "Direct Apartment",
+      maxGuests: p.maxGuests || 2,
+      propertySize: p.propertySize || 0,
+      bedrooms: p.bedrooms || 1,
+      bathrooms: p.bathrooms || 1,
+      pricePerNight: p.pricingStartingFrom || 100000,
+      weekendPricePerNight: p.pricingStartingFrom || 100000,
+      holidayPricePerNight: p.pricingStartingFrom || 100000,
+      rating: 5,
+      reviewCount: 0,
+      ratingBreakdown: { fiveStar: 0, fourStar: 0, threeStar: 0, twoStar: 0, oneStar: 0 },
+      description: p.description,
+      heroImage: p.heroImage || p.gallery?.[0] || "/images/saffron/saffron-1.jpg",
+      gallery: p.gallery && p.gallery.length > 0 ? p.gallery : [p.heroImage || "/images/saffron/saffron-1.jpg"],
+      amenities: (p.amenities || []).map((a: any) => typeof a === "string" ? a : a.name),
+      features: {
+        bedType: "", view: "", floor: "", balcony: false, workspace: false,
+        miniBar: false, coffeeMachine: false, smartTV: false, netflix: false,
+        wifi: false, safe: false, closet: false, hairDryer: false,
+        refrigerator: false, cable: false, roomService: false, housekeeping: false,
+      },
+      published: true,
+      featured: true,
+    }));
+
+  return [...existingRooms, ...directApartmentRooms];
 }
 // The room document acts as a per-room write lock inside the MongoDB transaction.
 // Conflicting confirmations retry with a fresh snapshot before counting occupied nights.
@@ -163,11 +204,17 @@ export async function lockRoomInventory(room: any) {
   const session = sessions.getStore();
   if (!session) throw new Error('Inventory changes require a database transaction');
   const result = await Room.updateOne(room._id ? { _id: room._id } : { id: room.id }, { $inc: { inventoryVersion: 1 } }, { session });
-  if (!result.matchedCount) throw new Error('Room inventory not found');
+  if (!result.matchedCount) {
+    await Property.updateOne(
+      { $or: [{ id: room.propertyId }, { id: room.id }, { slug: room.slug }] },
+      { $inc: { inventoryVersion: 1 } },
+      { session }
+    );
+  }
 }
 // Preserve links created by the former single-property booking page.
 export function roomMatches(room: any, value: string) {
-  return [room.id, room._id, room.slug].filter(Boolean).includes(value) ||
+  return [room.id, room._id, room.slug, room.propertyId].filter(Boolean).includes(value) ||
     (['standard-room', 'room-standard-1'].includes(value) && room.slug === 'executive-single-suite' && room.propertyId === 'prop-lekki-1');
 }
 export async function findPublicRoom(value: string) { return (await publicRooms()).find(room => roomMatches(room, value)); }

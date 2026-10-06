@@ -80,6 +80,12 @@ function AdminPropertiesPageContent() {
     gallery: [] as string[],
     partnerId: "",
     hostName: "",
+    propertyType: "Apartment" as "Apartment" | "Hotel",
+    pricingStartingFrom: 100000,
+    bedrooms: 1,
+    bathrooms: 1,
+    maxGuests: 2,
+    propertySize: 0,
   });
 
   const fetchLivePartners = async () => {
@@ -194,6 +200,14 @@ function AdminPropertiesPageContent() {
       slug,
       name: formData.name,
       tagline: formData.tagline.trim() || formData.name.trim(),
+      propertyType: formData.propertyType,
+      pricingStartingFrom: Number(formData.pricingStartingFrom) || 100000,
+      bedrooms: Number(formData.bedrooms) || 1,
+      bathrooms: Number(formData.bathrooms) || 1,
+      maxGuests: Number(formData.maxGuests) || 2,
+      propertySize: Number(formData.propertySize) || 0,
+      numberOfUnits: 1,
+      category: formData.propertyType === "Hotel" ? "Luxury Hotel" : "Serviced Apartment",
       address: formData.address,
       city: formData.city,
       description: formData.description,
@@ -219,7 +233,23 @@ function AdminPropertiesPageContent() {
       }
       setIsModalOpen(false);
       setUploadProgress(null);
-      setFormData({ name: "", tagline: "", address: "", city: "", description: "", heroImage: "", gallery: [], partnerId: "", hostName: "" });
+      setFormData({
+        name: "",
+        tagline: "",
+        address: "",
+        city: "",
+        description: "",
+        heroImage: "",
+        gallery: [],
+        partnerId: "",
+        hostName: "",
+        propertyType: "Apartment",
+        pricingStartingFrom: 100000,
+        bedrooms: 1,
+        bathrooms: 1,
+        maxGuests: 2,
+        propertySize: 0,
+      });
     } catch (e: any) {
       setError(e.message);
     } finally {
@@ -388,15 +418,26 @@ function AdminPropertiesPageContent() {
                     <h3 className="font-serif text-xl sm:text-2xl text-slate-900">
                       {prop.name}
                     </h3>
-                    <span
-                      className={`px-3 py-1 text-[10px] uppercase font-bold rounded-full border self-start sm:self-auto ${
-                        prop.verificationStatus === "Approved"
-                          ? "bg-emerald-50 text-emerald-700 border-emerald-200"
-                          : "bg-amber-50 text-amber-800 border-amber-200"
-                      }`}
-                    >
-                      {prop.verificationStatus || "Approved"}
-                    </span>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span
+                        className={`px-2.5 py-0.5 text-[10px] uppercase font-bold rounded-full border ${
+                          prop.propertyType === "Hotel"
+                            ? "bg-purple-50 text-purple-700 border-purple-200"
+                            : "bg-sky-50 text-sky-700 border-sky-200"
+                        }`}
+                      >
+                        {prop.propertyType === "Hotel" ? "Hotel · Room Inventory" : "Apartment · Direct Booking"}
+                      </span>
+                      <span
+                        className={`px-3 py-1 text-[10px] uppercase font-bold rounded-full border self-start sm:self-auto ${
+                          prop.verificationStatus === "Approved"
+                            ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                            : "bg-amber-50 text-amber-800 border-amber-200"
+                        }`}
+                      >
+                        {prop.verificationStatus || "Approved"}
+                      </span>
+                    </div>
                   </div>
                   <div className="text-xs text-slate-600 flex items-center gap-2">
                     <MapPin className="w-4 h-4 text-[#0077B6] shrink-0" />
@@ -405,9 +446,10 @@ function AdminPropertiesPageContent() {
                   <p className="text-xs text-slate-600 font-light leading-relaxed line-clamp-2">
                     {prop.description}
                   </p>
-                  <p className="text-xs text-slate-600">
-                    {prop.numberOfUnits || 1} rooms / units · From ₦
-                    {prop.pricingStartingFrom?.toLocaleString()}
+                  <p className="text-xs text-slate-600 font-medium">
+                    {prop.propertyType === "Hotel"
+                      ? `${prop.numberOfUnits || 1} rooms / units · From ₦${prop.pricingStartingFrom?.toLocaleString()}`
+                      : `${prop.bedrooms || 1} Bed · ${prop.bathrooms || 1} Bath · Up to ${prop.maxGuests || 2} Guests · ₦${prop.pricingStartingFrom?.toLocaleString()} / night`}
                   </p>
                   {prop.reviewNote && (
                     <p className="text-sm text-amber-800">{prop.reviewNote}</p>
@@ -448,7 +490,7 @@ function AdminPropertiesPageContent() {
                       title={`Delete ${prop.name}`}
                     >
                       <Trash2 className="w-3.5 h-3.5 text-rose-500" />
-                      <span>{deletingId === prop.id ? "Deleting..." : "Delete Property"}</span>
+                      <span>{deletingId === prop.id ? "Deleting..." : prop.propertyType === "Apartment" ? "Delete Apartment" : "Delete Property"}</span>
                     </button>
                   </div>
                   {prop.verificationStatus === "Pending Verification" && (
@@ -575,6 +617,56 @@ function AdminPropertiesPageContent() {
                   </select>
                 </div>
 
+                {/* Property Classification */}
+                <div className="p-3.5 bg-slate-100 rounded-xl border border-slate-200 space-y-2">
+                  <label className="text-slate-900 font-semibold block text-xs">
+                    Property Classification
+                  </label>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <label className={`flex items-start gap-2.5 p-3 rounded-lg border cursor-pointer transition-all ${
+                      formData.propertyType === "Apartment"
+                        ? "bg-white border-[#00AEEF] shadow-sm text-slate-900"
+                        : "bg-slate-50 border-slate-200 text-slate-600 hover:bg-white"
+                    }`}>
+                      <input
+                        type="radio"
+                        name="modalPropertyType"
+                        value="Apartment"
+                        checked={formData.propertyType === "Apartment"}
+                        onChange={() => setFormData({ ...formData, propertyType: "Apartment" })}
+                        className="mt-0.5 text-[#00AEEF] focus:ring-[#00AEEF]"
+                      />
+                      <div>
+                        <div className="font-semibold text-xs text-slate-900">Apartment / Residence</div>
+                        <div className="text-[10px] text-slate-500 mt-0.5 leading-snug">
+                          Direct booking. Nightly rate and specs set here without separate room inventory.
+                        </div>
+                      </div>
+                    </label>
+
+                    <label className={`flex items-start gap-2.5 p-3 rounded-lg border cursor-pointer transition-all ${
+                      formData.propertyType === "Hotel"
+                        ? "bg-white border-[#00AEEF] shadow-sm text-slate-900"
+                        : "bg-slate-50 border-slate-200 text-slate-600 hover:bg-white"
+                    }`}>
+                      <input
+                        type="radio"
+                        name="modalPropertyType"
+                        value="Hotel"
+                        checked={formData.propertyType === "Hotel"}
+                        onChange={() => setFormData({ ...formData, propertyType: "Hotel" })}
+                        className="mt-0.5 text-[#00AEEF] focus:ring-[#00AEEF]"
+                      />
+                      <div>
+                        <div className="font-semibold text-xs text-slate-900">Hotel / Multi-Suite</div>
+                        <div className="text-[10px] text-slate-500 mt-0.5 leading-snug">
+                          Multiple room types (Standard, Executive, Deluxe) managed in Rooms inventory.
+                        </div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
                 <div>
                   <label htmlFor="property-name" className="text-slate-700 font-medium">
                     Property Name
@@ -617,6 +709,67 @@ function AdminPropertiesPageContent() {
                     autoComplete="address-level2" placeholder="e.g. Lagos" value={formData.city}
                     onChange={e => setFormData({ ...formData, city: e.target.value })}
                     className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3.5 py-2.5 text-slate-900 mt-1" />
+                </div>
+
+                {/* Pricing & Accommodation Specs */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  <div>
+                    <label htmlFor="property-price" className="text-slate-700 font-medium block">
+                      {formData.propertyType === "Apartment" ? "Nightly Rate (₦)" : "Starting Rate (₦)"}
+                    </label>
+                    <input
+                      id="property-price"
+                      type="number"
+                      required
+                      min={1000}
+                      step={1000}
+                      value={formData.pricingStartingFrom}
+                      onChange={(e) => setFormData({ ...formData, pricingStartingFrom: Number(e.target.value) })}
+                      className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-slate-900 mt-1"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="property-bedrooms" className="text-slate-700 font-medium block">
+                      Bedrooms
+                    </label>
+                    <input
+                      id="property-bedrooms"
+                      type="number"
+                      required
+                      min={1}
+                      value={formData.bedrooms}
+                      onChange={(e) => setFormData({ ...formData, bedrooms: Number(e.target.value) })}
+                      className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-slate-900 mt-1"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="property-bathrooms" className="text-slate-700 font-medium block">
+                      Bathrooms
+                    </label>
+                    <input
+                      id="property-bathrooms"
+                      type="number"
+                      required
+                      min={1}
+                      value={formData.bathrooms}
+                      onChange={(e) => setFormData({ ...formData, bathrooms: Number(e.target.value) })}
+                      className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-slate-900 mt-1"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="property-guests" className="text-slate-700 font-medium block">
+                      Max Guests
+                    </label>
+                    <input
+                      id="property-guests"
+                      type="number"
+                      required
+                      min={1}
+                      value={formData.maxGuests}
+                      onChange={(e) => setFormData({ ...formData, maxGuests: Number(e.target.value) })}
+                      className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-slate-900 mt-1"
+                    />
+                  </div>
                 </div>
 
                 {/* Property photos */}
