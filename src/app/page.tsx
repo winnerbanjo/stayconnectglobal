@@ -3,7 +3,6 @@ import Navbar from '@/components/navigation/Navbar';
 import Footer from '@/components/navigation/Footer';
 import HeroSection from '@/components/home/HeroSection';
 import BookingSearchWidget from '@/components/home/BookingSearchWidget';
-import CategoryOfferings from '@/components/home/CategoryOfferings';
 import DestinationsSection from '@/components/home/DestinationsSection';
 import FeaturedRoomsSection from '@/components/home/FeaturedRoomsSection';
 import HospitalityPackagesSection from '@/components/home/HospitalityPackagesSection';
@@ -15,7 +14,7 @@ import TestimonialsSection from '@/components/home/TestimonialsSection';
 
 export const metadata = {
   title: 'Stay Connect Global | Luxury Hospitality Platform & Ecosystem',
-  description: 'Discover exceptional luxury hotels, serviced apartments, premium residences, chauffeur services, concierge experiences, and curated stays across Nigeria.',
+  description: 'Discover exceptional stays, premium chauffeur services, concierge experiences, and luxury hospitality across Nigeria.',
 };
 
 export default function HomePage() {

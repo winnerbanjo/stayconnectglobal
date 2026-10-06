@@ -83,7 +83,7 @@ export default function HeroSection() {
           transition={{ duration: 1, delay: 0.6 }}
           className="text-xs sm:text-base md:text-lg text-neutral-300 font-light max-w-3xl mx-auto tracking-wide leading-relaxed px-2"
         >
-          Discover luxury hotels, serviced apartments, premium residences, chauffeur services, concierge experiences, and curated stays across Nigeria.
+          Discover exceptional stays, chauffeur mobility, concierge experiences, and curated hospitality across Nigeria.
         </motion.p>
 
         {/* CTA Action Buttons */}

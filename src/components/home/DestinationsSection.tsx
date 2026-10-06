@@ -27,10 +27,10 @@ export default function DestinationsSection() {
               <span>Featured Destinations</span>
             </span>
             <h2 className="font-serif text-3xl sm:text-5xl font-normal leading-tight text-[#111111] dark:text-white">
-              Explore Places to Stay by Destination
+              Explore Stays by Destination
             </h2>
             <p className="text-neutral-600 dark:text-neutral-400 text-sm font-light leading-relaxed">
-              Discover curated luxury accommodation and chauffeur services across West Africa’s premier business and residential enclaves.
+              Discover curated luxury stays and chauffeur services across Nigeria’s premier business and residential enclaves.
             </p>
           </div>
 
@@ -38,7 +38,7 @@ export default function DestinationsSection() {
             href="/rooms"
             className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl border border-[#00AEEF] text-xs font-semibold uppercase tracking-wider text-[#00AEEF] hover:bg-[#00AEEF] hover:text-[#111111] transition-all shrink-0 self-start md:self-auto"
           >
-            <span>View All Locations</span>
+            <span>View All Stays</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>

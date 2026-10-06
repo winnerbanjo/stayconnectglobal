@@ -15,11 +15,9 @@ export default function PropertySearch({
   query?: string;
 }) {
   const [location, setLocation] = useState(initialLocation);
-  const [category, setCategory] = useState(initialCategory);
   const [search, setSearch] = useState(initialLocation);
   const filtered = properties.filter(
     (p) =>
-      (!category || p.category === category) &&
       [p.city, p.area, p.address, p.name]
         .join(" ")
         .toLowerCase()
@@ -27,11 +25,11 @@ export default function PropertySearch({
   );
   const areas = [...new Set(properties.map((p) => p.area || p.city))].sort();
   const groups = [...new Set(filtered.map((p) => p.area || p.city))].sort();
-  function update(value: string, clearCategory = false) {
+  function update(value: string) {
     setSearch(value);
     setLocation(value);
     const params = new URLSearchParams(window.location.search);
-    if (clearCategory) params.delete("category");
+    params.delete("category");
     if (value) params.set("location", value);
     else {
       params.delete("location");
@@ -50,7 +48,7 @@ export default function PropertySearch({
           e.preventDefault();
           update(location);
         }}
-        className="bg-white border border-[#E8E5DF] rounded-2xl p-5 shadow-sm grid gap-4 md:grid-cols-[1fr_240px_auto]"
+        className="bg-white border border-[#E8E5DF] rounded-2xl p-5 shadow-sm grid gap-4 md:grid-cols-[1fr_auto]"
       >
         <label className="text-xs font-medium text-neutral-600">
           City, area or property name
@@ -70,38 +68,6 @@ export default function PropertySearch({
               ))}
             </datalist>
           </div>
-        </label>
-        <label className="text-xs font-medium text-neutral-600">
-          Accommodation type
-          <select
-            aria-label="Accommodation type"
-            value={category}
-            onChange={(e) => {
-              setCategory(e.target.value);
-              const params = new URLSearchParams(window.location.search);
-              params.set("category", e.target.value);
-              window.history.replaceState(
-                null,
-                "",
-                `${window.location.pathname}?${params}`,
-              );
-            }}
-            className="w-full mt-2 bg-[#FAF9F6] rounded-lg p-3 text-sm text-black"
-          >
-            <option value="">All accommodation</option>
-            {[
-              "Luxury Hotel",
-              "Serviced Apartment",
-              "Luxury Residence",
-              "Villa",
-              "Shortlet",
-              "Corporate Housing",
-              "Resort",
-              "Boutique Hotel",
-            ].map((c) => (
-              <option key={c}>{c}</option>
-            ))}
-          </select>
         </label>
         <button className="self-end flex items-center justify-center gap-2 bg-[#00AEEF] text-black px-6 py-3 rounded-lg text-sm font-semibold">
           <Search size={17} />
@@ -126,25 +92,24 @@ export default function PropertySearch({
         ))}
       </div>
       <p role="status" className="text-sm text-neutral-600">
-        {filtered.length} {filtered.length === 1 ? "property" : "properties"}
-        {search ? ` matching “${search}”` : " to explore"}. Select a room and
+        {filtered.length} {filtered.length === 1 ? "stay" : "stays"}
+        {search ? ` matching “${search}”` : " available in Nigeria"}. Select a stay and
         dates to request a reservation.
       </p>
       {!filtered.length && (
         <div className="bg-white border rounded-2xl p-12 text-center space-y-4">
           <Building2 className="mx-auto text-[#00AEEF]" size={36} />
-          <h2 className="font-serif text-3xl">No properties found here yet</h2>
+          <h2 className="font-serif text-3xl">No stays found here yet</h2>
           <p className="text-sm text-neutral-500">
-            Try another location or browse all available properties.
+            Try another location or browse all available stays.
           </p>
           <button
             className="underline text-sm"
             onClick={() => {
-              setCategory("");
-              update("", true);
+              update("");
             }}
           >
-            Clear filters
+            View all stays
           </button>
         </div>
       )}
@@ -175,8 +140,8 @@ export default function PropertySearch({
                       )}
                     </div>
                     <div className="p-6 space-y-3">
-                      <p className="text-[10px] uppercase tracking-widest text-[#0077B6]">
-                        {p.category}
+                      <p className="text-[10px] uppercase tracking-widest text-[#00AEEF] font-semibold">
+                        Stay Connect Verified
                       </p>
                       <h3 className="font-serif text-3xl">{p.name}</h3>
                       <p className="text-xs text-neutral-500 flex gap-2">

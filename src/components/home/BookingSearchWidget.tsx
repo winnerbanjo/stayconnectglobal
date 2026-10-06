@@ -21,7 +21,6 @@ export default function BookingSearchWidget() {
     "stays" | "mobility" | "transfers" | "experiences" | "concierge"
   >("stays");
   const [destination, setDestination] = useState("Lagos");
-  const [propertyType, setPropertyType] = useState("All");
   const [checkIn, setCheckIn] = useState(new Date().toISOString().slice(0, 10));
   const [checkOut, setCheckOut] = useState(
     new Date(Date.now() + 86400000).toISOString().slice(0, 10),
@@ -40,12 +39,11 @@ export default function BookingSearchWidget() {
       }
       const query = new URLSearchParams({
         city: destination,
-        category: propertyType !== "All" ? propertyType : "",
         checkIn,
         checkOut,
         guests,
       }).toString();
-      router.push(`/properties?${query}`);
+      router.push(`/rooms?${query}`);
     } else if (activeTab === "mobility") {
       router.push(
         `/car-rentals?category=${vehicleCategory}&city=${destination}`,
@@ -78,7 +76,7 @@ export default function BookingSearchWidget() {
             }`}
           >
             <Building2 className="w-3.5 h-3.5" />
-            <span>Places to Stay</span>
+            <span>Stays</span>
           </button>
 
           <button
@@ -140,7 +138,7 @@ export default function BookingSearchWidget() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3 sm:gap-4 items-center">
               {activeTab === "stays" && (
                 <>
-                  <div className="space-y-1 lg:col-span-3">
+                  <div className="space-y-1 lg:col-span-4">
                     <label className="text-[10px] uppercase tracking-[0.2em] text-[#00AEEF] font-semibold flex items-center gap-1.5">
                       <MapPin className="w-3.5 h-3.5 text-[#00AEEF] shrink-0" />
                       <span>Destination</span>
@@ -161,32 +159,10 @@ export default function BookingSearchWidget() {
                     </datalist>
                   </div>
 
-                  <div className="space-y-1 lg:col-span-3">
-                    <label className="text-[10px] uppercase tracking-[0.2em] text-[#00AEEF] font-semibold flex items-center gap-1.5">
-                      <Building2 className="w-3.5 h-3.5 text-[#00AEEF] shrink-0" />
-                      <span>Accommodation Type</span>
-                    </label>
-                    <select
-                      value={propertyType}
-                      onChange={(e) => setPropertyType(e.target.value)}
-                      className="w-full min-h-[44px] bg-white dark:bg-[#111111] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-xl px-3 py-2 text-xs text-[#111111] dark:text-white focus:border-[#00AEEF]"
-                    >
-                      <option value="All">All Accommodation Types</option>
-                      <option value="Luxury Hotel">Luxury Hotels</option>
-                      <option value="Serviced Apartment">
-                        Serviced Apartments
-                      </option>
-                      <option value="Luxury Residence">
-                        Luxury Residences
-                      </option>
-                      <option value="Villa">Private Villas</option>
-                    </select>
-                  </div>
-
                   <div className="space-y-1 lg:col-span-2">
                     <label className="text-[10px] uppercase tracking-[0.2em] text-[#00AEEF] font-semibold flex items-center gap-1.5">
                       <CalendarIcon className="w-3.5 h-3.5 text-[#00AEEF] shrink-0" />
-                      <span>Check-In / Out</span>
+                      <span>Check-In</span>
                     </label>
                     <input
                       type="date"
@@ -206,13 +182,20 @@ export default function BookingSearchWidget() {
                       }}
                       className="w-full min-h-[44px] bg-white dark:bg-[#111111] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-xl px-3 py-2 text-xs text-[#111111] dark:text-white"
                     />
+                  </div>
+
+                  <div className="space-y-1 lg:col-span-2">
+                    <label className="text-[10px] uppercase tracking-[0.2em] text-[#00AEEF] font-semibold flex items-center gap-1.5">
+                      <CalendarIcon className="w-3.5 h-3.5 text-[#00AEEF] shrink-0" />
+                      <span>Check-Out</span>
+                    </label>
                     <input
                       type="date"
                       aria-label="Check-out"
                       min={checkIn}
                       value={checkOut}
                       onChange={(e) => setCheckOut(e.target.value)}
-                      className="w-full min-h-[44px] bg-white dark:bg-[#111111] border border-[#E8E5DF] rounded-xl px-3 py-2 text-xs"
+                      className="w-full min-h-[44px] bg-white dark:bg-[#111111] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-xl px-3 py-2 text-xs text-[#111111] dark:text-white"
                     />
                   </div>
 
@@ -240,7 +223,7 @@ export default function BookingSearchWidget() {
                       className="w-full min-h-[44px] bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-1.5 shadow-md active:scale-95 shrink-0"
                     >
                       <Search className="w-4 h-4 shrink-0" />
-                      <span>Search</span>
+                      <span>Search Stays</span>
                     </button>
                   </div>
                 </>

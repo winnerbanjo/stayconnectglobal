@@ -78,7 +78,7 @@ export default function Footer() {
               </div>
             </Link>
             <p className="text-neutral-400 text-xs leading-relaxed font-light pr-2 sm:pr-4">
-              Stay Connect Global is a luxury hospitality platform and ecosystem connecting guests with carefully curated hotels, serviced apartments, premium residences, chauffeur mobility, and concierge experiences across Nigeria.
+              Stay Connect Global is a luxury hospitality platform and ecosystem connecting guests with carefully curated stays, chauffeur mobility, and concierge experiences across Nigeria.
             </p>
             <div className="space-y-2.5 text-xs text-neutral-300 font-light">
               <div className="flex items-start gap-3">
@@ -96,26 +96,26 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Column 1: Accommodation Categories */}
+          {/* Column 1: Stays */}
           <div className="lg:col-span-3 space-y-3 sm:space-y-4">
             <div className="text-[10px] uppercase tracking-[0.3em] text-[#00AEEF] font-semibold flex items-center gap-1.5">
               <Building2 className="w-3.5 h-3.5" />
-              <span>Explore Collection</span>
+              <span>Explore Stays</span>
             </div>
             <ul className="space-y-2.5 text-xs text-neutral-300 font-light">
               <li>
-                <Link href="/rooms?category=Luxury+Hotel" className="hover:text-[#00AEEF] transition-colors">
-                  Luxury Hotels & Resorts
+                <Link href="/rooms" className="hover:text-[#00AEEF] transition-colors">
+                  All Stays & Residences
                 </Link>
               </li>
               <li>
-                <Link href="/rooms?category=Serviced+Apartment" className="hover:text-[#00AEEF] transition-colors">
-                  Serviced Executive Apartments
+                <Link href="/rooms?city=Lagos" className="hover:text-[#00AEEF] transition-colors">
+                  Stays in Lagos
                 </Link>
               </li>
               <li>
-                <Link href="/rooms?category=Luxury+Residence" className="hover:text-[#00AEEF] transition-colors">
-                  Private Penthouses & Villas
+                <Link href="/rooms?city=Abuja" className="hover:text-[#00AEEF] transition-colors">
+                  Stays in Abuja
                 </Link>
               </li>
               <li>

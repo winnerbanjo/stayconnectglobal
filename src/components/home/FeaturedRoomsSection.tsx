@@ -40,8 +40,8 @@ export default function FeaturedRoomsSection() {
   if (!standardRoom)
     return (
       <section className="p-12 text-center">
-        <Link href="/properties" className="text-[#0077B6] underline">
-          Explore hotels & residences →
+        <Link href="/rooms" className="text-[#00AEEF] underline">
+          Explore all stays →
         </Link>
       </section>
     );
@@ -194,8 +194,7 @@ export default function FeaturedRoomsSection() {
               </h2>
             </div>
             <p className="text-neutral-600 dark:text-neutral-400 text-sm font-light max-w-md">
-              Hotels, apartments, villas, and residences currently available
-              through verified Stay Connect partners.
+              Verified stays and residences currently available through Stay Connect partners.
             </p>
           </div>
 
@@ -218,7 +217,7 @@ export default function FeaturedRoomsSection() {
                     <span>Verified Partner</span>
                   </div>
                   <div className="absolute top-4 right-4 bg-[#111111]/80 backdrop-blur-md px-3 py-1 rounded-full text-white text-[10px] uppercase tracking-widest font-medium">
-                    {prop.category}
+                    Verified Stay
                   </div>
                   <div className="absolute bottom-4 left-4 text-xs font-semibold text-white">
                     📍 {prop.address}
@@ -246,7 +245,7 @@ export default function FeaturedRoomsSection() {
                     </div>
 
                     <span className="px-4 py-2 bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-bold text-xs rounded-xl transition-all flex items-center gap-1.5 shadow-md active:scale-95">
-                      <span>View Property</span>
+                      <span>View Stay</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </span>
                   </div>

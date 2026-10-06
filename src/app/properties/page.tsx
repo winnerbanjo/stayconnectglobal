@@ -4,9 +4,9 @@ import PropertySearch from "@/components/properties/PropertySearch";
 import { publicProperties } from "@/lib/platform/store";
 export const dynamic = "force-dynamic";
 export const metadata = {
-  title: "Hotels, Apartments & Residences by Location | Stay Connect",
+  title: "Stays by Location | Stay Connect",
   description:
-    "Find your next stay by city or area. Explore Stay Connect Residence and verified hotels, apartments and residences in Nigeria.",
+    "Find your next stay by city or area. Explore verified stays across Nigeria.",
 };
 export default async function PropertiesPage({
   searchParams,
@@ -22,8 +22,8 @@ export default async function PropertiesPage({
       <Navbar />
       <main className="pt-32 pb-20 max-w-7xl mx-auto px-5 sm:px-8">
         <header className="max-w-2xl mb-10 space-y-4">
-          <p className="text-xs uppercase tracking-[0.3em] text-[#0077B6]">
-            Find your place
+          <p className="text-xs uppercase tracking-[0.3em] text-[#00AEEF]">
+            Find your stay
           </p>
           <h1 className="font-serif text-4xl sm:text-6xl">
             Exceptional stays.
@@ -31,9 +31,8 @@ export default async function PropertiesPage({
             The right location.
           </h1>
           <p className="text-neutral-600 text-sm leading-relaxed">
-            Discover hotels, serviced apartments and private residences. Search
-            your preferred neighbourhood and find a place that feels right for
-            you.
+            Discover curated stays across Nigeria. Search your preferred neighbourhood
+            and find a place that feels right for you.
           </p>
         </header>
         <PropertySearch

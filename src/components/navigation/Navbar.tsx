@@ -8,6 +8,7 @@ import {
   Menu,
   X,
   Calendar,
+  Building2,
   MapPin,
   ChevronDown,
   Sun,
@@ -24,7 +25,6 @@ import { useTheme } from "@/context/ThemeContext";
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [collectionOpen, setCollectionOpen] = useState(false);
   const [mobilityOpen, setMobilityOpen] = useState(false);
   const [experiencesOpen, setExperiencesOpen] = useState(false);
 
@@ -64,87 +64,26 @@ export default function Navbar() {
             </div>
           </Link>
 
-          {/* Desktop Navigation - 3 Streamlined Luxury Dropdowns */}
+          {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-2 xl:gap-4">
-            {/* Dropdown 1: Stay Collection */}
-            <div className="relative">
-              <button
-                onClick={() => {
-                  setCollectionOpen(!collectionOpen);
-                  setMobilityOpen(false);
-                  setExperiencesOpen(false);
-                }}
-                onBlur={() => setTimeout(() => setCollectionOpen(false), 200)}
-                className={`flex items-center gap-1.5 text-xs uppercase tracking-wider font-bold px-3 py-2 rounded-xl transition-colors ${
-                  !scrolled && isHome
-                    ? "text-white hover:text-[#00AEEF]"
-                    : "text-neutral-800 dark:text-neutral-200 hover:text-[#00AEEF]"
-                }`}
-              >
-                <MapPin className="w-3.5 h-3.5 text-[#00AEEF]" />
-                <span>Collection</span>
-                <ChevronDown
-                  className={`w-3 h-3 transition-transform duration-300 ${collectionOpen ? "rotate-180" : ""}`}
-                />
-              </button>
-
-              <AnimatePresence>
-                {collectionOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 8 }}
-                    className="absolute top-full left-0 w-72 bg-white dark:bg-[#1A1918] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-2xl shadow-2xl p-3 mt-2 z-50"
-                  >
-                    <div className="text-[9px] uppercase tracking-widest text-neutral-400 px-3 py-1 font-bold">
-                      Accommodation Types
-                    </div>
-                    {[
-                      {
-                        name: "Luxury Hotels",
-                        href: "/rooms?category=Luxury+Hotel",
-                        desc: "Directly operated flagships",
-                      },
-                      {
-                        name: "Serviced Apartments",
-                        href: "/rooms?category=Serviced+Apartment",
-                        desc: "Short & extended stays",
-                      },
-                      {
-                        name: "Luxury Residences",
-                        href: "/rooms?category=Luxury+Residence",
-                        desc: "Penthouses & private homes",
-                      },
-                      {
-                        name: "Browse All Stays",
-                        href: "/rooms",
-                        desc: "View complete collection",
-                      },
-                    ].map((item, i) => (
-                      <Link
-                        key={i}
-                        href={item.href}
-                        className="block px-3 py-2.5 rounded-xl hover:bg-[#FAF9F6] dark:hover:bg-[#252422] transition-colors"
-                      >
-                        <div className="text-xs font-semibold text-[#111111] dark:text-white hover:text-[#00AEEF]">
-                          {item.name}
-                        </div>
-                        <div className="text-[11px] text-neutral-500 font-light">
-                          {item.desc}
-                        </div>
-                      </Link>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
+            {/* Direct Link: Stays */}
+            <Link
+              href="/rooms"
+              className={`flex items-center gap-1.5 text-xs uppercase tracking-wider font-bold px-3 py-2 rounded-xl transition-colors ${
+                !scrolled && isHome
+                  ? "text-white hover:text-[#00AEEF]"
+                  : "text-neutral-800 dark:text-neutral-200 hover:text-[#00AEEF]"
+              }`}
+            >
+              <Building2 className="w-3.5 h-3.5 text-[#00AEEF]" />
+              <span>Stays</span>
+            </Link>
 
             {/* Dropdown 2: Mobility & Transfers */}
             <div className="relative">
               <button
                 onClick={() => {
                   setMobilityOpen(!mobilityOpen);
-                  setCollectionOpen(false);
                   setExperiencesOpen(false);
                 }}
                 onBlur={() => setTimeout(() => setMobilityOpen(false), 200)}
@@ -221,7 +160,6 @@ export default function Navbar() {
               <button
                 onClick={() => {
                   setExperiencesOpen(!experiencesOpen);
-                  setCollectionOpen(false);
                   setMobilityOpen(false);
                 }}
                 onBlur={() => setTimeout(() => setExperiencesOpen(false), 200)}
@@ -396,7 +334,7 @@ export default function Navbar() {
               </div>
 
               {[
-                { name: "Places to Stay", href: "/rooms" },
+                { name: "Stays", href: "/rooms" },
                 { name: "Car Rentals & Mobility", href: "/car-rentals" },
                 { name: "Airport VIP Transfers", href: "/transfers" },
                 { name: "Flights — Coming Soon", href: "/flights" },

@@ -7,22 +7,10 @@ import { Building2, Home, Hotel, Plane, Car, Compass, ConciergeBell, Briefcase, 
 
 const CATEGORIES = [
   {
-    icon: Hotel,
-    title: 'Luxury Hotels',
-    subtitle: 'Premium hotels operated by Stay Connect & trusted hospitality partners.',
-    link: '/rooms?category=Luxury+Hotel',
-  },
-  {
     icon: Building2,
-    title: 'Serviced Apartments',
-    subtitle: 'Executive apartments for short and extended stays in prime business districts.',
-    link: '/rooms?category=Serviced+Apartment',
-  },
-  {
-    icon: Home,
-    title: 'Luxury Residences',
-    subtitle: 'Private villas, penthouses, holiday homes, and corporate residences.',
-    link: '/rooms?category=Luxury+Residence',
+    title: 'Stays',
+    subtitle: 'Curated luxury stays, residences, and suites across prime locations.',
+    link: '/rooms',
   },
   {
     icon: Plane,
