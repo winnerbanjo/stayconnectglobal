@@ -45,7 +45,7 @@ export default function ExperiencesPage() {
 
             <div className="pt-4 border-t border-[#E8E5DF] dark:border-[#2C2B29] flex flex-col sm:flex-row items-center justify-center gap-4">
               <a
-                href="https://wa.me/2347041008351?text=Hello%20Stay%20Connect%20Concierge,%20I%20would%20like%20to%20request%20a%20bespoke%20lifestyle%20experience."
+                href="https://wa.me/2349042854834?text=Hello%20Stay%20Connect%20Concierge,%20I%20would%20like%20to%20request%20a%20bespoke%20lifestyle%20experience."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-6 py-3 bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-bold text-xs uppercase tracking-widest rounded-xl transition-all shadow-md flex items-center gap-2"
@@ -89,7 +89,7 @@ export default function ExperiencesPage() {
 
                   <div className="pt-4 border-t border-[#2C2B29]">
                     <a
-                      href={`https://wa.me/2347041008351?text=Hi%20Stay%20Connect,%20I%20want%20to%20book%20the%20experience:%20${encodeURIComponent(exp.title)}`}
+                      href={`https://wa.me/2349042854834?text=Hi%20Stay%20Connect,%20I%20want%20to%20book%20the%20experience:%20${encodeURIComponent(exp.title)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-semibold text-xs uppercase tracking-wider transition-all"

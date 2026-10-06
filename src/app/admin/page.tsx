@@ -374,7 +374,7 @@ function AdminPageContent() {
                 <div className="text-xs text-slate-600 font-light">
                   WhatsApp Concierge Admin:{" "}
                   <span className="text-[#0077B6] font-mono">
-                    +234 704 100 8351
+                    +234 904 285 4834
                   </span>
                 </div>
               </div>
@@ -573,7 +573,7 @@ function AdminPageContent() {
                               <span>View Onboarding Details</span>
                             </button>
                             <a
-                              href={`https://wa.me/${(p.phone || "+2347041008351").replace(/[^0-9]/g, "")}?text=${encodeURIComponent(
+                              href={`https://wa.me/${(p.phone || "+2349042854834").replace(/[^0-9]/g, "")}?text=${encodeURIComponent(
                                 `Hello ${p.contactName || "Partner"}, this is Stay Connect Admin regarding your property application on Stay Connect Global.`,
                               )}`}
                               target="_blank"
@@ -651,7 +651,7 @@ function AdminPageContent() {
                   <input
                     type="text"
                     required
-                    placeholder="+234 704 100 8351"
+                    placeholder="+234 904 285 4834"
                     value={newWalkIn.guestPhone}
                     onChange={(e) =>
                       setNewWalkIn({ ...newWalkIn, guestPhone: e.target.value })
@@ -969,7 +969,7 @@ function AdminPageContent() {
               {/* Action Buttons */}
               <div className="pt-4 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
                 <a
-                  href={`https://wa.me/${(selectedPartnerModal.phone || "+2347041008351").replace(/[^0-9]/g, "")}?text=${encodeURIComponent(
+                  href={`https://wa.me/${(selectedPartnerModal.phone || "+2349042854834").replace(/[^0-9]/g, "")}?text=${encodeURIComponent(
                     `Hello ${selectedPartnerModal.contactName || "Partner"}, this is Stay Connect Global Admin regarding your property application for ${selectedPartnerModal.propertyName || selectedPartnerModal.businessName || "Not provided"}.`,
                   )}`}
                   target="_blank"

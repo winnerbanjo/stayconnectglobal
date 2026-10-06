@@ -449,7 +449,7 @@ export default function BookingPage() {
                       <input
                         type="tel"
                         required
-                        placeholder="+234 704 100 8351"
+                        placeholder="+234 904 285 4834"
                         value={formData.guestPhone}
                         onChange={(e) =>
                           setFormData({
@@ -527,7 +527,7 @@ export default function BookingPage() {
                 </div>
 
                 <div className="space-y-3">
-                  <a href="https://wa.me/2347041008351" target="_blank" rel="noopener noreferrer" className="text-[#0077B6] underline">Ask the concierge about additional services</a>
+                  <a href="https://wa.me/2349042854834" target="_blank" rel="noopener noreferrer" className="text-[#0077B6] underline">Ask the concierge about additional services</a>
                 </div>
 
                 <div className="flex items-center gap-3 pt-2">

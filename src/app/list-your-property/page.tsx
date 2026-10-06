@@ -317,7 +317,7 @@ export default function ListYourPropertyPage() {
                       <input
                         type="tel"
                         required
-                        placeholder="+234 803 000 0000"
+                        placeholder="+234 904 285 4834"
                         value={formData.phone}
                         onChange={(e) =>
                           setFormData({ ...formData, phone: e.target.value })

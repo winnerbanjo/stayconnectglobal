@@ -92,7 +92,7 @@ export async function sendBookingConfirmationEmail(
       <hr style="border: 0; border-top: 1px solid #2C2B29; margin: 24px 0;" />
 
       <div style="text-align: center; font-size: 12px; color: #8E8B85; line-height: 1.6;">
-        <p style="margin-bottom: 4px;">WhatsApp Concierge: <strong style="color: #00AEEF;">+234 704 100 8351</strong></p>
+        <p style="margin-bottom: 4px;">WhatsApp Concierge: <strong style="color: #00AEEF;">+234 904 285 4834</strong></p>
         <p style="margin: 0;">Location: 14B Providence Street, Lekki Phase 1, Lagos, Nigeria</p>
       </div>
     </div>

@@ -47,7 +47,7 @@ export default function EventsPage() {
               </div>
               <div className="pt-4 border-t border-[#E8E5DF] flex items-center justify-between text-xs">
                 <span>Capacity: Up to 250 Guests</span>
-                <a href="tel:+2348031234567" className="text-[#00AEEF] font-semibold hover:underline">Inquire Venue →</a>
+                <a href="tel:+2349042854834" className="text-[#00AEEF] font-semibold hover:underline">Inquire Venue →</a>
               </div>
             </div>
 
@@ -69,7 +69,7 @@ export default function EventsPage() {
               </div>
               <div className="pt-4 border-t border-[#E8E5DF] flex items-center justify-between text-xs">
                 <span>Capacity: Up to 120 Executives</span>
-                <a href="tel:+2348031234567" className="text-[#00AEEF] font-semibold hover:underline">Inquire Venue →</a>
+                <a href="tel:+2349042854834" className="text-[#00AEEF] font-semibold hover:underline">Inquire Venue →</a>
               </div>
             </div>
           </div>

@@ -23,6 +23,8 @@ import {
   Building,
   Award,
   MessageSquare,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { Room } from "@/types";
 
@@ -58,7 +60,7 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
   const whatsappMessage = encodeURIComponent(
     `Hello Stay Connect Concierge, I would like to book the ${room.name} (${room.type} Suite) at ${room.address} from ${checkIn} to ${checkOut} (${nights} nights) for ${guests} guest(s). Total estimated: ₦${total.toLocaleString()}.`,
   );
-  const whatsappUrl = `https://wa.me/2347041008351?text=${whatsappMessage}`;
+  const whatsappUrl = `https://wa.me/2349042854834?text=${whatsappMessage}`;
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 space-y-6 sm:space-y-10">
@@ -116,7 +118,7 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
 
       {/* Image Gallery Showcase */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-        <div className="lg:col-span-8 relative h-[250px] sm:h-[420px] lg:h-[540px] rounded-2xl overflow-hidden bg-neutral-900 shadow-xl border border-[#E8E5DF]">
+        <div className="lg:col-span-8 relative h-[280px] sm:h-[420px] lg:h-[540px] rounded-2xl overflow-hidden bg-neutral-900 shadow-xl border border-[#E8E5DF] group">
           <Image
             src={selectedImg}
             alt={room.name}
@@ -127,6 +129,41 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
           <div className="absolute top-4 left-4 bg-[#111111]/80 backdrop-blur-md px-3.5 py-1 rounded-full text-[10px] sm:text-xs text-[#00AEEF] uppercase tracking-widest font-medium border border-[#00AEEF]/30">
             Editorial Photo Gallery
           </div>
+
+          {/* Photo Counter */}
+          <div className="absolute top-4 right-4 bg-[#111111]/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-mono text-white border border-white/20">
+            {(room.gallery.indexOf(selectedImg) !== -1 ? room.gallery.indexOf(selectedImg) : 0) + 1} / {room.gallery.length}
+          </div>
+
+          {/* Prev / Next Arrows */}
+          {room.gallery.length > 1 && (
+            <>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  const idx = room.gallery.indexOf(selectedImg);
+                  const prev = idx <= 0 ? room.gallery.length - 1 : idx - 1;
+                  setSelectedImg(room.gallery[prev]);
+                }}
+                aria-label="Previous photo"
+                className="absolute left-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-black/60 hover:bg-[#00AEEF] text-white hover:text-[#111111] backdrop-blur-md transition-all shadow-lg active:scale-95"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  const idx = room.gallery.indexOf(selectedImg);
+                  const next = idx >= room.gallery.length - 1 ? 0 : idx + 1;
+                  setSelectedImg(room.gallery[next]);
+                }}
+                aria-label="Next photo"
+                className="absolute right-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-black/60 hover:bg-[#00AEEF] text-white hover:text-[#111111] backdrop-blur-md transition-all shadow-lg active:scale-95"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </>
+          )}
         </div>
 
         {/* Thumbnail Stack */}

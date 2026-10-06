@@ -14,7 +14,24 @@ import {
 } from "lucide-react";
 import { publicProperties, publicRooms } from "@/lib/platform/store";
 import { notFound } from "next/navigation";
+import PropertyImageGallery from "@/components/properties/PropertyImageGallery";
 export const dynamic = "force-dynamic";
+
+function cleanDescription(desc: string = ""): string {
+  if (!desc) return "";
+  if (desc.includes("•")) {
+    const parts = desc.split("•");
+    const last = parts[parts.length - 1]?.trim();
+    if (last && last.length > 30) {
+      const sentenceMatch = last.match(/(?:(?:Hairdryer|Iron|Fridge|Toaster|Oven)\s+)?([A-Z].*)/);
+      if (sentenceMatch && sentenceMatch[1]) {
+        return sentenceMatch[1];
+      }
+      return last;
+    }
+  }
+  return desc;
+}
 
 export async function generateMetadata({
   params,
@@ -67,7 +84,7 @@ export default async function PropertyDetailPage({
               <span>📍 {prop.address}</span>
             </div>
             <p className="text-neutral-600 text-sm font-light leading-relaxed">
-              {prop.description}
+              {cleanDescription(prop.description)}
             </p>
           </div>
 
@@ -98,16 +115,12 @@ export default async function PropertyDetailPage({
             </div>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {prop.gallery.map((url: string, i: number) => (
-              <img
-                key={url}
-                src={url}
-                alt={`${prop.name} — property photo ${i + 1}`}
-                className="w-full h-40 object-cover rounded-xl"
-              />
-            ))}
-          </div>
+          {/* Scrollable Photo Gallery */}
+          <PropertyImageGallery
+            propertyName={prop.name}
+            images={prop.gallery}
+            heroImage={prop.heroImage}
+          />
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{

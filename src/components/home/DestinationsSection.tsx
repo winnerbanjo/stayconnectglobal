@@ -12,9 +12,28 @@ export default function DestinationsSection() {
       if (j.success) setProperties(j.data);
     }).catch(() => {});
   }, []);
-  const destinations = [...new Set(properties.map(p => p.area || p.city))].filter(Boolean).map(name => {
-    const listings = properties.filter(p => (p.area || p.city) === name);
-    return { name, city: listings[0].city, propertiesCount: `${listings.length} ${listings.length === 1 ? 'property' : 'properties'}`, image: listings[0].heroImage, tag: 'Explore stays', slug: name };
+  const getDestinationName = (p: any) => {
+    if (p.area) return p.area;
+    const addr = (p.address || "").toLowerCase();
+    if (addr.includes("banana island")) return "Banana Island";
+    if (addr.includes("ikoyi")) return "Ikoyi";
+    if (addr.includes("lekki")) return "Lekki Phase 1";
+    if (addr.includes("victoria island")) return "Victoria Island";
+    if (addr.includes("ikeja")) return "Ikeja";
+    if ((p.city || "").toLowerCase().includes("abuja")) return "Abuja Central";
+    return p.city || "Lagos";
+  };
+
+  const destinations = [...new Set(properties.map(getDestinationName))].filter(Boolean).map(name => {
+    const listings = properties.filter(p => getDestinationName(p) === name);
+    return {
+      name,
+      city: listings[0]?.city || "Lagos",
+      propertiesCount: `${listings.length} ${listings.length === 1 ? 'stay' : 'stays'} available`,
+      image: listings[0]?.heroImage || "/images/saffron/saffron-1.jpg",
+      tag: 'Explore stays',
+      slug: name
+    };
   });
   if (!destinations.length) return null;
   return (

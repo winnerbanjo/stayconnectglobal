@@ -74,7 +74,7 @@ export default function CarRentalsPage() {
 
             <div className="pt-4 border-t border-[#E8E5DF] dark:border-[#2C2B29] flex flex-col sm:flex-row items-center justify-center gap-4">
               <a
-                href="https://wa.me/2347041008351?text=Hello%20Stay%20Connect%20Concierge,%20I%20would%20like%20to%20request%20executive%20chauffeur%20mobility."
+                href="https://wa.me/2349042854834?text=Hello%20Stay%20Connect%20Concierge,%20I%20would%20like%20to%20request%20executive%20chauffeur%20mobility."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-6 py-3 bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-bold text-xs uppercase tracking-widest rounded-xl transition-all shadow-md flex items-center gap-2"
@@ -125,7 +125,7 @@ export default function CarRentalsPage() {
                     </div>
 
                     <a
-                      href={`https://wa.me/2347041008351?text=Hi%20Stay%20Connect,%20I%20want%20to%20reserve%20the%20${encodeURIComponent(veh.name)}`}
+                      href={`https://wa.me/2349042854834?text=Hi%20Stay%20Connect,%20I%20want%20to%20reserve%20the%20${encodeURIComponent(veh.name)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="px-4 py-2 bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-semibold text-xs rounded-lg transition-colors flex items-center gap-1.5"

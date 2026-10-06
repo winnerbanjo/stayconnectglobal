@@ -85,7 +85,7 @@ export default function DiningPage() {
 
                   <div className="pt-4 border-t border-[#E8E5DF] flex items-center justify-between">
                     <a
-                      href="tel:+2348031234567"
+                      href="tel:+2349042854834"
                       className="px-6 py-3 bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-medium text-xs uppercase tracking-widest rounded shadow-md inline-flex items-center gap-2"
                     >
                       <Utensils className="w-3.5 h-3.5" />

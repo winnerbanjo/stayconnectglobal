@@ -3,6 +3,23 @@ import { useState } from "react";
 import Link from "next/link";
 import { MapPin, Search, ArrowRight, Building2 } from "lucide-react";
 import { Property } from "@/types";
+
+function cleanDescription(desc: string = ""): string {
+  if (!desc) return "";
+  if (desc.includes("•")) {
+    const parts = desc.split("•");
+    const last = parts[parts.length - 1]?.trim();
+    if (last && last.length > 30) {
+      const sentenceMatch = last.match(/(?:(?:Hairdryer|Iron|Fridge|Toaster|Oven)\s+)?([A-Z].*)/);
+      if (sentenceMatch && sentenceMatch[1]) {
+        return sentenceMatch[1];
+      }
+      return last;
+    }
+  }
+  return desc;
+}
+
 export default function PropertySearch({
   properties,
   initialLocation = "",
@@ -149,7 +166,7 @@ export default function PropertySearch({
                         {p.address}
                       </p>
                       <p className="text-sm text-neutral-600 line-clamp-2">
-                        {p.description}
+                        {cleanDescription(p.description)}
                       </p>
                       <div className="flex flex-wrap gap-2">
                         {p.amenities.slice(0, 3).map((a) => (

@@ -70,7 +70,7 @@ export default function ContactPage() {
                     <label className="text-xs font-semibold uppercase tracking-widest text-[#111111]">Phone Number</label>
                     <input
                       type="tel"
-                      placeholder="+234 803 123 4567"
+                      placeholder="+234 904 285 4834"
                       className="w-full bg-[#FAF9F6] border border-[#E8E5DF] rounded p-3 text-xs text-[#111111] mt-1"
                     />
                   </div>
@@ -116,7 +116,9 @@ export default function ContactPage() {
                     <Phone className="w-5 h-5 text-[#00AEEF] shrink-0 mt-0.5" />
                     <div>
                       <div className="text-white font-medium">Direct Telephone & WhatsApp</div>
-                      <div>+234 803 123 4567 / +234 901 888 0000</div>
+                      <a href="tel:+2349042854834" className="hover:text-[#00AEEF] transition-colors block">
+                        +234 904 285 4834
+                      </a>
                     </div>
                   </div>
 

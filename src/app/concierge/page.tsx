@@ -84,7 +84,7 @@ export default function ConciergePage() {
 
                 <div className="space-y-1.5">
                   <label className="text-xs text-[#00AEEF] font-semibold">Phone / WhatsApp Number *</label>
-                  <input required type="tel" placeholder="+234 803 123 4567" className="w-full bg-[#111111] border border-[#2C2B29] rounded-xl px-4 py-3 text-sm text-white" />
+                  <input required type="tel" placeholder="+234 904 285 4834" className="w-full bg-[#111111] border border-[#2C2B29] rounded-xl px-4 py-3 text-sm text-white" />
                 </div>
 
                 <div className="space-y-1.5">
