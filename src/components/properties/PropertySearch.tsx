@@ -3,6 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { MapPin, Search, ArrowRight, Building2 } from "lucide-react";
 import { Property } from "@/types";
+import AirbnbPropertyCard from "@/components/airbnb/AirbnbPropertyCard";
 
 function cleanDescription(desc: string = ""): string {
   if (!desc) return "";
@@ -132,65 +133,23 @@ export default function PropertySearch({
       )}
       {groups.map((area) => (
         <section key={area} className="space-y-5">
-          <h2 className="font-serif text-3xl">Stays in {area}</h2>
-          <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+          <div className="flex items-baseline justify-between border-b border-[#E8E5DF] dark:border-[#2C2B29] pb-3">
+            <h2 className="font-bold text-xl sm:text-2xl text-neutral-900 dark:text-white">
+              Stays in {area}
+            </h2>
+            <span className="text-xs text-neutral-500 font-medium">
+              {filtered.filter((p) => (p.area || p.city) === area).length} properties
+            </span>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {filtered
               .filter((p) => (p.area || p.city) === area)
               .map((p) => (
-                <article
+                <AirbnbPropertyCard
                   key={p.id}
-                  className="bg-white border border-[#E8E5DF] rounded-2xl overflow-hidden shadow-sm"
-                >
-                  <Link
-                    href={`/properties/${p.slug}${query ? `?${query}` : ""}`}
-                  >
-                    <div className="relative h-64">
-                      <img
-                        src={p.heroImage}
-                        alt={p.name}
-                        className="w-full h-full object-cover"
-                      />
-                      {!p.partnerId && (
-                        <span className="absolute top-4 left-4 bg-[#111111] text-[#65D5FF] text-xs px-3 py-2 rounded-full">
-                          Stay Connect operated
-                        </span>
-                      )}
-                    </div>
-                    <div className="p-6 space-y-3">
-                      <p className="text-[10px] uppercase tracking-widest text-[#00AEEF] font-semibold">
-                        Stay Connect Verified
-                      </p>
-                      <h3 className="font-serif text-3xl">{p.name}</h3>
-                      <p className="text-xs text-neutral-500 flex gap-2">
-                        <MapPin size={15} className="shrink-0" />
-                        {p.address}
-                      </p>
-                      <p className="text-sm text-neutral-600 line-clamp-2">
-                        {cleanDescription(p.description)}
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {p.amenities.slice(0, 3).map((a) => (
-                          <span
-                            key={a.id}
-                            className="bg-[#FAF9F6] px-2 py-1 text-[11px] rounded"
-                          >
-                            {a.name}
-                          </span>
-                        ))}
-                      </div>
-                      <div className="pt-4 border-t flex justify-between items-center">
-                        <p className="text-xs text-neutral-500">
-                          From{" "}
-                          <strong className="text-lg text-black">
-                            {p.pricingStartingFrom ? `₦${p.pricingStartingFrom.toLocaleString()}` : "Contact for price"}
-                          </strong>{" "}
-                          / night
-                        </p>
-                        <ArrowRight size={19} />
-                      </div>
-                    </div>
-                  </Link>
-                </article>
+                  property={p}
+                  showFeeTotal={true}
+                />
               ))}
           </div>
         </section>

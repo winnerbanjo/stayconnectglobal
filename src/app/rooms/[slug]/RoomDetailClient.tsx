@@ -27,6 +27,8 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { Room } from "@/types";
+import AirbnbHeader from "@/components/airbnb/AirbnbHeader";
+import AirbnbFooter from "@/components/airbnb/AirbnbFooter";
 
 interface RoomDetailClientProps {
   room: Room;
@@ -69,7 +71,15 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
   const whatsappUrl = `https://wa.me/2349042854834?text=${whatsappMessage}`;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 space-y-6 sm:space-y-10">
+    <div className="min-h-screen bg-[#FAF9F6] dark:bg-[#111111] text-[#111111] dark:text-white font-sans selection:bg-[#00AEEF] selection:text-[#111111] transition-colors duration-200">
+      <AirbnbHeader
+        activeCategory="all"
+        onSelectCategory={() => {}}
+        selectedLocation=""
+        onSelectLocation={() => {}}
+        onSearch={() => {}}
+      />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-6 sm:py-8 space-y-6 sm:space-y-10">
       {/* Top Breadcrumbs & Header */}
       <div className="space-y-2 sm:space-y-4">
         <div className="flex flex-wrap items-center gap-2 text-[10px] sm:text-xs uppercase tracking-widest text-neutral-400 font-medium">
@@ -419,6 +429,8 @@ export default function RoomDetailClient({ room }: RoomDetailClientProps) {
           </div>
         </div>
       </div>
+      </div>
+      <AirbnbFooter />
     </div>
   );
 }

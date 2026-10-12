@@ -1,9 +1,8 @@
 import React from "react";
 import { notFound } from "next/navigation";
-import Navbar from "@/components/navigation/Navbar";
-import Footer from "@/components/navigation/Footer";
 import RoomDetailClient from "./RoomDetailClient";
-import { publicRooms, findPublicRoom } from "@/lib/platform/store";
+import { findPublicRoom } from "@/lib/platform/store";
+
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
@@ -13,9 +12,9 @@ export async function generateMetadata({
 }) {
   const { slug } = await params;
   const room = await findPublicRoom(slug);
-  if (!room) return { title: "Room not found | Stay Connect" };
+  if (!room) return { title: "Room not found | Stay Connect Global" };
   return {
-    title: `${room.name} | Stay Connect Global Lekki`,
+    title: `${room.name} | Stay Connect Global`,
     description: room.description,
   };
 }
@@ -30,13 +29,5 @@ export default async function RoomDetailPage({
 
   if (!room) notFound();
 
-  return (
-    <div className="min-h-screen bg-[#FAF9F6] text-[#111111] font-sans selection:bg-[#00AEEF] selection:text-[#111111]">
-      <Navbar />
-      <main className="pt-20 sm:pt-24 pb-12 sm:pb-20">
-        <RoomDetailClient room={room} />
-      </main>
-      <Footer />
-    </div>
-  );
+  return <RoomDetailClient room={room} />;
 }

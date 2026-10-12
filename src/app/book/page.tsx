@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
 import {
   Calendar,
   User,
+  Users,
   Phone,
   Mail,
   Check,
@@ -15,15 +15,17 @@ import {
   CheckCircle,
   ArrowRight,
   Building2,
-  Car,
-  Plane,
-  ConciergeBell,
   Lock,
   ShieldCheck,
   ArrowLeft,
+  Zap,
+  Crown,
+  Upload,
+  MessageCircle,
+  Star,
 } from "lucide-react";
-import Navbar from "@/components/navigation/Navbar";
-import Footer from "@/components/navigation/Footer";
+import AirbnbHeader from "@/components/airbnb/AirbnbHeader";
+import AirbnbFooter from "@/components/airbnb/AirbnbFooter";
 import { uploadImages, type ImageUploadProgress } from "@/lib/upload-images";
 
 export default function BookingPage() {
@@ -31,7 +33,6 @@ export default function BookingPage() {
   const [error, setError] = useState("");
   const [roomsLoading, setRoomsLoading] = useState(true);
   const [agentCode, setAgentCode] = useState("");
-  const [currentStep, setCurrentStep] = useState(1);
   const [copiedAccount, setCopiedAccount] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [bookingCompleted, setBookingCompleted] = useState<any>(null);
@@ -90,6 +91,7 @@ export default function BookingPage() {
       .catch((e) => setError(e.message))
       .finally(() => setRoomsLoading(false));
   }, []);
+
   useEffect(() => {
     const nights =
       Math.max(
@@ -102,12 +104,14 @@ export default function BookingPage() {
       ) || 0;
     setFormData((prev) => ({ ...prev, nights }));
   }, [formData.checkIn, formData.checkOut]);
+
   const selectedRoom = rooms.find((r) => r.slug === formData.suiteSlug);
   const isApartment = Boolean(
     selectedRoom?.badge?.toLowerCase().includes("apartment") ||
     selectedRoom?.type?.toLowerCase().includes("apartment") ||
     selectedRoom?.category?.toLowerCase().includes("apartment")
   );
+
   function validateDates() {
     if (!selectedRoom) {
       setError("Please select an available accommodation.");
@@ -134,18 +138,14 @@ export default function BookingPage() {
   const nightlyTotal = formData.pricePerNight * formData.nights;
   const grandTotal = nightlyTotal;
 
-  const toggleAddOn = (addonId: string) => {
-    setFormData((prev) => {
-      const exists = prev.selectedAddOns.includes(addonId);
-      if (exists) {
-        return {
-          ...prev,
-          selectedAddOns: prev.selectedAddOns.filter((id) => id !== addonId),
-        };
-      } else {
-        return { ...prev, selectedAddOns: [...prev.selectedAddOns, addonId] };
-      }
-    });
+  const handleCopyAccount = async () => {
+    try {
+      await navigator.clipboard.writeText("1000364331");
+      setCopiedAccount(true);
+      setTimeout(() => setCopiedAccount(false), 3000);
+    } catch {
+      setError("Please copy account number 1000364331 manually.");
+    }
   };
 
   const handleCompleteBooking = async (e: React.FormEvent) => {
@@ -153,7 +153,7 @@ export default function BookingPage() {
     try {
       if (!validateDates()) return;
       if (formData.paymentMethod === "Bank Transfer" && !paymentReceipt) {
-        setError("Upload your bank transfer receipt before completing the reservation.");
+        setError("Please upload your bank transfer receipt before completing the reservation.");
         return;
       }
       setIsSubmitting(true);
@@ -189,7 +189,6 @@ export default function BookingPage() {
           json.error || "Reservation could not be saved. Please try again.",
         );
       }
-      setCurrentStep(4);
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -198,612 +197,564 @@ export default function BookingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6] dark:bg-[#111111] text-[#111111] dark:text-white font-sans flex flex-col justify-between transition-colors duration-300">
-      <Navbar />
+    <div className="min-h-screen bg-[#FAF9F6] dark:bg-[#111111] text-[#111111] dark:text-white font-sans flex flex-col justify-between transition-colors duration-200">
+      {/* 1. AIRBNB HEADER */}
+      <AirbnbHeader
+        activeCategory="all"
+        onSelectCategory={() => {}}
+        selectedLocation=""
+        onSelectLocation={() => {}}
+        onSearch={() => {}}
+      />
 
-      <main className="pt-28 sm:pt-36 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full flex-1 space-y-8">
+      <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 sm:py-10 flex-1 space-y-6">
+        {/* TOP BACK BUTTON & PAGE TITLE */}
+        <div className="flex items-center gap-3">
+          <Link
+            href="/"
+            className="p-2 rounded-full border border-neutral-300 dark:border-neutral-700 hover:border-[#00AEEF] text-neutral-700 dark:text-neutral-300 transition"
+            aria-label="Back to stays"
+          >
+            <ArrowLeft className="w-4 h-4" />
+          </Link>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-neutral-900 dark:text-white">
+            Confirm and pay
+          </h1>
+        </div>
+
         {error && (
-          <p
+          <div
             role="alert"
-            className="p-4 rounded-lg border border-rose-500 text-rose-600 dark:text-rose-300"
+            className="p-4 rounded-2xl border border-rose-500/40 bg-rose-50 dark:bg-rose-950/30 text-rose-700 dark:text-rose-300 text-xs font-medium"
           >
             {error}
-          </p>
-        )}
-        {roomsLoading && <p role="status">Loading available rooms…</p>}
-        {!roomsLoading && !rooms.length && (
-          <p>
-            No rooms are currently available.{" "}
-            <Link href="/properties" className="underline">
-              Browse other properties
-            </Link>
-            .
-          </p>
-        )}
-        {/* Checkout Header */}
-        <div className="text-center space-y-2">
-          <span className="text-[10px] uppercase tracking-[0.4em] text-[#00AEEF] font-semibold px-4 py-1.5 rounded-full bg-white dark:bg-[#1A1918] border border-[#E8E5DF] dark:border-[#00AEEF]/30 inline-block shadow-sm">
-            Encrypted Checkout Process
-          </span>
-          <h1 className="font-serif text-3xl sm:text-5xl font-normal leading-tight text-[#111111] dark:text-white">
-            Reserve Your Luxury Sanctuary
-          </h1>
-          <p className="text-xs text-neutral-600 dark:text-neutral-400 font-light">
-            Stay Connect Global Platform • Direct Guaranteed Pricing
-          </p>
-        </div>
-
-        {/* Stripe-Grade 4-Step Wizard Indicator */}
-        <div className="max-w-3xl mx-auto bg-white dark:bg-[#1A1918] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-2xl p-4 shadow-sm">
-          <div className="grid grid-cols-4 gap-2 text-center">
-            {[
-              { num: 1, label: isApartment ? "Dates & Apartment" : "Dates & Suite" },
-              { num: 2, label: "Guest Info" },
-              { num: 3, label: "Add-On Services" },
-              { num: 4, label: "Payment" },
-            ].map((st) => (
-              <div
-                key={st.num}
-                className={`py-2 px-2 rounded-xl transition-all ${
-                  currentStep === st.num
-                    ? "bg-[#00AEEF] text-[#111111] font-bold shadow-md"
-                    : currentStep > st.num
-                      ? "bg-[#00AEEF]/20 text-[#00AEEF] font-semibold"
-                      : "text-neutral-400 font-medium"
-                }`}
-              >
-                <div className="text-[10px] uppercase tracking-wider">
-                  Step 0{st.num}
-                </div>
-                <div className="text-xs sm:text-sm font-serif truncate">
-                  {st.label}
-                </div>
-              </div>
-            ))}
           </div>
-        </div>
+        )}
 
-        {/* Step Content & Sticky Live Order Summary Panel */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Main Checkout Form Container */}
-          <div className="lg:col-span-7 bg-white dark:bg-[#1A1918] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-3xl p-6 sm:p-8 space-y-6 shadow-xl">
-            {/* STEP 1: DATES & SUITE SELECTION */}
-            {currentStep === 1 && (
-              <motion.div
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="space-y-6"
+        {roomsLoading && (
+          <div className="p-12 text-center text-sm text-neutral-500">
+            Loading reservation details...
+          </div>
+        )}
+
+        {/* CONFIRMATION SCREEN (When booking is saved) */}
+        {bookingCompleted && (
+          <div className="max-w-2xl mx-auto bg-white dark:bg-[#1A1918] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-3xl p-8 sm:p-12 text-center space-y-6 shadow-2xl animate-fade-in">
+            <div className="w-16 h-16 rounded-full bg-[#00AEEF]/20 text-[#00AEEF] flex items-center justify-center mx-auto shadow-sm">
+              <CheckCircle className="w-9 h-9" />
+            </div>
+
+            <div className="space-y-2">
+              <span className="text-[10px] uppercase tracking-[0.35em] text-[#00AEEF] font-bold">
+                {bookingCompleted.paymentStatus === "Paid"
+                  ? "Reservation Confirmed"
+                  : "Reservation Voucher Saved • Pending Payment Verification"}
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-neutral-900 dark:text-white">
+                Voucher #{bookingCompleted.bookingRef}
+              </h2>
+              <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 font-light max-w-lg mx-auto">
+                Thank you, <strong>{formData.guestName}</strong>. Your reservation request for{" "}
+                <strong>{formData.suiteName}</strong> has been created. Our team will verify your payment receipt and send WhatsApp confirmation shortly.
+              </p>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-[#FAF9F6] dark:bg-[#111111] border border-[#E8E5DF] dark:border-[#2C2B29] text-xs space-y-2 text-left">
+              <div className="flex justify-between">
+                <span className="text-neutral-500">Dates</span>
+                <span className="font-semibold">{formData.checkIn} → {formData.checkOut} ({formData.nights} nights)</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-neutral-500">Guests</span>
+                <span className="font-semibold">{formData.guests} Guests</span>
+              </div>
+              <div className="flex justify-between border-t border-neutral-200 dark:border-neutral-800 pt-2 font-bold text-sm">
+                <span>Total Amount</span>
+                <span className="text-[#00AEEF]">₦{grandTotal.toLocaleString()}</span>
+              </div>
+            </div>
+
+            <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+              <a
+                href={`https://wa.me/2349042854834?text=${encodeURIComponent(
+                  `Hello Stay Connect Concierge, I just completed reservation #${bookingCompleted.bookingRef} for ${formData.suiteName}. Please confirm receipt verification.`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#1EBE5D] text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg"
               >
-                <div className="border-b border-[#E8E5DF] dark:border-[#2C2B29] pb-4">
-                  <h3 className="font-serif text-2xl text-[#111111] dark:text-white">
-                    Step 1: Choose {isApartment ? "Apartment" : "Suite"} & Dates
-                  </h3>
-                  <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                    Select your preferred accommodation and reservation stay
-                    window.
-                  </p>
-                </div>
+                <MessageCircle className="w-4 h-4" />
+                <span>Notify Concierge on WhatsApp</span>
+              </a>
 
-                <div className="space-y-4 text-xs">
-                  <div>
-                    <label className="text-[#111111] dark:text-neutral-300 font-semibold block mb-1.5">
-                      {isApartment ? "Select Apartment / Residence" : "Select Suite / Room"}
-                    </label>
-                    <select
-                      value={formData.suiteSlug}
-                      onChange={(e) => {
-                        const matched = rooms.find(
-                          (r) => r.slug === e.target.value,
-                        );
-                        if (matched) {
-                          setFormData({
-                            ...formData,
-                            suiteSlug: matched.slug,
-                            suiteName: matched.name,
-                            pricePerNight: matched.pricePerNight,
-                            guests: Math.min(
-                              formData.guests,
-                              matched.maxGuests,
-                            ),
-                          });
-                        }
-                      }}
-                      className="w-full min-h-[48px] bg-[#FAF9F6] dark:bg-[#111111] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-xl px-4 py-3 text-sm text-[#111111] dark:text-white font-serif font-bold focus:outline-none focus:border-[#00AEEF]"
-                    >
-                      {rooms.map((rm) => (
-                        <option key={rm.slug} value={rm.slug}>
-                          {rm.name} — ₦{rm.pricePerNight.toLocaleString()} /
-                          night
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+              <Link
+                href={`/booking-status?ref=${bookingCompleted.bookingRef}#${bookingCompleted.lookupToken}`}
+                className="w-full sm:w-auto px-6 py-3.5 rounded-xl border border-neutral-300 dark:border-neutral-700 text-xs font-semibold text-neutral-800 dark:text-neutral-200 hover:border-[#00AEEF] flex items-center justify-center"
+              >
+                Track Voucher Status
+              </Link>
+            </div>
+          </div>
+        )}
 
+        {/* 2-COLUMN AIRBNB CHECKOUT FLOW */}
+        {!roomsLoading && !bookingCompleted && (
+          <form onSubmit={handleCompleteBooking} className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start">
+            {/* LEFT COLUMN: GUEST & PAYMENT DETAILS (65% width) */}
+            <div className="lg:col-span-7 xl:col-span-8 space-y-8 divide-y divide-[#E8E5DF] dark:divide-[#2C2B29]">
+              {/* SECTION 1: YOUR TRIP */}
+              <div className="space-y-4">
+                <h2 className="text-lg sm:text-xl font-bold tracking-tight text-neutral-900 dark:text-white">
+                  Your trip details
+                </h2>
+
+                <div className="rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#1A1918] p-4 sm:p-5 space-y-4 shadow-sm">
+                  {/* Accommodation Selector (if multiple suites) */}
+                  {rooms.length > 1 && (
+                    <div className="border-b border-neutral-100 dark:border-neutral-800 pb-3">
+                      <label className="block text-[11px] font-bold uppercase tracking-wider text-neutral-500 mb-1">
+                        Selected Accommodation
+                      </label>
+                      <select
+                        value={formData.suiteSlug}
+                        onChange={(e) => {
+                          const matched = rooms.find((r) => r.slug === e.target.value);
+                          if (matched) {
+                            setFormData((prev) => ({
+                              ...prev,
+                              suiteSlug: matched.slug,
+                              suiteName: matched.name,
+                              pricePerNight: matched.pricePerNight,
+                            }));
+                          }
+                        }}
+                        className="w-full p-2.5 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-[#FAF9F6] dark:bg-[#111111] text-xs font-semibold cursor-pointer"
+                      >
+                        {rooms.map((r) => (
+                          <option key={r.id} value={r.slug}>
+                            {r.name} — ₦{r.pricePerNight.toLocaleString()} / night
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
+
+                  {/* Dates & Guests */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="text-[#111111] dark:text-neutral-300 font-semibold block mb-1.5">
-                        Check-In Date
-                      </label>
-                      <input
-                        type="date"
-                        value={formData.checkIn}
-                        onChange={(e) =>
-                          setFormData({ ...formData, checkIn: e.target.value })
-                        }
-                        className="w-full min-h-[48px] bg-[#FAF9F6] dark:bg-[#111111] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-xl px-4 py-3 text-xs text-[#111111] dark:text-white focus:outline-none focus:border-[#00AEEF]"
-                      />
+                      <div className="text-xs font-bold text-neutral-900 dark:text-white flex items-center gap-1.5">
+                        <Calendar className="w-3.5 h-3.5 text-[#00AEEF]" />
+                        <span>Dates</span>
+                      </div>
+                      <div className="grid grid-cols-2 gap-2 mt-2">
+                        <div>
+                          <label className="block text-[10px] text-neutral-500 mb-0.5">Check-in</label>
+                          <input
+                            type="date"
+                            value={formData.checkIn}
+                            onChange={(e) => setFormData((prev) => ({ ...prev, checkIn: e.target.value }))}
+                            className="w-full p-2 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-[#FAF9F6] dark:bg-[#111111] text-xs font-semibold cursor-pointer"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-[10px] text-neutral-500 mb-0.5">Checkout</label>
+                          <input
+                            type="date"
+                            value={formData.checkOut}
+                            onChange={(e) => setFormData((prev) => ({ ...prev, checkOut: e.target.value }))}
+                            className="w-full p-2 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-[#FAF9F6] dark:bg-[#111111] text-xs font-semibold cursor-pointer"
+                          />
+                        </div>
+                      </div>
                     </div>
+
                     <div>
-                      <label className="text-[#111111] dark:text-neutral-300 font-semibold block mb-1.5">
-                        Check-Out Date
-                      </label>
-                      <input
-                        type="date"
-                        value={formData.checkOut}
-                        onChange={(e) =>
-                          setFormData({ ...formData, checkOut: e.target.value })
-                        }
-                        className="w-full min-h-[48px] bg-[#FAF9F6] dark:bg-[#111111] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-xl px-4 py-3 text-xs text-[#111111] dark:text-white focus:outline-none focus:border-[#00AEEF]"
-                      />
+                      <div className="text-xs font-bold text-neutral-900 dark:text-white flex items-center gap-1.5">
+                        <Users className="w-3.5 h-3.5 text-[#00AEEF]" />
+                        <span>Guests</span>
+                      </div>
+                      <div className="mt-2">
+                        <label className="block text-[10px] text-neutral-500 mb-0.5">Total capacity</label>
+                        <select
+                          value={formData.guests}
+                          onChange={(e) => setFormData((prev) => ({ ...prev, guests: Number(e.target.value) }))}
+                          className="w-full p-2 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-[#FAF9F6] dark:bg-[#111111] text-xs font-semibold cursor-pointer"
+                        >
+                          {Array.from({ length: selectedRoom?.maxGuests || 4 }).map((_, i) => (
+                            <option key={i + 1} value={i + 1}>
+                              {i + 1} Guest{i > 0 ? "s" : ""}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
                     </div>
                   </div>
-
-                  <div>
-                    <label className="text-[#111111] dark:text-neutral-300 font-semibold block mb-1.5">
-                      Number of Guests
-                    </label>
-                    <select
-                      value={formData.guests}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          guests: Number(e.target.value),
-                        })
-                      }
-                      className="w-full min-h-[48px] bg-[#FAF9F6] dark:bg-[#111111] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-xl px-4 py-3 text-xs text-[#111111] dark:text-white focus:outline-none focus:border-[#00AEEF]"
-                    >
-                      <option value={1}>1 Guest</option>
-                      <option value={2}>2 Guests</option>
-                      {Array.from(
-                        {
-                          length: Math.max(
-                            0,
-                            (selectedRoom?.maxGuests || 2) - 2,
-                          ),
-                        },
-                        (_, i) => (
-                          <option key={i + 3} value={i + 3}>
-                            {i + 3} Guests
-                          </option>
-                        ),
-                      )}
-                    </select>
-                  </div>
-
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (validateDates()) setCurrentStep(2);
-                    }}
-                    className="w-full min-h-[50px] bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-bold text-xs uppercase tracking-[0.2em] rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 mt-6 active:scale-95"
-                  >
-                    <span>Continue to Guest Details</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
                 </div>
-              </motion.div>
-            )}
+              </div>
 
-            {/* STEP 2: GUEST INFORMATION */}
-            {currentStep === 2 && (
-              <motion.div
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="space-y-6"
-              >
-                <div className="border-b border-[#E8E5DF] dark:border-[#2C2B29] pb-4">
-                  <h3 className="font-serif text-2xl text-[#111111] dark:text-white">
-                    Step 2: Guest Details
-                  </h3>
-                  <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                    Provide contact information so the property can follow up on
-                    your reservation.
-                  </p>
-                </div>
+              {/* SECTION 2: GUEST INFORMATION */}
+              <div className="pt-8 space-y-4">
+                <h2 className="text-lg sm:text-xl font-bold tracking-tight text-neutral-900 dark:text-white">
+                  Guest contact details
+                </h2>
 
-                <div className="space-y-4 text-xs">
+                <div className="rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#1A1918] p-4 sm:p-5 space-y-4 shadow-sm">
                   <div>
-                    <label className="text-[#111111] dark:text-neutral-300 font-semibold block mb-1.5">
-                      Full Guest Name *
+                    <label className="block text-xs font-bold text-neutral-800 dark:text-neutral-200 mb-1">
+                      Full Legal Name *
                     </label>
                     <input
                       type="text"
                       required
                       placeholder="e.g. Chief Oluwaseun Davies"
                       value={formData.guestName}
-                      onChange={(e) =>
-                        setFormData({ ...formData, guestName: e.target.value })
-                      }
-                      className="w-full min-h-[48px] bg-[#FAF9F6] dark:bg-[#111111] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-xl px-4 py-3 text-xs text-[#111111] dark:text-white focus:outline-none focus:border-[#00AEEF]"
+                      onChange={(e) => setFormData((prev) => ({ ...prev, guestName: e.target.value }))}
+                      className="w-full p-3 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-[#FAF9F6] dark:bg-[#111111] text-xs text-neutral-900 dark:text-white focus:outline-none focus:border-[#00AEEF]"
                     />
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="text-[#111111] dark:text-neutral-300 font-semibold block mb-1.5">
-                        Email Address *
+                      <label className="block text-xs font-bold text-neutral-800 dark:text-neutral-200 mb-1">
+                        Email Address (for confirmation voucher) *
                       </label>
                       <input
                         type="email"
                         required
                         placeholder="guest@domain.com"
                         value={formData.guestEmail}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            guestEmail: e.target.value,
-                          })
-                        }
-                        className="w-full min-h-[48px] bg-[#FAF9F6] dark:bg-[#111111] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-xl px-4 py-3 text-xs text-[#111111] dark:text-white focus:outline-none focus:border-[#00AEEF]"
+                        onChange={(e) => setFormData((prev) => ({ ...prev, guestEmail: e.target.value }))}
+                        className="w-full p-3 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-[#FAF9F6] dark:bg-[#111111] text-xs text-neutral-900 dark:text-white focus:outline-none focus:border-[#00AEEF]"
                       />
                     </div>
+
                     <div>
-                      <label className="text-[#111111] dark:text-neutral-300 font-semibold block mb-1.5">
-                        WhatsApp Phone *
+                      <label className="block text-xs font-bold text-neutral-800 dark:text-neutral-200 mb-1">
+                        WhatsApp Phone Number *
                       </label>
                       <input
                         type="tel"
                         required
                         placeholder="+234 904 285 4834"
                         value={formData.guestPhone}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            guestPhone: e.target.value,
-                          })
-                        }
-                        className="w-full min-h-[48px] bg-[#FAF9F6] dark:bg-[#111111] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-xl px-4 py-3 text-xs text-[#111111] dark:text-white focus:outline-none focus:border-[#00AEEF]"
+                        onChange={(e) => setFormData((prev) => ({ ...prev, guestPhone: e.target.value }))}
+                        className="w-full p-3 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-[#FAF9F6] dark:bg-[#111111] text-xs text-neutral-900 dark:text-white focus:outline-none focus:border-[#00AEEF]"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="text-[#111111] dark:text-neutral-300 font-semibold block mb-1.5">
-                      Special Requests (Optional)
+                    <label className="block text-xs font-bold text-neutral-800 dark:text-neutral-200 mb-1">
+                      Special Requests or Arrival Notes (Optional)
                     </label>
                     <textarea
                       rows={2}
-                      placeholder="Airport pick-up time, dietary preferences, late check-in..."
+                      placeholder="Estimated arrival time, dietary preference, protocol assistance..."
                       value={formData.specialRequests}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          specialRequests: e.target.value,
-                        })
-                      }
-                      className="w-full bg-[#FAF9F6] dark:bg-[#111111] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-xl px-4 py-3 text-xs text-[#111111] dark:text-white focus:outline-none focus:border-[#00AEEF]"
+                      onChange={(e) => setFormData((prev) => ({ ...prev, specialRequests: e.target.value }))}
+                      className="w-full p-3 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-[#FAF9F6] dark:bg-[#111111] text-xs text-neutral-900 dark:text-white focus:outline-none focus:border-[#00AEEF]"
                     />
                   </div>
-
-                  <div className="flex items-center gap-3 pt-2">
-                    <button
-                      type="button"
-                      onClick={() => setCurrentStep(1)}
-                      className="w-1/3 min-h-[48px] border border-[#E8E5DF] dark:border-[#2C2B29] text-neutral-600 dark:text-neutral-400 hover:text-[#111111] dark:hover:text-white rounded-xl font-semibold transition-colors flex items-center justify-center gap-1"
-                    >
-                      <ArrowLeft className="w-4 h-4" />
-                      <span>Back</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        if (!formData.guestName || !formData.guestEmail) {
-                          alert(
-                            "Please enter your full name and email address.",
-                          );
-                          return;
-                        }
-                        setCurrentStep(3);
-                      }}
-                      className="w-2/3 min-h-[48px] bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-bold text-xs uppercase tracking-[0.2em] rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 active:scale-95"
-                    >
-                      <span>Continue to Add-Ons</span>
-                      <ArrowRight className="w-4 h-4" />
-                    </button>
-                  </div>
                 </div>
-              </motion.div>
-            )}
+              </div>
 
-            {/* STEP 3: OPTIONAL ADD-ON SERVICES */}
-            {currentStep === 3 && (
-              <motion.div
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="space-y-6"
-              >
-                <div className="border-b border-[#E8E5DF] dark:border-[#2C2B29] pb-4">
-                  <h3 className="font-serif text-2xl text-[#111111] dark:text-white">
-                    Step 3: Enhance Your Stay
-                  </h3>
-                  <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                    Additional services are arranged separately with our concierge, subject to availability and a confirmed quote.
-                  </p>
+              {/* SECTION 3: PAYMENT METHOD WITH LIVE BANK DETAILS */}
+              <div className="pt-8 space-y-4">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-lg sm:text-xl font-bold tracking-tight text-neutral-900 dark:text-white">
+                    Payment method
+                  </h2>
+                  <div className="flex items-center gap-1 text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">
+                    <ShieldCheck className="w-3.5 h-3.5" />
+                    <span>Secure Encrypted Transfer</span>
+                  </div>
                 </div>
 
                 <div className="space-y-3">
-                  <a href="https://wa.me/2349042854834" target="_blank" rel="noopener noreferrer" className="text-[#0077B6] underline">Ask the concierge about additional services</a>
-                </div>
-
-                <div className="flex items-center gap-3 pt-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (validateDates()) setCurrentStep(2);
-                    }}
-                    className="w-1/3 min-h-[48px] border border-[#E8E5DF] dark:border-[#2C2B29] text-neutral-600 dark:text-neutral-400 hover:text-[#111111] dark:hover:text-white rounded-xl font-semibold transition-colors flex items-center justify-center gap-1"
+                  {/* Option 1: Direct Bank Transfer (Parallex Bank) */}
+                  <div
+                    onClick={() => setFormData((prev) => ({ ...prev, paymentMethod: "Bank Transfer" }))}
+                    className={`p-4 sm:p-5 rounded-2xl border cursor-pointer transition-all ${
+                      formData.paymentMethod === "Bank Transfer"
+                        ? "border-[#00AEEF] bg-[#00AEEF]/5 ring-1 ring-[#00AEEF] shadow-md"
+                        : "border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#1A1918]"
+                    }`}
                   >
-                    <ArrowLeft className="w-4 h-4" />
-                    <span>Back</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setCurrentStep(4)}
-                    className="w-2/3 min-h-[48px] bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-bold text-xs uppercase tracking-[0.2em] rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 active:scale-95"
-                  >
-                    <span>Proceed to Payment</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                </div>
-              </motion.div>
-            )}
-
-            {/* STEP 4: ENCRYPTED PAYMENT METHOD */}
-            {currentStep === 4 && !bookingCompleted && (
-              <motion.div
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="space-y-6"
-              >
-                <div className="border-b border-[#E8E5DF] dark:border-[#2C2B29] pb-4">
-                  <h3 className="font-serif text-2xl text-[#111111] dark:text-white">
-                    Step 4: Select Payment Method
-                  </h3>
-                  <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                    Choose how you intend to pay. Your reservation is confirmed
-                    only after payment verification.
-                  </p>
-                </div>
-
-                <form
-                  onSubmit={handleCompleteBooking}
-                  className="space-y-6 text-xs"
-                >
-                  <div className="space-y-3">
-                    {/* Bank Transfer Option */}
-                    <div
-                      onClick={() =>
-                        setFormData({
-                          ...formData,
-                          paymentMethod: "Bank Transfer",
-                        })
-                      }
-                      className={`p-4 rounded-2xl border cursor-pointer transition-all flex items-start gap-4 ${
-                        formData.paymentMethod === "Bank Transfer"
-                          ? "border-[#00AEEF] bg-[#00AEEF]/10 shadow-md"
-                          : "border-[#E8E5DF] dark:border-[#2C2B29] bg-[#FAF9F6] dark:bg-[#111111]"
-                      }`}
-                    >
-                      <Building2 className="w-6 h-6 text-[#00AEEF] shrink-0 mt-1" />
-                      <div className="space-y-1">
-                        <div className="font-serif text-base text-[#111111] dark:text-white font-medium">
-                          Direct Bank Transfer (Manual Verification)
+                    <div className="flex items-start gap-3">
+                      <div className="w-9 h-9 rounded-xl bg-[#00AEEF]/10 text-[#00AEEF] flex items-center justify-center shrink-0 mt-0.5">
+                        <Building2 className="w-5 h-5" />
+                      </div>
+                      <div className="flex-1 space-y-1">
+                        <div className="flex items-center justify-between">
+                          <span className="font-bold text-sm text-neutral-900 dark:text-white">
+                            Direct Bank Transfer (Manual Verification)
+                          </span>
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#00AEEF] bg-[#00AEEF]/10 px-2 py-0.5 rounded-full">
+                            Preferred
+                          </span>
                         </div>
-                        <p className="text-[11px] text-neutral-500 dark:text-neutral-400">
-                          Transfer to Stay Connect, upload your receipt, and
-                          we will verify the payment before confirming.
+                        <p className="text-xs text-neutral-500 font-light">
+                          Transfer directly to Stay Connect Solutions Ltd account, upload proof, and your voucher will be approved.
                         </p>
+
+                        {/* LIVE PARALLEX BANK DETAILS BOX */}
                         {formData.paymentMethod === "Bank Transfer" && (
-                          <div className="mt-4 space-y-4 rounded-xl border border-[#00AEEF]/50 bg-white p-4 dark:bg-[#111111]" onClick={(event) => event.stopPropagation()}>
-                            <div>
-                              <p className="font-semibold text-sm text-[#111111] dark:text-white">Bank transfer details</p>
-                              <p className="mt-1 text-[11px] text-neutral-600 dark:text-neutral-300">Transfer ₦{grandTotal.toLocaleString()} and use your name as the narration.</p>
+                          <div
+                            className="mt-4 p-4 rounded-2xl bg-white dark:bg-[#111111] border border-[#00AEEF]/40 space-y-4 shadow-sm"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <div className="flex items-center justify-between border-b border-neutral-100 dark:border-neutral-800 pb-2">
+                              <div>
+                                <span className="text-[10px] uppercase font-bold tracking-wider text-neutral-400">
+                                  Official Operating Account
+                                </span>
+                                <div className="text-xs font-bold text-neutral-900 dark:text-white">
+                                  Stay Connect Solutions Ltd
+                                </div>
+                              </div>
+                              <span className="text-xs font-bold text-neutral-500 bg-neutral-100 dark:bg-neutral-800 px-2.5 py-1 rounded-lg">
+                                Parallex Bank
+                              </span>
                             </div>
-                            <dl className="grid gap-2 text-xs text-[#111111] dark:text-white">
-                              <div className="flex items-center justify-between gap-4"><dt className="text-neutral-500">Account name</dt><dd className="font-semibold text-right">Stay Connect Solutions Ltd</dd></div>
-                              <div className="flex items-center justify-between gap-4"><dt className="text-neutral-500">Bank</dt><dd className="font-semibold">Parallex Bank</dd></div>
-                              <div className="flex items-center justify-between gap-4"><dt className="text-neutral-500">Account number</dt><dd className="flex items-center gap-2 font-bold tracking-wider">1000364331 <button type="button" onClick={async () => { try { await navigator.clipboard.writeText("1000364331"); setCopiedAccount(true); } catch { setError("Copy is unavailable on this browser. Please enter 1000364331 manually."); } }} className="rounded border border-[#00AEEF] px-2 py-1 text-[10px] font-semibold text-[#0077B6]">{copiedAccount ? "Copied" : "Copy"}</button></dd></div>
-                            </dl>
-                            <label className="block text-xs font-semibold text-[#111111] dark:text-white">
-                              Upload payment receipt *
-                              <input
-                                type="file"
-                                accept="image/jpeg,image/png,image/webp"
-                                disabled={receiptUploading || isSubmitting}
-                                className="mt-2 block w-full rounded-lg border border-[#00AEEF]/40 bg-white p-2 text-xs text-slate-700 dark:bg-black dark:text-white"
-                                onChange={async (e) => {
-                                  const file = e.currentTarget.files?.[0];
-                                  if (!file) return;
-                                  setError("");
-                                  setReceiptProgress(null);
-                                  setReceiptUploading(true);
-                                  try {
-                                    const [url] = await uploadImages([file], { onProgress: setReceiptProgress });
-                                    setPaymentReceipt(url);
-                                  } catch (uploadError) {
-                                    setPaymentReceipt("");
-                                    setError(uploadError instanceof Error ? uploadError.message : "Receipt upload failed. Please try again.");
-                                  } finally {
-                                    setReceiptUploading(false);
-                                    e.currentTarget.value = "";
-                                  }
-                                }}
-                              />
-                            </label>
-                            {receiptUploading && <p role="status" className="text-[11px] text-[#0077B6]">{receiptProgress?.stage === "preparing" ? "Preparing receipt…" : "Uploading receipt…"}</p>}
-                            {paymentReceipt && <p role="status" className="text-[11px] font-semibold text-emerald-700">Receipt uploaded and ready for verification.</p>}
+
+                            <div className="flex items-center justify-between bg-[#FAF9F6] dark:bg-[#161616] p-3 rounded-xl border border-neutral-200 dark:border-neutral-700">
+                              <div>
+                                <div className="text-[10px] uppercase font-bold text-neutral-500">
+                                  Account Number
+                                </div>
+                                <div className="text-base sm:text-lg font-mono font-bold tracking-widest text-[#111111] dark:text-white">
+                                  1000364331
+                                </div>
+                              </div>
+                              <button
+                                type="button"
+                                onClick={handleCopyAccount}
+                                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#00AEEF] hover:bg-[#0090C8] text-[#111111] font-bold text-xs shadow-sm transition active:scale-95"
+                              >
+                                {copiedAccount ? (
+                                  <>
+                                    <Check className="w-3.5 h-3.5" />
+                                    <span>Copied!</span>
+                                  </>
+                                ) : (
+                                  <>
+                                    <Copy className="w-3.5 h-3.5" />
+                                    <span>Copy Number</span>
+                                  </>
+                                )}
+                              </button>
+                            </div>
+
+                            <p className="text-[11px] text-neutral-500 font-light">
+                              Please transfer <strong>₦{grandTotal.toLocaleString()}</strong> and use your full name (
+                              <strong>{formData.guestName || "Your Name"}</strong>) as payment narration.
+                            </p>
+
+                            {/* RECEIPT UPLOAD INPUT */}
+                            <div className="pt-2 border-t border-neutral-100 dark:border-neutral-800 space-y-2">
+                              <label className="block text-xs font-bold text-neutral-900 dark:text-white">
+                                Upload Bank Transfer Receipt *
+                              </label>
+                              <div className="relative border-2 border-dashed border-neutral-300 dark:border-neutral-700 hover:border-[#00AEEF] rounded-2xl p-4 text-center cursor-pointer transition bg-[#FAF9F6] dark:bg-[#161616]">
+                                <input
+                                  type="file"
+                                  accept="image/jpeg,image/png,image/webp"
+                                  disabled={receiptUploading || isSubmitting}
+                                  onChange={async (e) => {
+                                    const file = e.currentTarget.files?.[0];
+                                    if (!file) return;
+                                    setError("");
+                                    setReceiptProgress(null);
+                                    setReceiptUploading(true);
+                                    try {
+                                      const [url] = await uploadImages([file], { onProgress: setReceiptProgress });
+                                      setPaymentReceipt(url);
+                                    } catch (uploadError) {
+                                      setPaymentReceipt("");
+                                      setError(
+                                        uploadError instanceof Error
+                                          ? uploadError.message
+                                          : "Receipt upload failed. Please try again."
+                                      );
+                                    } finally {
+                                      setReceiptUploading(false);
+                                      e.currentTarget.value = "";
+                                    }
+                                  }}
+                                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                />
+                                <div className="space-y-1">
+                                  <Upload className="w-6 h-6 text-[#00AEEF] mx-auto" />
+                                  <div className="text-xs font-semibold text-neutral-800 dark:text-neutral-200">
+                                    Click or drag transfer receipt here
+                                  </div>
+                                  <div className="text-[10px] text-neutral-400">
+                                    PNG, JPG, or WEBP up to 10MB
+                                  </div>
+                                </div>
+                              </div>
+
+                              {receiptUploading && (
+                                <p className="text-xs text-[#00AEEF] font-semibold animate-pulse">
+                                  Uploading transfer receipt...
+                                </p>
+                              )}
+                              {paymentReceipt && (
+                                <div className="flex items-center gap-1.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/30 p-2.5 rounded-xl border border-emerald-500/30">
+                                  <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0" />
+                                  <span>Transfer receipt attached and ready for verification!</span>
+                                </div>
+                              )}
+                            </div>
                           </div>
                         )}
                       </div>
                     </div>
+                  </div>
 
-                    {/* Card Option */}
-                    <div
-                      onClick={() =>
-                        setFormData({
-                          ...formData,
-                          paymentMethod: "Pay at Hotel",
-                        })
-                      }
-                      className={`p-4 rounded-2xl border cursor-pointer transition-all flex items-start gap-4 ${
-                        formData.paymentMethod === "Pay at Hotel"
-                          ? "border-[#00AEEF] bg-[#00AEEF]/10 shadow-md"
-                          : "border-[#E8E5DF] dark:border-[#2C2B29] bg-[#FAF9F6] dark:bg-[#111111]"
-                      }`}
-                    >
-                      <CreditCard className="w-6 h-6 text-[#00AEEF] shrink-0 mt-1" />
+                  {/* Option 2: Pay at Property */}
+                  <div
+                    onClick={() => setFormData((prev) => ({ ...prev, paymentMethod: "Pay at Hotel" }))}
+                    className={`p-4 sm:p-5 rounded-2xl border cursor-pointer transition-all ${
+                      formData.paymentMethod === "Pay at Hotel"
+                        ? "border-[#00AEEF] bg-[#00AEEF]/5 ring-1 ring-[#00AEEF] shadow-md"
+                        : "border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#1A1918]"
+                    }`}
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="w-9 h-9 rounded-xl bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 flex items-center justify-center shrink-0 mt-0.5">
+                        <CreditCard className="w-5 h-5" />
+                      </div>
                       <div className="space-y-1">
-                        <div className="font-serif text-base text-[#111111] dark:text-white font-medium">
-                          Pay at Property
-                        </div>
-                        <p className="text-[11px] text-neutral-500 dark:text-neutral-400">
-                          Arrange payment directly with the property. Your
-                          reservation remains pending until confirmed.
+                        <span className="font-bold text-sm text-neutral-900 dark:text-white">
+                          Pay upon Arrival at Residence
+                        </span>
+                        <p className="text-xs text-neutral-500 font-light">
+                          Arrange direct payment on arrival with the on-ground concierge. Reservation remains pending verification.
                         </p>
                       </div>
                     </div>
                   </div>
-
-                  <label className="block text-xs">
-                    Agent referral code (optional)
-                    <input
-                      value={agentCode}
-                      onChange={(e) => setAgentCode(e.target.value)}
-                      pattern="[a-zA-Z0-9_-]{2,40}"
-                      maxLength={40}
-                      placeholder="Provided by your agent"
-                      className="mt-2 w-full p-3 bg-[#FAF9F6] dark:bg-black border rounded-lg"
-                    />
-                  </label>
-
-                  <div className="flex items-center gap-3 pt-2">
-                    <button
-                      type="button"
-                      onClick={() => setCurrentStep(3)}
-                      className="w-1/3 min-h-[48px] border border-[#E8E5DF] dark:border-[#2C2B29] text-neutral-600 dark:text-neutral-400 rounded-xl font-semibold transition-colors"
-                    >
-                      Back
-                    </button>
-                    <button
-                      type="submit"
-                      disabled={isSubmitting || receiptUploading || (formData.paymentMethod === "Bank Transfer" && !paymentReceipt)}
-                      className="w-2/3 min-h-[48px] bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-bold text-xs uppercase tracking-[0.2em] rounded-xl shadow-lg transition-all active:scale-95"
-                    >
-                      {isSubmitting
-                        ? "Processing Voucher..."
-                        : "Complete Reservation"}
-                    </button>
-                  </div>
-                </form>
-              </motion.div>
-            )}
-
-            {/* CONFIRMATION MODAL STEP 4 RESULT */}
-            {currentStep === 4 && bookingCompleted && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="text-center space-y-6"
-              >
-                <div className="w-16 h-16 rounded-full bg-[#00AEEF]/20 border border-[#00AEEF] text-[#00AEEF] flex items-center justify-center mx-auto">
-                  <CheckCircle className="w-8 h-8" />
                 </div>
 
-                <div className="space-y-2">
-                  <span className="text-[10px] uppercase tracking-[0.35em] text-[#00AEEF] font-semibold">
-                    {bookingCompleted.paymentStatus === "Paid"
-                      ? "Booking Confirmed / Payment Confirmed"
-                      : "Reservation / Pending Payment"}
-                  </span>
-                  <h2 className="font-serif text-3xl text-[#111111] dark:text-white">
-                    Voucher #{bookingCompleted.bookingRef}
-                  </h2>
-                  <p className="text-xs text-neutral-600 dark:text-neutral-300">
-                    Thank you, <strong>{formData.guestName}</strong>. Your
-                    reservation request has been saved. It becomes a confirmed
-                    booking after payment is verified by Stay Connect.
+                {/* Optional Agent referral code */}
+                <div className="pt-2">
+                  <label className="block text-[11px] font-semibold text-neutral-500 mb-1">
+                    Agent referral code (Optional)
+                  </label>
+                  <input
+                    value={agentCode}
+                    onChange={(e) => setAgentCode(e.target.value)}
+                    placeholder="Enter agent promo or partner code"
+                    className="w-full p-2.5 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-[#111111] text-xs font-mono text-neutral-900 dark:text-white focus:outline-none focus:border-[#00AEEF]"
+                  />
+                </div>
+              </div>
+
+              {/* SECTION 4: GROUND RULES & CONFIRMATION BUTTON */}
+              <div className="pt-8 space-y-4">
+                <div className="text-xs text-neutral-500 font-light leading-relaxed">
+                  By clicking <strong>Complete Reservation</strong>, you agree to Stay Connect Global terms of service, guest policies, and 24/7 power protection standards.
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={
+                    isSubmitting ||
+                    receiptUploading ||
+                    (formData.paymentMethod === "Bank Transfer" && !paymentReceipt)
+                  }
+                  className="w-full py-4 rounded-2xl bg-[#00AEEF] hover:bg-[#0090C8] disabled:opacity-50 text-[#111111] font-bold text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl hover:shadow-cyan-500/20 active:scale-95 transition-all duration-200"
+                >
+                  <Lock className="w-4 h-4 stroke-[2.8]" />
+                  <span>{isSubmitting ? "Generating Voucher..." : "Complete Reservation"}</span>
+                </button>
+              </div>
+            </div>
+
+            {/* RIGHT COLUMN: STICKY ORDER SUMMARY CARD (35% width) */}
+            <div className="lg:col-span-5 xl:col-span-4 sticky top-28">
+              <div className="rounded-3xl border border-[#E8E5DF] dark:border-[#2C2B29] bg-white dark:bg-[#1A1918] p-6 shadow-xl space-y-5">
+                {/* Accommodation Card Summary */}
+                <div className="flex gap-4 border-b border-neutral-100 dark:border-neutral-800 pb-4">
+                  <div className="w-24 h-20 rounded-2xl overflow-hidden bg-neutral-900 shrink-0 border border-neutral-200 dark:border-neutral-700">
+                    <img
+                      src={selectedRoom?.heroImage || "/images/experiences/chauffeur.jpg"}
+                      alt={formData.suiteName}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <span className="text-[10px] uppercase font-bold tracking-wider text-[#00AEEF]">
+                      Stay Connect Verified
+                    </span>
+                    <h3 className="font-bold text-sm text-neutral-900 dark:text-white line-clamp-1">
+                      {formData.suiteName || "Luxury Residence"}
+                    </h3>
+                    <p className="text-[11px] text-neutral-500 line-clamp-1 font-light">
+                      {selectedRoom?.address || "Lagos, Nigeria"}
+                    </p>
+                    <div className="flex items-center gap-1 text-[11px] font-semibold text-neutral-800 dark:text-neutral-200">
+                      <Star className="w-3 h-3 fill-current text-[#C6A15B]" />
+                      <span>4.98</span>
+                      <span className="text-neutral-400 font-normal">· (28 reviews)</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Guarantees Tag */}
+                <div className="flex items-center gap-2 p-2.5 rounded-xl bg-[#00AEEF]/10 text-[#00AEEF] text-xs font-semibold">
+                  <Zap className="w-4 h-4 shrink-0" />
+                  <span>Guaranteed 24/7 Power & Escort Ready</span>
+                </div>
+
+                {/* Price Breakdown */}
+                <div className="space-y-2.5 text-xs text-neutral-600 dark:text-neutral-400">
+                  <div className="text-xs font-bold text-neutral-900 dark:text-white uppercase tracking-wider mb-2">
+                    Price details
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>
+                      ₦{formData.pricePerNight.toLocaleString()} x {formData.nights} night
+                      {formData.nights > 1 ? "s" : ""}
+                    </span>
+                    <span className="font-semibold text-neutral-900 dark:text-white">
+                      ₦{nightlyTotal.toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>Stay Connect Service Fee</span>
+                    <span className="font-semibold text-emerald-600 dark:text-emerald-400">₦0 (Included)</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>24/7 Energy & Generator Surcharge</span>
+                    <span className="font-semibold text-emerald-600 dark:text-emerald-400">₦0 (Complimentary)</span>
+                  </div>
+
+                  <div className="pt-3 border-t border-neutral-200 dark:border-neutral-700 flex justify-between items-baseline text-sm font-bold text-neutral-900 dark:text-white">
+                    <span>Total (NGN)</span>
+                    <span className="text-lg text-[#00AEEF]">₦{grandTotal.toLocaleString()}</span>
+                  </div>
+                </div>
+
+                {/* Parallex Bank Reminder Card */}
+                <div className="p-3.5 rounded-xl bg-neutral-50 dark:bg-[#111111] border border-neutral-200 dark:border-neutral-800 text-[11px] space-y-1">
+                  <div className="font-bold text-neutral-800 dark:text-neutral-200 flex items-center justify-between">
+                    <span>Parallex Bank Transfer</span>
+                    <span className="font-mono text-[#00AEEF]">1000364331</span>
+                  </div>
+                  <p className="text-neutral-500 font-light">
+                    Stay Connect Solutions Ltd • Receipt verified upon upload
                   </p>
                 </div>
-
-                <Link
-                  href={`/booking-status?ref=${bookingCompleted.bookingRef}#${bookingCompleted.lookupToken}`}
-                  className="block text-[#0077B6] underline"
-                >
-                  View reservation & payment status (save this private link)
-                </Link>
-                <div className="pt-4 border-t border-[#E8E5DF] dark:border-[#2C2B29] flex items-center justify-center">
-                  <Link
-                    href="/"
-                    className="px-8 py-3.5 bg-[#00AEEF] hover:bg-[#0088CC] text-[#111111] font-bold uppercase tracking-widest rounded-xl text-xs shadow-lg transition-all"
-                  >
-                    Return to Homepage
-                  </Link>
-                </div>
-              </motion.div>
-            )}
-          </div>
-
-          {/* Sticky Live Order Summary Panel */}
-          <div className="lg:col-span-5 bg-white dark:bg-[#1A1918] border border-[#E8E5DF] dark:border-[#2C2B29] rounded-3xl p-6 sm:p-8 space-y-6 shadow-xl sticky top-28">
-            <h3 className="font-serif text-2xl text-[#111111] dark:text-white border-b border-[#E8E5DF] dark:border-[#2C2B29] pb-4">
-              Live Order Breakdown
-            </h3>
-
-            <div className="space-y-3.5 text-xs">
-              <div className="flex justify-between items-center text-neutral-600 dark:text-neutral-400">
-                <span>Selected {isApartment ? "Apartment" : "Suite"}</span>
-                <span className="font-semibold text-[#111111] dark:text-white">
-                  {formData.suiteName}
-                </span>
-              </div>
-              <div className="flex justify-between items-center text-neutral-600 dark:text-neutral-400">
-                <span>Stay Window</span>
-                <span className="text-[#111111] dark:text-white">
-                  {formData.nights} Nights
-                </span>
-              </div>
-              <div className="flex justify-between items-center text-neutral-600 dark:text-neutral-400">
-                <span>Nightly Rate Total</span>
-                <span className="font-semibold text-[#111111] dark:text-white">
-                  ₦{nightlyTotal.toLocaleString()}
-                </span>
-              </div>
-
-              <div className="border-t border-[#E8E5DF] dark:border-[#2C2B29] pt-4 flex justify-between items-center text-sm">
-                <span className="font-bold text-[#111111] dark:text-white">
-                  Total {isApartment ? "apartment" : "room"} charge
-                </span>
-                <span className="font-serif text-2xl font-bold text-[#00AEEF]">
-                  ₦{grandTotal.toLocaleString()}
-                </span>
               </div>
             </div>
-
-            <div className="p-4 bg-[#FAF9F6] dark:bg-[#111111] rounded-2xl border border-[#E8E5DF] dark:border-[#2C2B29] space-y-2 text-xs">
-              <div className="flex items-center gap-2 text-[#00AEEF] font-bold">
-                <ShieldCheck className="w-4 h-4" />
-                <span>Stay Connect Direct Guarantee</span>
-              </div>
-              <p className="text-[11px] text-neutral-600 dark:text-neutral-400 font-light leading-relaxed">
-                Includes 24/7 power guarantee, complimentary high-speed fiber
-                internet, and a saved reservation reference after submission.
-              </p>
-            </div>
-          </div>
-        </div>
+          </form>
+        )}
       </main>
 
-      <Footer />
+      {/* 5. AIRBNB FOOTER */}
+      <AirbnbFooter />
     </div>
   );
 }
